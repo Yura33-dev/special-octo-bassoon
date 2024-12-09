@@ -7,7 +7,7 @@ import 'swiper/css';
 import Image from 'next/image';
 
 import 'swiper/css/pagination';
-import SliderButton from './MainSwiperButton';
+import MainSwiperButton from './MainSwiperButton';
 
 export default function MainSwiper() {
   const [_, setSwiperInit] = useState<boolean>(false);
@@ -36,8 +36,8 @@ export default function MainSwiper() {
       wrapperTag='ul'
       className='rounded-md shadow-xl h-[250px] md:h-[400px]'
     >
-      <SliderButton to='next' btnRef={nextButtonRef} />
-      <SliderButton to='prev' btnRef={prevButtonRef} />
+      <MainSwiperButton to='next' btnRef={nextButtonRef} />
+      <MainSwiperButton to='prev' btnRef={prevButtonRef} />
 
       <SwiperSlide tag='li'>
         <div className='relative h-full'>
@@ -46,7 +46,8 @@ export default function MainSwiper() {
             src={'/promo1.png'}
             width={2000}
             height={900}
-            className='absolute w-full h-full object-cover '
+            priority
+            className='absolute w-full h-full object-cover'
           />
           <div className='w-full h-full absolute z-[3] text-white flex flex-col items-center justify-center gap-6'>
             <p>text in slide</p>
@@ -67,6 +68,7 @@ export default function MainSwiper() {
             width={2000}
             height={900}
             className='w-full h-full object-cover'
+            priority
           />
         </div>
       </SwiperSlide>
@@ -78,6 +80,7 @@ export default function MainSwiper() {
             width={2000}
             height={900}
             className='w-full h-full object-cover'
+            priority
           />
         </div>
       </SwiperSlide>

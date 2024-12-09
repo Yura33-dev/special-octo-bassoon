@@ -17,7 +17,7 @@ export default function GridCategories() {
       <li className='bg-white rounded-md shadow-md'>
         <Link
           href='#'
-          className='group flex flex-col gap-4 relative h-full p-6'
+          className='group flex flex-col gap-4 relative h-full p-6 pr-16 sm:pr-6'
         >
           <h3 className='text-2xl'>Наші продукти</h3>
           <span className='leading-tight text-base'>

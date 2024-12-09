@@ -16,7 +16,7 @@ export default function HeaderBar() {
   return (
     <div className='bg-primary py-2'>
       <Container className='text-primary-foreground flex items-center'>
-        <div className='flex gap-28 items-center basis-full'>
+        <div className='flex gap-10 lg:gap-28 items-center basis-full'>
           <Logo
             title='Graund-A'
             ariaLabel='Посилання на головну сторінку'
