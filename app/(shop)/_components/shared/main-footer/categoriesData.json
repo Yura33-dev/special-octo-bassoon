@@ -1,0 +1,92 @@
+{
+  "categoriesData": [
+    {
+      "href": "/katalog/nasinnia-ovochiv",
+      "text": "Насіння овочів",
+      "subcategories": [
+        { "href": "/katalog/nasinnia-ovochiv/buriak", "text": "Буряк" },
+        { "href": "/katalog/nasinnia-ovochiv/morkva", "text": "Морква" },
+        { "href": "/katalog/nasinnia-ovochiv/baklazhan", "text": "Баклажан" },
+        {
+          "href": "/katalog/nasinnia-ovochiv/kukurudza",
+          "text": "Кукурудза суперсолодка"
+        },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Редис" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Салат" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Диня" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Кабачок" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Огірок" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Томат" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Кавун" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Перець" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Цибуля" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Капуста" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Гарбуз" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Горох" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Квасоля" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Фенхель" },
+        { "href": "/katalog/nasinnia-ovochiv/garbuz", "text": "Спаржа" }
+      ]
+    },
+    {
+      "href": "/katalog/kultury",
+      "text": "Культури",
+      "subcategories": [
+        {
+          "href": "/katalog/kultury/polovi-kultury",
+          "text": "Польові культури"
+        },
+        {
+          "href": "/katalog/kultury/zelenni-kultury",
+          "text": "Зеленні культури"
+        },
+        {
+          "href": "/katalog/kultury/kormovi-kultury",
+          "text": "Кормові культури"
+        }
+      ]
+    },
+    {
+      "text": "Аксесуари",
+      "href": "/katalog/vologomiry-shilnomiry-ta-aksesuary",
+      "subcategories": [
+        {
+          "href": "/katalog/vologomiry-shilnomiry-ta-aksesuary/vologomir",
+          "text": "Вологомір"
+        },
+        {
+          "href": "/katalog/vologomiry-shilnomiry-ta-aksesuary/shilnomir",
+          "text": "Щільномір"
+        },
+        {
+          "href": "/katalog/vologomiry-shilnomiry-ta-aksesuary/aksesuary",
+          "text": "Інше"
+        }
+      ]
+    },
+    {
+      "href": "/zasoby-zahystu-roslyn",
+      "text": "Засоби захисту",
+      "subcategories": [
+        { "href": "/buriak", "text": "Фунгіциди" },
+        { "href": "/buriak", "text": "Інсектициди" },
+        { "href": "/buriak", "text": "Протруйники" },
+        { "href": "/buriak", "text": "Гербіциди" },
+        { "href": "/buriak", "text": "Прилипач" },
+        { "href": "/buriak", "text": "Фуміганти" },
+        { "href": "/buriak", "text": "Десиканти" },
+        { "href": "/buriak", "text": "Родентициди" }
+      ]
+    },
+    {
+      "href": "/dobryva-i-stymuliatory-rostu",
+      "text": "Добрива і стимулятори",
+      "subcategories": [
+        { "href": "/buriak", "text": "Водорозчинні добрива" },
+        { "href": "/buriak", "text": "Мікродобрива" },
+        { "href": "/buriak", "text": "Регулятори росту" },
+        { "href": "/buriak", "text": "Стимулятори росту" }
+      ]
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { Fira_Sans } from 'next/font/google';
 import '@/app/globals.css';
 
 import Header from './_components/shared/main-header/Header';
+import Footer from './_components/shared/main-footer/Footer';
 
 const fira = Fira_Sans({
   subsets: ['cyrillic'],
@@ -29,7 +30,7 @@ export default function ShopLayout({
       >
         <Header />
         <main className='flex-shrink-0 flex-grow basis-full'>{children}</main>
-        <footer>Shop`s footer</footer>
+        <Footer />
       </body>
     </html>
   );
