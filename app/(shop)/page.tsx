@@ -2,6 +2,10 @@ import Container from '@/components/shared/Container';
 import MainSwiper from './_components/home-page/main-swiper/MainSwiper';
 import GridCategories from './_components/home-page/catalog-categories/GridCategories';
 import NewProductsSwiper from './_components/home-page/new-products-swiper/NewProductsSwiper';
+import ConsultingBanner from './_components/shared/consulting-banner/ConsultingBanner';
+import About from './_components/home-page/about-us/About';
+import Benefits from './_components/home-page/about-us/Benefits';
+import Faq from './_components/home-page/faq/Faq';
 
 export default function ShopHome() {
   return (
@@ -27,6 +31,23 @@ export default function ShopHome() {
         <Container className='relative'>
           <h2 className='text-3xl font-semibold mb-8'>Новинки</h2>
           <NewProductsSwiper />
+        </Container>
+      </section>
+
+      <ConsultingBanner />
+
+      <section className='mt-20'>
+        <Container>
+          <h2 className='text-3xl font-semibold'>Про нас</h2>
+          <About />
+          <Benefits />
+        </Container>
+      </section>
+
+      <section className='mt-20'>
+        <Container>
+          <h2 className='text-3xl font-semibold'>Запитання та відповіді</h2>
+          <Faq />
         </Container>
       </section>
     </>
