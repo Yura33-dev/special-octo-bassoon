@@ -1,6 +1,6 @@
-import { MutableRefObject } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { MutableRefObject } from 'react';
 
 interface IMainSwiperButtonProps {
   to: 'next' | 'prev';

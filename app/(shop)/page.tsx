@@ -1,11 +1,12 @@
 import Container from '@/components/shared/Container';
-import MainSwiper from './_components/home-page/main-swiper/MainSwiper';
-import GridCategories from './_components/home-page/catalog-categories/GridCategories';
-import NewProductsSwiper from './_components/home-page/new-products-swiper/NewProductsSwiper';
-import ConsultingBanner from './_components/shared/consulting-banner/ConsultingBanner';
+
 import About from './_components/home-page/about-us/About';
 import Benefits from './_components/home-page/about-us/Benefits';
+import GridCategories from './_components/home-page/catalog-categories/GridCategories';
 import Faq from './_components/home-page/faq/Faq';
+import MainSwiper from './_components/home-page/main-swiper/MainSwiper';
+import NewProductsSwiper from './_components/home-page/new-products-swiper/NewProductsSwiper';
+import ConsultingBanner from './_components/shared/consulting-banner/ConsultingBanner';
 
 export default function ShopHome() {
   return (

@@ -1,11 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper/modules';
-import 'swiper/css';
 import Link from 'next/link';
+import { useRef, useState } from 'react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 import NewProductsSwiperButton from './NewProductsSwiperButton';
 

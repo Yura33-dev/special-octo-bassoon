@@ -1,8 +1,9 @@
+import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import Link from 'next/link';
+
 import Container from '@/components/shared/Container';
 
 import data from './categoriesData.json';
-import Link from 'next/link';
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 import Logo from '../../ui/Logo';
 
 export default function Footer() {

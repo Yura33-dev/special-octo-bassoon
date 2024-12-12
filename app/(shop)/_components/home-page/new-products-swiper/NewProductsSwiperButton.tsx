@@ -1,5 +1,5 @@
-import { MutableRefObject } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { MutableRefObject } from 'react';
 
 interface INewProductsSwiperButtonProps {
   to: 'next' | 'prev';

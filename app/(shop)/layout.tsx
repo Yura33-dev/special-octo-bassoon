@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { Fira_Sans } from 'next/font/google';
 import '@/app/globals.css';
 
-import Header from './_components/shared/main-header/Header';
 import Footer from './_components/shared/main-footer/Footer';
+import Header from './_components/shared/main-header/Header';
 
 const fira = Fira_Sans({
   subsets: ['cyrillic'],

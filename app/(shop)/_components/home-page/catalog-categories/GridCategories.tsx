@@ -1,8 +1,5 @@
-// interface IGridCategoriesProps {}
-
-import Link from 'next/link';
-// import Image from 'next/image';
 import { ArrowDownRight } from 'lucide-react';
+import Link from 'next/link';
 
 import data from './featuredCategories.json';
 

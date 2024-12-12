@@ -1,9 +1,10 @@
-import Link from 'next/link';
+import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
+import Link from 'next/link';
 
 import Container from '@/components/shared/Container';
+
 import data from './categoriesData.json';
-import clsx from 'clsx';
 
 export default function NavigationBar() {
   return (

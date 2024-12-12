@@ -1,8 +1,9 @@
 import Link from 'next/link';
 
 import Container from '@/components/shared/Container';
-import HamburgerBtn from '../../ui/HamburgerBtn';
+
 import CartBtn from '../../ui/CartBtn';
+import HamburgerBtn from '../../ui/HamburgerBtn';
 import Logo from '../../ui/Logo';
 
 // TODO: get data from database
