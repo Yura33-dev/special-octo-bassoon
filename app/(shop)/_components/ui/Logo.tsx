@@ -2,24 +2,17 @@ import Link from 'next/link';
 import clsx from 'clsx';
 
 interface ILogoProps {
-  ariaLabel: string;
-  href: string;
   title: string;
   className?: string;
 }
 
-export default function Logo({
-  ariaLabel,
-  href,
-  title,
-  className,
-}: ILogoProps) {
+export default function Logo({ title, className }: ILogoProps) {
   return (
     <Link
-      aria-label={ariaLabel}
-      href={href}
+      aria-label='Посилання на головну сторінку'
+      href='/'
       className={clsx(
-        `text-xl py-3 font-extrabold uppercase relative max-w-max
+        `font-extrabold uppercase relative max-w-max
           focus-visible:outline-none focus-visible:ring-0
                 
           transition-colors

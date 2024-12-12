@@ -17,11 +17,7 @@ export default function HeaderBar() {
     <div className='bg-primary py-2'>
       <Container className='text-primary-foreground flex items-center'>
         <div className='flex gap-10 lg:gap-28 items-center basis-full'>
-          <Logo
-            title='Graund-A'
-            ariaLabel='Посилання на головну сторінку'
-            href='/'
-          />
+          <Logo title='Graund-A' className='text-xl py-3' />
 
           <ul className='flex items-center gap-2'>
             {HeaderData.map(({ href, text }, index) => (
