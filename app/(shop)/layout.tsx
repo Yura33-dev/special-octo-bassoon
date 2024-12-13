@@ -4,6 +4,7 @@ import '@/app/globals.css';
 
 import Footer from './_components/shared/main-footer/Footer';
 import Header from './_components/shared/main-header/Header';
+import MobileMenu from './_components/shared/mobile-menu/MobileMenu';
 
 const fira = Fira_Sans({
   subsets: ['cyrillic'],
@@ -26,11 +27,13 @@ export default function ShopLayout({
   return (
     <html lang='uk'>
       <body
-        className={`${fira.className} subpixel-antialiased min-h-[100dvh] flex flex-col`}
+        className={`${fira.className} subpixel-antialiased min-h-[100dvh] flex flex-col relative`}
       >
         <Header />
         <main className='flex-shrink-0 flex-grow basis-full'>{children}</main>
         <Footer />
+
+        <MobileMenu />
       </body>
     </html>
   );

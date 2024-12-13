@@ -1,6 +1,18 @@
+'use client';
+
+import { useGlobalStore } from '@/providers/globalStore.provider';
+
 export default function HamburgerBtn() {
+  const openMobileMenu = useGlobalStore(state => state.mobileMenuOpen);
+
   return (
-    <button aria-label='Відкрити мобільне меню'>
+    <button
+      aria-label='Відкрити мобільне меню'
+      onClick={e => {
+        e.preventDefault();
+        openMobileMenu();
+      }}
+    >
       <label className='btn border-none bg-green-700 hover:bg-green-900 active:bg-green-900 swap swap-rotate'>
         <input type='checkbox' />
 
