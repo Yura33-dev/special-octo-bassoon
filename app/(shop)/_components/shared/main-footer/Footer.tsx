@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className='mt-20 bg-primary text-white py-8'>
       <Container>
         <div className='flex flex-col items-center mb-6 lg:mb-12'>
-          <Logo title='Graund-A' className='text-2xl py-2' />
+          <Logo className='text-2xl py-2' />
           <span className='text-sm'>Засій своє майбутнє з Graund-A!</span>
         </div>
 

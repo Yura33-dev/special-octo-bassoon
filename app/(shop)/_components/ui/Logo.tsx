@@ -2,11 +2,11 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 interface ILogoProps {
-  title: string;
+  title?: string;
   className?: string;
 }
 
-export default function Logo({ title, className }: ILogoProps) {
+export default function Logo({ title = 'Graund-A', className }: ILogoProps) {
   return (
     <Link
       aria-label='Посилання на головну сторінку'
