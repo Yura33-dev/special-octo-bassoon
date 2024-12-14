@@ -1,6 +1,7 @@
 import HeaderBar from './HeaderBar';
 import NavigationBar from './NavigationBar';
 import SearchBar from './SearchBar';
+import Cart from '../cart/Cart';
 
 export default function Header() {
   return (
@@ -8,6 +9,7 @@ export default function Header() {
       <HeaderBar />
       <SearchBar />
       <NavigationBar />
+      <Cart />
     </header>
   );
 }
