@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Fira_Sans } from 'next/font/google';
+import { Toaster } from 'sonner';
+
 import '@/app/globals.css';
 
 import Footer from './_components/shared/main-footer/Footer';
@@ -34,6 +36,7 @@ export default function ShopLayout({
         <Footer />
 
         <MobileMenu />
+        <Toaster richColors />
       </body>
     </html>
   );
