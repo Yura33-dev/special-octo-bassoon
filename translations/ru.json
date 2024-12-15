@@ -1,0 +1,8 @@
+{
+  "Header": {
+    "toAboutPage": "О нас",
+    "toBlogPage": "Блог",
+    "toComparePage": "Сравнение товаров",
+    "searchPlaceholder": "Поиск товаров"
+  }
+}

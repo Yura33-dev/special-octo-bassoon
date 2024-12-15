@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import { Fira_Sans } from 'next/font/google';
+import { notFound } from 'next/navigation';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import { Toaster } from 'sonner';
 
+import { routing } from '@/i18n/routing';
 import '@/app/globals.css';
 
 import Footer from './_components/shared/main-footer/Footer';
@@ -21,22 +25,33 @@ export const metadata: Metadata = {
     'Купити насіння з доставкою по Україні. Інтернет магазин продажу насіння.✔️Гарантія якості ✔️Вигідні ціни ✔️Швидка доставка',
 };
 
-export default function ShopLayout({
+export default async function ShopLayout({
   children,
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
+  const translations = await getMessages();
+
   return (
-    <html lang='uk'>
+    <html lang={locale}>
       <body
         className={`${fira.className} subpixel-antialiased min-h-[100dvh] flex flex-col relative`}
       >
-        <Header />
-        <main className='flex-shrink-0 flex-grow basis-full'>{children}</main>
-        <Footer />
+        <NextIntlClientProvider messages={translations}>
+          <Header />
+          <main className='flex-shrink-0 flex-grow basis-full'>{children}</main>
+          <Footer />
 
-        <MobileMenu />
-        <Toaster richColors />
+          <MobileMenu />
+          <Toaster richColors />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
