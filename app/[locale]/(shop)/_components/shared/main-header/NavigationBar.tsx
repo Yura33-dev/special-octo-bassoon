@@ -1,51 +1,73 @@
+'use client';
+
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
-import Link from 'next/link';
+import { useLocale } from 'next-intl';
+import { useEffect } from 'react';
 
 import Container from '@/components/shared/Container';
-
-import data from './categoriesData.json';
+import { Link } from '@/i18n/routing';
+import { useGlobalStore } from '@/providers/globalStore.provider';
+import { locale } from '@/types';
 
 export default function NavigationBar() {
+  const locale = useLocale() as locale;
+  const fetchCategories = useGlobalStore(state => state.fetchCategories);
+  const categories = useGlobalStore(state => state.categories);
+
+  useEffect(() => {
+    const getCategories = async () => fetchCategories(locale);
+
+    getCategories();
+  }, [fetchCategories, locale]);
+
   return (
     <div className='bg-primary hidden lg:block'>
       <Container>
         <ul className='flex justify-center text-white text-sm [backface-visibility:hidden]'>
-          {data.categoriesData.map(({ href, text, subcategories }, index) => (
-            <li key={index} className='group relative'>
-              <Link href={href} className='flex items-center p-2 gap-2'>
-                <span>{text}</span>
-                <span>
-                  <ChevronDown
-                    size={16}
-                    className='transition-transform duration-150 group-hover:rotate-180'
-                  />
-                </span>
-              </Link>
+          {categories &&
+            categories.map(
+              ({ slug: slugMain, name, childCategories, id }, index) => (
+                <li key={id} className='group relative'>
+                  <Link
+                    href={`/catalog/${slugMain}`}
+                    className='flex items-center p-2 gap-2'
+                  >
+                    <span>{name}</span>
+                    <span>
+                      <ChevronDown
+                        size={16}
+                        className='transition-transform duration-150 group-hover:rotate-180'
+                      />
+                    </span>
+                  </Link>
 
-              {subcategories && subcategories.length > 0 && (
-                <ul
-                  className={clsx(
-                    `absolute top-full w-[400px] shadow-md rounded-b-md bg-white text-foreground p-2 hidden`,
-                    index === subcategories.length ? 'right-0' : 'left-0',
-                    'group-hover:grid grid-cols-3 auto-rows-auto'
-                  )}
-                >
-                  {subcategories.map(({ href, text }, index) => (
-                    <li key={index} className=''>
-                      <Link
-                        href={href}
-                        className='flex p-2 rounded-md transition-colors duration-150 hover:bg-accent hover:text-white
+                  {childCategories && childCategories.length > 0 && (
+                    <ul
+                      className={clsx(
+                        `absolute top-full w-[400px] shadow-md rounded-b-md bg-white text-foreground p-2 hidden`,
+                        index === childCategories.length ? 'right-0' : 'left-0',
+                        'group-hover:grid grid-cols-3 auto-rows-auto'
+                      )}
+                    >
+                      {childCategories.map(
+                        ({ slug: slugChild, name }, index) => (
+                          <li key={index} className=''>
+                            <Link
+                              href={`/catalog/${slugMain}/${slugChild}`}
+                              className='flex p-2 rounded-md transition-colors duration-150 hover:bg-accent hover:text-white
                                   '
-                      >
-                        {text}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
+                            >
+                              {name}
+                            </Link>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  )}
+                </li>
+              )
+            )}
         </ul>
       </Container>
     </div>
