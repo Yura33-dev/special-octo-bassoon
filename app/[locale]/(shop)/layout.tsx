@@ -6,6 +6,7 @@ import { getMessages } from 'next-intl/server';
 import { Toaster } from 'sonner';
 
 import { routing } from '@/i18n/routing';
+import { locale } from '@/types';
 import '@/app/globals.css';
 
 import Footer from './_components/shared/main-footer/Footer';
@@ -30,7 +31,7 @@ export default async function ShopLayout({
   params: { locale },
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: locale };
 }>) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (!routing.locales.includes(locale as any)) {
