@@ -7,6 +7,7 @@ interface IGlobalStore {
   isMobileMenuOpen: boolean;
   categories: Array<ICategory>;
   fetchCategories: (locale: locale) => void;
+  categoriesAreLoading: boolean;
   mobileMenuOpen: () => void;
   mobileMenuClose: () => void;
 }
@@ -14,6 +15,7 @@ export const useGlobalStore = create<IGlobalStore>()(
   devtools(set => ({
     isMobileMenuOpen: false,
     categories: [],
+    categoriesAreLoading: true,
     fetchCategories: async (locale: locale) => {
       try {
         const response = await fetch(`/api/categories?locale=${locale}`);
@@ -25,6 +27,8 @@ export const useGlobalStore = create<IGlobalStore>()(
         set(state => ({ ...state, categories }));
       } catch (error: unknown) {
         console.error(error);
+      } finally {
+        set(state => ({ ...state, categoriesAreLoading: false }));
       }
     },
     mobileMenuOpen: () => set(state => ({ ...state, isMobileMenuOpen: true })),

@@ -35,7 +35,7 @@ export interface ICategory {
   createdAt: Date | null;
 }
 
-interface IChildCategory {
+export interface IChildCategory {
   id: string;
   name: string;
   slug: string;
