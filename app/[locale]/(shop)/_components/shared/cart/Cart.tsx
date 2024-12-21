@@ -16,8 +16,8 @@ export default function Cart() {
   return (
     <div
       className={clsx(
-        `absolute top-0 right-0 p-4 w-full h-screen bg-white shadow-sm text-foreground transition-all duration-200 opacity-0 pointer-events-none z-[3]
-        flex flex-col justify-start sm:rounded-md sm:w-[400px] sm:top-16 sm:right-4`,
+        `absolute z-[10] -top-[60px] -left-4 h-screen w-screen sm:w-[400px] p-4 bg-white shadow-sm text-foreground transition-opacity duration-200 opacity-0 pointer-events-none
+        flex flex-col justify-start sm:rounded-md sm:-top-0 sm:left-auto sm:right-0`,
         isCartOpen && 'opacity-100 pointer-events-auto',
         cart.length > 0 ? 'sm:h-[650px]' : 'sm:h-[350px]'
       )}
