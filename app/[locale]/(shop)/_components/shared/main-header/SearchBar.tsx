@@ -4,7 +4,7 @@ export default function SearchBar() {
   const t = useTranslations('Header');
 
   return (
-    <div className='bg-background py-3 flex justify-center items-center '>
+    <div className='bg-background py-3 flex justify-center items-center mt-[68px]'>
       <label
         className='input input-sm border-primary flex items-center gap-2
                   focus-within:border-primary focus-within:outline-none
