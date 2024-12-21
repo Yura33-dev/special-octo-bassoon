@@ -22,9 +22,9 @@ export default function MainSwiperButton({
       )}
     >
       {to === 'next' ? (
-        <ChevronRight color='white' className='w-6 h-6 md:w-10 md:h-10' />
+        <ChevronRight color='white' className='w-6 h-6 md:w-8 md:h-8' />
       ) : (
-        <ChevronLeft color='white' className='w-6 h-6 md:w-10 md:h-10' />
+        <ChevronLeft color='white' className='w-6 h-6 md:w-8 md:h-8' />
       )}
     </button>
   );

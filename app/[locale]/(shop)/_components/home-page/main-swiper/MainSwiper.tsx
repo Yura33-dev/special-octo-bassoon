@@ -34,7 +34,7 @@ export default function MainSwiper() {
       onSwiper={_ => setSwiperInit(true)}
       wrapperClass='mainSwiper'
       wrapperTag='ul'
-      className='rounded-md shadow-xl h-[250px] md:h-[400px]'
+      className='rounded-md shadow-xl h-[250px] md:h-[400px] w-full lg:!w-[calc(100%_-_320px)] lg:!mr-0 lg:!ml-auto'
     >
       <MainSwiperButton to='next' btnRef={nextButtonRef} />
       <MainSwiperButton to='prev' btnRef={prevButtonRef} />

@@ -12,7 +12,7 @@ export default function ShopHome() {
   return (
     <>
       <h1 className='sr-only'>
-        Ground-A - найкращий магазин насінин в Україні
+        Graund-A - найкращий магазин насінин в Україні
       </h1>
 
       <section className='mt-4'>
