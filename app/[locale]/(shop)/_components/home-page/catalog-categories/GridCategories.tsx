@@ -1,5 +1,6 @@
 import { ArrowDownRight } from 'lucide-react';
-import Link from 'next/link';
+
+import { Link } from '@/i18n/routing';
 
 import data from './featuredCategories.json';
 
@@ -13,7 +14,7 @@ export default function GridCategories() {
     >
       <li className='bg-white rounded-md shadow-md'>
         <Link
-          href='#'
+          href='/catalog'
           className='group flex flex-col gap-4 relative h-full p-6 pr-16 sm:pr-6'
         >
           <h3 className='text-2xl'>Наші продукти</h3>
