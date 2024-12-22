@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 import Container from '@/components/shared/Container';
 import Skeleton from '@/components/shared/loaders/Skeleton';
-import { Link } from '@/i18n/routing';
+import { Link, usePathname } from '@/i18n/routing';
 import { useGlobalStore } from '@/providers/globalStore.provider';
 import { locale } from '@/types';
 
@@ -24,8 +24,19 @@ export default function CatalogNavBar() {
 
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [areCategoriesOpened, setAreCategoriesOpened] = useState(false);
+  const [isOverflowVisible, setIsOverflowVisible] = useState(false);
+
+  const pathName = usePathname();
 
   let hoverTimeout: NodeJS.Timeout | null = null;
+
+  useEffect(() => {
+    if (pathName === '/') {
+      setAreCategoriesOpened(true);
+    } else {
+      setAreCategoriesOpened(false);
+    }
+  }, [pathName]);
 
   useEffect(() => {
     const getCategories = async () => fetchCategories(locale);
@@ -38,6 +49,18 @@ export default function CatalogNavBar() {
       if (hoverTimeout) clearTimeout(hoverTimeout);
     };
   }, [hoverTimeout]);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (areCategoriesOpened) {
+      timeout = setTimeout(() => setIsOverflowVisible(true), 300);
+    } else {
+      setIsOverflowVisible(false);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [areCategoriesOpened]);
 
   const handleMouseEnter = (id: string) => {
     if (hoverTimeout) clearTimeout(hoverTimeout);
@@ -59,10 +82,11 @@ export default function CatalogNavBar() {
         <div
           className={clsx(
             `absolute top-full left-0 lg:left-4
-              mt-4 bg-white rounded-md transition-all duration-300 overflow-hidden lg:overflow-visible
-              h-max lg:h-[400px] lg:max-h-[400px] 
+              mt-4 bg-white rounded-md transition-all duration-300 overflow-hidden
+              h-max lg:h-[400px] 
               w-full lg:max-w-[310px]`,
-            areCategoriesOpened ? 'max-h-[400px]' : 'max-h-[0px]'
+            areCategoriesOpened ? 'max-h-[400px]' : 'max-h-[0px]',
+            isOverflowVisible && 'lg:overflow-visible'
           )}
         >
           {categoriesAreLoading ? (
