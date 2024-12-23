@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import Container from '@/components/shared/Container';
 import Skeleton from '@/components/shared/loaders/Skeleton';
 import { Link, usePathname } from '@/i18n/routing';
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
 import { useGlobalStore } from '@/providers/globalStore.provider';
 import { locale } from '@/types';
 
@@ -25,18 +26,23 @@ export default function CatalogNavBar() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [areCategoriesOpened, setAreCategoriesOpened] = useState(false);
   const [isOverflowVisible, setIsOverflowVisible] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const isMobile = useMediaQuery('(max-width: 1024px)');
 
   const pathName = usePathname();
 
   let hoverTimeout: NodeJS.Timeout | null = null;
 
   useEffect(() => {
-    if (pathName === '/') {
+    if (pathName === '/' && !isMobile) {
       setAreCategoriesOpened(true);
+      setIsButtonDisabled(true);
     } else {
       setAreCategoriesOpened(false);
+      setIsButtonDisabled(false);
     }
-  }, [pathName]);
+  }, [pathName, isMobile]);
 
   useEffect(() => {
     const getCategories = async () => fetchCategories(locale);
@@ -77,7 +83,10 @@ export default function CatalogNavBar() {
   return (
     <div className='bg-primary'>
       <Container className='relative'>
-        <CatalogNavBarButton toggleCategoriesList={toggleCategoriesList} />
+        <CatalogNavBarButton
+          toggleCategoriesList={toggleCategoriesList}
+          isButtonDisabled={isButtonDisabled}
+        />
 
         <div
           className={clsx(
