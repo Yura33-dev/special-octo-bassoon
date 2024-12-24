@@ -4,5 +4,12 @@
     "toBlogPage": "Блог",
     "toComparePage": "Порівняння товарів",
     "searchPlaceholder": "Пошук товарів"
+  },
+  "ProductCard": {
+    "sale": "Розпродаж",
+    "top": "ТОП продажів",
+    "canister": "Каністра",
+    "liters": "л",
+    "bulk": "Оптом і в роздріб"
   }
 }

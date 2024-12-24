@@ -1,9 +1,16 @@
-// interface ICircleLoaderProps {}
+import clsx from 'clsx';
 
-export default function CircleLoader() {
+interface ICircleLoaderProps {
+  className?: string;
+}
+
+export default function CircleLoader({ className }: ICircleLoaderProps) {
   return (
-    <div className='flex items-center justify-center'>
-      <div className='h-10 w-10 animate-spin rounded-full border-[5px] border-solid border-accent border-t-transparent'></div>
-    </div>
+    <div
+      className={clsx(
+        `h-10 w-10 animate-spin rounded-full border-[5px] border-solid border-accent border-t-transparent`,
+        className && className
+      )}
+    ></div>
   );
 }

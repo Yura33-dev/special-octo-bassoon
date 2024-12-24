@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import Container from '@/components/shared/Container';
 import Skeleton from '@/components/shared/loaders/Skeleton';
 import { Link, usePathname } from '@/i18n/routing';
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
+import { useMediaQuery } from '@/lib/hooks';
 import { useGlobalStore } from '@/providers/globalStore.provider';
 import { locale } from '@/types';
 

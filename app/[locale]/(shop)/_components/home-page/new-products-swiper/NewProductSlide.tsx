@@ -57,10 +57,14 @@ export default function NewProductSlide({ product }: INewProductSlideProps) {
           {product.title}
         </h3>
 
-        <p className='font-bold text-center text-xl mb-2'>{product.price}</p>
+        <p className='font-bold text-center text-xl mb-2'>
+          {product.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') +
+            ' ' +
+            'грн'}
+        </p>
 
         <span className='badge border-none bg-primary text-white text-xs mb-3 block mx-auto leading-relaxed'>
-          {product.possibility}
+          {product.pack}
         </span>
         <p className='text-center text-sm mb-3'>Оптом і в роздріб</p>
 
