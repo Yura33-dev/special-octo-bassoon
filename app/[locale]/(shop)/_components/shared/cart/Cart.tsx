@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import { X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { useCartStore } from '@/providers/cart.provider';
 
@@ -13,6 +14,8 @@ export default function Cart() {
   const closeCart = useCartStore(state => state.cartClose);
   const cart = useCartStore(state => state.cart);
 
+  const t = useTranslations('Cart');
+
   return (
     <div
       className={clsx(
@@ -23,7 +26,7 @@ export default function Cart() {
       )}
     >
       <div className='flex justify-between items-center'>
-        <h4 className='text-center text-lg'>Кошик</h4>
+        <h4 className='text-center text-lg'>{t('Title')}</h4>
         <button
           type='button'
           className='block text-white bg-primary md:hover:bg-green-800 rounded-md p-2 sm:p-1 transition-colors ml-auto'
@@ -35,7 +38,7 @@ export default function Cart() {
 
       <ul className='mt-4 max-h-[75%] overflow-x-auto flex flex-col gap-6 py-2'>
         {cart.map(item => (
-          <CartItem key={item.id} product={item} />
+          <CartItem key={item.packVariant.id} product={item} />
         ))}
       </ul>
 

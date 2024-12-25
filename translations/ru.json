@@ -1,4 +1,12 @@
 {
+  "Cart": {
+    "Title": "Корзина",
+    "FromCart": "Товар {title} удален из корзины",
+    "ToCart": "Товар {title} добавлен в корзину",
+    "Empty": "Корзина пуста",
+    "Total": "Всего:",
+    "Order": "Оформить заказ"
+  },
   "Header": {
     "toAboutPage": "О нас",
     "toBlogPage": "Блог",
@@ -10,6 +18,14 @@
     "top": "ТОП продаж",
     "canister": "Канистра",
     "liters": "л",
-    "bulk": "Оптом и в розницу"
+    "bulk": "Оптом и в розницу",
+    "buttonToCart": "В корзину",
+    "packagingTitle": "Упаковка:",
+    "cart": {
+      "FromCart": "Товар {title} удален из корзины",
+      "ToCart": "Товар {title} добавлен в корзину",
+      "Price": "Цена",
+      "DeleteItem": "Удалить {title} с корзины"
+    }
   }
 }

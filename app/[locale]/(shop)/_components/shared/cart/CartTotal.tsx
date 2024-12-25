@@ -2,8 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
+import { formattedPrice } from '@/lib/utils';
 import { useCartStore } from '@/providers/cart.provider';
 
 export default function CartTotal() {
@@ -11,6 +13,8 @@ export default function CartTotal() {
   const getTotalPrice = useCartStore(state => state.getTotalPrice);
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  const t = useTranslations('Cart');
 
   useEffect(() => {
     setTotalPrice(getTotalPrice());
@@ -28,26 +32,23 @@ export default function CartTotal() {
             className='w-full h-full object-cover'
           />
         </div>
-        <h5 className='text-xl text-center mt-3'>Кошик порожній</h5>
+        <h5 className='text-xl text-center mt-3'>{t('Empty')}</h5>
       </div>
     );
   }
 
   return (
     <div className='flex flex-col gap-4 mt-auto border-t-[1px] pt-4'>
-      <p className='text-base text-center'>
-        Всього:{' '}
-        <span className='font-semibold'>
-          {totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}{' '}
-        </span>{' '}
-        грн
+      <p className='text-base text-center flex gap-2 justify-center'>
+        {t('Total')}
+        <span className='font-semibold'>{formattedPrice(totalPrice)}</span>
       </p>
       <Link
         href='/checkout'
         type='button'
         className='btn border-none min-h-0 h-auto px-2 py-4 text-foreground bg-accent md:hover:bg-primary md:hover:text-white uppercase'
       >
-        оформити замовлення
+        {t('Order')}
       </Link>
     </div>
   );

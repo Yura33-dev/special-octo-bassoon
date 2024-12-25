@@ -1,24 +1,29 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
-export interface IProduct {
+import { IPackaging } from '@/types';
+
+interface IPackagingWithQuantity extends IPackaging {
+  orderedQuantity: number;
+}
+
+export interface IProductInCart {
   id: string;
-  title: string;
-  price: number;
-  quantity: number;
   imgUrl: string;
-  pack: string;
+  name: string;
+  slug: string;
+  packVariant: IPackagingWithQuantity;
 }
 
 interface ICartStore {
-  cart: Array<IProduct>;
+  cart: Array<IProductInCart>;
   isCartOpen: boolean;
   cartOpen: () => void;
   cartClose: () => void;
-  increaseProductQuantity: (productId: string) => void;
-  decreaseProductQuantity: (productId: string) => void;
-  addProduct: (product: IProduct) => void;
-  removeProduct: (productId: string) => void;
+  increaseProductQuantity: (packId: string) => void;
+  decreaseProductQuantity: (packId: string) => void;
+  addProduct: (product: IProductInCart) => void;
+  removeProduct: (packId: string) => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
 }
@@ -30,36 +35,56 @@ export const useCartStore = create<ICartStore>()(
       cartOpen: () => set(state => ({ ...state, isCartOpen: true })),
       cartClose: () => set(state => ({ ...state, isCartOpen: false })),
 
-      increaseProductQuantity: (productId: string) =>
+      increaseProductQuantity: (packId: string) =>
         set(state => ({
           ...state,
           cart: state.cart.map(item =>
-            item.id === productId
-              ? { ...item, quantity: item.quantity + 1 }
+            item.packVariant.id === packId
+              ? {
+                  ...item,
+                  packVariant: {
+                    ...item.packVariant,
+                    orderedQuantity: item.packVariant.orderedQuantity + 1,
+                  },
+                }
               : item
           ),
         })),
 
-      decreaseProductQuantity: (productId: string) =>
+      decreaseProductQuantity: (packId: string) =>
         set(state => ({
           ...state,
           cart: state.cart.map(item =>
-            item.id === productId
-              ? { ...item, quantity: item.quantity - 1 }
+            item.packVariant.id === packId
+              ? {
+                  ...item,
+                  packVariant: {
+                    ...item.packVariant,
+                    orderedQuantity: item.packVariant.orderedQuantity - 1,
+                  },
+                }
               : item
           ),
         })),
 
-      addProduct: (product: IProduct) =>
+      addProduct: (product: IProductInCart) =>
         set(state => {
-          const index = state.cart.findIndex(item => item.id === product.id);
+          const index = state.cart.findIndex(
+            item => item.packVariant.id === product.packVariant.id
+          );
 
           if (index > -1) {
             return {
               ...state,
               cart: state.cart.map(item =>
-                item.id === product.id
-                  ? { ...item, quantity: item.quantity + 1 }
+                item.packVariant.id === product.packVariant.id
+                  ? {
+                      ...item,
+                      packVariant: {
+                        ...item.packVariant,
+                        orderedQuantity: item.packVariant.orderedQuantity + 1,
+                      },
+                    }
                   : item
               ),
             };
@@ -71,21 +96,24 @@ export const useCartStore = create<ICartStore>()(
           }
         }),
 
-      removeProduct: (productId: string) =>
+      removeProduct: (packId: string) =>
         set(state => ({
           ...state,
-          cart: state.cart.filter(item => item.id !== productId),
+          cart: state.cart.filter(item => item.packVariant.id !== packId),
         })),
 
       getTotalPrice: () => {
         return get().cart.reduce((total, product) => {
-          return total + product.price * product.quantity;
+          return (
+            total +
+            product.packVariant.price * product.packVariant.orderedQuantity
+          );
         }, 0);
       },
 
       getTotalItems: () => {
         return get().cart.reduce((total, product) => {
-          return total + product.quantity;
+          return total + product.packVariant.orderedQuantity;
         }, 0);
       },
     })),

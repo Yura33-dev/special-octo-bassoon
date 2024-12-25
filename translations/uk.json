@@ -1,4 +1,12 @@
 {
+  "Cart": {
+    "Title": "Кошик",
+    "FromCart": "Товар {title} видалений з кошика",
+    "ToCart": "Товар {title} доданий в кошик",
+    "Empty": "Кошик порожній",
+    "Total": "Всього:",
+    "Order": "Оформити замовлення"
+  },
   "Header": {
     "toAboutPage": "Про нас",
     "toBlogPage": "Блог",
@@ -10,6 +18,14 @@
     "top": "ТОП продажів",
     "canister": "Каністра",
     "liters": "л",
-    "bulk": "Оптом і в роздріб"
+    "bulk": "Оптом і в роздріб",
+    "buttonToCart": "В кошик",
+    "packagingTitle": "Пакування:",
+    "cart": {
+      "FromCart": "Товар {title} видалений з кошика",
+      "ToCart": "Товар {title} доданий в кошик",
+      "Price": "Ціна",
+      "DeleteItem": "Видалити {title} з кошика"
+    }
   }
 }
