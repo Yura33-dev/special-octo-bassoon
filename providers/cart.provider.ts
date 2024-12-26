@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
-import { IPackaging } from '@/types';
+import { getProductById } from '@/lib/api/products';
+import { CART_FETCH_FAILED } from '@/lib/constants';
+import { ICategory, IPackaging, IProduct } from '@/types';
 
 interface IPackagingWithQuantity extends IPackaging {
   orderedQuantity: number;
@@ -10,14 +12,18 @@ interface IPackagingWithQuantity extends IPackaging {
 export interface IProductInCart {
   id: string;
   imgUrl: string;
-  name: string;
-  slug: string;
+  data: {
+    name: string;
+    slug: string;
+  };
+  categories: Array<Pick<ICategory, 'id' | 'name' | 'slug' | 'main'>>;
   packVariant: IPackagingWithQuantity;
 }
 
 interface ICartStore {
   cart: Array<IProductInCart>;
   isCartOpen: boolean;
+  isCartLoading: boolean;
   cartOpen: () => void;
   cartClose: () => void;
   increaseProductQuantity: (packId: string) => void;
@@ -26,12 +32,14 @@ interface ICartStore {
   removeProduct: (packId: string) => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
+  fetchProductsInCart: (locale: string) => void;
 }
 export const useCartStore = create<ICartStore>()(
   persist(
     devtools((set, get) => ({
       cart: [],
       isCartOpen: false,
+      isCartLoading: false,
       cartOpen: () => set(state => ({ ...state, isCartOpen: true })),
       cartClose: () => set(state => ({ ...state, isCartOpen: false })),
 
@@ -115,6 +123,49 @@ export const useCartStore = create<ICartStore>()(
         return get().cart.reduce((total, product) => {
           return total + product.packVariant.orderedQuantity;
         }, 0);
+      },
+
+      fetchProductsInCart: async (locale: string) => {
+        set(state => ({ ...state, isCartLoading: true }));
+
+        const uniqueIds: Set<string> = new Set();
+        get().cart.map(item => uniqueIds.add(item.id));
+        const productIds = Array.from(uniqueIds);
+
+        let products: Array<IProduct | undefined>;
+
+        try {
+          products = await Promise.all(
+            productIds.map(id => getProductById(id, locale))
+          );
+
+          set(state => ({
+            ...state,
+            isCartLoading: false,
+            cart: state.cart.map(item => {
+              const updatedProduct = products.find(
+                product => product?.id === item.id
+              );
+
+              if (updatedProduct) {
+                return {
+                  ...item,
+                  data: {
+                    ...item.data,
+                    name: updatedProduct.data.name,
+                    slug: updatedProduct.data.slug,
+                  },
+                  categories: updatedProduct.categories,
+                };
+              }
+
+              return item;
+            }),
+          }));
+        } catch (e: unknown) {
+          console.error(CART_FETCH_FAILED, e);
+          set(state => ({ ...state, isCartLoading: false }));
+        }
       },
     })),
 

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
-import { formattedPrice } from '@/lib/utils';
+import { formattedPrice, getProductLinks } from '@/lib/utils';
 import { IProductInCart, useCartStore } from '@/providers/cart.provider';
 
 import CartCounter from './CartCounter';
@@ -17,7 +17,10 @@ interface ICartItemProps {
 
 export default function CartItem({ product }: ICartItemProps) {
   const t = useTranslations('ProductCard');
-  const { name, imgUrl, packVariant } = product;
+  const { productLink } = getProductLinks(product);
+
+  const { data, imgUrl, packVariant } = product;
+  const { name } = data;
 
   const removeProductFromCart = useCartStore(state => state.removeProduct);
 
@@ -35,7 +38,7 @@ export default function CartItem({ product }: ICartItemProps) {
   return (
     <li className='rounded-md p-2 shadow-sm border-[1px]'>
       <div className='flex items-start justify-start'>
-        <Link href='#' className='block w-28 h-28 mr-2 flex-shrink-0'>
+        <Link href={productLink} className='block w-28 h-28 mr-2 flex-shrink-0'>
           <Image
             src={imgUrl}
             alt={name}
@@ -56,7 +59,7 @@ export default function CartItem({ product }: ICartItemProps) {
               <Trash2 className='w-[18px] h-[18px] stroke-red-500' />
             </button>
 
-            <Link href='#'>
+            <Link href={productLink}>
               <h5 className='text-sm leading-none sm:max-w-[190px] sm:truncate'>
                 {name}
               </h5>

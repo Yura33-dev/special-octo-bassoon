@@ -1,14 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
+import Skeleton from '@/components/shared/loaders/Skeleton';
+import { useRouter } from '@/i18n/routing';
 import { formattedPrice } from '@/lib/utils';
 import { useCartStore } from '@/providers/cart.provider';
 
 export default function CartTotal() {
+  const router = useRouter();
+
+  const isCartLoading = useCartStore(state => state.isCartLoading);
   const cart = useCartStore(state => state.cart);
   const getTotalPrice = useCartStore(state => state.getTotalPrice);
 
@@ -19,6 +23,10 @@ export default function CartTotal() {
   useEffect(() => {
     setTotalPrice(getTotalPrice());
   }, [getTotalPrice, cart]);
+
+  const handleCheckoutClick = () => {
+    router.push('/checkout');
+  };
 
   if (cart.length === 0) {
     return (
@@ -39,17 +47,23 @@ export default function CartTotal() {
 
   return (
     <div className='flex flex-col gap-4 mt-auto border-t-[1px] pt-4'>
-      <p className='text-base text-center flex gap-2 justify-center'>
-        {t('Total')}
-        <span className='font-semibold'>{formattedPrice(totalPrice)}</span>
-      </p>
-      <Link
-        href='/checkout'
+      {isCartLoading && <Skeleton quantity={1} className='w-3/4 h-6 mx-auto' />}
+      {!isCartLoading && (
+        <p className='text-base text-center flex gap-2 justify-center'>
+          {t('Total')}
+          <span className='font-semibold'>{formattedPrice(totalPrice)}</span>
+        </p>
+      )}
+
+      <button
+        disabled={isCartLoading}
+        onClick={handleCheckoutClick}
         type='button'
-        className='btn border-none min-h-0 h-auto px-2 py-4 text-foreground bg-accent md:hover:bg-primary md:hover:text-white uppercase'
+        className='btn border-none min-h-0 h-auto px-2 py-4 text-foreground bg-accent md:hover:bg-primary md:hover:text-white uppercase
+                  disabled:bg-slate-200'
       >
         {t('Order')}
-      </Link>
+      </button>
     </div>
   );
 }
