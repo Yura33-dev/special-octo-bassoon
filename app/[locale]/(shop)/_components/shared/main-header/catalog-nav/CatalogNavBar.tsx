@@ -99,7 +99,13 @@ export default function CatalogNavBar() {
           )}
         >
           {categoriesAreLoading ? (
-            <Skeleton />
+            <Skeleton
+              icon={<ChevronRight size={16} className='animate-pulse' />}
+              quantity={5}
+              widths={['w-1/2', 'w-2/3', 'w-1/3', 'w-1/2', 'w-10/12']}
+              wrapperStyle='flex flex-col space-y-5 p-5'
+              className='h-5'
+            />
           ) : (
             <ul className='flex flex-col h-full relative py-2 gap-y-3 lg:gap-y-0'>
               {categories &&

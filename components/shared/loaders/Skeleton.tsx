@@ -1,32 +1,40 @@
-// interface ISkeletonProps {
-//   className?: string;
-// }
+import clsx from 'clsx';
+import React from 'react';
 
-import { ChevronRight } from 'lucide-react';
+interface ISkeletonProps {
+  quantity: number;
+  className?: string;
+  icon?: React.ReactNode;
+  wrapperStyle?: string;
+  widths?: Array<string>;
+}
 
-export default function Skeleton() {
+export default function Skeleton({
+  quantity,
+  className,
+  icon: Icon,
+  wrapperStyle,
+  widths,
+}: ISkeletonProps) {
   return (
-    <div className='flex flex-col space-y-5 p-5'>
-      <div className='flex justify-between items-center'>
-        <span className='inline-block h-5 w-1/2 bg-gray-300 rounded animate-pulse'></span>
-        <ChevronRight size={16} className='animate-pulse' />
-      </div>
-      <div className='flex justify-between items-center'>
-        <span className='inline-block h-5 w-2/3 bg-gray-300 rounded animate-pulse'></span>
-        <ChevronRight size={16} className='animate-pulse' />
-      </div>
-      <div className='flex justify-between items-center'>
-        <span className='inline-block h-5 w-1/3 bg-gray-300 rounded animate-pulse'></span>
-        <ChevronRight size={16} className='animate-pulse' />
-      </div>
-      <div className='flex justify-between items-center'>
-        <span className='inline-block h-5 w-1/2 bg-gray-300 rounded animate-pulse'></span>
-        <ChevronRight size={16} className='animate-pulse' />
-      </div>
-      <div className='flex justify-between items-center'>
-        <span className='inline-block h-5 w-10/12 bg-gray-300 rounded animate-pulse'></span>
-        <ChevronRight size={16} className='animate-pulse' />
-      </div>
-    </div>
+    <ul className={clsx(wrapperStyle && wrapperStyle)}>
+      {Array(quantity)
+        .fill(0)
+        .map((_, index) => (
+          <li
+            key={index}
+            className={clsx(Icon && 'flex justify-between items-center')}
+          >
+            <span
+              className={clsx(
+                `block bg-gray-300 rounded animate-pulse`,
+                widths && widths?.length > 0 && widths[index],
+                className && className
+              )}
+            ></span>
+            {Icon && Icon}
+          </li>
+        ))}
+    </ul>
   );
 }
