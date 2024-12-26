@@ -1,20 +1,37 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import mongoose from 'mongoose';
 
 import { config } from './config';
 
-const connection: { isConnected?: number } = {};
+interface MongooseConnection {
+  conn: mongoose.Connection | null;
+  promise: Promise<mongoose.Connection> | null;
+}
+
+let cached: MongooseConnection = (global as any).mongoose;
+
+if (!cached) {
+  cached = (global as any).mongoose = { conn: null, promise: null };
+}
 
 async function dbConnect() {
-  if (connection.isConnected) {
-    return;
+  if (cached.conn) {
+    return cached.conn;
   }
 
-  try {
-    const db = await mongoose.connect(config.DB_URI);
-    connection.isConnected = db.connections[0].readyState;
-  } catch (e) {
-    console.error('Error while connect to database:', e);
+  if (!cached.promise) {
+    const options: mongoose.ConnectOptions = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(config.DB_URI, options).then(mongoose => {
+      console.log('✅ MongoDB connected successfully');
+      return mongoose.connection;
+    });
   }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
 
 export default dbConnect;
