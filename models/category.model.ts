@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { models, model } from 'mongoose';
 
 import { ICategoryApi } from '@/types';
 
@@ -43,7 +43,6 @@ const categorySchema = new mongoose.Schema<ICategoryApi>(
 );
 
 const Category =
-  mongoose.models?.Category ||
-  mongoose.model<ICategoryApi>('Category', categorySchema);
+  models?.Category || model<ICategoryApi>('Category', categorySchema);
 
 export default Category;
