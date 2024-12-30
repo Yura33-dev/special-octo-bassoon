@@ -2,11 +2,10 @@ import Container from '@/components/shared/Container';
 import { Link } from '@/i18n/routing';
 import { locale } from '@/types';
 
-import CatalogGrid from '../_components/catalog-page/CatalogGrid';
+import Catalog from '../_components/catalog-page/Catalog';
 import Filter from '../_components/catalog-page/Filter';
-import Pagination from '../_components/catalog-page/Pagination';
 
-export default function CatalogPage({
+export default async function CatalogPage({
   params,
   searchParams,
 }: {
@@ -33,21 +32,20 @@ export default function CatalogPage({
 
       <section className='mt-12'>
         <Container>
-          <h1 className='text-center text-xl md:text-2xl'>
-            Каталог продуктів <span className='uppercase'>Graund-A</span>
-          </h1>
-
           <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
             <Filter />
-            <div>
+            <div className='basis-full flex flex-col gap-4'>
+              <h1 className='text-center text-xl md:text-2xl'>
+                Каталог продуктів <span className='uppercase'>Graund-A</span>
+              </h1>
+
               <div>Sorting</div>
-              <CatalogGrid locale={locale} page={page} />
+
+              <Catalog locale={locale} page={page} />
             </div>
           </div>
         </Container>
       </section>
-
-      <Pagination />
     </>
   );
 }
