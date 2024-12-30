@@ -41,6 +41,7 @@ export default [
           },
         },
       ],
+      'import/no-anonymous-default-export': 'off',
     },
   },
 ];
