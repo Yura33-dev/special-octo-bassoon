@@ -1,4 +1,7 @@
 {
+  "LocaleSwitcher": {
+    "label": "{locale}"
+  },
   "Cart": {
     "Title": "Корзина",
     "FromCart": "Товар {title} удален из корзины",
@@ -16,8 +19,11 @@
   "ProductCard": {
     "sale": "Распродажа",
     "top": "ТОП продаж",
+    "bottle": "Флакон",
+    "pack": "Пакет",
     "canister": "Канистра",
     "liters": "л",
+    "kilograms": "кг",
     "bulk": "Оптом и в розницу",
     "buttonToCart": "В корзину",
     "packagingTitle": "Упаковка:",
