@@ -1,5 +1,7 @@
 import { useTranslations } from 'next-intl';
 
+import LocaleSwitcher from '@/components/shared/LocaleSwitcher';
+
 export default function SearchBar() {
   const t = useTranslations('Header');
 
@@ -29,6 +31,8 @@ export default function SearchBar() {
           />
         </svg>
       </label>
+
+      <LocaleSwitcher />
     </div>
   );
 }
