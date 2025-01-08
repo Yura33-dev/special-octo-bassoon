@@ -20,7 +20,7 @@ export default function HeaderBar() {
       <Container className='text-primary-foreground flex flex-col'>
         <div className='flex items-center'>
           <div className='flex gap-10 lg:gap-28 items-center basis-full'>
-            <Logo className='text-xl py-3' />
+            <Logo className='text-2xl py-3' />
 
             <ul className='flex items-center gap-2'>
               {HeaderData.map(({ href, text }, index) => (

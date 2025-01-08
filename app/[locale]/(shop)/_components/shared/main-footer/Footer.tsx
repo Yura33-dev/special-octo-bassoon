@@ -12,7 +12,7 @@ export default function Footer() {
       <Container>
         <div className='flex flex-col items-center mb-6 lg:mb-12'>
           <Logo className='text-2xl py-2' />
-          <span className='text-sm'>Засій своє майбутнє з Graund-A!</span>
+          <span className='text-sm'>Засій своє майбутнє з ProGround!</span>
         </div>
 
         <div className='flex flex-col gap-8 sm:gap-0 sm:gap-x-4 sm:gap-y-6 sm:flex-row sm:flex-wrap sm:justify-between'>

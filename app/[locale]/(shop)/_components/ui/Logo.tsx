@@ -6,13 +6,13 @@ interface ILogoProps {
   className?: string;
 }
 
-export default function Logo({ title = 'Graund-A', className }: ILogoProps) {
+export default function Logo({ title = 'ProGround', className }: ILogoProps) {
   return (
     <Link
       aria-label='Посилання на головну сторінку'
       href='/'
       className={clsx(
-        `font-extrabold uppercase relative max-w-max
+        `font-bold relative max-w-max
           focus-visible:outline-none focus-visible:ring-0
                 
           transition-colors

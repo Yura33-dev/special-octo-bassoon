@@ -36,7 +36,7 @@ export default async function CatalogPage({
             <Filter />
             <div className='basis-full flex flex-col gap-4'>
               <h1 className='text-center text-xl md:text-2xl'>
-                Каталог продуктів <span className='uppercase'>Graund-A</span>
+                Каталог продуктів <span className='uppercase'>ProGround</span>
               </h1>
 
               <div>Sorting</div>
