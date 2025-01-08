@@ -1,4 +1,7 @@
+import { Suspense } from 'react';
+
 import Container from '@/components/shared/Container';
+import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { Link } from '@/i18n/routing';
 import { locale } from '@/types';
 
@@ -41,7 +44,9 @@ export default async function CatalogPage({
 
               <div>Sorting</div>
 
-              <Catalog locale={locale} page={page} />
+              <Suspense fallback={<CircleLoader />}>
+                <Catalog locale={locale} page={page} />
+              </Suspense>
             </div>
           </div>
         </Container>

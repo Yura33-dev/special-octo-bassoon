@@ -1,16 +1,11 @@
-import { NextResponse } from 'next/server';
-
 import { CATEGORIES_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { Category } from '@/models';
 import { ICategory, ICategoryApi, locale } from '@/types';
 
-export async function GET(
-  request: Request
-): Promise<NextResponse<Array<ICategory> | { error: string }>> {
-  const { searchParams } = new URL(request.url);
-  const locale = searchParams.get('locale') as locale;
-
+export async function getAllCategories(
+  locale: locale
+): Promise<Array<ICategory>> {
   try {
     await dbConnect();
 
@@ -20,22 +15,19 @@ export async function GET(
 
     const transformedCategories = transformCategories(categories, locale);
 
-    return NextResponse.json(transformedCategories, { status: 200 });
+    return transformedCategories;
   } catch (error) {
-    return NextResponse.json(
-      { error: `${CATEGORIES_FETCH_FAILED} ${error}` },
-      { status: 500 }
-    );
+    throw new Error(`Error: ${CATEGORIES_FETCH_FAILED}. ${error}`);
   }
 }
 
-const transformCategories = (
+export const transformCategories = (
   categories: Array<ICategoryApi>,
   locale: locale
 ): Array<ICategory> => {
   const mappedCategories = categories.map(category => {
     return {
-      id: category._id,
+      id: category._id.toString(),
       name: category.name[locale] || 'N/A',
       slug: category.slug[locale] || 'N/A',
       main: category.main,
@@ -46,7 +38,7 @@ const transformCategories = (
       childCategories: category.childCategories
         .map(childCategory => {
           return {
-            id: childCategory._id,
+            id: childCategory._id.toString(),
             name: childCategory.name[locale] || 'N/A',
             slug: childCategory.slug[locale] || 'N/A',
             sortOrder: childCategory.sortOrder,

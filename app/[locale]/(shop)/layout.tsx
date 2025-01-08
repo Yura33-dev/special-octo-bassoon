@@ -46,7 +46,7 @@ export default async function ShopLayout({
         className={`${fira.className} subpixel-antialiased min-h-[100dvh] flex flex-col relative`}
       >
         <NextIntlClientProvider messages={translations}>
-          <Header />
+          <Header locale={locale} />
           <main className='flex-shrink-0 flex-grow basis-full'>{children}</main>
           <Footer />
 
