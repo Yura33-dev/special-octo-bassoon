@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
-import { getProductById } from '@/lib/api/products';
+import { getProductById } from '@/lib/api';
 import { CART_FETCH_FAILED } from '@/lib/constants';
 import { ICategory, IPackaging, IProduct } from '@/types';
 
