@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import Container from '@/components/shared/Container';
+import LocaleSwitcher from '@/components/shared/LocaleSwitcher';
 
 import CartBtn from '../../ui/CartBtn';
 import HamburgerBtn from '../../ui/HamburgerBtn';
@@ -46,6 +47,9 @@ export default function HeaderBar() {
           </div>
 
           <ul className='flex justify-end items-center gap-5'>
+            <li className='hidden lg:block'>
+              <LocaleSwitcher />
+            </li>
             <li>
               <CartBtn />
             </li>

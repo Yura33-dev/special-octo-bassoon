@@ -1,6 +1,6 @@
 {
   "LocaleSwitcher": {
-    "label": "{locale}"
+    "locale": "{locale, select, uk {Українська} ru {Російська} other {Інше}}"
   },
   "Cart": {
     "Title": "Корзина",

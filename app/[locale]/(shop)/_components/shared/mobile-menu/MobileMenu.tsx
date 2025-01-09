@@ -2,8 +2,9 @@
 
 import clsx from 'clsx';
 import { X } from 'lucide-react';
-import Link from 'next/link';
 
+import LocaleSwitcher from '@/components/shared/LocaleSwitcher';
+import { Link } from '@/i18n/routing';
 import { useGlobalStore } from '@/providers/globalStore.provider';
 
 import data from './categoriesData.json';
@@ -26,16 +27,22 @@ export default function MobileMenu() {
           isMobileMenuOpen && '!right-0'
         )}
       >
-        <div className='flex justify-between items-center'>
-          <Logo className='text-xl' />
+        <div>
+          <div className='flex justify-between items-center'>
+            <Logo className='text-xl' />
 
-          <button
-            type='button'
-            className='block bg-green-700 rounded-md py-2 px-3'
-            onClick={closeMobileMenu}
-          >
-            <X className='w-7 h-7' />
-          </button>
+            <button
+              type='button'
+              className='block bg-green-700 rounded-md py-2 px-3'
+              onClick={closeMobileMenu}
+            >
+              <X className='w-7 h-7' />
+            </button>
+          </div>
+
+          <div className='mt-6'>
+            <LocaleSwitcher />
+          </div>
         </div>
 
         <div className='flex flex-col basis-full justify-between'>
