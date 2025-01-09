@@ -8,6 +8,7 @@ import {
   IMeasurements,
   IPackaging,
 } from './interfaces/product.interfaces';
+import { ISlideApi, ISlide } from './interfaces/slide.interfaces';
 import { locale } from './types/global.types';
 
 export type {
@@ -20,5 +21,7 @@ export type {
   IMeasurements,
   IPackaging,
   IPagination,
+  ISlideApi,
+  ISlide,
 };
 export type { locale };

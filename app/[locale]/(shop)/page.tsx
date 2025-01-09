@@ -1,4 +1,7 @@
+import { Suspense } from 'react';
+
 import Container from '@/components/shared/Container';
+import CircleLoader from '@/components/shared/loaders/CircleLoader';
 
 import About from './_components/home-page/about-us/About';
 import Benefits from './_components/home-page/about-us/Benefits';
@@ -17,7 +20,15 @@ export default function ShopHome() {
 
       <section className='mt-4'>
         <Container>
-          <MainSwiper />
+          <Suspense
+            fallback={
+              <div className='max-w-max mx-auto'>
+                <CircleLoader />
+              </div>
+            }
+          >
+            <MainSwiper />
+          </Suspense>
         </Container>
       </section>
 

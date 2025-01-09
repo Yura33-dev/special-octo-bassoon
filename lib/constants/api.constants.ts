@@ -24,3 +24,9 @@ export const CATEGORIES_FETCH_FAILED = 'Failed to fetch categories.';
 }
 
 export const PRODUCTS_FETCH_FAILED = 'Failed to fetch products.';
+
+{
+  /* Slides  */
+}
+
+export const SLIDES_FETCH_FAILED = 'Failed to fetch slides.';
