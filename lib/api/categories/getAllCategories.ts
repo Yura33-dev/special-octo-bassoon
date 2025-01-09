@@ -1,3 +1,5 @@
+'use server';
+
 import { CATEGORIES_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { Category } from '@/models';

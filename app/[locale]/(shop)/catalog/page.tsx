@@ -44,7 +44,13 @@ export default async function CatalogPage({
 
               <div>Sorting</div>
 
-              <Suspense fallback={<CircleLoader />}>
+              <Suspense
+                fallback={
+                  <div className='flex justify-center'>
+                    <CircleLoader />
+                  </div>
+                }
+              >
                 <Catalog locale={locale} page={page} />
               </Suspense>
             </div>

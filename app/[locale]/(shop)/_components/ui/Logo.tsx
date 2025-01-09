@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
 interface ILogoProps {
   title?: string;
@@ -7,10 +8,12 @@ interface ILogoProps {
 }
 
 export default function Logo({ title = 'ProGround', className }: ILogoProps) {
+  const locale = useLocale();
+
   return (
     <Link
       aria-label='Посилання на головну сторінку'
-      href='/'
+      href={`/${locale}/`}
       className={clsx(
         `font-bold relative max-w-max
           focus-visible:outline-none focus-visible:ring-0
