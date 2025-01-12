@@ -20,15 +20,17 @@ export default function ShopHome() {
 
       <section className='mt-4'>
         <Container>
-          <Suspense
-            fallback={
-              <div className='max-w-max mx-auto'>
-                <CircleLoader />
-              </div>
-            }
-          >
-            <MainSwiper />
-          </Suspense>
+          <div className='flex flex-col gap-2 lg:flex-row'>
+            <Suspense
+              fallback={
+                <div className='max-w-max mx-auto'>
+                  <CircleLoader />
+                </div>
+              }
+            >
+              <MainSwiper />
+            </Suspense>
+          </div>
         </Container>
       </section>
 
