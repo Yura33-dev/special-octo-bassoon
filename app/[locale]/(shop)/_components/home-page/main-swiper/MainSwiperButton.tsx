@@ -17,7 +17,7 @@ export default function MainSwiperButton({
       className={clsx(
         `hidden sm:inline-flex btn border-none h-auto absolute top-1/2 z-[2]
           bg-primary rounded-md p-2 transition-all duration-150 
-          md:hover:bg-green-800`,
+          md:hover:bg-accent`,
         to === 'next' ? 'right-4' : 'left-4'
       )}
     >

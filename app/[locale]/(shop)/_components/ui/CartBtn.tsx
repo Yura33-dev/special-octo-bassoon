@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { useCartStore } from '@/providers/cart.provider';
@@ -11,6 +12,8 @@ export default function CartBtn() {
   const cart = useCartStore(state => state.cart);
   const getTotalItems = useCartStore(state => state.getTotalItems());
 
+  const t = useTranslations('Cart');
+
   useEffect(() => {
     setItems(getTotalItems);
   }, [getTotalItems, cart]);
@@ -18,8 +21,8 @@ export default function CartBtn() {
   return (
     <div className='dropdown dropdown-end [backface-visibility:hidden]'>
       <button
-        className='btn border-none flex bg-green-700 hover:bg-green-900 focus-visible:bg-green-900'
-        aria-label='Відкрити кошик'
+        className='btn border-none flex bg-primary-dark hover:bg-accent focus-visible:bg-accent'
+        aria-label={t('OpenCart')}
         onClick={openCart}
       >
         <div className='indicator'>

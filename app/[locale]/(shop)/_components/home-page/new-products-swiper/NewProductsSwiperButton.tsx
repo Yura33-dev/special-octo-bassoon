@@ -14,7 +14,7 @@ export default function NewProductsSwiperButton({
     <button
       ref={btnRef}
       className={
-        'flex bg-primary p-2 rounded-md disabled:bg-slate-300 justify-center items-center transition-colors duration-150 md:hover:bg-green-800'
+        'flex bg-primary p-2 rounded-md disabled:bg-slate-300 justify-center items-center transition-colors duration-150 md:hover:bg-accent'
       }
     >
       {to === 'next' ? (

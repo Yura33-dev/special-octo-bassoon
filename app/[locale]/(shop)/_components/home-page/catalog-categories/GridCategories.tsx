@@ -7,10 +7,12 @@ import data from './featuredCategories.json';
 export default function GridCategories() {
   return (
     <ul
-      className='grid grid-cols-1 auto-rows-[125px]
-                  sm:grid-cols-2 sm:auto-rows-[160px]
-                  md:grid-cols-3 md:auto-rows-[190px]
-                  lg:grid-cols-5 lg:auto-rows-[220px] gap-2'
+      className='grid gap-2 auto-rows-[125px]
+                  grid-cols-1
+                  sm:grid-cols-[310px_repeat(auto-fill,_minmax(220px,_1fr))]
+                  sm:auto-rows-[160px]
+                  md:auto-rows-[190px]
+                  lg:auto-rows-[220px]'
     >
       <li className='bg-white rounded-md shadow-md'>
         <Link
@@ -23,8 +25,8 @@ export default function GridCategories() {
           </span>
 
           <ArrowDownRight
-            className='w-14 h-14 absolute bottom-2 right-[10px] transition-all duration-150 stroke-accent opacity-70
-                        md:group-hover:w-16 md:group-hover:h-16 md:group-hover:stroke-primary md:group-hover:opacity-100'
+            className='w-14 h-14 absolute bottom-2 right-[10px] transition-all duration-150 stroke-primary opacity-70
+                        md:group-hover:w-16 md:group-hover:h-16 md:group-hover:opacity-100'
           />
         </Link>
       </li>
