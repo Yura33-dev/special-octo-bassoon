@@ -41,7 +41,7 @@ export default function CatalogGrid({
           <CircleLoader />
         </div>
       ) : (
-        <ul className='grid grid-cols-1 place-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 xl:gap-6'>
+        <ul className='grid grid-cols-1 place-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 '>
           {products.map(product => (
             <Card key={product.id} product={product} />
           ))}

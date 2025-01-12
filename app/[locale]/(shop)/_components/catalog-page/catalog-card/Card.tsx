@@ -27,7 +27,7 @@ export default function Card({ product }: ICardProps) {
   };
 
   return (
-    <li className='bg-white rounded-t-md rounded-b-md group lg:hover:rounded-b-none w-full max-w-[350px] sm:max-w-none lg:max-w-[280px] lg:w-[280px]'>
+    <li className='bg-white rounded-t-md rounded-b-md group lg:hover:rounded-b-none w-full max-w-[350px] sm:max-w-none lg:max-w-[280px]'>
       <CardImage
         productLink={productLink}
         productName={product.data.name}
