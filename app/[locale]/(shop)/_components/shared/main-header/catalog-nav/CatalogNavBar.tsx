@@ -3,13 +3,11 @@ import { locale } from '@/types';
 
 import CategoriesList from './CategoriesList';
 
-interface ICatalogNavBarNewProps {
+interface ICatalogNavBarProps {
   locale: locale;
 }
 
-export default async function CatalogNavBarNew({
-  locale,
-}: ICatalogNavBarNewProps) {
+export default async function CatalogNavBar({ locale }: ICatalogNavBarProps) {
   const categories = await getAllCategories(locale);
 
   return <CategoriesList categories={categories} />;

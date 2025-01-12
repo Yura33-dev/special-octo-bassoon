@@ -1,29 +1,22 @@
 import { Suspense } from 'react';
 
-import Container from '@/components/shared/Container';
-import CategoriesLoadingButton from '@/components/shared/loaders/CategoriesLoadingButton';
 import { locale } from '@/types';
 
 import CatalogNavBar from './catalog-nav/CatalogNavBar';
+import CategoriesListSkeleton from './catalog-nav/CategoriesListSkeleton';
 import HeaderBar from './HeaderBar';
 import SearchBar from './SearchBar';
 
-interface IHeaderProps {
-  locale: locale;
-}
-
-export default function Header({ locale }: IHeaderProps) {
+export default function Header({ locale }: { locale: locale }) {
   return (
     <header className='relative z-10'>
       <HeaderBar />
       <SearchBar />
 
-      <div className='bg-primary'>
-        <Container className='relative'>
-          <Suspense fallback={<CategoriesLoadingButton />}>
-            <CatalogNavBar locale={locale} />
-          </Suspense>
-        </Container>
+      <div className='bg-primary relative min-h-[56px]'>
+        <Suspense fallback={<CategoriesListSkeleton />}>
+          <CatalogNavBar locale={locale} />
+        </Suspense>
       </div>
     </header>
   );
