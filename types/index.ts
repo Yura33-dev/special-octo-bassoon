@@ -1,4 +1,5 @@
 import { ICategoryApi, ICategory } from './interfaces/category.interfaces';
+import { IPage, ITranslatedPageData } from './interfaces/pages.interfaces';
 import { IPagination } from './interfaces/pagination.interfaces';
 import {
   IProductApi,
@@ -23,5 +24,7 @@ export type {
   IPagination,
   ISlideApi,
   ISlide,
+  IPage,
+  ITranslatedPageData,
 };
 export type { locale };

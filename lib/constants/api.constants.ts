@@ -30,3 +30,9 @@ export const PRODUCTS_FETCH_FAILED = 'Failed to fetch products.';
 }
 
 export const SLIDES_FETCH_FAILED = 'Failed to fetch slides.';
+
+{
+  /* Pages  */
+}
+
+export const PAGE_FETCH_FAILED = 'Failed to fetch page`s data';

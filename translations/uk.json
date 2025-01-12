@@ -35,6 +35,12 @@
       "DeleteItem": "Видалити {title} з кошика"
     }
   },
+  "MainPage": {
+    "CategoriesSectionTitle": "Категорії та продукти",
+    "NewProductsSectionTitle": "Новинки",
+    "AboutSectionTitle": "Про нас",
+    "FaqSection": "Запитання та відповіді"
+  },
   "Consulting": {
     "Title": "Потрібна консультація?",
     "Purpose": "Залиште свій номер телефону і менеджер зателефонує вам найближчим часом",

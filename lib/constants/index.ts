@@ -4,6 +4,7 @@ import {
   DB_CONNECTION_FAILED,
   CART_FETCH_FAILED,
   SLIDES_FETCH_FAILED,
+  PAGE_FETCH_FAILED,
 } from './api.constants';
 
 export {
@@ -12,4 +13,5 @@ export {
   DB_CONNECTION_FAILED,
   CART_FETCH_FAILED,
   SLIDES_FETCH_FAILED,
+  PAGE_FETCH_FAILED,
 };

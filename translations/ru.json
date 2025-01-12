@@ -35,6 +35,12 @@
       "DeleteItem": "Удалить {title} с корзины"
     }
   },
+  "MainPage": {
+    "CategoriesSectionTitle": "Категории и продукты",
+    "NewProductsSectionTitle": "Новинки",
+    "AboutSectionTitle": "О нас",
+    "FaqSection": "Вопросы и ответы"
+  },
   "Consulting": {
     "Title": "Необходима консультация?",
     "Purpose": "Оставьте свой номер телефона и менеджер перезвонит вам в близжайшее время",
