@@ -26,6 +26,14 @@ const categorySchema = new mongoose.Schema<ICategoryApi>(
       type: Boolean,
       default: true,
     },
+    featured: {
+      type: Boolean,
+      default: false,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
     parentCategories: [
       {
         type: mongoose.Schema.Types.ObjectId,

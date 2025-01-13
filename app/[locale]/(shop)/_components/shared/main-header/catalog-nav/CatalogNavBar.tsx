@@ -8,7 +8,10 @@ interface ICatalogNavBarProps {
 }
 
 export default async function CatalogNavBar({ locale }: ICatalogNavBarProps) {
-  const categories = await getAllCategories(locale);
+  const categories = await getAllCategories(locale, {
+    visible: true,
+    main: true,
+  });
 
   return <CategoriesList categories={categories} />;
 }

@@ -6,13 +6,15 @@ import { Category } from '@/models';
 import { ICategory, ICategoryApi, locale } from '@/types';
 
 export async function getAllCategories(
-  locale: locale
+  locale: locale,
+  filter: Record<string, string> | object = {}
 ): Promise<Array<ICategory>> {
   try {
     await dbConnect();
 
-    const categories = await Category.find({ visible: true, main: true })
+    const categories = await Category.find(filter)
       .populate('childCategories')
+      .populate('parentCategories')
       .lean<Array<ICategoryApi>>();
 
     const transformedCategories = transformCategories(categories, locale);
@@ -35,6 +37,11 @@ export const transformCategories = (
       main: category.main,
       sortOrder: category.sortOrder,
       visible: category.visible,
+      featured: category.featured || false,
+      image: category.image || '',
+      parentCategories: category.parentCategories.map(parentCategory => ({
+        slug: parentCategory.slug[locale],
+      })),
       updatedAt: category.updatedAt ?? null,
       createdAt: category.createdAt ?? null,
       childCategories: category.childCategories
@@ -45,6 +52,8 @@ export const transformCategories = (
             slug: childCategory.slug[locale] || 'N/A',
             sortOrder: childCategory.sortOrder,
             visible: childCategory.visible,
+            featured: childCategory.featured || false,
+            image: childCategory.image || '',
             updatedAt: childCategory.updatedAt ?? null,
             createdAt: childCategory.createdAt ?? null,
           };

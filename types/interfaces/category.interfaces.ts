@@ -1,4 +1,4 @@
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
 export interface ICategoryApi extends Document {
   _id: string;
@@ -7,10 +7,16 @@ export interface ICategoryApi extends Document {
   main: boolean;
   sortOrder: number;
   visible: boolean;
-  parentCategories: Array<Types.ObjectId>;
+  featured: boolean;
+  image: string;
+  parentCategories: Array<IParentCategoryApi>;
   childCategories: Array<IChildCategoryApi>;
   updatedAt: Date;
   createdAt: Date;
+}
+
+interface IParentCategoryApi {
+  slug: { [key: string]: string };
 }
 
 interface IChildCategoryApi {
@@ -19,8 +25,26 @@ interface IChildCategoryApi {
   slug: { [key: string]: string };
   sortOrder: number;
   visible: boolean;
+  featured: boolean;
+  image: string;
   updatedAt: Date;
   createdAt: Date;
+}
+
+interface IParentCategory {
+  slug: string;
+}
+
+export interface IChildCategory {
+  id: string;
+  name: string;
+  slug: string;
+  sortOrder: number;
+  visible: boolean;
+  featured: boolean;
+  image: string;
+  updatedAt: Date | null;
+  createdAt: Date | null;
 }
 
 export interface ICategory {
@@ -30,17 +54,10 @@ export interface ICategory {
   main: boolean;
   sortOrder: number;
   visible: boolean;
+  featured: boolean;
+  image: string;
   childCategories: Array<IChildCategory>;
-  updatedAt: Date | null;
-  createdAt: Date | null;
-}
-
-export interface IChildCategory {
-  id: string;
-  name: string;
-  slug: string;
-  sortOrder: number;
-  visible: boolean;
+  parentCategories: Array<IParentCategory>;
   updatedAt: Date | null;
   createdAt: Date | null;
 }
