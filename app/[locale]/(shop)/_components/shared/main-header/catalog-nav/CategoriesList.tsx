@@ -79,14 +79,14 @@ export default function CategoriesList({ categories }: ICategoriesListProps) {
         <div
           className={clsx(
             `absolute top-full left-0 bg-white rounded-md transition-all duration-300 overflow-hidden
-          mt-4 py-2 
+          mt-4
           h-max lg:h-[400px]
           w-full lg:max-w-[310px]`,
             isCategoriesListOpen ? 'max-h-[400px]' : 'max-h-[0px]',
             isOverflowVisible && 'lg:overflow-visible'
           )}
         >
-          <div className='h-full w-full overflow-y-auto overflow-x-visible'>
+          <div className='h-full w-full py-2 overflow-y-auto overflow-x-visible'>
             <ul className='flex flex-col h-full gap-y-3 text-sm lg:text-base lg:gap-y-0'>
               {categories &&
                 categories.map(({ slug, name, childCategories, id }) => (
