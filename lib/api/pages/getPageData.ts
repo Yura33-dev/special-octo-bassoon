@@ -10,14 +10,15 @@ export async function getPageData(page: string, locale: locale) {
     const connection = await dbConnect();
 
     if (!connection) {
-      throw new Error(DB_CONNECTION_FAILED);
+      console.error(DB_CONNECTION_FAILED);
+      return;
     }
 
     const data = await Page.findOne({ name: page }).lean<IPage>();
-    if (!data) throw new Error(`Error: ${PAGE_FETCH_FAILED}`);
+    if (!data) return console.error(`Error: ${PAGE_FETCH_FAILED}`);
 
     return { name: data.name, translatedData: data.translatedData[locale] };
   } catch (error: unknown) {
-    throw new Error(`Error: ${PAGE_FETCH_FAILED}. ${error}`);
+    console.error(`Error: ${PAGE_FETCH_FAILED}. ${error}`);
   }
 }
