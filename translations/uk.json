@@ -15,7 +15,8 @@
     "toAboutPage": "Про нас",
     "toBlogPage": "Блог",
     "toComparePage": "Порівняння товарів",
-    "searchPlaceholder": "Пошук товарів"
+    "searchPlaceholder": "Пошук товарів",
+    "CategoriesCatalogBtn": "Каталог товарів"
   },
   "ProductCard": {
     "sale": "Розпродаж",
@@ -37,6 +38,8 @@
   },
   "MainPage": {
     "CategoriesSectionTitle": "Категорії та продукти",
+    "CategoriesSectionOurProducts": "Наші продукти",
+    "CategoriesSectionToViewAllProducts": "Перейти в каталог всіх продуктів",
     "NewProductsSectionTitle": "Новинки",
     "AboutSectionTitle": "Про нас",
     "FaqSection": "Запитання та відповіді"

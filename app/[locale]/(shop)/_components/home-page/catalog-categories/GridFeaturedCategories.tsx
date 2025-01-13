@@ -1,4 +1,5 @@
 import { ArrowDownRight } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import { Link } from '@/i18n/routing';
 import { ICategory } from '@/types';
@@ -7,9 +8,11 @@ interface IGridCategoriesProps {
   featuredCategories: Array<ICategory>;
 }
 
-export default function GridFeaturedCategories({
+export default async function GridFeaturedCategories({
   featuredCategories,
 }: IGridCategoriesProps) {
+  const t = await getTranslations('MainPage');
+
   return (
     <ul
       className='grid gap-2 auto-rows-[125px]
@@ -24,9 +27,9 @@ export default function GridFeaturedCategories({
           href='/catalog'
           className='group flex flex-col gap-4 relative h-full p-6 pr-16 sm:pr-6'
         >
-          <h3 className='text-2xl'>Наші продукти</h3>
+          <h3 className='text-2xl'>{t('CategoriesSectionOurProducts')}</h3>
           <span className='leading-tight text-base'>
-            Перейти в каталог всіх продуктів
+            {t('CategoriesSectionToViewAllProducts')}
           </span>
 
           <ArrowDownRight

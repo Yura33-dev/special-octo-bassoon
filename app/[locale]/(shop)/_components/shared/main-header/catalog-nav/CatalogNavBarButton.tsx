@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDown, LayoutList } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { usePathname } from '@/i18n/routing';
@@ -9,6 +10,8 @@ import { useGlobalStore } from '@/providers/globalStore.provider';
 
 export default function CatalogNavBarButton() {
   const [isMounted, setIsMounted] = useState(false);
+
+  const t = useTranslations('Header');
 
   const categoriesListToggle = useGlobalStore(
     state => state.categoriesListToggle
@@ -31,7 +34,7 @@ export default function CatalogNavBarButton() {
     >
       <div className='flex gap-2 '>
         <LayoutList />
-        <span>Каталог товарів</span>
+        <span>{t('CategoriesCatalogBtn')}</span>
       </div>
       <ChevronDown />
     </button>

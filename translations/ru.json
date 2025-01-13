@@ -15,7 +15,8 @@
     "toAboutPage": "О нас",
     "toBlogPage": "Блог",
     "toComparePage": "Сравнение товаров",
-    "searchPlaceholder": "Поиск товаров"
+    "searchPlaceholder": "Поиск товаров",
+    "CategoriesCatalogBtn": "Каталог товаров"
   },
   "ProductCard": {
     "sale": "Распродажа",
@@ -37,6 +38,8 @@
   },
   "MainPage": {
     "CategoriesSectionTitle": "Категории и продукты",
+    "CategoriesSectionOurProducts": "Наши продукты",
+    "CategoriesSectionToViewAllProducts": "Перейти в каталог всех продуктов",
     "NewProductsSectionTitle": "Новинки",
     "AboutSectionTitle": "О нас",
     "FaqSection": "Вопросы и ответы"
