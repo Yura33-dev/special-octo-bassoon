@@ -8,7 +8,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { Link } from '@/i18n/routing';
-import { ISlide } from '@/types';
+import { IFilteredSlide, ISlide } from '@/types';
 
 import MainSwiperButton from './MainSwiperButton';
 
@@ -21,6 +21,13 @@ export default function MainSwiperClient({ slides }: IMainSwiperClientProps) {
 
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const filteredSlides = slides.filter(
+    slide => slide.image && slide.name && slide.visible
+  ) as unknown as Array<IFilteredSlide>;
+
+  if (filteredSlides.length <= 0)
+    return <div className='mt-[250px] lg:mt-[450px]'></div>;
 
   return (
     <Swiper
@@ -43,12 +50,16 @@ export default function MainSwiperClient({ slides }: IMainSwiperClientProps) {
       wrapperTag='ul'
       className='rounded-md shadow-xl h-[250px] md:h-[400px] w-full lg:!w-[calc(100%_-_320px)] lg:!mr-0 lg:!ml-auto'
     >
-      <MainSwiperButton to='next' btnRef={nextButtonRef} />
-      <MainSwiperButton to='prev' btnRef={prevButtonRef} />
+      {filteredSlides.length > 1 && (
+        <>
+          <MainSwiperButton to='next' btnRef={nextButtonRef} />
+          <MainSwiperButton to='prev' btnRef={prevButtonRef} />
+        </>
+      )}
 
-      {slides.length > 0 &&
-        slides.map(slide => (
-          <SwiperSlide key={slide.id} tag='li'>
+      {filteredSlides.map(slide => (
+        <SwiperSlide key={slide.id} tag='li'>
+          {slide.linkTo ? (
             <Link href={slide.linkTo}>
               <div className='relative h-full'>
                 <Image
@@ -61,8 +72,20 @@ export default function MainSwiperClient({ slides }: IMainSwiperClientProps) {
                 />
               </div>
             </Link>
-          </SwiperSlide>
-        ))}
+          ) : (
+            <div className='relative h-full'>
+              <Image
+                alt={slide.name}
+                src={slide.image}
+                width={1000}
+                height={500}
+                className='w-full h-full object-cover'
+                priority
+              />
+            </div>
+          )}
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 }

@@ -9,7 +9,12 @@ import {
   IMeasurements,
   IPackaging,
 } from './interfaces/product.interfaces';
-import { ISlideApi, ISlide } from './interfaces/slide.interfaces';
+import {
+  ISlideApi,
+  ISlide,
+  ITranslatedSlideData,
+  IFilteredSlide,
+} from './interfaces/slide.interfaces';
 import { locale } from './types/global.types';
 
 export type {
@@ -26,5 +31,7 @@ export type {
   ISlide,
   IPage,
   ITranslatedPageData,
+  ITranslatedSlideData,
+  IFilteredSlide,
 };
 export type { locale };
