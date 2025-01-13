@@ -3,12 +3,13 @@ import { Suspense } from 'react';
 
 import Container from '@/components/shared/Container';
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
+import { getAllCategories } from '@/lib/api';
 import { getPageData } from '@/lib/api/pages/getPageData';
 import { locale } from '@/types';
 
 import About from './_components/home-page/about-us/About';
 import Benefits from './_components/home-page/about-us/Benefits';
-import GridCategories from './_components/home-page/catalog-categories/GridCategories';
+import GridFeaturedCategories from './_components/home-page/catalog-categories/GridFeaturedCategories';
 import Faq from './_components/home-page/faq/Faq';
 import MainSwiper from './_components/home-page/main-swiper/MainSwiper';
 import NewProductsSwiper from './_components/home-page/new-products-swiper/NewProductsSwiper';
@@ -21,6 +22,10 @@ export default async function ShopHome({
 }) {
   const pageData = await getPageData('MainPage', locale);
   const t = await getTranslations('MainPage');
+  const featuredCategories = await getAllCategories(locale, {
+    visible: true,
+    featured: true,
+  });
 
   return (
     <>
@@ -45,7 +50,7 @@ export default async function ShopHome({
       <section className='mt-20'>
         <Container>
           <h2 className='sr-only'>{t('CategoriesSectionTitle')}</h2>
-          <GridCategories />
+          <GridFeaturedCategories featuredCategories={featuredCategories} />
         </Container>
       </section>
 
