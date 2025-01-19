@@ -29,6 +29,7 @@
     "bulk": "Оптом и в розницу",
     "buttonToCart": "В корзину",
     "packagingTitle": "Упаковка:",
+    "packagingOthers": "Другая упаковка",
     "cart": {
       "FromCart": "Товар {title} удален из корзины",
       "ToCart": "Товар {title} добавлен в корзину",
