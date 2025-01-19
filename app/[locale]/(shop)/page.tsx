@@ -59,7 +59,16 @@ export default async function ShopHome({
           <h2 className='text-3xl font-semibold mb-8'>
             {t('NewProductsSectionTitle')}
           </h2>
-          <NewProductsSwiper />
+
+          <Suspense
+            fallback={
+              <div className='max-w-max mx-auto'>
+                <CircleLoader />
+              </div>
+            }
+          >
+            <NewProductsSwiper />
+          </Suspense>
         </Container>
       </section>
 
