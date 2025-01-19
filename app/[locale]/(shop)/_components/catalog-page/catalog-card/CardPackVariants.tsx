@@ -1,12 +1,14 @@
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 
+import { Link } from '@/i18n/routing';
 import { formattedPrice } from '@/lib/utils';
 import { IPackaging } from '@/types';
 
 interface ICardPackVariantsProps {
   availablePackaging: Array<IPackaging>;
   activePackaging: string;
+  productLink: string;
   handleChangeActivePackaging: (packId: string) => void;
 }
 
@@ -14,12 +16,18 @@ export default function CardPackVariants({
   availablePackaging,
   activePackaging,
   handleChangeActivePackaging,
+  productLink,
 }: ICardPackVariantsProps) {
   const t = useTranslations('ProductCard');
 
   const packagingInStock = availablePackaging.filter(
     packVariant => packVariant.quantity === null || packVariant.quantity > 0
   );
+
+  const visiblePackaging =
+    packagingInStock.length > 3
+      ? packagingInStock.slice(0, 3)
+      : packagingInStock;
 
   const activePack =
     availablePackaging.find(pack => pack.id === activePackaging) ??
@@ -33,8 +41,8 @@ export default function CardPackVariants({
     >
       <h4 className='mb-1 font-semibold'>{t('packagingTitle')}</h4>
       <ul className='text-sm flex flex-col gap-1'>
-        {packagingInStock.length > 0 &&
-          packagingInStock.map(packageVariant => (
+        {visiblePackaging.length > 0 &&
+          visiblePackaging.map(packageVariant => (
             <li key={packageVariant.id}>
               <button
                 type='button'
@@ -51,6 +59,16 @@ export default function CardPackVariants({
               </button>
             </li>
           ))}
+        {packagingInStock.length > 3 && (
+          <li className='rounded-md'>
+            <Link
+              href={productLink}
+              className='inline-block mt-1 px-2 py-1 transition-colors text-gray-600 rounded-b-md text-sm hover:text-accent'
+            >
+              {t('packagingOthers')}
+            </Link>
+          </li>
+        )}
       </ul>
     </div>
   );

@@ -1,11 +1,9 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
 
-export default function ConsultingBanner() {
-  const t = useTranslations('Consulting');
+export default async function ConsultingBanner() {
+  const t = await getTranslations('Consulting');
 
   return (
     <Container className='mt-20'>
