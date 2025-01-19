@@ -1,89 +1,58 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { toast } from 'sonner';
+import { useState } from 'react';
 
-import { useCartStore } from '@/providers/cart.provider';
+import { getProductLinks } from '@/lib/utils';
+import { IProduct } from '@/types';
+
+import CardButtonToCart from '../../catalog-page/catalog-card/CardButtonToCart';
+import CardCategories from '../../catalog-page/catalog-card/CardCategories';
+import CardImage from '../../catalog-page/catalog-card/CardImage';
+import CardInfo from '../../catalog-page/catalog-card/CardInfo';
+import CardPackVariants from '../../catalog-page/catalog-card/CardPackVariants';
 
 interface INewProductSlideProps {
-  product: {
-    id: string;
-    imgUrl: string;
-    title: string;
-    pack: string;
-    possibility: string;
-    category: string;
-    parentCategory: string;
-    price: number;
-  };
+  product: IProduct;
 }
 
 export default function NewProductSlide({ product }: INewProductSlideProps) {
-  const addToCart = useCartStore(state => state.addProduct);
+  const { mainCategory, subCategory, productLink } = getProductLinks(product);
 
-  const handleAddToCart = () => {
-    addToCart({
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      quantity: 1,
-      imgUrl: product.imgUrl,
-      pack: product.pack,
-    });
+  const [selectedPackId, setSelectedPackId] = useState<string>(
+    product.packaging.find(pack => pack.default)?.id ?? product.packaging[0].id
+  );
 
-    toast.success(`Товар ${product.title} успішно доданий в кошик`);
+  const handleChangeActivePackaging = (packId: string) => {
+    setSelectedPackId(packId);
   };
 
   return (
-    <>
-      <Link href='#' className='group'>
-        <div className='relative h-[200px] rounded-md overflow-hidden'>
-          <Image
-            src={product.imgUrl}
-            alt={product.title}
-            width={500}
-            height={500}
-            className='w-full h-full object-cover rounded-md'
-          />
-          <span
-            className='badge h-auto w-auto px-2 py-1 rounded-md bg-accent border-none text-white text-base font-semibold absolute top-4 right-4
-                              transition-colors duration-150 group-hover:bg-primary'
-          >
-            NEW
-          </span>
-        </div>
-      </Link>
-      <div className='card-body gap-0 p-4 '>
-        <h3 className='text-xl font-semibold text-center mb-3 max-w-full truncate'>
-          {product.title}
+    <div className='bg-white rounded-t-md rounded-b-md group lg:hover:rounded-b-none w-full'>
+      <CardImage
+        productLink={productLink}
+        productName={product.data.name}
+        productLabels={product.labels}
+        productImage={product.imgUrl}
+      />
+
+      <div className='flex flex-col p-4 relative'>
+        <h3 className='text-lg sm:text-xl font-semibold text-center mb-3 max-w-full truncate'>
+          {product.data.name}
         </h3>
+        <CardInfo
+          availablePackaging={product.packaging}
+          activePackaging={selectedPackId}
+        />
 
-        <p className='font-bold text-center text-xl mb-2'>
-          {product.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') +
-            ' ' +
-            'грн'}
-        </p>
+        <CardButtonToCart product={product} activePackaging={selectedPackId} />
 
-        <span className='badge border-none bg-primary text-white text-xs mb-3 block mx-auto leading-relaxed'>
-          {product.pack}
-        </span>
-        <p className='text-center text-sm mb-3'>Оптом і в роздріб</p>
+        <CardCategories mainCategory={mainCategory} subCategory={subCategory} />
 
-        <button
-          className='btn bg-accent border-none text-foreground mb-5 hover:bg-primary hover:text-white uppercase text-base'
-          onClick={handleAddToCart}
-        >
-          В кошик
-        </button>
-
-        <div className='card-actions justify-end'>
-          <div className='rounded-badge px-2 leading-normal bg-orange-300 text-foreground text-xs border-none'>
-            <Link href='#'>{product.parentCategory}</Link>
-          </div>
-          <div className='rounded-badge px-2 leading-normal bg-orange-300 text-foreground text-xs border-none'>
-            <Link href='#'>{product.category}</Link>
-          </div>
-        </div>
+        <CardPackVariants
+          availablePackaging={product.packaging}
+          activePackaging={selectedPackId}
+          handleChangeActivePackaging={handleChangeActivePackaging}
+          productLink={productLink}
+        />
       </div>
-    </>
+    </div>
   );
 }
