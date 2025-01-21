@@ -54,5 +54,11 @@
     "WideChoise": "Большой выбор качественных семян",
     "FastestDelivery": "Быстрая доставка по Украине",
     "LowestPrices": "Самые низкие цены на рынке"
+  },
+  "Footer": {
+    "CategoriesTitle": "Категории",
+    "ContactsTitle": "Контакты",
+    "CustomersTitle": "Покупателям",
+    "WorkSchedule": "График работы"
   }
 }

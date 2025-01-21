@@ -54,5 +54,11 @@
     "WideChoise": "Великий вибір якісного насіння",
     "FastestDelivery": "Швидка доставка по Україні",
     "LowestPrices": "Найнижчі ціни на ринку"
+  },
+  "Footer": {
+    "CategoriesTitle": "Категорії",
+    "ContactsTitle": "Контакти",
+    "CustomersTitle": "Покупцям",
+    "WorkSchedule": "Графік роботи"
   }
 }
