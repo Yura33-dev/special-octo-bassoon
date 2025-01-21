@@ -36,3 +36,9 @@ export const SLIDES_FETCH_FAILED = 'Failed to fetch slides.';
 }
 
 export const PAGE_FETCH_FAILED = 'Failed to fetch page`s data';
+
+{
+  /* Settings  */
+}
+
+export const SETTINGS_FETCH_FAILED = 'Failed to fetch web-site`s settings';

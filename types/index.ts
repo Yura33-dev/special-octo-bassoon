@@ -10,6 +10,11 @@ import {
   IPackaging,
 } from './interfaces/product.interfaces';
 import {
+  ISettingsApi,
+  ISettings,
+  ITranslatedSettingsData,
+} from './interfaces/settings.interfaces';
+import {
   ISlideApi,
   ISlide,
   ITranslatedSlideData,
@@ -33,5 +38,8 @@ export type {
   ITranslatedPageData,
   ITranslatedSlideData,
   IFilteredSlide,
+  ISettingsApi,
+  ISettings,
+  ITranslatedSettingsData,
 };
 export type { locale };
