@@ -7,9 +7,9 @@ import { Product } from '@/models';
 import { IProduct, IProductApi, locale } from '@/types';
 
 export async function getAllProducts(
-  page: number = 1,
   locale: locale,
-  limit: number = 10
+  page: number = 1,
+  limit: number = 9
 ) {
   const connection = await dbConnect();
 
@@ -28,6 +28,7 @@ export async function getAllProducts(
       .skip(skip)
       .limit(limit)
       .populate('categories')
+      .populate('packaging')
       .lean<Array<IProductApi>>()
       .exec(),
   ]);
@@ -50,15 +51,15 @@ export async function getAllProducts(
     packaging: product.packaging
       .map(pack => ({
         id: pack._id.toString(),
-        type: pack.type,
-        measurements: {
-          measureIn: pack.measurements.measureIn,
-          measureValue: pack.measurements.measureValue,
-        },
         inStock: pack.inStock,
         price: pack.price,
         quantity: pack.quantity,
         default: pack.default,
+        data: {
+          type: pack.translatedData[locale].type,
+          measureIn: pack.translatedData[locale].measureIn,
+          measureValue: pack.translatedData[locale].measureValue,
+        },
       }))
       .toSorted((first, second) => first.price - second.price),
     categories: product.categories.map(category => ({

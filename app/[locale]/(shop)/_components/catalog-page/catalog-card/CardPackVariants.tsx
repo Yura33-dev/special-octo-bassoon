@@ -54,11 +54,14 @@ export default function CardPackVariants({
                 )}
                 onClick={() => handleChangeActivePackaging(packageVariant.id)}
               >
-                <span className='basis-1/2 max-w-1/2 truncate'>{`${t(packageVariant.type)} ${packageVariant.measurements.measureValue} ${t(packageVariant.measurements.measureIn)}`}</span>
+                <span className='basis-1/2 max-w-1/2 truncate'>
+                  {`${packageVariant.data.type} ${packageVariant.data.measureValue} ${packageVariant.data.measureIn}`}
+                </span>
                 <span className='basis-1/2 max-w-1/2 truncate'>{`${formattedPrice(packageVariant.price)}`}</span>
               </button>
             </li>
           ))}
+
         {packagingInStock.length > 3 && (
           <li className='rounded-md'>
             <Link

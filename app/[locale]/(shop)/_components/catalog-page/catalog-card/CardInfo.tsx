@@ -17,7 +17,7 @@ export default function CardInfo({
     availablePackaging[0];
 
   const t = useTranslations('ProductCard');
-  const packagingString = `${t(packaging.type)} ${packaging.measurements.measureValue} ${t(packaging.measurements.measureIn)}`;
+  const packagingString = `${packaging.data.type} ${packaging.data.measureValue} ${packaging.data.measureIn}`;
 
   return (
     <>

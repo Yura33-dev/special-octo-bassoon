@@ -1,12 +1,6 @@
 import mongoose, { model, models } from 'mongoose';
 
-import {
-  IMeasurements,
-  IMetaData,
-  IPackaging,
-  IProductApi,
-  ITranslatedData,
-} from '@/types';
+import { IMetaData, IProductApi, ITranslatedData } from '@/types';
 
 const metaSchema = new mongoose.Schema<IMetaData>({
   title: { type: String, required: true },
@@ -22,24 +16,6 @@ const translatedDataSchema = new mongoose.Schema<ITranslatedData>({
   meta: { type: metaSchema, required: true },
 });
 
-const measurementsSchema = new mongoose.Schema<IMeasurements>({
-  measureIn: { type: String, required: true },
-  measureValue: { type: Number, required: true },
-});
-
-const packagingSchema = new mongoose.Schema<IPackaging>({
-  type: { type: String, required: true },
-  measurements: { type: measurementsSchema, required: true },
-  inStock: {
-    type: String,
-    enum: ['inStock', 'outStock', 'preOrder'],
-    required: true,
-  },
-  price: { type: Number, required: true },
-  quantity: { type: Number, required: false, default: null },
-  default: { type: Boolean, required: false, default: false },
-});
-
 const productSchema = new mongoose.Schema<IProductApi>(
   {
     translatedData: {
@@ -47,13 +23,11 @@ const productSchema = new mongoose.Schema<IProductApi>(
       of: translatedDataSchema,
       required: true,
     },
-    packaging: [{ type: packagingSchema, required: true }],
+    packaging: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Packaging' }],
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     visible: { type: Boolean, required: false, default: true },
     producer: { type: String, required: true },
-    labels: [
-      { type: String, enum: ['top', 'sale'], required: false, default: [] },
-    ],
+    labels: [{ type: String, enum: ['top', 'sale'], default: [] }],
     imgUrl: { type: String, required: true },
   },
   { timestamps: true, versionKey: false }

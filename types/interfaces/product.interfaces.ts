@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-import { ICategory, ICategoryApi } from '@/types';
+import { ICategory, ICategoryApi, IPackaging, IPackagingApi } from '@/types';
 
 export interface IProductApi extends Document {
   _id: string;
@@ -41,30 +41,4 @@ export interface IMetaData {
   keywords: string | null;
 }
 
-export interface IPackagingApi extends Document {
-  _id: string;
-  type: string;
-  measurements: IMeasurements;
-  inStock: Stock;
-  price: number;
-  quantity: number | null;
-  default: boolean;
-}
-
-export interface IPackaging {
-  id: string;
-  type: string;
-  measurements: IMeasurements;
-  inStock: Stock;
-  price: number;
-  quantity: number | null;
-  default: boolean;
-}
-
-export interface IMeasurements {
-  measureIn: string;
-  measureValue: number;
-}
-
-type Stock = 'inStock' | 'outStock' | 'preOrder';
 type Labels = 'top' | 'sale';

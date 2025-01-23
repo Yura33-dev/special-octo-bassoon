@@ -14,6 +14,7 @@ export async function getProductById(productId: string, locale: string) {
 
   const product = await Product.findOne({ _id: productId })
     .populate('categories')
+    .populate('packaging')
     .lean<IProductApi>();
 
   if (product) {
@@ -33,15 +34,15 @@ export async function getProductById(productId: string, locale: string) {
       packaging: product.packaging
         .map(pack => ({
           id: pack._id.toString(),
-          type: pack.type,
-          measurements: {
-            measureIn: pack.measurements.measureIn,
-            measureValue: pack.measurements.measureValue,
-          },
           inStock: pack.inStock,
           price: pack.price,
           quantity: pack.quantity,
           default: pack.default,
+          data: {
+            type: pack.translatedData[locale].type,
+            measureIn: pack.translatedData[locale].measureIn,
+            measureValue: pack.translatedData[locale].measureValue,
+          },
         }))
         .toSorted((first, second) => first.price - second.price),
       categories: product.categories.map(category => ({
