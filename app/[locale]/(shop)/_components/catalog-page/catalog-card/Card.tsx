@@ -53,6 +53,7 @@ export default function Card({ product }: ICardProps) {
           availablePackaging={product.packaging}
           activePackaging={selectedPackId}
           handleChangeActivePackaging={handleChangeActivePackaging}
+          productLink={productLink}
         />
       </div>
     </li>

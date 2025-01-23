@@ -1,3 +1,5 @@
+'use server';
+
 import { SETTINGS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { Setting } from '@/models';

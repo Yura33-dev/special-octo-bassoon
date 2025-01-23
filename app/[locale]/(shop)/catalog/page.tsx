@@ -3,19 +3,15 @@ import { Suspense } from 'react';
 import Container from '@/components/shared/Container';
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { Link } from '@/i18n/routing';
-import { locale } from '@/types';
 
 import Catalog from '../_components/catalog-page/Catalog';
 import Filter from '../_components/catalog-page/Filter';
 
 export default async function CatalogPage({
-  params,
   searchParams,
 }: {
-  params: { locale: locale };
   searchParams: { page?: string };
 }) {
-  const { locale } = params;
   const page = parseInt(searchParams.page || '1');
 
   return (
@@ -51,7 +47,7 @@ export default async function CatalogPage({
                   </div>
                 }
               >
-                <Catalog locale={locale} page={page} />
+                <Catalog page={page} />
               </Suspense>
             </div>
           </div>

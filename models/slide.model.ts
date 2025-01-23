@@ -12,7 +12,6 @@ const translatedSlideDataSchema = new mongoose.Schema<ITranslatedSlideData>({
   },
   sortOrder: {
     type: Number,
-    required: false,
     deafult: 0,
   },
 });

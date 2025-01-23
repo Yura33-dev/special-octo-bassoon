@@ -10,10 +10,10 @@ const settingSchema = new mongoose.Schema<ISettingsApi>(
   {
     siteName: {
       type: String,
-      translatedData: {
-        type: Map,
-        of: settingsTranslatedData,
-      },
+    },
+    translatedData: {
+      type: Map,
+      of: settingsTranslatedData,
     },
   },
   { timestamps: true, versionKey: false }
