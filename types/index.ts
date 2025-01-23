@@ -1,4 +1,9 @@
 import { ICategoryApi, ICategory } from './interfaces/category.interfaces';
+import {
+  IPackagingApi,
+  IPackaging,
+  ITranslatedPackagingData,
+} from './interfaces/packaging.interfaces';
 import { IPage, ITranslatedPageData } from './interfaces/pages.interfaces';
 import { IPagination } from './interfaces/pagination.interfaces';
 import {
@@ -6,8 +11,6 @@ import {
   IProduct,
   ITranslatedData,
   IMetaData,
-  IMeasurements,
-  IPackaging,
 } from './interfaces/product.interfaces';
 import {
   ISettingsApi,
@@ -29,8 +32,9 @@ export type {
   IProduct,
   ITranslatedData,
   IMetaData,
-  IMeasurements,
+  IPackagingApi,
   IPackaging,
+  ITranslatedPackagingData,
   IPagination,
   ISlideApi,
   ISlide,
