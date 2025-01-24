@@ -33,6 +33,7 @@ export interface ITranslatedData {
   description: string | null;
   country: string | null;
   meta: IMetaData;
+  characteristics: Array<[string, string]> | null;
 }
 
 export interface IMetaData {
