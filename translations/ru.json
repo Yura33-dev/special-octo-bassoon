@@ -6,10 +6,13 @@
     "Title": "Корзина",
     "FromCart": "Товар {title} удален из корзины",
     "ToCart": "Товар {title} добавлен в корзину",
+    "DeleteItem": "Удалить {title} с корзины",
     "Empty": "Корзина пуста",
     "Total": "Всего:",
     "Order": "Оформить заказ",
-    "OpenCart": "Открыть корзину"
+    "OpenCart": "Открыть корзину",
+    "Price": "Цена",
+    "buttonToCart": "В корзину"
   },
   "Header": {
     "toAboutPage": "О нас",
@@ -24,13 +27,7 @@
     "bulk": "Оптом и в розницу",
     "buttonToCart": "В корзину",
     "packagingTitle": "Упаковка:",
-    "packagingOthers": "Другая упаковка",
-    "cart": {
-      "FromCart": "Товар {title} удален из корзины",
-      "ToCart": "Товар {title} добавлен в корзину",
-      "Price": "Цена",
-      "DeleteItem": "Удалить {title} с корзины"
-    }
+    "packagingOthers": "Другая упаковка"
   },
   "MainPage": {
     "CategoriesSectionTitle": "Категории и продукты",
@@ -57,6 +54,11 @@
     "WorkSchedule": "График работы"
   },
   "ProductPage": {
+    "ProductPackaging": "Упаковка",
+    "ProductCharacteristics": "Характеристика",
+    "ProductDelivery": "Доставка",
+    "ProductPayments": "Оплата",
+    "ProductRefund": "Возврат",
     "Description": "Описание",
     "Reviews": "Отзывы",
     "NoDescription": "Описание товара отсутствует. Пожалуйста, обратитесь к менеджеру магазина для уточнения деталей",

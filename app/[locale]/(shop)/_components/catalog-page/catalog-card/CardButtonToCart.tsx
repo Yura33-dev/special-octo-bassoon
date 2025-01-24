@@ -17,7 +17,7 @@ export default function CardButtonToCart({
 }: ICardButtonToCardProps) {
   const addProductToCart = useCartStore(state => state.addProduct);
 
-  const t = useTranslations('ProductCard');
+  const t = useTranslations('Cart');
 
   const handleAddToCart = () => {
     const packVariant = product.packaging.filter(
@@ -37,7 +37,7 @@ export default function CardButtonToCart({
 
     addProductToCart(productObject);
     toast.success(
-      t('cart.ToCart', {
+      t('ToCart', {
         title: `${productObject.data.name} (${productObject.packVariant.data.type} ${productObject.packVariant.data.measureValue} ${productObject.packVariant.data.measureIn})`,
       })
     );

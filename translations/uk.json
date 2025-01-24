@@ -6,10 +6,13 @@
     "Title": "Кошик",
     "FromCart": "Товар {title} видалений з кошика",
     "ToCart": "Товар {title} доданий в кошик",
+    "DeleteItem": "Видалити {title} з кошика",
     "Empty": "Кошик порожній",
     "Total": "Всього:",
     "Order": "Оформити замовлення",
-    "OpenCart": "Відкрити кошик"
+    "OpenCart": "Відкрити кошик",
+    "Price": "Ціна",
+    "buttonToCart": "В кошик"
   },
   "Header": {
     "toAboutPage": "Про нас",
@@ -24,13 +27,7 @@
     "bulk": "Оптом і в роздріб",
     "buttonToCart": "В кошик",
     "packagingTitle": "Пакування:",
-    "packagingOthers": "Інше пакування",
-    "cart": {
-      "FromCart": "Товар {title} видалений з кошика",
-      "ToCart": "Товар {title} доданий в кошик",
-      "Price": "Ціна",
-      "DeleteItem": "Видалити {title} з кошика"
-    }
+    "packagingOthers": "Інше пакування"
   },
   "MainPage": {
     "CategoriesSectionTitle": "Категорії та продукти",
@@ -57,6 +54,11 @@
     "WorkSchedule": "Графік роботи"
   },
   "ProductPage": {
+    "ProductPackaging": "Пакування:",
+    "ProductCharacteristics": "Характеристика",
+    "ProductDelivery": "Доставка",
+    "ProductPayments": "Розрахунок",
+    "ProductRefund": "Повернення",
     "Description": "Опис",
     "Reviews": "Відгуки",
     "NoDescription": "Опис товару відсутній. Будь ласка, зверніться до менеджера магазину для уточнення деталей",

@@ -16,7 +16,7 @@ interface ICartItemProps {
 }
 
 export default function CartItem({ product }: ICartItemProps) {
-  const t = useTranslations('ProductCard');
+  const t = useTranslations('Cart');
   const { productLink } = getProductLinks(product);
 
   const { data, imgUrl, packVariant } = product;
@@ -29,7 +29,7 @@ export default function CartItem({ product }: ICartItemProps) {
   const handleRemoveProduct = () => {
     removeProductFromCart(packVariant.id);
     toast.info(
-      t('cart.FromCart', {
+      t('FromCart', {
         title: `${name} (${packVariant.data.type} ${packVariant.data.measureValue} ${packVariant.data.measureIn})`,
       })
     );
@@ -52,7 +52,7 @@ export default function CartItem({ product }: ICartItemProps) {
           <div className='flex flex-col gap-2 sm:flex-row-reverse sm:justify-between sm:items-center sm:gap-0'>
             <button
               type='button'
-              aria-label={t('cart.DeleteItem', { title: name })}
+              aria-label={t('DeleteItem', { title: name })}
               onClick={handleRemoveProduct}
               className='self-end'
             >
@@ -72,7 +72,7 @@ export default function CartItem({ product }: ICartItemProps) {
           />
 
           <p className='mt-1 text-sm'>
-            {t('cart.Price')} <span>{formattedPrice(packVariant.price)}</span>
+            {t('Price')} <span>{formattedPrice(packVariant.price)}</span>
           </p>
 
           <div className='badge text-xs border-none bg-accent text-foreground'>
