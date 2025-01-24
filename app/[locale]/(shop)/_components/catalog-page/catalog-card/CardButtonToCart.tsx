@@ -38,7 +38,7 @@ export default function CardButtonToCart({
     addProductToCart(productObject);
     toast.success(
       t('cart.ToCart', {
-        title: `${productObject.data.name} (${t(productObject.packVariant.type)} ${productObject.packVariant.measurements.measureValue} ${t(productObject.packVariant.measurements.measureIn)})`,
+        title: `${productObject.data.name} (${productObject.packVariant.data.type} ${productObject.packVariant.data.measureValue} ${productObject.packVariant.data.measureIn})`,
       })
     );
   };

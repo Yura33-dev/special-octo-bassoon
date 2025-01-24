@@ -24,13 +24,13 @@ export default function CartItem({ product }: ICartItemProps) {
 
   const removeProductFromCart = useCartStore(state => state.removeProduct);
 
-  const packagingString = `${t(packVariant.type)} ${packVariant.measurements.measureValue} ${t(packVariant.measurements.measureIn)}`;
+  const packagingString = `${packVariant.data.type} ${packVariant.data.measureValue} ${packVariant.data.measureIn}`;
 
   const handleRemoveProduct = () => {
     removeProductFromCart(packVariant.id);
     toast.info(
       t('cart.FromCart', {
-        title: `${name} (${t(packVariant.type)} ${packVariant.measurements.measureValue} ${t(packVariant.measurements.measureIn)})`,
+        title: `${name} (${packVariant.data.type} ${packVariant.data.measureValue} ${packVariant.data.measureIn})`,
       })
     );
   };

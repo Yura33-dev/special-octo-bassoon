@@ -21,11 +21,6 @@
   "ProductCard": {
     "sale": "Розпродаж",
     "top": "ТОП продажів",
-    "bottle": "Флакон",
-    "pack": "Пакет",
-    "canister": "Каністра",
-    "liters": "л",
-    "kilograms": "кг",
     "bulk": "Оптом і в роздріб",
     "buttonToCart": "В кошик",
     "packagingTitle": "Пакування:",
@@ -60,5 +55,11 @@
     "ContactsTitle": "Контакти",
     "CustomersTitle": "Покупцям",
     "WorkSchedule": "Графік роботи"
+  },
+  "ProductPage": {
+    "Description": "Опис",
+    "Reviews": "Відгуки",
+    "NoDescription": "Опис товару відсутній. Будь ласка, зверніться до менеджера магазину для уточнення деталей",
+    "NoReviews": "Відгуків на цей товар ще немає"
   }
 }
