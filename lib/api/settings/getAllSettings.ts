@@ -14,10 +14,14 @@ export async function getAllSettings(
     const settings = await Setting.find({}).lean<Array<ISettingsApi>>();
 
     const mappedSettings: Array<ISettings> = settings.map(setting => ({
-      id: setting._id.toString(),
       siteName: setting.siteName,
       translatedData: {
         slogan: setting.translatedData[locale].slogan,
+        deliveryProductMethods:
+          setting.translatedData[locale].deliveryProductMethods,
+        paymentProductMethods:
+          setting.translatedData[locale].paymentProductMethods,
+        refundProductMethod: setting.translatedData[locale].refundProductMethod,
       },
     }));
 

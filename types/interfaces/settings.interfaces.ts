@@ -9,11 +9,18 @@ export interface ISettingsApi extends Document {
 export interface ITranslatedSettingsData {
   [key: string]: {
     slogan: string;
+    deliveryProductMethods: Array<string>;
+    paymentProductMethods: Array<string>;
+    refundProductMethod: string;
   };
 }
 
 export interface ISettings {
-  id: string;
   siteName: string;
-  translatedData: { slogan: string };
+  translatedData: {
+    slogan: string;
+    deliveryProductMethods: Array<string>;
+    paymentProductMethods: Array<string>;
+    refundProductMethod: string;
+  };
 }
