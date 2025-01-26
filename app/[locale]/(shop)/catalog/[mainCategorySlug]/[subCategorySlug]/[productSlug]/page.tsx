@@ -6,7 +6,7 @@ import ProductInfo from '@/app/[locale]/(shop)/_components/product-page/ProductI
 import ProductTabs from '@/app/[locale]/(shop)/_components/product-page/ProductTabs';
 import ProductVariants from '@/app/[locale]/(shop)/_components/product-page/ProductVariants';
 import Container from '@/components/shared/Container';
-import { getProductBySlug } from '@/lib/api/products/getProductBySlug';
+import { getProductBySlug } from '@/lib/api';
 import { locale } from '@/types';
 
 interface IProductPageProps {

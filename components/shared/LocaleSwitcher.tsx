@@ -1,28 +1,52 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { useId } from 'react';
 import Select from 'react-select';
 
 import { routing, usePathname, useRouter } from '@/i18n/routing';
+import { getLocalizedSlugs } from '@/lib/utils';
+import { locale } from '@/types';
 
 export default function LocaleSwitcher() {
   const t = useTranslations('LocaleSwitcher');
+
   const locale = useLocale();
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
+  const params = useParams();
 
-  const handleChange = (
+  const handleChange = async (
     selectedOption: { label: string; value: string } | null
   ) => {
     if (!selectedOption) return;
 
+    const localizedSlugs = await getLocalizedSlugs(
+      params as {
+        mainCategorySlug: string | null;
+        subCategorySlug: string | null;
+        productSlug: string | null;
+      },
+      locale as locale,
+      selectedOption.value as locale
+    );
+
+    const mainCategoryLink = `${localizedSlugs.mainCategorySlug ? `/${localizedSlugs.mainCategorySlug}` : ''}`;
+    const subCategoryLink = `${localizedSlugs.subCategorySlug ? `/${localizedSlugs.subCategorySlug}` : ''}`;
+    const productLink = `${localizedSlugs.productSlug ? `/${localizedSlugs.productSlug}` : ''}`;
+
+    const generatePath = pathName.includes('catalog')
+      ? `/catalog${mainCategoryLink}${subCategoryLink}${productLink}`
+      : `${mainCategoryLink}${subCategoryLink}${productLink}`;
+
+    const newPath = generatePath.length === 0 ? '/' : generatePath;
+
     const urlString =
       searchParams.toString().length > 0
-        ? `${pathName}?${searchParams.toString()}`
-        : `${pathName}`;
+        ? `${newPath}?${searchParams.toString()}`
+        : `${newPath}`;
 
     router.replace(urlString, { locale: selectedOption.value });
   };
