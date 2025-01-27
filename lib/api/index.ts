@@ -1,4 +1,6 @@
 import { getAllCategories } from './categories/getAllCategories';
+import { getCategoryBySlug } from './categories/getCategoryBySlug';
+import { getPageDataByName } from './pages/getPageDataByName';
 import { getAllProducts } from './products/getAllProducts';
 import { getLatestProducts } from './products/getLatestProducts';
 import { getProductById } from './products/getProductById';
@@ -16,4 +18,6 @@ export {
   getAllSettings,
   getProductSlug,
   getCategorySlug,
+  getPageDataByName,
+  getCategoryBySlug,
 };

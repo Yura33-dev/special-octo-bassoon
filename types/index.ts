@@ -4,7 +4,11 @@ import {
   IPackaging,
   ITranslatedPackagingData,
 } from './interfaces/packaging.interfaces';
-import { IPage, ITranslatedPageData } from './interfaces/pages.interfaces';
+import {
+  IPageApi,
+  ITranslatedPageData,
+  IPage,
+} from './interfaces/pages.interfaces';
 import { IPagination } from './interfaces/pagination.interfaces';
 import {
   IProductApi,
@@ -38,6 +42,7 @@ export type {
   IPagination,
   ISlideApi,
   ISlide,
+  IPageApi,
   IPage,
   ITranslatedPageData,
   ITranslatedSlideData,

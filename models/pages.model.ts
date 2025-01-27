@@ -1,12 +1,13 @@
 import mongoose, { model, models } from 'mongoose';
 
-import { IPage, ITranslatedPageData } from '@/types';
+import { IPageApi, ITranslatedPageData } from '@/types';
 
 const translatedPageDataSchema = new mongoose.Schema<ITranslatedPageData>({
   h1: { type: String, required: true },
+  breadcrumbTitles: { type: [String], required: true },
 });
 
-const pageSchema = new mongoose.Schema<IPage>(
+const pageSchema = new mongoose.Schema<IPageApi>(
   {
     name: { type: String, required: true },
     translatedData: {
@@ -18,6 +19,6 @@ const pageSchema = new mongoose.Schema<IPage>(
   { timestamps: true, versionKey: false }
 );
 
-const Page = models?.Page || model<IPage>('Page', pageSchema);
+const Page = models?.Page || model<IPageApi>('Page', pageSchema);
 
 export default Page;
