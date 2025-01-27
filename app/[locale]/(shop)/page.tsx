@@ -1,10 +1,11 @@
+import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
 import Container from '@/components/shared/Container';
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { getAllCategories } from '@/lib/api';
-import { getPageData } from '@/lib/api/pages/getPageData';
+import { getPageDataByName } from '@/lib/api/pages/getPageDataByName';
 import { locale } from '@/types';
 
 import About from './_components/home-page/about-us/About';
@@ -20,7 +21,12 @@ export default async function ShopHome({
 }: {
   params: { locale: locale };
 }) {
-  const pageData = await getPageData('MainPage', locale);
+  const maingPageData = await getPageDataByName('MainPage', locale);
+
+  if (!maingPageData) {
+    notFound();
+  }
+
   const t = await getTranslations('MainPage');
   const featuredCategories = await getAllCategories(locale, {
     visible: true,
@@ -29,7 +35,7 @@ export default async function ShopHome({
 
   return (
     <>
-      <h1 className='sr-only'>{pageData?.translatedData.h1}</h1>
+      <h1 className='sr-only'>{maingPageData.data.h1}</h1>
 
       <section className='mt-4'>
         <Container>
