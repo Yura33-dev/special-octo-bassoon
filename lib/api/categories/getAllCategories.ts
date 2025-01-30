@@ -9,7 +9,7 @@ import { ICategory, ICategoryApi, locale } from '@/types';
 export async function getAllCategories(
   locale: locale,
   filter: Record<string, string> | object = {}
-): Promise<Array<ICategory>> {
+): Promise<Array<ICategory> | []> {
   try {
     await dbConnect();
 
@@ -24,6 +24,7 @@ export async function getAllCategories(
 
     return transformedCategories;
   } catch (error) {
-    throw new Error(`Error: ${CATEGORIES_FETCH_FAILED}. ${error}`);
+    console.error(`Error: ${CATEGORIES_FETCH_FAILED}. ${error}`);
+    return [];
   }
 }
