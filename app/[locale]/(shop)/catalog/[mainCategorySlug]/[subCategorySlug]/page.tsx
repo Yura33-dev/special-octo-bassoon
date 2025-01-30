@@ -1,21 +1,30 @@
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
+import { Suspense } from 'react';
 
 import Container from '@/components/shared/Container';
+import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { getCategoryBySlug, getPageDataByName } from '@/lib/api';
 import { locale } from '@/types';
 
+import Filter from '../../../_components/catalog-page/Filter';
 import BreadCrumbs from '../../../_components/shared/breadcrumbs/BreadCrumbs';
+import ProductsList from '../../../_components/subCategory-page/ProductsList';
 
 interface ISubcategoryPageProps {
   params: {
     mainCategorySlug: string;
     subCategorySlug: string;
   };
+  searchParams: {
+    page?: string;
+    limit?: string;
+  };
 }
 
 export default async function SubcategoryPage({
   params,
+  searchParams,
 }: ISubcategoryPageProps) {
   const locale = (await getLocale()) as locale;
 
@@ -28,6 +37,9 @@ export default async function SubcategoryPage({
   if (!catalogPageData || !category || !subcategory) {
     notFound();
   }
+
+  const page = parseInt(searchParams.page || '1');
+  const limit = parseInt(searchParams.limit || '9');
 
   const generateBreadCrumbs = [
     '',
@@ -49,8 +61,33 @@ export default async function SubcategoryPage({
         breadcrumbTitles={generateBreadTitles}
       />
 
-      <section className='mt-4'>
-        <Container>subcategoryPage</Container>
+      <section className='mt-12'>
+        <Container>
+          <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
+            <Filter />
+            <div className='basis-full flex flex-col gap-4'>
+              <h1 className='text-center text-xl md:text-2xl'>
+                {catalogPageData.data.h1}
+              </h1>
+
+              <div>Sorting</div>
+
+              <Suspense
+                fallback={
+                  <div className='flex justify-center'>
+                    <CircleLoader />
+                  </div>
+                }
+              >
+                <ProductsList
+                  categoryId={subcategory.id}
+                  page={page}
+                  limit={limit}
+                />
+              </Suspense>
+            </div>
+          </div>
+        </Container>
       </section>
     </>
   );

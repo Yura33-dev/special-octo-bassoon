@@ -7,15 +7,15 @@ import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { useRouter } from '@/i18n/routing';
 import { IPagination, IProduct } from '@/types';
 
-import Card from './catalog-card/Card';
-import Pagination from './Pagination';
+import Card from '../catalog-page/catalog-card/Card';
+import Pagination from '../catalog-page/Pagination';
 
 interface ICatalogGridProps {
   products: Array<IProduct>;
   paginationData: IPagination;
 }
 
-export default function CatalogGrid({
+export default function ProductsListClient({
   products,
   paginationData,
 }: ICatalogGridProps) {

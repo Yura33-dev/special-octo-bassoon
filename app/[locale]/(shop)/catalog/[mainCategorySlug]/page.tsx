@@ -2,10 +2,15 @@ import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
-import { getCategoryBySlug, getPageDataByName } from '@/lib/api';
+import {
+  getCategoryBySlug,
+  getChildCategoriesByParentSlug,
+  getPageDataByName,
+} from '@/lib/api';
 import { locale } from '@/types';
 
 import BreadCrumbs from '../../_components/shared/breadcrumbs/BreadCrumbs';
+import CatalogGrid from '../../_components/shared/catalogGrid/CatalogGrid';
 
 interface IMainCategoryPageProps {
   params: {
@@ -26,6 +31,11 @@ export default async function MainCategoryPage({
     notFound();
   }
 
+  const subCategories = await getChildCategoriesByParentSlug(
+    category.slug,
+    locale
+  );
+
   const generateBreadCrumbs = ['', `catalog`, `catalog/${category?.slug}`];
 
   const generateBreadTitles = [
@@ -41,7 +51,9 @@ export default async function MainCategoryPage({
       />
 
       <section className='mt-4'>
-        <Container>mainCategorySlug</Container>
+        <Container>
+          <CatalogGrid categories={subCategories} />
+        </Container>
       </section>
     </>
   );

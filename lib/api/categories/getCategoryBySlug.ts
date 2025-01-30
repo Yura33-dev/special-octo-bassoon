@@ -15,11 +15,15 @@ export async function getCategoryBySlug(slug: string, locale: locale) {
   const category = await Category.findOne({
     [`slug.${locale}`]: slug,
   })
-    .select('name slug')
+    .select('name slug _id')
     .lean<ICategoryApi>();
 
   if (category) {
-    return { name: category.name[locale], slug: category.slug[locale] };
+    return {
+      name: category.name[locale],
+      slug: category.slug[locale],
+      id: category._id.toString(),
+    };
   } else {
     return null;
   }
