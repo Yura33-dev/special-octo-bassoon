@@ -17,7 +17,7 @@ export const CART_FETCH_FAILED = 'Failed to fetch cart.';
   /* Categories  */
 }
 
-export const CATEGORIES_FETCH_FAILED = 'Failed to fetch categories.';
+export const CATEGORIES_FETCH_FAILED = 'Failed to fetch categories';
 export const PARENT_CATEGORY_FETCH_FAILED = 'Failed to fetch parent category';
 export const SMTH_WENT_WRONG =
   'Something went wrong while fetching nested categories:';

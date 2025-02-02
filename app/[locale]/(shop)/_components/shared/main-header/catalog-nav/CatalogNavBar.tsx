@@ -1,4 +1,4 @@
-import { getAllCategories } from '@/lib/api/categories/getAllCategories';
+import { getAllCategories } from '@/lib/api';
 import { locale } from '@/types';
 
 import CategoriesList from './CategoriesList';

@@ -1,63 +1,31 @@
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 export interface ICategoryApi extends Document {
-  _id: string;
+  _id: ObjectId;
   name: { [key: string]: string };
   slug: { [key: string]: string };
+  sortOrder: number;
+  visible: boolean;
+  featured: boolean;
+  image: string;
   main: boolean;
-  sortOrder: number;
-  visible: boolean;
-  featured: boolean;
-  image: string;
-  parentCategories: Array<IParentCategoryApi>;
-  childCategories: Array<IChildCategoryApi>;
+  childCategories: Array<ObjectId>;
+  parentCategories: Array<ObjectId>;
   updatedAt: Date;
   createdAt: Date;
-}
-
-interface IParentCategoryApi {
-  slug: { [key: string]: string };
-}
-
-interface IChildCategoryApi {
-  _id: string;
-  name: { [key: string]: string };
-  slug: { [key: string]: string };
-  sortOrder: number;
-  visible: boolean;
-  featured: boolean;
-  image: string;
-  updatedAt: Date;
-  createdAt: Date;
-}
-
-interface IParentCategory {
-  slug: string;
-}
-
-export interface IChildCategory {
-  id: string;
-  name: string;
-  slug: string;
-  sortOrder: number;
-  visible: boolean;
-  featured: boolean;
-  image: string;
-  updatedAt: Date | null;
-  createdAt: Date | null;
 }
 
 export interface ICategory {
   id: string;
   name: string;
   slug: string;
-  main: boolean;
   sortOrder: number;
   visible: boolean;
   featured: boolean;
   image: string;
-  childCategories: Array<IChildCategory>;
-  parentCategories: Array<IParentCategory>;
+  main: boolean;
+  childCategories: Array<ICategory>;
+  parentCategories: Array<ICategory>;
   updatedAt: Date | null;
   createdAt: Date | null;
 }

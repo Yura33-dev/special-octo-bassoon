@@ -4,8 +4,7 @@ import { Suspense } from 'react';
 
 import Container from '@/components/shared/Container';
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
-import { getAllCategories } from '@/lib/api';
-import { getPageDataByName } from '@/lib/api/pages/getPageDataByName';
+import { getAllCategories, getPageDataByName } from '@/lib/api';
 import { locale } from '@/types';
 
 import About from './_components/home-page/about-us/About';

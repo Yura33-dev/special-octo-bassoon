@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 
 import { Link } from '@/i18n/routing';
-import { IChildCategory } from '@/types/interfaces/category.interfaces';
+import { ICategory } from '@/types';
 
 interface ICatalogNavBarChildCategoriesProps {
-  childCategories: Array<IChildCategory>;
+  childCategories: Array<ICategory>;
   parentCategorySlug: string;
   parentCategoryId: string;
   activeCategory: string | null;
