@@ -33,9 +33,9 @@ export default async function ProductInfo({
           </span>
         </div>
         {product.data.characteristics ? (
-          <ul className='px-2 mt-4 text-sm flex flex-col gap-2'>
+          <ul className='px-2 mt-4 text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2'>
             {product.data.characteristics.map((item, index) => (
-              <li key={index} className='flex flex-col gap-1'>
+              <li key={index} className='flex flex-col'>
                 <span className='font-bold'>{item[0]}:</span>{' '}
                 <span>{item[1]}</span>
               </li>
