@@ -1,6 +1,11 @@
 import mongoose, { model, models } from 'mongoose';
 
-import { IMetaData, IProductApi, ITranslatedData } from '@/types';
+import {
+  IMetaData,
+  IProductApi,
+  IProductPackVariantsApi,
+  ITranslatedData,
+} from '@/types';
 
 const metaSchema = new mongoose.Schema<IMetaData>({
   title: { type: String, required: true },
@@ -16,6 +21,28 @@ const translatedDataSchema = new mongoose.Schema<ITranslatedData>({
   meta: { type: metaSchema, required: true },
 });
 
+const packagingSchema = new mongoose.Schema<IProductPackVariantsApi>(
+  {
+    default: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Packaging',
+      required: true,
+    },
+    items: [
+      {
+        packId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Packaging',
+          required: true,
+        },
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true },
+      },
+    ],
+  },
+  { _id: false }
+);
+
 const productSchema = new mongoose.Schema<IProductApi>(
   {
     translatedData: {
@@ -23,7 +50,10 @@ const productSchema = new mongoose.Schema<IProductApi>(
       of: translatedDataSchema,
       required: true,
     },
-    packaging: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Packaging' }],
+    packaging: {
+      type: packagingSchema,
+      required: true,
+    },
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     visible: { type: Boolean, required: false, default: true },
     producer: { type: String, required: true },

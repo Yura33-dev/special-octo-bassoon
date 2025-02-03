@@ -2,11 +2,11 @@ import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 
 import { Link } from '@/i18n/routing';
-import { formattedPrice } from '@/lib/utils';
-import { IPackaging } from '@/types';
+import { formattedPackValue, formattedPrice } from '@/lib/utils';
+import { IProductPack } from '@/types';
 
 interface ICardPackVariantsProps {
-  availablePackaging: Array<IPackaging>;
+  availablePackaging: Array<IProductPack>;
   activePackaging: string;
   productLink: string;
   handleChangeActivePackaging: (packId: string) => void;
@@ -21,7 +21,7 @@ export default function CardPackVariants({
   const t = useTranslations('ProductCard');
 
   const packagingInStock = availablePackaging.filter(
-    packVariant => packVariant.quantity === null || packVariant.quantity > 0
+    packVariant => packVariant.quantity > 0
   );
 
   const visiblePackaging =
@@ -30,8 +30,8 @@ export default function CardPackVariants({
       : packagingInStock;
 
   const activePack =
-    availablePackaging.find(pack => pack.id === activePackaging) ??
-    availablePackaging[0];
+    visiblePackaging.find(pack => pack.id === activePackaging) ??
+    visiblePackaging[0];
 
   return (
     <div
@@ -47,22 +47,26 @@ export default function CardPackVariants({
               <button
                 type='button'
                 className={clsx(
-                  `w-full flex text-left gap-2 border-[1px] rounded-md px-2 py-1 transition-colors`,
+                  `w-full flex text-left text-xs gap-2 border-[1px] rounded-md px-2 py-1 transition-colors`,
                   activePack.id === packageVariant.id
                     ? 'border-accent'
                     : 'border-gray-200'
                 )}
                 onClick={() => handleChangeActivePackaging(packageVariant.id)}
               >
-                <span className='basis-1/2 max-w-1/2 truncate'>
-                  {`${packageVariant.data.type} ${packageVariant.data.measureValue} ${packageVariant.data.measureIn}`}
+                <span className='basis-2/3 max-w-2/3 truncate'>
+                  {formattedPackValue(
+                    packageVariant.type,
+                    packageVariant.measureValue,
+                    packageVariant.measureIn
+                  )}
                 </span>
-                <span className='basis-1/2 max-w-1/2 truncate'>{`${formattedPrice(packageVariant.price)}`}</span>
+                <span className='basis-1/3 max-w-1/3 truncate'>{`${formattedPrice(packageVariant.price)}`}</span>
               </button>
             </li>
           ))}
 
-        {packagingInStock.length > 3 && (
+        {availablePackaging.length > 3 && (
           <li className='rounded-md'>
             <Link
               href={productLink}

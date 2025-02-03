@@ -26,7 +26,8 @@ export async function getAllProductsByCategoryId(
         .skip(skip)
         .limit(limit)
         .populate('categories')
-        .populate('packaging')
+        .populate('packaging.default')
+        .populate('packaging.items.packId')
         .lean<Array<IProductApi>>()
         .exec(),
     ]);

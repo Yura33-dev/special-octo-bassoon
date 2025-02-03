@@ -17,7 +17,8 @@ export async function getProductBySlug(slug: string, locale: locale) {
     [`translatedData.${locale}.slug`]: slug,
   })
     .populate('categories')
-    .populate('packaging')
+    .populate('packaging.default')
+    .populate('packaging.items.packId')
     .lean<IProductApi>();
 
   if (product) {

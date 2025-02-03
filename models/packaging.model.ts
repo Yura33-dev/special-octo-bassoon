@@ -17,14 +17,7 @@ const packagingSchema = new mongoose.Schema<IPackagingApi>(
       of: translatedPackagingSchema,
       required: true,
     },
-    inStock: {
-      type: String,
-      enum: ['inStock', 'outStock', 'preOrder'],
-      required: true,
-    },
-    price: { type: Number, required: true },
-    quantity: { type: Number, default: null },
-    default: { type: Boolean, default: false },
+    showPricePerUnit: { type: Boolean, default: true },
   },
   { timestamps: true, versionKey: false }
 );

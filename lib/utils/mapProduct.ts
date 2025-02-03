@@ -15,25 +15,36 @@ export function mapProduct(product: IProductApi, locale: locale): IProduct {
       },
       characteristics: product.translatedData[locale].characteristics || null,
     },
-    packaging: product.packaging
-      .map(pack => ({
-        id: pack._id.toString(),
-        inStock: pack.inStock,
-        price: pack.price,
-        quantity: pack.quantity,
-        default: pack.default,
-        data: {
-          type: pack.translatedData[locale].type,
-          measureIn: pack.translatedData[locale].measureIn,
-          measureValue: pack.translatedData[locale].measureValue,
-        },
-      }))
-      .toSorted((first, second) => first.price - second.price),
+    packaging: {
+      default: product.packaging.default
+        ? {
+            id: product.packaging.default._id.toString(),
+            type: product.packaging.default.translatedData[locale]?.type || '',
+            measureIn:
+              product.packaging.default.translatedData[locale]?.measureIn || '',
+            measureValue:
+              product.packaging.default.translatedData[locale]?.measureValue ||
+              0,
+            quantity: product.packaging.default.quantity,
+            price: product.packaging.default.price,
+            showPricePerUnit: product.packaging.default.showPricePerUnit,
+          }
+        : null,
+      items: product.packaging.items.map(packItem => ({
+        id: packItem.packId._id.toString() || '',
+        type: packItem.packId.translatedData[locale]?.type || '',
+        measureIn: packItem.packId.translatedData[locale]?.measureIn || '',
+        measureValue: packItem.packId.translatedData[locale]?.measureValue || 0,
+        quantity: packItem.quantity,
+        price: packItem.price,
+        showPricePerUnit: packItem.packId.showPricePerUnit,
+      })),
+    },
     categories: product.categories.map(category => ({
       id: category._id.toString(),
       name: category.name[locale],
       slug: category.slug[locale],
-      main: category.main,
+      main: category.main ?? false,
     })),
     visible: product.visible,
     producer: product.producer,

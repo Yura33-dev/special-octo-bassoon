@@ -1,11 +1,16 @@
 import { Document } from 'mongoose';
 
-import { ICategory, ICategoryApi, IPackaging, IPackagingApi } from '@/types';
+import {
+  ICategory,
+  ICategoryApi,
+  IProductPackVariants,
+  IProductPackVariantsApi,
+} from '@/types';
 
 export interface IProductApi extends Document {
   _id: string;
   translatedData: Record<string, ITranslatedData>;
-  packaging: Array<IPackagingApi>;
+  packaging: IProductPackVariantsApi;
   //   reviews: Array<string>;
   categories: Array<ICategoryApi>;
   labels: Array<Labels> | [];
@@ -19,7 +24,8 @@ export interface IProductApi extends Document {
 export interface IProduct {
   id: string;
   data: ITranslatedData;
-  packaging: Array<IPackaging>;
+  packaging: IProductPackVariants;
+  //   reviews: Array<string>;
   categories: Array<Pick<ICategory, 'id' | 'name' | 'slug' | 'main'>>;
   visible: boolean;
   producer: string;

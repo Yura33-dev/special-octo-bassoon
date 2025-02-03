@@ -15,7 +15,8 @@ export async function getProductById(productId: string, locale: locale) {
 
   const product = await Product.findOne({ _id: productId })
     .populate('categories')
-    .populate('packaging')
+    .populate('packaging.default')
+    .populate('packaging.items.packId')
     .lean<IProductApi>();
 
   if (product) {

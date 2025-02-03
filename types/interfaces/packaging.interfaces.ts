@@ -1,21 +1,9 @@
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 export interface IPackagingApi extends Document {
-  _id: string;
+  _id: ObjectId;
   translatedData: Record<string, ITranslatedPackagingData>;
-  inStock: Stock;
-  price: number;
-  quantity: number | null;
-  default: boolean;
-}
-
-export interface IPackaging {
-  id: string;
-  data: ITranslatedPackagingData;
-  inStock: Stock;
-  price: number;
-  quantity: number | null;
-  default: boolean;
+  showPricePerUnit: boolean;
 }
 
 export interface ITranslatedPackagingData {
@@ -24,4 +12,42 @@ export interface ITranslatedPackagingData {
   measureValue: number;
 }
 
-type Stock = 'inStock' | 'outStock' | 'preOrder';
+export interface IPackaging {
+  id: string;
+  data: ITranslatedPackagingData;
+  showPricePerUnit: boolean;
+}
+
+export interface IProductPackVariantsApi {
+  default: {
+    _id: ObjectId;
+    translatedData: Record<string, ITranslatedPackagingData>;
+    quantity: number;
+    price: number;
+    showPricePerUnit: boolean;
+  };
+  items: Array<{
+    packId: {
+      _id: ObjectId;
+      translatedData: Record<string, ITranslatedPackagingData>;
+      showPricePerUnit: boolean;
+    };
+    quantity: number;
+    price: number;
+  }>;
+}
+
+export interface IProductPackVariants {
+  default: IProductPack | null;
+  items: Array<IProductPack> | [];
+}
+
+export interface IProductPack {
+  id: string;
+  type: string;
+  measureIn: string;
+  measureValue: number;
+  quantity: number;
+  price: number;
+  showPricePerUnit: boolean;
+}

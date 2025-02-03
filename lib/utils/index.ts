@@ -1,4 +1,5 @@
 import { calculatePaginationData } from './calculatePagination';
+import { formattedPackValue } from './formattedPackValue';
 import { formattedPrice } from './formattedPrice';
 import { getLocalizedSlugs } from './getLocalizedSlugs';
 import { getProductLinks } from './getProductLinks';
@@ -12,4 +13,5 @@ export {
   mapProduct,
   mapCategory,
   getLocalizedSlugs,
+  formattedPackValue,
 };

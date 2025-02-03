@@ -3,9 +3,9 @@ import { devtools, persist } from 'zustand/middleware';
 
 import { getProductById } from '@/lib/api';
 import { CART_FETCH_FAILED } from '@/lib/constants';
-import { ICategory, IPackaging, IProduct } from '@/types';
+import { ICategory, IProduct, IProductPack, locale } from '@/types';
 
-interface IPackagingWithQuantity extends IPackaging {
+interface IPackagingWithQuantity extends IProductPack {
   orderedQuantity: number;
 }
 
@@ -125,7 +125,7 @@ export const useCartStore = create<ICartStore>()(
         }, 0);
       },
 
-      fetchProductsInCart: async (locale: string) => {
+      fetchProductsInCart: async (locale: locale) => {
         set(state => ({ ...state, isCartLoading: true }));
 
         const uniqueIds: Set<string> = new Set();

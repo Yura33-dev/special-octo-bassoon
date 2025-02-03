@@ -1,10 +1,10 @@
 import { useTranslations } from 'next-intl';
 
-import { formattedPrice } from '@/lib/utils';
-import { IPackaging } from '@/types';
+import { formattedPackValue, formattedPrice } from '@/lib/utils';
+import { IProductPack } from '@/types';
 
 interface ICardPriceProps {
-  availablePackaging: Array<IPackaging>;
+  availablePackaging: Array<IProductPack>;
   activePackaging: string;
 }
 
@@ -17,7 +17,6 @@ export default function CardInfo({
     availablePackaging[0];
 
   const t = useTranslations('ProductCard');
-  const packagingString = `${packaging.data.type} ${packaging.data.measureValue} ${packaging.data.measureIn}`;
 
   return (
     <>
@@ -26,7 +25,11 @@ export default function CardInfo({
       </p>
 
       <span className='badge border-none bg-primary text-white text-xs mb-3 block mx-auto leading-relaxed'>
-        {packagingString}
+        {formattedPackValue(
+          packaging.type,
+          packaging.measureValue,
+          packaging.measureIn
+        )}
       </span>
 
       <p className='text-center text-xs sm:text-sm mb-3'>{t('bulk')}</p>

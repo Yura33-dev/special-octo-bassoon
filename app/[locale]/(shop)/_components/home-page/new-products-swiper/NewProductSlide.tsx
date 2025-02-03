@@ -17,7 +17,7 @@ export default function NewProductSlide({ product }: INewProductSlideProps) {
   const { mainCategory, subCategory, productLink } = getProductLinks(product);
 
   const [selectedPackId, setSelectedPackId] = useState<string>(
-    product.packaging.find(pack => pack.default)?.id ?? product.packaging[0].id
+    product.packaging.default?.id ?? product.packaging.items[0].id
   );
 
   const handleChangeActivePackaging = (packId: string) => {
@@ -38,7 +38,7 @@ export default function NewProductSlide({ product }: INewProductSlideProps) {
           {product.data.name}
         </h3>
         <CardInfo
-          availablePackaging={product.packaging}
+          availablePackaging={product.packaging.items}
           activePackaging={selectedPackId}
         />
 
@@ -47,7 +47,7 @@ export default function NewProductSlide({ product }: INewProductSlideProps) {
         <CardCategories mainCategory={mainCategory} subCategory={subCategory} />
 
         <CardPackVariants
-          availablePackaging={product.packaging}
+          availablePackaging={product.packaging.items}
           activePackaging={selectedPackId}
           handleChangeActivePackaging={handleChangeActivePackaging}
           productLink={productLink}

@@ -3,6 +3,9 @@ import {
   IPackagingApi,
   IPackaging,
   ITranslatedPackagingData,
+  IProductPackVariants,
+  IProductPack,
+  IProductPackVariantsApi,
 } from './interfaces/packaging.interfaces';
 import {
   IPageApi,
@@ -34,10 +37,13 @@ export type {
   ICategory,
   IProductApi,
   IProduct,
+  IProductPackVariantsApi,
   ITranslatedData,
   IMetaData,
   IPackagingApi,
   IPackaging,
+  IProductPackVariants,
+  IProductPack,
   ITranslatedPackagingData,
   IPagination,
   ISlideApi,

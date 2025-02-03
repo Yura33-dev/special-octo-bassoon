@@ -20,7 +20,8 @@ export async function getLatestProducts(locale: locale, limit: number = 20) {
       .sort({ createdAt: 'desc' })
       .limit(limit)
       .populate('categories')
-      .populate('packaging')
+      .populate('packaging.default')
+      .populate('packaging.items.packId')
       .lean<Array<IProductApi>>()
       .exec(),
   ]);

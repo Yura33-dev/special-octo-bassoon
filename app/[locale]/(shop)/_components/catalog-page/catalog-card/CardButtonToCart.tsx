@@ -20,7 +20,7 @@ export default function CardButtonToCart({
   const t = useTranslations('Cart');
 
   const handleAddToCart = () => {
-    const packVariant = product.packaging.filter(
+    const packVariant = product.packaging.items.filter(
       packVariant => packVariant.id === activePackaging
     );
 
@@ -38,7 +38,7 @@ export default function CardButtonToCart({
     addProductToCart(productObject);
     toast.success(
       t('ToCart', {
-        title: `${productObject.data.name} (${productObject.packVariant.data.type} ${productObject.packVariant.data.measureValue} ${productObject.packVariant.data.measureIn})`,
+        title: `${productObject.data.name} (${productObject.packVariant.type} ${productObject.packVariant.measureValue} ${productObject.packVariant.measureIn})`,
       })
     );
   };

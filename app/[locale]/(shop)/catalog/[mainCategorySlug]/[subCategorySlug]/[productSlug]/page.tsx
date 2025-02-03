@@ -71,10 +71,7 @@ export default async function ProductPage({ params }: IProductPageProps) {
               <h1 className='text-xl mb-5 md:text-4xl md:mb-10'>
                 {product.data.name}
               </h1>
-              <ProductVariants
-                product={product}
-                packagings={product.packaging}
-              />
+              <ProductVariants product={product} />
             </div>
           </div>
 
