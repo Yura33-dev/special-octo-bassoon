@@ -30,6 +30,7 @@ export async function getAllProducts(
       .populate('categories')
       .populate('packaging.default')
       .populate('packaging.items.packId')
+      .populate('filters.filter')
       .lean<Array<IProductApi>>()
       .exec(),
   ]);

@@ -1,5 +1,10 @@
 import { ICategoryApi, ICategory } from './interfaces/category.interfaces';
 import {
+  IFilterApi,
+  IFilterInProductApi,
+  IFilterInProduct,
+} from './interfaces/filter.interfaces';
+import {
   IPackagingApi,
   IPackaging,
   ITranslatedPackagingData,
@@ -56,5 +61,8 @@ export type {
   ISettingsApi,
   ISettings,
   ITranslatedSettingsData,
+  IFilterApi,
+  IFilterInProductApi,
+  IFilterInProduct,
 };
 export type { locale };

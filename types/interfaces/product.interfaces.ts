@@ -3,6 +3,8 @@ import { Document } from 'mongoose';
 import {
   ICategory,
   ICategoryApi,
+  IFilterInProduct,
+  IFilterInProductApi,
   IProductPackVariants,
   IProductPackVariantsApi,
 } from '@/types';
@@ -17,6 +19,7 @@ export interface IProductApi extends Document {
   visible: boolean;
   producer: string;
   imgUrl: string;
+  filters: Array<IFilterInProductApi>;
   updatedAt: Date;
   createdAt: Date;
 }
@@ -31,6 +34,7 @@ export interface IProduct {
   producer: string;
   labels: Array<string>;
   imgUrl: string;
+  filters: Array<IFilterInProduct> | null;
 }
 
 export interface ITranslatedData {

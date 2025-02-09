@@ -50,5 +50,16 @@ export function mapProduct(product: IProductApi, locale: locale): IProduct {
     producer: product.producer,
     labels: product.labels,
     imgUrl: product.imgUrl,
+    filters:
+      product.filters?.map(({ filter, value }) => ({
+        id: filter._id.toString(),
+        slug: filter.slug,
+        title: filter.translatedData[locale].filterTitle,
+        variants: filter.variants.map(variant => ({
+          slug: variant.variantSlug,
+          title: variant.translatedData[locale].variantTitle,
+        })),
+        value,
+      })) ?? [],
   };
 }

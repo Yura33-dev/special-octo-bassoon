@@ -19,6 +19,7 @@ export async function getProductBySlug(slug: string, locale: locale) {
     .populate('categories')
     .populate('packaging.default')
     .populate('packaging.items.packId')
+    .populate('filters.filter')
     .lean<IProductApi>();
 
   if (product) {

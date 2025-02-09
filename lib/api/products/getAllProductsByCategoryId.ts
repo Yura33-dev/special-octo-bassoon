@@ -10,24 +10,50 @@ export async function getAllProductsByCategoryId(
   locale: locale,
   categoryId: string,
   page: number = 1,
-  limit: number = 9
+  limit: number = 9,
+  filter: { [key: string]: string | string[] | undefined } = {}
 ) {
   try {
     await dbConnect();
 
     const skip = (page - 1) * limit;
 
-    const productsQuery = Product.find({ categories: categoryId });
+    const parsedFilter = Object.fromEntries(
+      Object.entries(filter).filter(
+        ([key]) => key !== 'limit' && key !== 'page'
+      )
+    );
+
+    const filterConditions = Object.keys(parsedFilter).map(filterSlug => {
+      const filterValues = parsedFilter[filterSlug];
+
+      return {
+        filters: {
+          $elemMatch: {
+            value: { $in: filterValues },
+          },
+        },
+      };
+    });
+
+    const query = {
+      categories: categoryId,
+      ...(filterConditions.length > 0 ? { $and: filterConditions } : {}),
+    };
 
     const [productsCount, products] = await Promise.all([
-      Product.find().merge(productsQuery).countDocuments(),
-      productsQuery
-        // .sort({ [sortBy]: sortOrder })
+      Product.countDocuments(query),
+      Product.find(query)
+        .sort({
+          labels: -1,
+          createdAt: -1,
+        })
         .skip(skip)
         .limit(limit)
         .populate('categories')
         .populate('packaging.default')
         .populate('packaging.items.packId')
+        .populate('filters.filter')
         .lean<Array<IProductApi>>()
         .exec(),
     ]);

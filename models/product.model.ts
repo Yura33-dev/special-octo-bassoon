@@ -1,6 +1,7 @@
 import mongoose, { model, models } from 'mongoose';
 
 import {
+  IFilterApi,
   IMetaData,
   IProductApi,
   IProductPackVariantsApi,
@@ -43,6 +44,17 @@ const packagingSchema = new mongoose.Schema<IProductPackVariantsApi>(
   { _id: false }
 );
 
+const productFiltersSchema = new mongoose.Schema<{
+  filter: IFilterApi;
+  value: string;
+}>(
+  {
+    filter: { type: mongoose.Schema.Types.ObjectId, ref: 'Filter' },
+    value: { type: String, requred: true },
+  },
+  { _id: false }
+);
+
 const productSchema = new mongoose.Schema<IProductApi>(
   {
     translatedData: {
@@ -59,6 +71,7 @@ const productSchema = new mongoose.Schema<IProductApi>(
     producer: { type: String, required: true },
     labels: [{ type: String, enum: ['top', 'sale'], default: [] }],
     imgUrl: { type: String, required: true },
+    filters: [{ type: productFiltersSchema, default: null }],
   },
   { timestamps: true, versionKey: false }
 );

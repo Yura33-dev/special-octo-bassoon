@@ -4,7 +4,12 @@ import { Suspense } from 'react';
 
 import Container from '@/components/shared/Container';
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
-import { getCategoryBySlug, getPageDataByName } from '@/lib/api';
+import {
+  getAllProductsByCategoryId,
+  getCategoryBySlug,
+  getFilters,
+  getPageDataByName,
+} from '@/lib/api';
 import { locale } from '@/types';
 
 import Filter from '../../../_components/catalog-page/Filter';
@@ -19,6 +24,7 @@ interface ISubcategoryPageProps {
   searchParams: {
     page?: string;
     limit?: string;
+    [key: string]: string | undefined;
   };
 }
 
@@ -40,6 +46,17 @@ export default async function SubcategoryPage({
 
   const page = parseInt(searchParams.page || '1');
   const limit = parseInt(searchParams.limit || '9');
+
+  const [{ filters }, { products, paginationData }] = await Promise.all([
+    getFilters(locale, subcategory.id),
+    getAllProductsByCategoryId(
+      locale,
+      subcategory.id,
+      page,
+      limit,
+      searchParams
+    ),
+  ]);
 
   const generateBreadCrumbs = [
     '',
@@ -64,13 +81,11 @@ export default async function SubcategoryPage({
       <section className='mt-12'>
         <Container>
           <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
-            <Filter />
+            <Filter filters={[...filters]} />
             <div className='basis-full flex flex-col gap-4'>
               <h1 className='text-center text-xl md:text-2xl'>
                 {catalogPageData.data.h1}
               </h1>
-
-              <div>Sorting</div>
 
               <Suspense
                 fallback={
@@ -80,9 +95,8 @@ export default async function SubcategoryPage({
                 }
               >
                 <ProductsList
-                  categoryId={subcategory.id}
-                  page={page}
-                  limit={limit}
+                  products={products}
+                  paginationData={paginationData}
                 />
               </Suspense>
             </div>

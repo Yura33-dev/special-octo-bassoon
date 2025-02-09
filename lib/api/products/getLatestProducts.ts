@@ -22,6 +22,7 @@ export async function getLatestProducts(locale: locale, limit: number = 20) {
       .populate('categories')
       .populate('packaging.default')
       .populate('packaging.items.packId')
+      .populate('filters.filter')
       .lean<Array<IProductApi>>()
       .exec(),
   ]);

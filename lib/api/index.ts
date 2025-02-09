@@ -1,6 +1,7 @@
 import { getAllCategories } from './categories/getAllCategories';
 import { getCategoryBySlug } from './categories/getCategoryBySlug';
 import { getChildCategoriesByParentSlug } from './categories/getChildCategoryByParentSlug';
+import { getFilters } from './filters/getFilters';
 import { getPageDataByName } from './pages/getPageDataByName';
 import { getAllProducts } from './products/getAllProducts';
 import { getAllProductsByCategoryId } from './products/getAllProductsByCategoryId';
@@ -24,4 +25,5 @@ export {
   getCategoryBySlug,
   getChildCategoriesByParentSlug,
   getAllProductsByCategoryId,
+  getFilters,
 };
