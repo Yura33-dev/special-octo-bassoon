@@ -30,7 +30,7 @@ export default async function CatalogPage() {
 
       <section className='mt-12'>
         <Container>
-          <h1 className='text-center text-xl md:text-2xl'>
+          <h1 className='text-center text-xl md:text-2xl mb-6 md:mb-8'>
             {catalogPageData.data.h1}
           </h1>
 

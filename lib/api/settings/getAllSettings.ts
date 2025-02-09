@@ -16,17 +16,19 @@ export async function getAllSettings(
     const mappedSettings: Array<ISettings> = settings.map(setting => ({
       siteName: setting.siteName,
       translatedData: {
-        slogan: setting.translatedData[locale].slogan,
+        slogan: setting.translatedData[locale].slogan || '',
         deliveryProductMethods:
-          setting.translatedData[locale].deliveryProductMethods,
+          setting.translatedData[locale].deliveryProductMethods || '',
         paymentProductMethods:
-          setting.translatedData[locale].paymentProductMethods,
-        refundProductMethod: setting.translatedData[locale].refundProductMethod,
+          setting.translatedData[locale].paymentProductMethods || '',
+        refundProductMethod:
+          setting.translatedData[locale].refundProductMethod || '',
       },
     }));
 
     return mappedSettings;
   } catch (error) {
-    throw new Error(`Error: ${SETTINGS_FETCH_FAILED}. ${error}`);
+    console.error(`${SETTINGS_FETCH_FAILED}: ${error}`);
+    return [];
   }
 }

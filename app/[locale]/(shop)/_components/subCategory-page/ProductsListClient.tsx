@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useTransition } from 'react';
 
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
@@ -19,6 +20,8 @@ export default function ProductsListClient({
   products,
   paginationData,
 }: ICatalogGridProps) {
+  const t = useTranslations('CatalogPage');
+
   const [isPending, startTransition] = useTransition();
 
   const searchParams = useSearchParams();
@@ -35,7 +38,10 @@ export default function ProductsListClient({
   };
 
   return (
-    <>
+    <div>
+      {products.length <= 0 && (
+        <h2 className='text-lg text-center mt-6'>{t('NoProducts')}</h2>
+      )}
       {isPending ? (
         <div className='flex justify-center mt-10'>
           <CircleLoader />
@@ -54,6 +60,6 @@ export default function ProductsListClient({
           handlePageChange={handlePageChange}
         />
       )}
-    </>
+    </div>
   );
 }

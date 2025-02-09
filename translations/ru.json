@@ -53,6 +53,11 @@
     "CustomersTitle": "Покупателям",
     "WorkSchedule": "График работы"
   },
+  "CatalogPage": {
+    "FilterTitle": "Фильтр",
+    "NoProducts": "К сожалению, товары не найдены. Попробуйте изменить фильтр поиска или выберите другую категорию",
+    "NoFilters": "К сожалению, фильтры для этих товаров отсутствуют"
+  },
   "ProductPage": {
     "ProductPackaging": "Упаковка",
     "ProductCharacteristics": "Характеристика",

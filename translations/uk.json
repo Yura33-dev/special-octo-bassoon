@@ -53,6 +53,11 @@
     "CustomersTitle": "Покупцям",
     "WorkSchedule": "Графік роботи"
   },
+  "CatalogPage": {
+    "FilterTitle": "Фільтр",
+    "NoProducts": "Нажаль, товари не знайдені. Спробуйте змінити фільтр пошуку або оберіть іншу категорію",
+    "NoFilters": "Нажаль, фільтри для цих товарів відсутні"
+  },
   "ProductPage": {
     "ProductPackaging": "Пакування:",
     "ProductCharacteristics": "Характеристика",
