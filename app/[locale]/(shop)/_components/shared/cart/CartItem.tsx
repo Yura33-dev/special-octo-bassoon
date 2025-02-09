@@ -6,7 +6,11 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
-import { formattedPrice, getProductLinks } from '@/lib/utils';
+import {
+  formattedPackValue,
+  formattedPrice,
+  getProductLinks,
+} from '@/lib/utils';
 import { IProductInCart, useCartStore } from '@/providers/cart.provider';
 
 import CartCounter from './CartCounter';
@@ -24,13 +28,11 @@ export default function CartItem({ product }: ICartItemProps) {
 
   const removeProductFromCart = useCartStore(state => state.removeProduct);
 
-  const packagingString = `${packVariant.type} ${packVariant.measureValue} ${packVariant.measureIn}`;
-
   const handleRemoveProduct = () => {
     removeProductFromCart(packVariant.id);
     toast.info(
       t('FromCart', {
-        title: `${name} (${packVariant.type} ${packVariant.measureValue} ${packVariant.measureIn})`,
+        title: `${name} (${formattedPackValue(packVariant.type, packVariant.measureValue, packVariant.measureIn)})`,
       })
     );
   };
@@ -76,7 +78,11 @@ export default function CartItem({ product }: ICartItemProps) {
           </p>
 
           <div className='badge text-xs border-none bg-accent text-foreground'>
-            {packagingString}
+            {formattedPackValue(
+              packVariant.type,
+              packVariant.measureValue,
+              packVariant.measureIn
+            )}
           </div>
         </div>
       </div>

@@ -42,7 +42,7 @@ export default function ProductVariants({ product }: IPackagingProps) {
     addProductToCart(productObject);
     toast.success(
       t('ToCart', {
-        title: `${productObject.data.name} (${productObject.packVariant.type} ${productObject.packVariant.measureValue} ${productObject.packVariant.measureIn})`,
+        title: `${productObject.data.name} (${formattedPackValue(productObject.packVariant.type, productObject.packVariant.measureValue, productObject.packVariant.measureIn)})`,
       })
     );
   };

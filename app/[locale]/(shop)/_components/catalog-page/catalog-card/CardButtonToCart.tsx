@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
+import { formattedPackValue } from '@/lib/utils';
 import { useCartStore } from '@/providers/cart.provider';
 import { IProduct } from '@/types';
 
@@ -38,7 +39,7 @@ export default function CardButtonToCart({
     addProductToCart(productObject);
     toast.success(
       t('ToCart', {
-        title: `${productObject.data.name} (${productObject.packVariant.type} ${productObject.packVariant.measureValue} ${productObject.packVariant.measureIn})`,
+        title: `${productObject.data.name} (${formattedPackValue(productObject.packVariant.type, productObject.packVariant.measureValue, productObject.packVariant.measureIn)})`,
       })
     );
   };
