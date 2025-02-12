@@ -1,22 +1,18 @@
 'use server';
 
-import { DB_CONNECTION_FAILED } from '@/lib/constants';
+import { LATEST_PRODUCTS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
 import { IProductApi, locale } from '@/types';
 
 export async function getLatestProducts(locale: locale, limit: number = 20) {
-  const connection = await dbConnect();
+  try {
+    await dbConnect();
 
-  if (!connection) {
-    throw new Error(DB_CONNECTION_FAILED);
-  }
+    const productsQuery = Product.find();
 
-  const productsQuery = Product.find();
-
-  const [products] = await Promise.all([
-    productsQuery
+    const products = await productsQuery
       .sort({ createdAt: 'desc' })
       .limit(limit)
       .populate('categories')
@@ -24,10 +20,12 @@ export async function getLatestProducts(locale: locale, limit: number = 20) {
       .populate('packaging.items.packId')
       .populate('filters.filter')
       .lean<Array<IProductApi>>()
-      .exec(),
-  ]);
+      .exec();
 
-  const mappedProducts = products.map(product => mapProduct(product, locale));
-
-  return { products: mappedProducts };
+    const mappedProducts = products.map(product => mapProduct(product, locale));
+    return { products: mappedProducts };
+  } catch (e) {
+    console.error(LATEST_PRODUCTS_FETCH_FAILED, e);
+    return { products: [] };
+  }
 }

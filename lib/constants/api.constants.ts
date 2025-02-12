@@ -29,6 +29,7 @@ export const SMTH_WENT_WRONG =
 export const PRODUCTS_FETCH_FAILED = 'Failed to fetch products.';
 export const PRODUCTS_BY_CATEGORY_ID_FAILED =
   'Failed to fetch products by category ID:';
+export const LATEST_PRODUCTS_FETCH_FAILED = 'Failed to fetch latest products.';
 
 {
   /* Slides  */
