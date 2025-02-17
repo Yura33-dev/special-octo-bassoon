@@ -15,6 +15,7 @@ export default function CartTotal() {
   const isCartLoading = useCartStore(state => state.isCartLoading);
   const cart = useCartStore(state => state.cart);
   const getTotalPrice = useCartStore(state => state.getTotalPrice);
+  const closeCart = useCartStore(state => state.cartClose);
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
@@ -26,6 +27,7 @@ export default function CartTotal() {
 
   const handleCheckoutClick = () => {
     router.push('/checkout');
+    closeCart();
   };
 
   if (cart.length === 0) {

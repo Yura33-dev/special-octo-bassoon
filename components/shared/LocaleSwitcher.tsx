@@ -39,7 +39,7 @@ export default function LocaleSwitcher() {
 
     const generatePath = pathName.includes('catalog')
       ? `/catalog${mainCategoryLink}${subCategoryLink}${productLink}`
-      : `${mainCategoryLink}${subCategoryLink}${productLink}`;
+      : `${pathName}`;
 
     const newPath = generatePath.length === 0 ? '/' : generatePath;
 

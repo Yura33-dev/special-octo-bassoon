@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
+import { usePathname } from '@/i18n/routing';
 import { useCartStore } from '@/providers/cart.provider';
 
 export default function CartBtn() {
@@ -14,6 +15,8 @@ export default function CartBtn() {
 
   const t = useTranslations('Cart');
 
+  const pathName = usePathname();
+
   useEffect(() => {
     setItems(getTotalItems);
   }, [getTotalItems, cart]);
@@ -23,7 +26,7 @@ export default function CartBtn() {
       <button
         className='btn border-none flex bg-primary-dark hover:bg-accent focus-visible:bg-accent'
         aria-label={t('OpenCart')}
-        onClick={openCart}
+        onClick={!pathName.includes('checkout') ? openCart : undefined}
       >
         <div className='indicator'>
           <svg
