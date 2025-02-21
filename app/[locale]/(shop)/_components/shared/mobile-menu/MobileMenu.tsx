@@ -33,7 +33,7 @@ export default function MobileMenu() {
 
             <button
               type='button'
-              className='block bg-green-700 rounded-md py-2 px-3'
+              className='block bg-primary-dark rounded-md py-2 px-3'
               onClick={closeMobileMenu}
             >
               <X className='w-7 h-7' />

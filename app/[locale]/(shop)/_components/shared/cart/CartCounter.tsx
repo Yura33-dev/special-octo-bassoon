@@ -22,10 +22,10 @@ export default function CartCounter({ quantity, packId }: ICartCounterProps) {
   };
 
   return (
-    <div className='flex justify-start items-center w-full'>
+    <div className='flex justify-center sm:justify-start items-center w-full'>
       <button
         type='button'
-        className='btn bg-primary min-h-0 h-auto p-1 text-white rounded-sm border-none md:hover:bg-green-800 disabled:bg-slate-300'
+        className='btn bg-primary min-h-0 h-auto p-1 text-white rounded-sm border-none md:hover:bg-accent disabled:bg-slate-300'
         disabled={quantity === 1}
         onClick={handleDecreaseProductQuantity}
       >
@@ -38,7 +38,7 @@ export default function CartCounter({ quantity, packId }: ICartCounterProps) {
 
       <button
         type='button'
-        className='btn bg-primary min-h-0 h-auto p-1 text-white rounded-sm border-none md:hover:bg-green-800 disabled:bg-slate-300'
+        className='btn bg-primary min-h-0 h-auto p-1 text-white rounded-sm border-none md:hover:bg-accent disabled:bg-slate-300'
         onClick={handleIncreaseProductQuantity}
       >
         <Plus className='w-4 h-4' />

@@ -13,7 +13,7 @@ export default function HamburgerBtn() {
         openMobileMenu();
       }}
     >
-      <label className='btn border-none bg-green-700 hover:bg-green-900 active:bg-green-900 swap swap-rotate'>
+      <label className='btn border-none bg-primary-dark hover:bg-accent active:bg-accent swap swap-rotate'>
         <input type='checkbox' />
 
         {/* hamburger icon */}

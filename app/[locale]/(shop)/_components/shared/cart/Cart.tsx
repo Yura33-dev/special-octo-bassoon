@@ -41,7 +41,7 @@ export default function Cart() {
         <h4 className='text-center text-lg'>{t('Title')}</h4>
         <button
           type='button'
-          className='block text-white bg-primary md:hover:bg-green-800 rounded-md p-2 sm:p-1 transition-colors ml-auto'
+          className='block text-white bg-primary md:hover:bg-accent rounded-md p-2 sm:p-1 transition-colors ml-auto'
           onClick={closeCart}
         >
           <X className='w-5 h-5' />
