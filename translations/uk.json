@@ -69,5 +69,13 @@
     "Reviews": "Відгуки",
     "NoDescription": "Опис товару відсутній. Будь ласка, зверніться до менеджера магазину для уточнення деталей",
     "NoReviews": "Відгуків на цей товар ще немає"
+  },
+  "CheckoutPage": {
+    "CheckoutTitle": "Оформлення замовлення",
+    "DeliveryMethodTitle": "Спосіб доставки",
+    "PaymentMethodTitle": "Спосіб оплати",
+    "ContactsData": "Контактні дані",
+    "DeliveryAddress": "Доставка",
+    "TotalCost": "До сплати:"
   }
 }

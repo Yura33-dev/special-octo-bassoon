@@ -69,5 +69,13 @@
     "Reviews": "Отзывы",
     "NoDescription": "Описание товара отсутствует. Пожалуйста, обратитесь к менеджеру магазина для уточнения деталей",
     "NoReviews": "Отзывов на этот товар еще нет"
+  },
+  "CheckoutPage": {
+    "CheckoutTitle": "Оформление заказа",
+    "DeliveryMethodTitle": "Способ доставки",
+    "PaymentMethodTitle": "Способ оплаты",
+    "ContactsData": "Контактные данные",
+    "DeliveryAddress": "Доставка",
+    "TotalCost": "К оплате:"
   }
 }
