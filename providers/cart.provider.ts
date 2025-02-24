@@ -33,6 +33,7 @@ interface ICartStore {
   getTotalPrice: () => number;
   getTotalItems: () => number;
   fetchProductsInCart: (locale: string) => void;
+  cleanCart: () => void;
 }
 export const useCartStore = create<ICartStore>()(
   persist(
@@ -148,6 +149,11 @@ export const useCartStore = create<ICartStore>()(
               );
 
               if (updatedProduct) {
+                const translatedPackVariant =
+                  updatedProduct.packaging.items.find(
+                    updatedPack => updatedPack.id === item.packVariant.id
+                  ) ?? item.packVariant;
+
                 return {
                   ...item,
                   data: {
@@ -156,6 +162,10 @@ export const useCartStore = create<ICartStore>()(
                     slug: updatedProduct.data.slug,
                   },
                   categories: updatedProduct.categories,
+                  packVariant: {
+                    ...translatedPackVariant,
+                    orderedQuantity: item.packVariant.orderedQuantity,
+                  },
                 };
               }
 
@@ -167,6 +177,8 @@ export const useCartStore = create<ICartStore>()(
           set(state => ({ ...state, isCartLoading: false }));
         }
       },
+
+      cleanCart: () => set(state => ({ ...state, cart: [] })),
     })),
 
     {

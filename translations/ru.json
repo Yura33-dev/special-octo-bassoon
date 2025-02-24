@@ -76,6 +76,8 @@
     "PaymentMethodTitle": "Способ оплаты",
     "ContactsData": "Контактные данные",
     "DeliveryAddress": "Доставка",
-    "TotalCost": "К оплате:"
+    "TotalCost": "К оплате:",
+    "NoProductsYet": "Добавьте товар в корзину, чтобы сделать заказ или вернитесь на главную страницу",
+    "GoToMain": "На главную"
   }
 }

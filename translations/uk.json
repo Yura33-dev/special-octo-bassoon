@@ -76,6 +76,8 @@
     "PaymentMethodTitle": "Спосіб оплати",
     "ContactsData": "Контактні дані",
     "DeliveryAddress": "Доставка",
-    "TotalCost": "До сплати:"
+    "TotalCost": "До сплати:",
+    "NoProductsYet": "Додайте товар в кошик, щоб зробити замовлення або поверніться на головну сторінку",
+    "GoToMain": "На головну"
   }
 }

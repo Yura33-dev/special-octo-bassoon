@@ -4,6 +4,7 @@ import {
   IFilterInProductApi,
   IFilterInProduct,
 } from './interfaces/filter.interfaces';
+import { IOrderApi, IProductInOrder } from './interfaces/order.interfaces';
 import {
   IPackagingApi,
   IPackaging,
@@ -64,5 +65,7 @@ export type {
   IFilterApi,
   IFilterInProductApi,
   IFilterInProduct,
+  IOrderApi,
+  IProductInOrder,
 };
 export type { locale };
