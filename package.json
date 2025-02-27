@@ -12,6 +12,7 @@
     "lint:check": "eslint ."
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.12.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.7",
     "lucide-react": "^0.469.0",

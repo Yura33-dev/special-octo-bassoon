@@ -7,7 +7,9 @@ interface ContainerProps {
 
 const Container = ({ className, children }: ContainerProps) => {
   return (
-    <div className={clsx('px-4 mx-auto max-w-7xl', className)}>{children}</div>
+    <div className={clsx('px-4 mx-auto max-w-7xl', className && className)}>
+      {children}
+    </div>
   );
 };
 
