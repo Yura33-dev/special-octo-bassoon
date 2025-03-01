@@ -10,6 +10,13 @@ export interface IFilterApi extends Document {
   }>;
 }
 
+export interface IFilter {
+  id: string;
+  slug: string;
+  title: string;
+  variants: Array<{ slug: string; title: string }>;
+}
+
 export interface IFilterInProductApi {
   filter: {
     _id: ObjectId;

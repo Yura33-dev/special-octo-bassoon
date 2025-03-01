@@ -5,11 +5,11 @@ import { useTranslations } from 'next-intl';
 import { useTransition } from 'react';
 
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
+import Pagination from '@/components/shared/Pagination';
 import { useRouter } from '@/i18n/routing';
 import { IPagination, IProduct } from '@/types';
 
 import Card from '../catalog-page/catalog-card/Card';
-import Pagination from '../catalog-page/Pagination';
 
 interface ICatalogGridProps {
   products: Array<IProduct>;

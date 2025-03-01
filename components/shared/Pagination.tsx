@@ -16,7 +16,7 @@ export default function Pagination({
       {hasPrevPage && page !== 1 && (
         <button
           type='button'
-          className='btn w-[3rem] border-none bg-primary text-white hover:bg-green-800'
+          className='btn w-[3rem] border-none bg-primary text-white hover:bg-primary-dark'
           onClick={() => handlePageChange(1)}
         >
           1
@@ -28,7 +28,7 @@ export default function Pagination({
           {page >= 4 && (
             <button
               type='button'
-              className='btn w-[3rem] border-none bg-primary text-white hover:bg-green-800'
+              className='btn w-[3rem] border-none bg-primary text-white hover:bg-primary-dark'
             >
               ...
             </button>
@@ -36,7 +36,7 @@ export default function Pagination({
 
           <button
             type='button'
-            className='btn w-[3rem] border-none bg-primary text-white hover:bg-green-800'
+            className='btn w-[3rem] border-none bg-primary text-white hover:bg-primary-dark'
             onClick={() => handlePageChange(page - 1)}
           >
             {page - 1}
@@ -46,7 +46,7 @@ export default function Pagination({
 
       <button
         type='button'
-        className='bg-accent btn w-[3rem] border-none text-white hover:bg-green-800'
+        className='bg-accent btn w-[3rem] border-none text-white hover:bg-primary-dark'
       >
         {page}
       </button>
@@ -54,7 +54,7 @@ export default function Pagination({
       {hasNextPage && page !== totalPages - 1 && (
         <button
           type='button'
-          className='btn w-[3rem] border-none bg-primary text-white hover:bg-green-800'
+          className='btn w-[3rem] border-none bg-primary text-white hover:bg-primary-dark'
           onClick={() => handlePageChange(page + 1)}
         >
           {page + 1}
@@ -66,7 +66,7 @@ export default function Pagination({
           {page + 2 < totalPages && (
             <button
               type='button'
-              className='btn w-[3rem] border-none bg-primary text-white hover:bg-green-800'
+              className='btn w-[3rem] border-none bg-primary text-white hover:bg-primary-dark'
             >
               ...
             </button>
@@ -74,7 +74,7 @@ export default function Pagination({
 
           <button
             type='button'
-            className='btn w-[3rem] border-none bg-primary text-white hover:bg-green-800'
+            className='btn w-[3rem] border-none bg-primary text-white hover:bg-primary-dark'
             onClick={() => handlePageChange(totalPages)}
           >
             {totalPages}

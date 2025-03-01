@@ -7,7 +7,7 @@ import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import {
   getAllProductsByCategoryId,
   getCategoryBySlug,
-  getFilters,
+  getFiltersFromProducts,
   getPageDataByName,
 } from '@/lib/api';
 import { locale } from '@/types';
@@ -48,7 +48,7 @@ export default async function SubcategoryPage({
   const limit = parseInt(searchParams.limit || '9');
 
   const [{ filters }, { products, paginationData }] = await Promise.all([
-    getFilters(locale, subcategory.id),
+    getFiltersFromProducts(locale, { categories: subcategory.id }),
     getAllProductsByCategoryId(
       locale,
       subcategory.id,

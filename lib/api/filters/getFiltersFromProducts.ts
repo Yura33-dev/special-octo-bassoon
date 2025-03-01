@@ -6,11 +6,14 @@ import { extractFilters, mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
 import { IProductApi, locale } from '@/types';
 
-export async function getFilters(locale: locale, subcategoryId: string) {
+export async function getFiltersFromProducts(
+  locale: locale,
+  filter: object = {}
+) {
   try {
     await dbConnect();
 
-    const productsQuery = Product.find({ categories: subcategoryId });
+    const productsQuery = Product.find(filter);
 
     const products = await productsQuery
       .populate('categories')

@@ -27,9 +27,20 @@ export const SMTH_WENT_WRONG =
 }
 
 export const PRODUCTS_FETCH_FAILED = 'Failed to fetch products.';
+export const PRODUCT_FETCH_FAILED = 'Failed to fetch product';
 export const PRODUCTS_BY_CATEGORY_ID_FAILED =
   'Failed to fetch products by category ID:';
 export const LATEST_PRODUCTS_FETCH_FAILED = 'Failed to fetch latest products.';
+
+{
+  /* Filters  */
+}
+export const FILTERS_FETCH_FAILED = 'Failed to fetch filters (admin)';
+
+{
+  /* Packaging  */
+}
+export const PACKAGING_FETCH_FAILED = 'Failed to fetch packaging';
 
 {
   /* Slides  */

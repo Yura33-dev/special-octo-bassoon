@@ -1,6 +1,7 @@
 import { ICategoryApi, ICategory } from './interfaces/category.interfaces';
 import {
   IFilterApi,
+  IFilter,
   IFilterInProductApi,
   IFilterInProduct,
 } from './interfaces/filter.interfaces';
@@ -63,6 +64,7 @@ export type {
   ISettings,
   ITranslatedSettingsData,
   IFilterApi,
+  IFilter,
   IFilterInProductApi,
   IFilterInProduct,
   IOrderApi,
