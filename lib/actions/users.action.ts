@@ -13,7 +13,7 @@ import {
   MANDATORY_FIELD,
 } from '@/lib/constants';
 import { Order } from '@/models';
-import { IOrderApi, IProductInOrder } from '@/types';
+import { IOrderApi, IProductInOrderApi } from '@/types';
 
 interface OrderData {
   delivery: string;
@@ -22,7 +22,7 @@ interface OrderData {
   customerPhone: string;
   customerEmail: string;
   city: string;
-  products: Array<IProductInOrder>;
+  products: Array<IProductInOrderApi>;
   customerLastName: string;
   customerFatherName: string;
   postNumber: string;
@@ -42,6 +42,7 @@ export async function submitOrder(
   formData: FormData
 ): Promise<OrderState> {
   const parsedData = parseFormData(formData);
+
   const errors = validateData(parsedData);
 
   if (Object.keys(errors).length > 0) {
@@ -67,9 +68,9 @@ export async function submitOrder(
     products: parsedData.products,
   };
 
-  const order: IOrderApi = await Order.create(orderObject);
+  const { orderNumber }: IOrderApi = await Order.create(orderObject);
 
-  return { success: true, errors: {}, orderNumber: order.orderNumber };
+  return { success: true, errors: {}, orderNumber };
 }
 
 function validateData(data: OrderData) {

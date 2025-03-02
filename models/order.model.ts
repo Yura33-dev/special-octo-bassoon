@@ -1,8 +1,8 @@
 import mongoose, { model, models } from 'mongoose';
 
-import { IOrderApi, IProductInOrder } from '@/types';
+import { IOrderApi, IProductInOrderApi } from '@/types';
 
-const productInOrder = new mongoose.Schema<IProductInOrder>(
+const productInOrder = new mongoose.Schema<IProductInOrderApi>(
   {
     productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
     packId: { type: mongoose.Schema.Types.ObjectId, ref: 'Packaging' },
@@ -18,6 +18,7 @@ const orderSchema = new mongoose.Schema<IOrderApi>(
     name: { type: String, required: true },
     email: { type: String, required: true },
     deliveryBy: { type: String, required: true },
+    deliveryTo: { type: String, required: true },
     paymentType: { type: String, required: true },
     totalPrice: { type: Number, required: true },
     orderNumber: { type: String, required: true },

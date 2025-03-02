@@ -59,3 +59,9 @@ export const PAGE_FETCH_FAILED = 'Failed to fetch page`s data';
 }
 
 export const SETTINGS_FETCH_FAILED = 'Failed to fetch web-site`s settings';
+
+{
+  /* Orders  */
+}
+
+export const ORDERS_FETCH_FAILED = 'Failed to fetch orders (admin)';

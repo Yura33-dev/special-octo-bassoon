@@ -3,6 +3,7 @@ import { getCategoryBySlug } from './categories/getCategoryBySlug';
 import { getChildCategoriesByParentSlug } from './categories/getChildCategoryByParentSlug';
 import { getAllFilters } from './filters/getAllFilters';
 import { getFiltersFromProducts } from './filters/getFiltersFromProducts';
+import { getAllOrders } from './orders/getAllOrders';
 import { getAllPackaging } from './packaging/getAllPackaging';
 import { getPageDataByName } from './pages/getPageDataByName';
 import { getAllProducts } from './products/getAllProducts';
@@ -32,4 +33,5 @@ export {
   getFiltersFromProducts,
   getAllPackaging,
   getAllFilters,
+  getAllOrders,
 };

@@ -13,6 +13,7 @@ import {
   SETTINGS_FETCH_FAILED,
   PACKAGING_FETCH_FAILED,
   FILTERS_FETCH_FAILED,
+  ORDERS_FETCH_FAILED,
 } from './api.constants';
 import { SUCCESS_ORDER_ID } from './modal.constant';
 import {
@@ -50,4 +51,5 @@ export {
   INCORRECT_FATHERNAME,
   INCORRECT_ZIP,
   FILTERS_FETCH_FAILED,
+  ORDERS_FETCH_FAILED,
 };
