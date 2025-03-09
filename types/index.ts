@@ -1,4 +1,11 @@
-import { ICategoryApi, ICategory } from './interfaces/category.interfaces';
+import {
+  ICategoryApi,
+  ICategory,
+  IMappedChildCategories,
+  ICategoryApiPopulated,
+  IEditCategory,
+  IEditCategoryToDB,
+} from './interfaces/category.interfaces';
 import {
   IFilterApi,
   IFilter,
@@ -47,6 +54,10 @@ import { locale } from './types/global.types';
 export type {
   ICategoryApi,
   ICategory,
+  ICategoryApiPopulated,
+  IMappedChildCategories,
+  IEditCategory,
+  IEditCategoryToDB,
   IProductApi,
   IProduct,
   IProductPackVariantsApi,
