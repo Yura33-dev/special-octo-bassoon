@@ -18,9 +18,9 @@ export async function getAllCategories(
       .populate('parentCategories')
       .lean<Array<ICategoryApi>>();
 
-    const transformedCategories = categories.map(category =>
-      mapCategory(category, locale)
-    );
+    const transformedCategories = categories
+      .map(category => mapCategory(category, locale))
+      .toSorted((a, b) => a.sortOrder - b.sortOrder);
 
     return transformedCategories;
   } catch (error) {

@@ -13,13 +13,11 @@ export function mapCategory(category: ICategoryApi, locale: locale): ICategory {
     updatedAt: category.updatedAt ?? null,
     createdAt: category.createdAt ?? null,
     parentCategories: Array.isArray(category.parentCategories)
-      ? category.parentCategories
-          .map(parent =>
-            typeof parent === 'object'
-              ? mapCategory(parent as unknown as ICategoryApi, locale)
-              : ({ id: String(parent) } as ICategory)
-          )
-          .filter(parent => parent.visible === true)
+      ? category.parentCategories.map(parent =>
+          typeof parent === 'object'
+            ? mapCategory(parent as unknown as ICategoryApi, locale)
+            : ({ id: String(parent) } as ICategory)
+        )
       : [],
 
     childCategories: Array.isArray(category.childCategories)
