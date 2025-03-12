@@ -221,7 +221,11 @@ export default function CheckoutForm({ className }: ICheckoutFormProps) {
         </form>
       )}
 
-      <ModalWindow title='Дякуємо!' modalId={SUCCESS_ORDER_ID}>
+      <ModalWindow
+        title='Дякуємо!'
+        modalId={SUCCESS_ORDER_ID}
+        className='max-w-[500px]'
+      >
         <SuccessSubmit order={data.orderNumber} />
       </ModalWindow>
     </>
