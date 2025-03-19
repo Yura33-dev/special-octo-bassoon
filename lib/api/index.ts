@@ -1,6 +1,13 @@
+import { addNestedCategory } from './categories/addNestedCategory';
+import { createCategory } from './categories/createCategory';
+import { deleteCategoryById } from './categories/deleteCategoryById';
 import { getAllCategories } from './categories/getAllCategories';
+import { getCategoryById } from './categories/getCategoryById';
 import { getCategoryBySlug } from './categories/getCategoryBySlug';
 import { getChildCategoriesByParentSlug } from './categories/getChildCategoryByParentSlug';
+import { getFullCategoryBySlug } from './categories/getFullCategoryBySlug';
+import { patchCategoryById } from './categories/patchCategoryById';
+import { removeNestedCategory } from './categories/removeNestedCategory';
 import { getAllFilters } from './filters/getAllFilters';
 import { getFiltersFromProducts } from './filters/getFiltersFromProducts';
 import { getAllOrders } from './orders/getAllOrders';
@@ -22,6 +29,7 @@ export {
   getProductBySlug,
   getProductsByName,
   getAllCategories,
+  getFullCategoryBySlug,
   getLatestProducts,
   getAllSettings,
   getProductSlug,
@@ -34,4 +42,10 @@ export {
   getAllPackaging,
   getAllFilters,
   getAllOrders,
+  patchCategoryById,
+  deleteCategoryById,
+  createCategory,
+  addNestedCategory,
+  getCategoryById,
+  removeNestedCategory,
 };
