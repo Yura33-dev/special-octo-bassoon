@@ -1,5 +1,3 @@
-// import { locale } from '@/types';
-
 import Container from '@/components/shared/Container';
 
 export const metadata = {

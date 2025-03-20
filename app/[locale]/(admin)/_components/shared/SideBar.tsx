@@ -110,8 +110,7 @@ export default function SideBar({ className }: ISideBarProps) {
             href={'/dashboard/categories'}
             className={clsx(
               'flex items-center justify-start gap-2 text-base transition-colors p-2 rounded-md hover:bg-primary-dark hover:text-white',
-              pathname === '/dashboard/categories' &&
-                'bg-primary-dark text-white'
+              pathname.includes('categories') && 'bg-primary-dark text-white'
             )}
           >
             <Blocks className='w-5 h-5' />
@@ -123,8 +122,7 @@ export default function SideBar({ className }: ISideBarProps) {
             href={'/dashboard/packaging'}
             className={clsx(
               'flex items-center justify-start gap-2 text-base transition-colors p-2 rounded-md hover:bg-primary-dark hover:text-white',
-              pathname === '/dashboard/packaging' &&
-                'bg-primary-dark text-white'
+              pathname.includes('packaging') && 'bg-primary-dark text-white'
             )}
           >
             <Package className='w-5 h-5' />
@@ -136,7 +134,7 @@ export default function SideBar({ className }: ISideBarProps) {
             href={'/dashboard/products'}
             className={clsx(
               'flex items-center justify-start gap-2 text-base transition-colors p-2 rounded-md hover:bg-primary-dark hover:text-white',
-              pathname === '/dashboard/products' && 'bg-primary-dark text-white'
+              pathname.includes('products') && 'bg-primary-dark text-white'
             )}
           >
             <ShoppingCart className='w-5 h-5' />
@@ -148,7 +146,7 @@ export default function SideBar({ className }: ISideBarProps) {
             href={'/dashboard/filters'}
             className={clsx(
               'flex items-center justify-start gap-2 text-base transition-colors p-2 rounded-md hover:bg-primary-dark hover:text-white',
-              pathname === '/dashboard/filters' && 'bg-primary-dark text-white'
+              pathname.includes('filters') && 'bg-primary-dark text-white'
             )}
           >
             <SlidersHorizontal className='w-5 h-5' />
@@ -160,7 +158,7 @@ export default function SideBar({ className }: ISideBarProps) {
             href={'/dashboard/orders'}
             className={clsx(
               'flex items-center justify-start gap-2 text-base transition-colors p-2 rounded-md hover:bg-primary-dark hover:text-white',
-              pathname === '/dashboard/orders' && 'bg-primary-dark text-white'
+              pathname.includes('orders') && 'bg-primary-dark text-white'
             )}
           >
             <Wallet className='w-5 h-5' />
