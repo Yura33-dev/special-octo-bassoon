@@ -12,11 +12,11 @@ import { createCategorySchema } from '@/lib/validations';
 import { useModalStore } from '@/providers';
 import { ICreateCategoryFormField, ICreateCategoryStructured } from '@/types';
 
-import CategoryAddSelect from './elements/CategoryAddSelect';
-import CustomCheckBox from './elements/CustomCheckBox';
-import FileUploader from './elements/FileUploader';
-import Input from './elements/Input';
-import SubmitButton from './elements/SubmitButton';
+import CategoryAddSelect from '../../shared/forms-elements/CategoryAddSelect';
+import CustomCheckBox from '../../shared/forms-elements/CustomCheckBox';
+import FileUploader from '../../shared/forms-elements/FileUploader';
+import Input from '../../shared/forms-elements/Input';
+import SubmitButton from '../../shared/forms-elements/SubmitButton';
 
 export default function CategoryAddForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);

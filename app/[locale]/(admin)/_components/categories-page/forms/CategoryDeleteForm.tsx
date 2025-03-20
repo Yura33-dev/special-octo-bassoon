@@ -8,7 +8,7 @@ import { deleteCategoryById } from '@/lib/api';
 import { DELETE_CATEGORY_ID } from '@/lib/constants';
 import { useModalStore } from '@/providers';
 
-import DeleteButton from './elements/DeleteButton';
+import DeleteButton from '../../shared/forms-elements/DeleteButton';
 
 interface ICategoryDeleteFormProps {
   categoryId: string;

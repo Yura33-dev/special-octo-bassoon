@@ -18,11 +18,11 @@ import {
   locale,
 } from '@/types';
 
-import CustomCheckBox from './elements/CustomCheckBox';
-import DeleteButton from './elements/DeleteButton';
-import FileUploader from './elements/FileUploader';
-import Input from './elements/Input';
-import SubmitButton from './elements/SubmitButton';
+import CustomCheckBox from '../../shared/forms-elements/CustomCheckBox';
+import DeleteButton from '../../shared/forms-elements/DeleteButton';
+import FileUploader from '../../shared/forms-elements/FileUploader';
+import Input from '../../shared/forms-elements/Input';
+import SubmitButton from '../../shared/forms-elements/SubmitButton';
 
 interface ICategoryEditFormProps {
   category: IMappedNestedCategories;
