@@ -51,3 +51,24 @@ export interface IProductPack {
   price: number;
   showPricePerUnit: boolean;
 }
+
+export interface ICreatePackagingFormField {
+  measureTypeUk: string;
+  measureTypeRu: string;
+  measureInUk: string;
+  measureInRu: string;
+  measureValue: number;
+  showPricePerUnit: boolean;
+}
+
+export interface ICreatePackagingStructured {
+  translatedData: Record<
+    string,
+    {
+      type: string;
+      measureIn: string;
+      measureValue: number;
+    }
+  >;
+  showPricePerUnit: boolean;
+}

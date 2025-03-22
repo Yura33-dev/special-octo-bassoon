@@ -27,6 +27,8 @@ import {
   IProductPackVariants,
   IProductPack,
   IProductPackVariantsApi,
+  ICreatePackagingFormField,
+  ICreatePackagingStructured,
 } from './interfaces/packaging.interfaces';
 import {
   IPageApi,
@@ -91,5 +93,7 @@ export type {
   IOrder,
   IProductInOrderApi,
   IProductInOrder,
+  ICreatePackagingFormField,
+  ICreatePackagingStructured,
 };
 export type { locale };
