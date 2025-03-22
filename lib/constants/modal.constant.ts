@@ -7,3 +7,6 @@ export const SUCCESS_ORDER_ID = 'success_order_id';
 export const ADD_CATEGORY_ID = 'add_category_id';
 export const DELETE_CATEGORY_ID = 'delete_category_id';
 export const ADD_SUBCATEGORY_ID = 'add_subcategory_id';
+
+export const ADD_PACKAGING_ID = 'add_packaging_id';
+export const DELETE_PACKAGING_ID = 'delete_packaging_id';

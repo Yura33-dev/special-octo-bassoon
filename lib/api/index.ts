@@ -11,7 +11,11 @@ import { removeNestedCategory } from './categories/removeNestedCategory';
 import { getAllFilters } from './filters/getAllFilters';
 import { getFiltersFromProducts } from './filters/getFiltersFromProducts';
 import { getAllOrders } from './orders/getAllOrders';
+import { createPackaging } from './packaging/createPackaging';
+import { deletePackagingById } from './packaging/deletePackagingById';
 import { getAllPackaging } from './packaging/getAllPackaging';
+import { getPackagingById } from './packaging/getPackagingById';
+import { patchPackagingById } from './packaging/patchPackagingById';
 import { getPageDataByName } from './pages/getPageDataByName';
 import { getAllProducts } from './products/getAllProducts';
 import { getAllProductsByCategoryId } from './products/getAllProductsByCategoryId';
@@ -48,4 +52,8 @@ export {
   addNestedCategory,
   getCategoryById,
   removeNestedCategory,
+  createPackaging,
+  getPackagingById,
+  deletePackagingById,
+  patchPackagingById,
 };
