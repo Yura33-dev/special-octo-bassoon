@@ -4,7 +4,8 @@ interface IInputProps {
   name: string;
   type: string;
   title: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   value: string;
   touched: Record<string, boolean>;
@@ -16,6 +17,7 @@ export default function Input({
   name,
   title,
   type,
+  placeholder,
   value,
   onChange,
   onBlur,
@@ -25,7 +27,7 @@ export default function Input({
 }: IInputProps) {
   return (
     <label htmlFor={name} className='flex flex-col'>
-      <span className='text-sm font-semibold mb-1 '>{title}</span>
+      <span className='text-sm font-semibold mb-1'>{title}</span>
       <input
         id={name}
         name={name}
@@ -33,8 +35,10 @@ export default function Input({
         onChange={onChange}
         onBlur={onBlur}
         value={value}
+        placeholder={placeholder}
         className={clsx(
           'w-full p-1 pl-3 text-gray-600 rounded-md text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-primary',
+          'placeholder:text-xs',
           className && className
         )}
       />

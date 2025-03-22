@@ -14,7 +14,7 @@ export default function NotFound() {
           href='/dashboard'
           className='bg-primary text-white px-4 py-2 rounded-md block mx-auto mt-6 w-max'
         >
-          Повернутися в адмінку
+          Повернутися на головну
         </Link>
       </Container>
     </section>

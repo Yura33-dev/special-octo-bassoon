@@ -2,18 +2,24 @@
 
 import { MoveLeft } from 'lucide-react';
 
-import { useRouter } from '@/i18n/routing';
+import { Link } from '@/i18n/routing';
 
-export default function BackButton() {
-  const router = useRouter();
-
+interface IBackButtonProps {
+  href: string;
+  title?: string;
+}
+export default function BackButton({
+  title = 'Назад',
+  href,
+}: IBackButtonProps) {
   return (
-    <button
-      onClick={() => router.back()}
-      className='text-white bg-primary rounded-md p-2 flex items-center gap-2 mb-5 text-sm transition-colors hover:bg-primary-dark'
+    <Link
+      className='flex justify-start items-center gap-4 mb-5 max-w-max rounded-md p-2 transition-colors
+                      hover:bg-primary-dark hover:text-white'
+      href={href}
     >
-      <MoveLeft />
-      <span>Назад</span>
-    </button>
+      <MoveLeft className='w-5 h-5' />
+      <span>{title}</span>
+    </Link>
   );
 }

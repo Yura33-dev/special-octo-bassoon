@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import React, { cloneElement, ReactElement, useEffect } from 'react';
 
+import { useRouter } from '@/i18n/routing';
 import { useModalStore } from '@/providers';
 
 interface IModalWindowProps {
@@ -12,6 +13,8 @@ interface IModalWindowProps {
   children: React.ReactNode;
   modalId: string;
   className?: string;
+  isModalSlot?: boolean;
+  initial?: boolean;
 }
 
 export default function ModalWindow({
@@ -19,9 +22,13 @@ export default function ModalWindow({
   title,
   modalId,
   className,
+  isModalSlot = false,
+  initial = false,
 }: IModalWindowProps) {
   const closeModal = useModalStore(state => state.closeModal);
   const modals = useModalStore(state => state.modals);
+
+  const router = useRouter();
 
   useEffect(() => {
     const isAnyModalOpen = Object.values(modals).some(isOpen => isOpen);
@@ -41,8 +48,21 @@ export default function ModalWindow({
     }
   }, [modals]);
 
+  const handleCloseModal = () => {
+    let timer: NodeJS.Timeout;
+
+    if (isModalSlot) {
+      closeModal(modalId);
+      timer = setTimeout(() => router.back(), 210);
+    } else {
+      closeModal(modalId);
+    }
+
+    return () => clearTimeout(timer);
+  };
+
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence initial={initial}>
       {modals[modalId] ? (
         <motion.div
           initial={{ opacity: 0, pointerEvents: 'none' }}
@@ -67,7 +87,7 @@ export default function ModalWindow({
               <button
                 className='btn block h-auto min-h-min p-1 bg-primary hover:bg-primary-dark border-none'
                 aria-label='Закрити модальне вікно'
-                onClick={() => closeModal(modalId)}
+                onClick={handleCloseModal}
               >
                 <X
                   className='w-5 h-5'
