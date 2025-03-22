@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { getFullCategoryBySlug } from '@/lib/api';
 import { locale } from '@/types';
 
-import CategoryDetailsPage from '../../../_components/categories-page/category-page/CategoryDetailsPage';
+import EditCategoryPage from '../../../_components/categories-page/edit-page/EditCategoryPage';
+import EditCategoryPageSkeleton from '../../../_components/categories-page/edit-page/EditCategoryPageSkeleton';
 
 interface ICategoryDetailsPage {
   params: {
@@ -29,14 +29,8 @@ export async function generateMetadata({
 
 export default async function CategoryPage({ params }: ICategoryDetailsPage) {
   return (
-    <Suspense
-      fallback={
-        <div className='w-full h-screen flex items-center justify-center'>
-          <CircleLoader />
-        </div>
-      }
-    >
-      <CategoryDetailsPage
+    <Suspense fallback={<EditCategoryPageSkeleton />}>
+      <EditCategoryPage
         categorySlug={params.categorySlug}
         locale={params.locale}
       />

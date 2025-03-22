@@ -1,3 +1,5 @@
+import ModalWindow from '@/components/shared/modals/ModalWindow';
+import { ADD_SUBCATEGORY_ID } from '@/lib/constants';
 import { ICategory } from '@/types';
 
 import SubcategoriesList from '../SubcategoriesList';
@@ -14,10 +16,16 @@ export default function NestedCategoryAddModal({
   main,
 }: INestedCategoryAddModalProps) {
   return (
-    <SubcategoriesList
-      availableSubcategories={availableSubcategories}
-      baseCategoryId={baseCategoryId}
-      main={main}
-    />
+    <ModalWindow
+      title='Додати категорію'
+      modalId={ADD_SUBCATEGORY_ID}
+      className='lg:max-w-[500px]'
+    >
+      <SubcategoriesList
+        availableSubcategories={availableSubcategories}
+        baseCategoryId={baseCategoryId}
+        main={main}
+      />
+    </ModalWindow>
   );
 }

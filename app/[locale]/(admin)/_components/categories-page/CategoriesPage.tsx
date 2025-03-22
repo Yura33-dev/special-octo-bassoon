@@ -1,18 +1,17 @@
 import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
-import ModalWindow from '@/components/shared/modals/ModalWindow';
 import { getAllCategories } from '@/lib/api';
 import { ADD_CATEGORY_ID } from '@/lib/constants';
 import { locale } from '@/types';
 
 import HeaderBody from './table/HeaderBody';
 import AddButton from '../shared/AddButton';
-import CategoryAddModal from './modals/CategoryAddModal';
 import HeaderTable from './table/HeaderTable';
 import Table from './table/Table';
+import PageMainHeader from '../shared/page-elements/PageMainHeader';
 
-export default async function CategoriesList() {
+export default async function CategoriesPage() {
   const locale = (await getLocale()) as locale;
 
   const categories = await getAllCategories(locale);
@@ -24,11 +23,14 @@ export default async function CategoriesList() {
       <section>
         <Container>
           <div className='flex items-center justify-between gap-8'>
-            <h1 className='text-2xl font-semibold'>
-              Категорії ({mainCategories.length})
-            </h1>
+            <PageMainHeader title='Категорії' length={mainCategories.length} />
+
             {mainCategories.length <= 0 && subCategories.length <= 0 ? null : (
-              <AddButton modalId={ADD_CATEGORY_ID} />
+              <AddButton
+                modalId={ADD_CATEGORY_ID}
+                type='link'
+                href='/dashboard/categories/new'
+              />
             )}
           </div>
 
@@ -39,6 +41,8 @@ export default async function CategoriesList() {
                 modalId={ADD_CATEGORY_ID}
                 className='mt-4'
                 title='Створити'
+                type='link'
+                href='/dashboard/categories/new'
               />
             </div>
           ) : (
@@ -51,14 +55,6 @@ export default async function CategoriesList() {
               <HeaderBody categories={mainCategories} />
             </Table>
           )}
-
-          <ModalWindow
-            title='Додати категорію'
-            modalId={ADD_CATEGORY_ID}
-            className='lg:max-w-[1000px]'
-          >
-            <CategoryAddModal />
-          </ModalWindow>
         </Container>
       </section>
 
@@ -77,6 +73,8 @@ export default async function CategoriesList() {
                 modalId={ADD_CATEGORY_ID}
                 className='mt-4'
                 title='Створити'
+                type='link'
+                href='/dashboard/categories/new'
               />
             </div>
           ) : (

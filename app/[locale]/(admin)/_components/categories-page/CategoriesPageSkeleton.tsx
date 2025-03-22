@@ -2,7 +2,7 @@
 
 import Container from '@/components/shared/Container';
 
-export default function TableSkeleton() {
+export default function CategoriesPageSkeleton() {
   return (
     <Container className='mt-10'>
       <div className='mb-5 flex justify-between'>

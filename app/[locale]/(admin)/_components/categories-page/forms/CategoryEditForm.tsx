@@ -81,7 +81,6 @@ export default function CategoryEditForm({ category }: ICategoryEditFormProps) {
       sortOrder: values.sortOrder,
       visible: values.visible,
       featured: values.featured,
-      // image: typeof values.image === 'string' ? values.image : '/no-image.webp',
     };
 
     if (values.image !== category.image) {
@@ -246,7 +245,11 @@ export default function CategoryEditForm({ category }: ICategoryEditFormProps) {
           className='px-4 py-2'
         />
         <p className='block text-center text-sm uppercase'>Або</p>
-        <DeleteButton onClick={handleDeleteButton} />
+        <DeleteButton
+          onClick={handleDeleteButton}
+          isSubmitting={isSubmitting}
+          withoutSpinner
+        />
       </div>
     </form>
   );

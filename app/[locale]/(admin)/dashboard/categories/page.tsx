@@ -1,16 +1,16 @@
 import { Suspense } from 'react';
 
-import CategoriesList from '../../_components/categories-page/CategoriesList';
-import TableSkeleton from '../../_components/categories-page/TableSkeleton';
+import CategoriesPage from '../../_components/categories-page/CategoriesPage';
+import CategoriesPageSkeleton from '../../_components/categories-page/CategoriesPageSkeleton';
 
 export const metadata = {
   title: 'ProGround | Категорії',
 };
 
-export default async function CategoriesPage() {
+export default async function Page() {
   return (
-    <Suspense fallback={<TableSkeleton />}>
-      <CategoriesList />
+    <Suspense fallback={<CategoriesPageSkeleton />}>
+      <CategoriesPage />
     </Suspense>
   );
 }

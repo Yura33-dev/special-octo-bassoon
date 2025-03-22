@@ -7,7 +7,6 @@ import { slugify } from 'transliteration';
 
 import { createCategory } from '@/lib/api';
 import { ADD_CATEGORY_ID } from '@/lib/constants';
-// import { ErrorHandler } from '@/lib/handlers';
 import { createCategorySchema } from '@/lib/validations';
 import { useModalStore } from '@/providers';
 import { ICreateCategoryFormField, ICreateCategoryStructured } from '@/types';
@@ -112,7 +111,7 @@ export default function CategoryAddForm() {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      {/* Локалізація */}
+      {/* Localization */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
         <div className='flex flex-col gap-4 p-4 bg-gray-200 rounded-md'>
           <h2 className='text-lg font-semibold md:mb-4'>
@@ -193,7 +192,7 @@ export default function CategoryAddForm() {
         </div>
       </div>
 
-      {/* Порядок сортування, чи показувати на головній, активність, фото */}
+      {/* Sort order, available in main page, activity, image */}
       <div className='flex flex-col md:flex-row gap-4'>
         <div className='p-4 bg-gray-200 mt-5 rounded-md basis-full md:basis-1/2'>
           <div className='flex flex-col gap-6 lg:gap-8'>

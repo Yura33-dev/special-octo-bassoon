@@ -8,6 +8,7 @@ import { deleteCategoryById } from '@/lib/api';
 import { DELETE_CATEGORY_ID } from '@/lib/constants';
 import { useModalStore } from '@/providers';
 
+import CancelButton from '../../shared/forms-elements/CancelButton';
 import DeleteButton from '../../shared/forms-elements/DeleteButton';
 
 interface ICategoryDeleteFormProps {
@@ -34,6 +35,7 @@ export default function CategoryDeleteForm({
       await deleteCategoryById(categoryId);
       toast.success('Категорія успішно видалена!');
       router.push('/dashboard/categories');
+      closeModal(DELETE_CATEGORY_ID);
     } catch (error: unknown) {
       toast.error('Помилка при видаленні категорії. Спробуйте ще раз');
       console.error(error);
@@ -52,15 +54,14 @@ export default function CategoryDeleteForm({
         Після видалення, категорію відновити неможливо
       </p>
       <div className='flex gap-4 items-center justify-center mt-6'>
-        <DeleteButton onClick={() => handleDeleleteCategory(categoryId)} />
-        <button
-          type='button'
+        <DeleteButton
+          onClick={() => handleDeleleteCategory(categoryId)}
+          isSubmitting={isSubmitting}
+        />
+        <CancelButton
           onClick={handleCancelButton}
-          disabled={isSubmitting}
-          className='bg-gray-300 px-10 py-2 rounded-md transition-colors hover:bg-gray-400'
-        >
-          Назад
-        </button>
+          isSubmitting={isSubmitting}
+        />
       </div>
     </div>
   );

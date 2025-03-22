@@ -21,20 +21,22 @@ export default async function EditPackagePage({
   if (!packaging) notFound();
 
   return (
-    <Container>
-      <BackButton title='Всі пакування' href='/dashboard/packaging' />
-      <PageMainHeader title='Редагувати пакування' className='mb-8' />
+    <section>
+      <Container>
+        <BackButton title='Всі пакування' href='/dashboard/packaging' />
+        <PageMainHeader title='Редагувати пакування' className='mb-8' />
 
-      <PackEditForm packaging={packaging} />
+        <PackEditForm packaging={packaging} />
 
-      <PackDeleteModal
-        packId={packaging._id.toString()}
-        packTitle={formattedPackValue(
-          packaging.translatedData['uk'].type,
-          packaging.translatedData['uk'].measureValue,
-          packaging.translatedData['uk'].measureIn
-        )}
-      />
-    </Container>
+        <PackDeleteModal
+          packId={packaging._id.toString()}
+          packTitle={formattedPackValue(
+            packaging.translatedData['uk'].type,
+            packaging.translatedData['uk'].measureValue,
+            packaging.translatedData['uk'].measureIn
+          )}
+        />
+      </Container>
+    </section>
   );
 }

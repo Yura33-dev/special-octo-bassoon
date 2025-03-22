@@ -79,9 +79,7 @@ export default function NestedCategoriesList({
           </button>
         </li>
       ))}
-      {/* {main && (
-        
-      )} */}
+
       <li className='p-1 rounded-md bg-teal-700/30 transition-colors hover:bg-teal-700/70 hover:text-white hover:cursor-pointer'>
         <button
           type='button'
