@@ -37,3 +37,20 @@ export interface IFilterInProduct {
   variants: Array<{ slug: string; title: string }>;
   value: string;
 }
+
+interface IVariant {
+  variantSlug: string;
+  translatedData: {
+    uk: { variantTitle: string };
+    ru: { variantTitle: string };
+  };
+}
+
+export interface ICreateFilterFormField {
+  slug: string;
+  translatedData: {
+    uk: { filterTitle: string };
+    ru: { filterTitle: string };
+  };
+  variants: Array<IVariant>;
+}

@@ -12,7 +12,7 @@ const translatedVariantSchema = new mongoose.Schema<{ variantTitle: string }>({
 
 const filterSchema = new mongoose.Schema<IFilterApi>(
   {
-    slug: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
     translatedData: { type: Map, of: translatedFilterSchema, required: true },
     variants: [
       {

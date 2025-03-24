@@ -10,3 +10,6 @@ export const ADD_SUBCATEGORY_ID = 'add_subcategory_id';
 
 export const ADD_PACKAGING_ID = 'add_packaging_id';
 export const DELETE_PACKAGING_ID = 'delete_packaging_id';
+
+export const ADD_FILTER_ID = 'add_filter_id';
+export const DELETE_FILTER_ID = 'delete_filter_id';

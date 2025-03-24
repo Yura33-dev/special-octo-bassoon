@@ -7,3 +7,9 @@ export const INCORRECT_POST = 'Будь ласка, вкажіть номер п
 export const INCORRECT_SURNAME = 'Будь ласка, вкажіть прізвище';
 export const INCORRECT_FATHERNAME = 'Будь ласка, вкажіть по-батькові';
 export const INCORRECT_ZIP = 'Будь ласка, вкажіть дійсний поштовий індекс';
+
+//Dashboard
+export const INCORRECT_SLUG = 'Тільки латиниця, цифри та дефіс без пробілів';
+
+//Other
+export const MIN_LENGTH = 'Поле має містити від 2 знаків';

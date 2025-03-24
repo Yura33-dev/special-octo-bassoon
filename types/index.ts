@@ -13,6 +13,7 @@ import {
   IFilter,
   IFilterInProductApi,
   IFilterInProduct,
+  ICreateFilterFormField,
 } from './interfaces/filter.interfaces';
 import {
   IOrderApi,
@@ -95,5 +96,6 @@ export type {
   IProductInOrder,
   ICreatePackagingFormField,
   ICreatePackagingStructured,
+  ICreateFilterFormField,
 };
 export type { locale };

@@ -8,8 +8,12 @@ import { getChildCategoriesByParentSlug } from './categories/getChildCategoryByP
 import { getFullCategoryBySlug } from './categories/getFullCategoryBySlug';
 import { patchCategoryById } from './categories/patchCategoryById';
 import { removeNestedCategory } from './categories/removeNestedCategory';
+import { createFilter } from './filters/createFilter';
+import { deleteFilterById } from './filters/deleteFilterById';
 import { getAllFilters } from './filters/getAllFilters';
+import { getFilterBySlug } from './filters/getFilterBySlug';
 import { getFiltersFromProducts } from './filters/getFiltersFromProducts';
+import { patchFilterBySlug } from './filters/patchFilterBySlug';
 import { getAllOrders } from './orders/getAllOrders';
 import { createPackaging } from './packaging/createPackaging';
 import { deletePackagingById } from './packaging/deletePackagingById';
@@ -26,7 +30,6 @@ import { getProductsByName } from './products/getProductsByName';
 import { getAllSettings } from './settings/getAllSettings';
 import { getCategorySlug } from './slugs/getCategorySlug';
 import { getProductSlug } from './slugs/getProductSlug';
-
 export {
   getAllProducts,
   getProductById,
@@ -56,4 +59,8 @@ export {
   getPackagingById,
   deletePackagingById,
   patchPackagingById,
+  createFilter,
+  getFilterBySlug,
+  patchFilterBySlug,
+  deleteFilterById,
 };
