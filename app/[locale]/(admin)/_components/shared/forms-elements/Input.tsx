@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import clsx from 'clsx';
+import { FormikErrors, FormikTouched } from 'formik';
+import { get } from 'lodash';
 
 interface IInputProps {
   name: string;
@@ -8,9 +11,10 @@ interface IInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   value: string;
-  touched: Record<string, boolean>;
-  errors: Record<string, string | string[]>;
+  touched: FormikTouched<any>;
+  errors: FormikErrors<any>;
   className?: string;
+  labelClassName?: string;
 }
 
 export default function Input({
@@ -24,9 +28,15 @@ export default function Input({
   touched,
   errors,
   className,
+  labelClassName,
 }: IInputProps) {
+  const errorMessage = get(errors, name);
+
   return (
-    <label htmlFor={name} className='flex flex-col'>
+    <label
+      htmlFor={name}
+      className={clsx('flex flex-col', labelClassName && labelClassName)}
+    >
       <span className='text-sm font-semibold mb-1'>{title}</span>
       <input
         id={name}
@@ -42,8 +52,14 @@ export default function Input({
           className && className
         )}
       />
-      {touched[name] && errors[name] ? (
-        <p className='mt-1 text-xs pl-2 text-red-600'>{errors[name]}</p>
+      {get(touched, name) && get(errors, name) ? (
+        <p className='mt-1 text-xs pl-2 text-red-600'>
+          {typeof errorMessage === 'string'
+            ? errorMessage
+            : Array.isArray(errorMessage)
+              ? errorMessage.join(', ')
+              : null}
+        </p>
       ) : null}
     </label>
   );

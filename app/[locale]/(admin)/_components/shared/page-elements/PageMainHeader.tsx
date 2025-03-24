@@ -24,7 +24,7 @@ export default function PageMainHeader({
 
   return (
     <h1 className={clsx('text-2xl font-semibold', className && className)}>
-      {title} {length && `(${length})`}
+      {title} {length && length > 0 ? `(${length})` : null}
     </h1>
   );
 }
