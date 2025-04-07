@@ -6,6 +6,7 @@ interface ICustomCheckBoxProps {
   falseTitle: string;
   onClick: () => void;
   value: boolean;
+  disabled?: boolean;
 }
 
 export default function CustomCheckBox({
@@ -14,6 +15,7 @@ export default function CustomCheckBox({
   falseTitle,
   onClick,
   value,
+  disabled = false,
 }: ICustomCheckBoxProps) {
   return (
     <label className='flex flex-col'>
@@ -21,20 +23,23 @@ export default function CustomCheckBox({
 
       <div className='flex items-center gap-2'>
         <span className='text-sm'>{falseTitle}</span>
-        <div
+        <button
+          disabled={disabled}
+          type='button'
           className={clsx(
-            'w-12 h-6 flex items-center bg-gray-300 rounded-full cursor-pointer transition-all',
+            'w-12 h-6 flex items-center rounded-full cursor-pointer transition-all',
             value ? 'bg-primary' : 'bg-gray-300'
           )}
           onClick={onClick}
         >
           <div
             className={clsx(
-              'w-6 h-6 bg-white rounded-full  transform transition-transform',
+              'w-6 h-6 rounded-full  transform transition-all',
+              disabled ? 'bg-gray-400' : 'bg-white',
               value ? 'translate-x-[24px]' : 'translate-x-0'
             )}
           />
-        </div>
+        </button>
         <span className='text-sm'>{trueTitle}</span>
       </div>
     </label>

@@ -10,7 +10,7 @@ interface IInputProps {
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
-  value: string;
+  value: string | number | null;
   touched: FormikTouched<any>;
   errors: FormikErrors<any>;
   className?: string;
@@ -44,7 +44,7 @@ export default function Input({
         type={type}
         onChange={onChange}
         onBlur={onBlur}
-        value={value}
+        value={value ?? ''}
         placeholder={placeholder}
         className={clsx(
           'w-full p-1 pl-3 text-gray-600 rounded-md text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-primary',

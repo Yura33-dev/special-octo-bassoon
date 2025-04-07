@@ -24,7 +24,7 @@ export async function deleteFilterById(filterId: string) {
     if (error instanceof Error) {
       throw error;
     } else {
-      console.error('Some error occurred while filter creating...', error);
+      console.error('Some error occurred while filter deleting...', error);
     }
   }
 }

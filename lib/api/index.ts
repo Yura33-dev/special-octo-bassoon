@@ -21,15 +21,19 @@ import { getAllPackaging } from './packaging/getAllPackaging';
 import { getPackagingById } from './packaging/getPackagingById';
 import { patchPackagingById } from './packaging/patchPackagingById';
 import { getPageDataByName } from './pages/getPageDataByName';
+import { createProduct } from './products/createProduct';
+import { deleteProductById } from './products/deleteProductById';
 import { getAllProducts } from './products/getAllProducts';
 import { getAllProductsByCategoryId } from './products/getAllProductsByCategoryId';
 import { getLatestProducts } from './products/getLatestProducts';
 import { getProductById } from './products/getProductById';
 import { getProductBySlug } from './products/getProductBySlug';
 import { getProductsByName } from './products/getProductsByName';
+import { updateProduct } from './products/updateProduct';
 import { getAllSettings } from './settings/getAllSettings';
 import { getCategorySlug } from './slugs/getCategorySlug';
 import { getProductSlug } from './slugs/getProductSlug';
+
 export {
   getAllProducts,
   getProductById,
@@ -63,4 +67,7 @@ export {
   getFilterBySlug,
   patchFilterBySlug,
   deleteFilterById,
+  createProduct,
+  updateProduct,
+  deleteProductById,
 };

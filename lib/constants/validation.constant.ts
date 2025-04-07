@@ -11,5 +11,30 @@ export const INCORRECT_ZIP = 'Будь ласка, вкажіть дійсний
 //Dashboard
 export const INCORRECT_SLUG = 'Тільки латиниця, цифри та дефіс без пробілів';
 
+// image validation
+export const ALLOW_IMAGE_EXT =
+  'Можливе завантаження лише картинок (JPG, JPEG, PNG, WEBP)';
+export const LARGE_IMAGE_SIZE = 'Зображення завелике (макс. 5 MB)';
+export const LATIN_FILE_NAME = 'Назва файлу повинна бути латиницею';
+export const ALLOW_IMAGE_EXT_ARRAY = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+];
+
 //Other
 export const MIN_LENGTH = 'Поле має містити від 2 знаків';
+export const MAX_LENGTH_24 = 'Поле може містити до 24 символів';
+//
+export const ONLY_NUMBERS = 'Поле може містити тільки числа';
+export const ONLY_LETTERS = 'Поле може містити тільки літери';
+export const ONLY_POSITIVE_NUMBERS = 'Значення має бути більше нуля';
+export const MIN_ARRAY_LENGTH_1 = 'Має бути доданий хоча б один елемент';
+
+// Packaging
+export const DEFAULT_PACKAGE_AT_LEAST =
+  'Одне з пакуваннь має бути за замовчуванням';
+
+// Categories
+export const SPECIFY_BOTH_CATEGORIES = 'Потрібно вибрати категорії';

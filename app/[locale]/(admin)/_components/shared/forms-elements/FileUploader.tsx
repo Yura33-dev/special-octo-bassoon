@@ -1,30 +1,40 @@
 'use client';
 
+import clsx from 'clsx';
+import { FormikErrors, FormikTouched } from 'formik';
+import { get } from 'lodash';
 import { CircleX } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-interface IFileUploaderProps {
-  name: string;
-  image: string | null;
+interface IFileUploaderProps<T> {
+  name: keyof T;
+  imageUrl: string | null;
   onChange: (file: File | null) => void;
-  touched: Record<string, boolean>;
-  errors: Record<string, string | string[]>;
+  touched: FormikTouched<T>;
+  errors: FormikErrors<T>;
+  labelClassName?: string;
 }
 
-export default function FileUploader({
-  image,
+export default function FileUploader<T>({
+  imageUrl,
   onChange,
   name,
   touched,
   errors,
-}: IFileUploaderProps) {
+  labelClassName,
+}: IFileUploaderProps<T>) {
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(image);
+  const [preview, setPreview] = useState<string | null>(imageUrl);
 
   useEffect(() => {
-    setPreview(image || null);
-  }, [image]);
+    if (!imageUrl) {
+      setFile(null);
+      setPreview('/no-image.webp');
+    } else {
+      setPreview(imageUrl);
+    }
+  }, [imageUrl]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -52,15 +62,18 @@ export default function FileUploader({
 
   return (
     <label
-      className='flex flex-col justify-start gap-2 rounded-md hover:cursor-pointer max-w-max mt-6'
-      htmlFor={name}
+      className={clsx(
+        'flex flex-col justify-start gap-2 rounded-md hover:cursor-pointer max-w-max',
+        labelClassName && labelClassName
+      )}
+      htmlFor={String(name)}
     >
       <span className='text-sm font-semibold'>Зображення</span>
       <input
         type='file'
         accept='image/*'
-        name={name}
-        id={name}
+        name={String(name)}
+        id={String(name)}
         className='hidden'
         onChange={handleFileChange}
       />
@@ -88,8 +101,8 @@ export default function FileUploader({
 
       {file && <p className='text-gray-700 text-sm'>{file.name}</p>}
 
-      {touched[name] && errors[name] ? (
-        <p className='text-xs pl-2 text-red-600'>{errors[name]}</p>
+      {get(touched, name) && get(errors, name) ? (
+        <p className='text-xs pl-2 text-red-600'>{String(get(errors, name))}</p>
       ) : null}
     </label>
   );
