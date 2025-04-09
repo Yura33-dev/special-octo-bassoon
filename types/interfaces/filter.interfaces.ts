@@ -10,6 +10,16 @@ export interface IFilterApi extends Document {
   }>;
 }
 
+export interface IFilterMapped {
+  id: string;
+  slug: string;
+  translatedData: Record<string, { filterTitle: string }>;
+  variants: Array<{
+    variantSlug: string;
+    translatedData: Record<string, { variantTitle: string }>;
+  }>;
+}
+
 export interface IFilter {
   id: string;
   slug: string;
@@ -18,8 +28,29 @@ export interface IFilter {
 }
 
 export interface IFilterInProductApi {
+  id: string;
+  filter: ObjectId;
+  value: string;
+}
+
+export interface IFilterInProductPopulated {
+  id: string;
   filter: {
     _id: ObjectId;
+    slug: string;
+    translatedData: Record<string, { filterTitle: string }>;
+    variants: Array<{
+      variantSlug: string;
+      translatedData: Record<string, { variantTitle: string }>;
+    }>;
+  };
+  value: string;
+}
+
+export interface IFilterInProductMapped {
+  id: string;
+  filter: {
+    id: string;
     slug: string;
     translatedData: Record<string, { filterTitle: string }>;
     variants: Array<{
@@ -36,7 +67,7 @@ export interface IFilterInProduct {
   title: string;
   variants: Array<{ slug: string; title: string }>;
   value: string;
-}
+} // TODO: delete
 
 interface IVariant {
   variantSlug: string;

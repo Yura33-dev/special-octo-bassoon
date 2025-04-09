@@ -7,7 +7,8 @@ const translatedPackagingSchema = new mongoose.Schema<ITranslatedPackagingData>(
     type: { type: String, required: true },
     measureIn: { type: String, required: true },
     measureValue: { type: Number, required: true },
-  }
+  },
+  { _id: false }
 );
 
 const packagingSchema = new mongoose.Schema<IPackagingApi>(

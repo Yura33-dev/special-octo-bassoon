@@ -2,31 +2,32 @@
 
 import { PACKAGING_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
+import { mapPackaging } from '@/lib/utils';
 import { Packaging } from '@/models';
-import { IPackaging, IPackagingApi, locale } from '@/types';
+import { IPackagingMapped, IPackagingPopulated, locale } from '@/types';
 
 export async function getAllPackaging(
   locale: locale,
   filter: Record<string, string> | object = {}
-): Promise<Array<IPackaging> | []> {
+): Promise<Array<IPackagingMapped> | []> {
   try {
     await dbConnect();
 
-    const packaging = await Packaging.find(filter).lean<Array<IPackagingApi>>();
+    const packaging =
+      await Packaging.find(filter).lean<Array<IPackagingPopulated>>();
 
-    const transformedPackaging = packaging
-      .map(packaging => ({
-        id: packaging._id.toString(),
-        data: packaging.translatedData[locale],
-        showPricePerUnit: packaging.showPricePerUnit,
-      }))
+    return packaging
+      .map(pack => mapPackaging(pack))
       .toSorted((a, b) => {
-        const typeComparison = a.data.type.localeCompare(b.data.type);
+        const typeComparison = a.translatedData[locale].type.localeCompare(
+          b.translatedData[locale].type
+        );
         if (typeComparison !== 0) return typeComparison;
-        return a.data.measureValue - b.data.measureValue;
+        return (
+          a.translatedData[locale].measureValue -
+          b.translatedData[locale].measureValue
+        );
       });
-
-    return transformedPackaging;
   } catch (error) {
     console.error(`Error: ${PACKAGING_FETCH_FAILED}. ${error}`);
     return [];

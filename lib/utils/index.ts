@@ -5,6 +5,8 @@ import { formattedPrice } from './formattedPrice';
 import { getLocalizedSlugs } from './getLocalizedSlugs';
 import { getProductLinks } from './getProductLinks';
 import { mapCategory } from './mapCategory';
+import { mapFilter, mapFilterInProduct } from './mapFilter';
+import { mapPackaging } from './mapPackaging';
 import { mapProduct } from './mapProduct';
 
 export {
@@ -16,4 +18,7 @@ export {
   getLocalizedSlugs,
   formattedPackValue,
   extractFilters,
+  mapPackaging,
+  mapFilter,
+  mapFilterInProduct,
 };

@@ -1,8 +1,9 @@
 import {
   ICategoryApi,
+  ICategoryPopulated,
+  ICategoryMapped,
   ICategory,
   IMappedNestedCategories,
-  ICategoryApiPopulated,
   IEditCategoryFormField,
   IEditCategoryStructured,
   ICreateCategoryFormField,
@@ -12,8 +13,11 @@ import {
   IFilterApi,
   IFilter,
   IFilterInProductApi,
+  IFilterInProductPopulated,
+  IFilterInProductMapped,
   IFilterInProduct,
   ICreateFilterFormField,
+  IFilterMapped,
 } from './interfaces/filter.interfaces';
 import {
   IOrderApi,
@@ -23,13 +27,18 @@ import {
 } from './interfaces/order.interfaces';
 import {
   IPackagingApi,
-  IPackaging,
+  IPackagingPopulated,
+  IPackagingMapped,
+  // IPackaging,
   ITranslatedPackagingData,
-  IProductPackVariants,
-  IProductPack,
+  // IProductPackVariants,
+  // IProductPack,
   IProductPackVariantsApi,
+  IProductPackVariantsPopulated,
+  IProductPackVariantsMapped,
   ICreatePackagingFormField,
   ICreatePackagingStructured,
+  IPackaginInProduct,
 } from './interfaces/packaging.interfaces';
 import {
   IPageApi,
@@ -39,9 +48,12 @@ import {
 import { IPagination } from './interfaces/pagination.interfaces';
 import {
   IProductApi,
+  IProductPopulated,
+  IProductMapped,
   IProduct,
   ITranslatedData,
   IMetaData,
+  IProductForm,
 } from './interfaces/product.interfaces';
 import {
   ISettingsApi,
@@ -58,22 +70,30 @@ import { locale } from './types/global.types';
 
 export type {
   ICategoryApi,
+  ICategoryPopulated,
+  ICategoryMapped,
   ICategory,
-  ICategoryApiPopulated,
   ICreateCategoryFormField,
   ICreateCategoryStructured,
   IMappedNestedCategories,
   IEditCategoryFormField,
   IEditCategoryStructured,
   IProductApi,
+  IProductPopulated,
+  IProductMapped,
   IProduct,
   IProductPackVariantsApi,
   ITranslatedData,
   IMetaData,
   IPackagingApi,
-  IPackaging,
-  IProductPackVariants,
-  IProductPack,
+  IPackagingPopulated,
+  IPackagingMapped,
+  IProductPackVariantsPopulated,
+  IProductPackVariantsMapped,
+
+  // IPackaging,
+  // IProductPackVariants,
+  // IProductPack,
   ITranslatedPackagingData,
   IPagination,
   ISlideApi,
@@ -87,8 +107,11 @@ export type {
   ISettings,
   ITranslatedSettingsData,
   IFilterApi,
+  IFilterMapped,
   IFilter,
   IFilterInProductApi,
+  IFilterInProductPopulated,
+  IFilterInProductMapped,
   IFilterInProduct,
   IOrderApi,
   IOrder,
@@ -97,5 +120,7 @@ export type {
   ICreatePackagingFormField,
   ICreatePackagingStructured,
   ICreateFilterFormField,
+  IProductForm,
+  IPackaginInProduct,
 };
 export type { locale };

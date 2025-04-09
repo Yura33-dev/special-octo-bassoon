@@ -15,23 +15,8 @@ export interface ICategoryApi extends Document {
   createdAt: Date;
 }
 
-export interface ICategory {
-  id: string;
-  name: string;
-  slug: string;
-  sortOrder: number;
-  visible: boolean;
-  featured: boolean;
-  image: string;
-  main: boolean;
-  childCategories: Array<ICategory>;
-  parentCategories: Array<ICategory>;
-  updatedAt: Date | null;
-  createdAt: Date | null;
-}
-
-export interface ICategoryApiPopulated {
-  _id: string;
+export interface ICategoryPopulated {
+  _id: ObjectId;
   name: { [key: string]: string };
   slug: { [key: string]: string };
   sortOrder: number;
@@ -40,7 +25,7 @@ export interface ICategoryApiPopulated {
   image: string;
   main: boolean;
   childCategories: Array<{
-    _id: string;
+    _id: ObjectId;
     name: { [key: string]: string };
     slug: { [key: string]: string };
     sortOrder: number;
@@ -69,6 +54,58 @@ export interface ICategoryApiPopulated {
   }>;
   updatedAt: Date;
   createdAt: Date;
+}
+
+export interface ICategoryMapped {
+  id: string;
+  name: { [key: string]: string };
+  slug: { [key: string]: string };
+  sortOrder: number;
+  visible: boolean;
+  featured: boolean;
+  image: string;
+  main: boolean;
+  childCategories: Array<{
+    id: string;
+    name: { [key: string]: string };
+    slug: { [key: string]: string };
+    sortOrder: number;
+    visible: boolean;
+    featured: boolean;
+    image: string;
+    main: boolean;
+    updatedAt: string | null;
+    createdAt: string | null;
+  }>;
+  parentCategories: Array<{
+    id: string;
+    name: { [key: string]: string };
+    slug: { [key: string]: string };
+    sortOrder: number;
+    visible: boolean;
+    featured: boolean;
+    image: string;
+    main: boolean;
+    updatedAt: string | null;
+    createdAt: string | null;
+  }>;
+  updatedAt: string | null;
+  createdAt: string | null;
+}
+
+export interface ICategory {
+  id: string;
+  name: string;
+  slug: string;
+  sortOrder: number;
+  visible: boolean;
+  featured: boolean;
+  image: string;
+  main: boolean;
+  childCategories: Array<ICategory>;
+  parentCategories: Array<ICategory>;
+  updatedAt: Date | null;
+  createdAt: Date | null;
 }
 
 export interface IMappedNestedCategories {

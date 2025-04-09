@@ -2,13 +2,19 @@ import mongoose, { model, models } from 'mongoose';
 
 import { IFilterApi } from '@/types';
 
-const translatedFilterSchema = new mongoose.Schema<{ filterTitle: string }>({
-  filterTitle: { type: String, required: true },
-});
+const translatedFilterSchema = new mongoose.Schema<{ filterTitle: string }>(
+  {
+    filterTitle: { type: String, required: true },
+  },
+  { _id: false }
+);
 
-const translatedVariantSchema = new mongoose.Schema<{ variantTitle: string }>({
-  variantTitle: { type: String, required: true },
-});
+const translatedVariantSchema = new mongoose.Schema<{ variantTitle: string }>(
+  {
+    variantTitle: { type: String, required: true },
+  },
+  { _id: false }
+);
 
 const filterSchema = new mongoose.Schema<IFilterApi>(
   {
