@@ -8,19 +8,25 @@ import {
   ITranslatedData,
 } from '@/types';
 
-const metaSchema = new mongoose.Schema<IMetaData>({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  keywords: { type: String, required: false, default: null },
-});
+const metaSchema = new mongoose.Schema<IMetaData>(
+  {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    keywords: { type: String, required: false, default: null },
+  },
+  { _id: false }
+);
 
-const translatedDataSchema = new mongoose.Schema<ITranslatedData>({
-  name: { type: String, required: true },
-  slug: { type: String, required: true },
-  description: { type: String, required: false, default: null },
-  country: { type: String, required: false, default: null },
-  meta: { type: metaSchema, required: true },
-});
+const translatedDataSchema = new mongoose.Schema<ITranslatedData>(
+  {
+    name: { type: String, required: true },
+    slug: { type: String, required: true },
+    description: { type: String, required: false, default: null },
+    country: { type: String, required: false, default: null },
+    meta: { type: metaSchema, required: true },
+  },
+  { _id: false }
+);
 
 const packagingSchema = new mongoose.Schema<IProductPackVariantsApi>(
   {
@@ -36,7 +42,7 @@ const packagingSchema = new mongoose.Schema<IProductPackVariantsApi>(
           ref: 'Packaging',
           required: true,
         },
-        quantity: { type: Number, required: true },
+        quantity: { type: Number, default: null },
         price: { type: Number, required: true },
       },
     ],
@@ -45,10 +51,12 @@ const packagingSchema = new mongoose.Schema<IProductPackVariantsApi>(
 );
 
 const productFiltersSchema = new mongoose.Schema<{
+  id: string;
   filter: IFilterApi;
   value: string;
 }>(
   {
+    id: { type: String, requered: true },
     filter: { type: mongoose.Schema.Types.ObjectId, ref: 'Filter' },
     value: { type: String, requred: true },
   },

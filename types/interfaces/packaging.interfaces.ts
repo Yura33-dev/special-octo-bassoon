@@ -38,7 +38,7 @@ export interface ITranslatedPackagingData {
 // } //TODO: delete
 
 export interface IProductPackVariantsApi {
-  default: string;
+  default: ObjectId;
   items: Array<IProductPackItemsApi>;
 }
 
