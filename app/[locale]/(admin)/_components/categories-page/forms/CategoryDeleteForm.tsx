@@ -33,8 +33,9 @@ export default function CategoryDeleteForm({
 
     try {
       await deleteCategoryById(categoryId);
+      router.replace('/dashboard/categories');
+      router.refresh();
       toast.success('Категорія успішно видалена!');
-      router.push('/dashboard/categories');
       closeModal(DELETE_CATEGORY_ID);
     } catch (error: unknown) {
       toast.error('Помилка при видаленні категорії. Спробуйте ще раз');

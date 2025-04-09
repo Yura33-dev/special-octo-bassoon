@@ -1,19 +1,20 @@
+'use client';
+
 import { CirclePlus, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import { useLocale } from 'next-intl';
 import { toast } from 'sonner';
 
 import { Link } from '@/i18n/routing';
 import { removeNestedCategory } from '@/lib/api';
 import { ADD_SUBCATEGORY_ID } from '@/lib/constants';
 import { useModalStore } from '@/providers';
+import { ICategoryMapped, locale } from '@/types';
 
 interface INestedCategoriesListProps {
-  subcategories: Array<{
-    _id: string;
-    name: string;
-    slug: string;
-    image: string;
-  }>;
+  subcategories: Array<
+    Omit<ICategoryMapped, 'childCategories' | 'parentCategories'>
+  >;
   main: boolean;
   baseCategoryId: string;
 }
@@ -24,6 +25,7 @@ export default function NestedCategoriesList({
   baseCategoryId,
 }: INestedCategoriesListProps) {
   const openModal = useModalStore(state => state.openModal);
+  const locale = useLocale() as locale;
 
   const handleDeleteCategoryFromNested = async (
     categoryId: string,
@@ -43,26 +45,26 @@ export default function NestedCategoriesList({
     <ul className='grid auto-rows-[56px] grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
       {subcategories.map(category => (
         <li
-          key={category._id}
+          key={category.id}
           className='flex items-center justify-between p-1 transition-colors rounded-md bg-teal-700/30 hover:bg-teal-700/60
                         focus-within:bg-teal-700/60 focus-within:outline-none'
         >
           <Link
             className='basis-full focus-within:outline-none'
-            href={`/dashboard/categories/${category.slug}`}
+            href={`/dashboard/categories/${category.slug[locale]}`}
           >
             <div className='flex justify-between items-center gap-4'>
               <div className='flex gap-2 items-center'>
                 <div className='w-12 h-12 shrink-0'>
                   <Image
                     src={category.image}
-                    alt={`Зображення ${category.name}`}
+                    alt={`Зображення ${category.name[locale]}`}
                     width={100}
                     height={100}
                     className='w-full h-full object-cover rounded-md'
                   />
                 </div>
-                <h3 className='text-sm'>{category.name}</h3>
+                <h3 className='text-sm'>{category.name[locale]}</h3>
               </div>
             </div>
           </Link>
@@ -70,7 +72,7 @@ export default function NestedCategoriesList({
           <button
             type='button'
             onClick={() =>
-              handleDeleteCategoryFromNested(category._id, baseCategoryId)
+              handleDeleteCategoryFromNested(category.id, baseCategoryId)
             }
             className='rounded-md bg-primary text-white p-2 transition-all hover:bg-primary-dark active:scale-90
                           focus-within:outline-none focus-within:ring-2 ring-primary-dark'

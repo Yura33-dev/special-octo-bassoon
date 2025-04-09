@@ -1,15 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import { useLocale } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { addNestedCategory } from '@/lib/api';
-import { ICategory } from '@/types';
+import { ICategoryMapped, locale } from '@/types';
 
 interface ISubcategoriesListProps {
-  availableSubcategories: Array<ICategory>;
+  availableSubcategories: Array<ICategoryMapped>;
   baseCategoryId: string;
   main: boolean;
 }
@@ -19,10 +20,12 @@ export default function SubcategoriesList({
   baseCategoryId,
   main,
 }: ISubcategoriesListProps) {
+  const locale = useLocale() as locale;
+
   const [isSubmitting, setIsSubmitting] = useState<string | null>(null);
 
   const sortedCategories = availableSubcategories.toSorted((a, b) =>
-    a.name.localeCompare(b.name)
+    a.name[locale].localeCompare(b.name[locale])
   );
 
   const handleAddCategoryInNested = async (
@@ -59,7 +62,7 @@ export default function SubcategoriesList({
                 className='w-full h-full object-cover rounded-md'
               />
             </div>
-            <h3>{category.name}</h3>
+            <h3>{category.name[locale]}</h3>
           </div>
           <button
             type='button'

@@ -2,19 +2,22 @@
 
 import { CircleCheck, CircleX, Eye, EyeOff, Pencil } from 'lucide-react';
 import Image from 'next/image';
+import { useLocale } from 'next-intl';
 import { toast } from 'sonner';
 
 import { Link } from '@/i18n/routing';
 import { patchCategoryById } from '@/lib/api';
-import { ICategory } from '@/types';
+import { ICategoryMapped, locale } from '@/types';
 
 import DropDownMenu from '../../shared/DropDownMenu';
 
 interface IHeaderBodyProps {
-  categories: Array<ICategory>;
+  categories: Array<ICategoryMapped>;
 }
 
 export default function HeaderBody({ categories }: IHeaderBodyProps) {
+  const locale = useLocale() as locale;
+
   const handleHideCategory = async (
     categoryId: string,
     categoryStatus: boolean
@@ -61,7 +64,7 @@ export default function HeaderBody({ categories }: IHeaderBodyProps) {
               </div>
             </div>
             <div role='cell' className='flex-1 flex justify-center text-center'>
-              {category.name}
+              {category.name[locale]}
             </div>
             <div role='cell' className='flex-1 flex justify-center'>
               {category.visible ? (
@@ -73,7 +76,7 @@ export default function HeaderBody({ categories }: IHeaderBodyProps) {
             <div role='cell' className='flex-1 flex justify-center gap-2'>
               {category.main
                 ? category.childCategories.length
-                : category.parentCategories[0]?.name || (
+                : category.parentCategories[0]?.name[locale] || (
                     <span className='italic'>Без категорії</span>
                   )}
               {category.parentCategories.length > 1 && (
@@ -85,7 +88,7 @@ export default function HeaderBody({ categories }: IHeaderBodyProps) {
               <DropDownMenu>
                 <li className='text-base transition-colors hover:bg-gray-200 rounded-md'>
                   <Link
-                    href={`/dashboard/categories/${category.slug}`}
+                    href={`/dashboard/categories/${category.slug[locale]}`}
                     className='flex items-center gap-3 w-full p-2'
                   >
                     <Pencil className='w-4 h-4 text-gray-500' />

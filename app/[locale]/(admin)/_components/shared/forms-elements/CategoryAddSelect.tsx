@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { get } from 'lodash';
 import { useLocale } from 'next-intl';
 import { useCallback, useState } from 'react';
 import { ActionMeta, MultiValue } from 'react-select';
@@ -8,15 +9,15 @@ import makeAnimated from 'react-select/animated';
 import AsyncSelect from 'react-select/async';
 
 import { getAllCategories } from '@/lib/api';
-import { ICategory, locale } from '@/types';
+import { ICategoryMapped, locale } from '@/types';
 
 interface ICategoryAddSelectProps {
   title: string;
   placeholder?: string;
   name: string;
   onChange: (
-    newValue: MultiValue<ICategory>,
-    actionMeta: ActionMeta<ICategory>
+    newValue: MultiValue<ICategoryMapped>,
+    actionMeta: ActionMeta<ICategoryMapped>
   ) => void;
   value: Array<string>;
   touched: Record<string, boolean>;
@@ -39,7 +40,7 @@ export default function CategoryAddSelect({
   const locale = useLocale() as locale;
 
   const animatedComponents = makeAnimated();
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [categories, setCategories] = useState<ICategoryMapped[]>([]);
 
   const loadCategories = useCallback(
     async (inputValue: string) => {
@@ -48,7 +49,7 @@ export default function CategoryAddSelect({
         setCategories(response);
 
         return response.filter(category =>
-          category.name.toLowerCase().includes(inputValue.toLowerCase())
+          category.name[locale].toLowerCase().includes(inputValue.toLowerCase())
         );
       } catch (error) {
         console.error('Ошибка загрузки категорий', error);
@@ -64,7 +65,7 @@ export default function CategoryAddSelect({
     <div className={clsx(className && className)}>
       <span className='block text-sm font-semibold mb-1'>{title}</span>
 
-      <AsyncSelect<ICategory, true>
+      <AsyncSelect<ICategoryMapped, true>
         key={isMain ? 'main' : 'sub'}
         cacheOptions={false}
         defaultOptions
@@ -72,7 +73,7 @@ export default function CategoryAddSelect({
         placeholder={placeholder}
         components={animatedComponents}
         name={name}
-        getOptionLabel={category => category.name}
+        getOptionLabel={category => category.name[locale]}
         getOptionValue={category => category.id}
         isMulti
         onChange={onChange}
@@ -92,7 +93,7 @@ export default function CategoryAddSelect({
           placeholder: () => 'text-sm',
         }}
       />
-      {touched[name] && errors[name] ? (
+      {get(touched, name) && get(errors, name) ? (
         <p className='mt-1 text-xs pl-2 text-red-600'>{errors[name]}</p>
       ) : null}
     </div>

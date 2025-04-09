@@ -12,9 +12,9 @@ import { DELETE_CATEGORY_ID } from '@/lib/constants';
 import { editCategorySchema } from '@/lib/validations';
 import { useModalStore } from '@/providers';
 import {
+  ICategoryMapped,
   IEditCategoryFormField,
   IEditCategoryStructured,
-  IMappedNestedCategories,
   locale,
 } from '@/types';
 
@@ -25,7 +25,7 @@ import Input from '../../shared/forms-elements/Input';
 import SubmitButton from '../../shared/forms-elements/SubmitButton';
 
 interface ICategoryEditFormProps {
-  category: IMappedNestedCategories;
+  category: ICategoryMapped;
 }
 
 export default function CategoryEditForm({ category }: ICategoryEditFormProps) {
@@ -89,7 +89,7 @@ export default function CategoryEditForm({ category }: ICategoryEditFormProps) {
     }
 
     try {
-      const updatedCategory = await patchCategoryById(category._id, dataToSave);
+      const updatedCategory = await patchCategoryById(category.id, dataToSave);
       router.replace(updatedCategory?.slug[locale] ?? category.slug[locale]);
       toast.success('Категорія успішно оновлена!');
     } catch (error) {
@@ -229,9 +229,10 @@ export default function CategoryEditForm({ category }: ICategoryEditFormProps) {
           />
         </div>
 
-        <FileUploader
+        <FileUploader<IEditCategoryStructured>
+          labelClassName='mt-6'
           name='image'
-          image={category.image || null}
+          imageUrl={category.image || null}
           onChange={file => formik.setFieldValue('image', file)}
           touched={formik.touched}
           errors={formik.errors}

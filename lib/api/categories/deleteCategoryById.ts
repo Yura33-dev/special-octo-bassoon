@@ -1,7 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-
 import dbConnect from '@/lib/db';
 import { Category } from '@/models';
 import { ICategoryApi } from '@/types';
@@ -31,7 +29,6 @@ export async function deleteCategoryById(
       }
     );
 
-    revalidatePath('/*/dashboard/categories');
     return JSON.parse(JSON.stringify(result));
   } catch (error: unknown) {
     console.error('Some error occured while category deleting...', error);

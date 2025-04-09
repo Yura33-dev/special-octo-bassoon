@@ -237,9 +237,10 @@ export default function CategoryAddForm() {
             />
           </div>
 
-          <FileUploader
+          <FileUploader<ICreateCategoryStructured>
+            labelClassName='mt-6'
             name='image'
-            image={null}
+            imageUrl={null}
             onChange={file => formik.setFieldValue('image', file)}
             touched={formik.touched}
             errors={formik.errors}

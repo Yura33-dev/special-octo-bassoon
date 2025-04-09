@@ -1,11 +1,11 @@
 import ModalWindow from '@/components/shared/modals/ModalWindow';
 import { ADD_SUBCATEGORY_ID } from '@/lib/constants';
-import { ICategory } from '@/types';
+import { ICategoryMapped } from '@/types';
 
 import SubcategoriesList from '../SubcategoriesList';
 
 interface INestedCategoryAddModalProps {
-  availableSubcategories: Array<ICategory>;
+  availableSubcategories: Array<ICategoryMapped>;
   baseCategoryId: string;
   main: boolean;
 }

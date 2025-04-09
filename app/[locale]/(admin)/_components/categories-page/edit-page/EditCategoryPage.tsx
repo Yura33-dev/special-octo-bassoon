@@ -30,10 +30,10 @@ export default async function EditCategoryPage({
   }
 
   const childCategoriesIds = new Set(
-    category.childCategories.flatMap(child => child._id)
+    category.childCategories.flatMap(child => child.id)
   );
   const parentCategoriesIds = new Set(
-    category.parentCategories.flatMap(parent => parent._id)
+    category.parentCategories.flatMap(parent => parent.id)
   );
 
   const filteredArray = categories
@@ -57,13 +57,13 @@ export default async function EditCategoryPage({
         <NestedCategories category={category} />
 
         <CategoryDeleteModal
-          categoryId={category._id}
+          categoryId={category.id}
           categoryTitle={category.name[locale]}
         />
 
         <NestedCategoryAddModal
           availableSubcategories={filteredArray}
-          baseCategoryId={category._id}
+          baseCategoryId={category.id}
           main={category.main}
         />
       </Container>

@@ -1,11 +1,11 @@
 'use client';
 
-import { IMappedNestedCategories } from '@/types';
+import { ICategoryMapped } from '@/types';
 
 import NestedCategoriesList from './NestedCategoriesList';
 
 interface INestedCategoriesProps {
-  category: IMappedNestedCategories;
+  category: ICategoryMapped;
 }
 
 export default function NestedCategories({ category }: INestedCategoriesProps) {
@@ -18,13 +18,13 @@ export default function NestedCategories({ category }: INestedCategoriesProps) {
         <NestedCategoriesList
           subcategories={category.childCategories}
           main={category.main}
-          baseCategoryId={category._id}
+          baseCategoryId={category.id}
         />
       ) : (
         <NestedCategoriesList
           subcategories={category.parentCategories}
           main={category.main}
-          baseCategoryId={category._id}
+          baseCategoryId={category.id}
         />
       )}
     </div>
