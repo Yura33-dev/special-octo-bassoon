@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
 import { getPackagingById } from '@/lib/api';
 import { formattedPackValue } from '@/lib/utils';
+import { locale } from '@/types';
 
 import BackButton from '../../shared/BackButton';
 import PageMainHeader from '../../shared/page-elements/PageMainHeader';
@@ -17,6 +19,7 @@ export default async function EditPackagePage({
   packId,
 }: IEditPackagePageProps) {
   const packaging = await getPackagingById(packId);
+  const locale = (await getLocale()) as locale;
 
   if (!packaging) notFound();
 
@@ -29,11 +32,11 @@ export default async function EditPackagePage({
         <PackEditForm packaging={packaging} />
 
         <PackDeleteModal
-          packId={packaging._id.toString()}
+          packId={packaging.id}
           packTitle={formattedPackValue(
-            packaging.translatedData['uk'].type,
-            packaging.translatedData['uk'].measureValue,
-            packaging.translatedData['uk'].measureIn
+            packaging.translatedData[locale].type,
+            packaging.translatedData[locale].measureValue,
+            packaging.translatedData[locale].measureIn
           )}
         />
       </Container>

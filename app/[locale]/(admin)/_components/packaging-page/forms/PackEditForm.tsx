@@ -12,7 +12,7 @@ import { useModalStore } from '@/providers';
 import {
   ICreatePackagingFormField as IEditPackagingFormField,
   ICreatePackagingStructured as IEditPackagingStructured,
-  IPackagingApi,
+  IPackagingMapped,
 } from '@/types';
 
 import CustomCheckBox from '../../shared/forms-elements/CustomCheckBox';
@@ -21,7 +21,7 @@ import Input from '../../shared/forms-elements/Input';
 import SubmitButton from '../../shared/forms-elements/SubmitButton';
 
 interface IPackEditFormProps {
-  packaging: IPackagingApi;
+  packaging: IPackagingMapped;
 }
 
 export default function PackEditForm({ packaging }: IPackEditFormProps) {
@@ -60,7 +60,7 @@ export default function PackEditForm({ packaging }: IPackEditFormProps) {
     };
 
     try {
-      await patchPackagingById(packaging._id.toString(), dataToSave);
+      await patchPackagingById(packaging.id, dataToSave);
       toast.success('Пакування успішно оновлено!');
       setTimeout(() => router.back(), 210);
     } catch (error: unknown) {

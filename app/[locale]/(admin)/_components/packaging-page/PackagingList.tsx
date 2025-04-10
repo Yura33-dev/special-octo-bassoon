@@ -1,13 +1,19 @@
+'use client';
+
+import { useLocale } from 'next-intl';
+
 import { formattedPackValue } from '@/lib/utils';
-import { IPackaging } from '@/types';
+import { IPackagingMapped } from '@/types';
 
 import EditButton from '../shared/EditButton';
 
 interface IPackagingListProps {
-  packaging: Array<IPackaging>;
+  packaging: Array<IPackagingMapped>;
 }
 
 export default function PackagingList({ packaging }: IPackagingListProps) {
+  const locale = useLocale();
+
   return (
     <ul className='mt-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2'>
       {packaging.map(pack => (
@@ -18,9 +24,9 @@ export default function PackagingList({ packaging }: IPackagingListProps) {
           <div className='flex justify-between items-center gap-2'>
             <h2 className='font-semibold text-sm'>
               {formattedPackValue(
-                pack.data.type,
-                pack.data.measureValue,
-                pack.data.measureIn
+                pack.translatedData[locale].type,
+                pack.translatedData[locale].measureValue,
+                pack.translatedData[locale].measureIn
               )}
             </h2>
             <EditButton

@@ -14,8 +14,8 @@ export const metadata = {
 };
 
 export default async function PackagingPage() {
-  const locale = await getLocale();
-  const packaging = await getAllPackaging(locale as locale);
+  const locale = (await getLocale()) as locale;
+  const packaging = await getAllPackaging(locale);
 
   return (
     <section>
