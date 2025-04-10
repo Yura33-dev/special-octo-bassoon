@@ -1,16 +1,19 @@
 import {
-  IFilterApi,
   IFilterInProductMapped,
   IFilterInProductPopulated,
   IFilterMapped,
+  IFilterPopulated,
 } from '@/types';
 
-export function mapFilter(filter: IFilterApi): IFilterMapped {
+export function mapFilter(filter: IFilterPopulated): IFilterMapped {
   return {
     id: filter._id.toString(),
     slug: filter.slug,
     translatedData: filter.translatedData,
-    variants: filter.variants,
+    variants: filter.variants.map(variant => ({
+      variantSlug: variant.variantSlug,
+      translatedData: variant.translatedData,
+    })),
   };
 }
 
@@ -23,7 +26,10 @@ export function mapFilterInProduct(
       id: filter.filter._id.toString(),
       slug: filter.filter.slug,
       translatedData: filter.filter.translatedData,
-      variants: filter.filter.variants,
+      variants: filter.filter.variants.map(variant => ({
+        variantSlug: variant.variantSlug,
+        translatedData: variant.translatedData,
+      })),
     },
     value: filter.value,
   };

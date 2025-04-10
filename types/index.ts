@@ -18,6 +18,7 @@ import {
   IFilterInProduct,
   ICreateFilterFormField,
   IFilterMapped,
+  IFilterPopulated,
 } from './interfaces/filter.interfaces';
 import {
   IOrderApi,
@@ -29,10 +30,7 @@ import {
   IPackagingApi,
   IPackagingPopulated,
   IPackagingMapped,
-  // IPackaging,
   ITranslatedPackagingData,
-  // IProductPackVariants,
-  // IProductPack,
   IProductPackVariantsApi,
   IProductPackVariantsPopulated,
   IProductPackVariantsMapped,
@@ -90,10 +88,6 @@ export type {
   IPackagingMapped,
   IProductPackVariantsPopulated,
   IProductPackVariantsMapped,
-
-  // IPackaging,
-  // IProductPackVariants,
-  // IProductPack,
   ITranslatedPackagingData,
   IPagination,
   ISlideApi,
@@ -107,6 +101,7 @@ export type {
   ISettings,
   ITranslatedSettingsData,
   IFilterApi,
+  IFilterPopulated,
   IFilterMapped,
   IFilter,
   IFilterInProductApi,

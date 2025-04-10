@@ -4,7 +4,7 @@ import { PRODUCTS_BY_CATEGORY_ID_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { extractFilters, mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProductApi, locale } from '@/types';
+import { IProductPopulated, locale } from '@/types';
 
 export async function getFiltersFromProducts(
   locale: locale,
@@ -20,12 +20,12 @@ export async function getFiltersFromProducts(
       .populate('packaging.default')
       .populate('packaging.items.packId')
       .populate('filters.filter')
-      .lean<Array<IProductApi>>()
+      .lean<Array<IProductPopulated>>()
       .exec();
 
-    const mappedProducts = products.map(product => mapProduct(product, locale));
+    const mappedProducts = products.map(product => mapProduct(product));
 
-    const filters = extractFilters(mappedProducts);
+    const filters = extractFilters(mappedProducts, locale);
 
     return { filters };
   } catch (e) {

@@ -1,24 +1,25 @@
 'use server';
 
 import dbConnect from '@/lib/db';
+import { mapFilter } from '@/lib/utils';
 import { Filter } from '@/models';
-import { IFilterApi } from '@/types';
+import { IFilterMapped, IFilterPopulated } from '@/types';
 
 export async function getFilterBySlug(
   filterSlug: string
-): Promise<IFilterApi | undefined> {
+): Promise<IFilterMapped | undefined> {
   try {
     await dbConnect();
 
-    const filter: IFilterApi | null = await Filter.findOne({
+    const filter = await Filter.findOne({
       slug: filterSlug,
-    });
+    }).lean<IFilterPopulated>();
 
     if (!filter) {
       throw new Error('Фільтр з таким ідентифікатором не знайдений');
     }
 
-    return JSON.parse(JSON.stringify(filter));
+    return mapFilter(filter);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error(error.message);

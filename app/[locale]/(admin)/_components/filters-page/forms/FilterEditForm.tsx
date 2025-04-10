@@ -11,14 +11,14 @@ import { patchFilterBySlug } from '@/lib/api';
 import { DELETE_FILTER_ID } from '@/lib/constants';
 import { createFilterSchema as EditValidationSchema } from '@/lib/validations';
 import { useModalStore } from '@/providers';
-import { ICreateFilterFormField, IFilterApi } from '@/types';
+import { ICreateFilterFormField, IFilterMapped } from '@/types';
 
 import DeleteButton from '../../shared/forms-elements/DeleteButton';
 import Input from '../../shared/forms-elements/Input';
 import SubmitButton from '../../shared/forms-elements/SubmitButton';
 
 interface IFilterEditFormProps {
-  filter: IFilterApi;
+  filter: IFilterMapped;
 }
 
 export default function FilterEditForm({ filter }: IFilterEditFormProps) {

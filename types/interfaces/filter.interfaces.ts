@@ -3,6 +3,15 @@ import { Document, ObjectId } from 'mongoose';
 export interface IFilterApi extends Document {
   _id: ObjectId;
   slug: string;
+  translatedData: Map<string, { filterTitle: string }>;
+  variants: Array<{
+    variantSlug: string;
+    translatedData: Map<string, { variantTitle: string }>;
+  }>;
+}
+export interface IFilterPopulated {
+  _id: ObjectId;
+  slug: string;
   translatedData: Record<string, { filterTitle: string }>;
   variants: Array<{
     variantSlug: string;

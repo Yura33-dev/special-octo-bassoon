@@ -19,7 +19,7 @@ export async function generateMetadata({
   const filter = await getFilterBySlug(params.filterSlug);
 
   return {
-    title: `ProGround | Фільтр ${filter?.translatedData['uk'].filterTitle ?? 'Сталася помилка'}`,
+    title: `ProGround | Фільтр ${filter?.translatedData[params.locale].filterTitle ?? 'Сталася помилка'}`,
   };
 }
 

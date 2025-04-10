@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
 import { getFilterBySlug } from '@/lib/api';
+import { locale } from '@/types';
 
 import BackButton from '../../shared/BackButton';
 import PageMainHeader from '../../shared/page-elements/PageMainHeader';
@@ -15,6 +17,7 @@ interface IEditFilterPageProps {
 export default async function EditFilterPage({
   filterSlug,
 }: IEditFilterPageProps) {
+  const locale = (await getLocale()) as locale;
   const filter = await getFilterBySlug(filterSlug);
 
   if (!filter) notFound();
@@ -28,8 +31,8 @@ export default async function EditFilterPage({
         <FilterEditForm filter={filter} />
 
         <FilterDeleteModal
-          filterId={filter._id.toString()}
-          filterTitle={filter.translatedData['uk'].filterTitle}
+          filterId={filter.id}
+          filterTitle={filter.translatedData[locale].filterTitle}
         />
       </Container>
     </section>
