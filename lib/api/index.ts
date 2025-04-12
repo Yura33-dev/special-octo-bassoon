@@ -21,6 +21,11 @@ import { getAllPackaging } from './packaging/getAllPackaging';
 import { getPackagingById } from './packaging/getPackagingById';
 import { patchPackagingById } from './packaging/patchPackagingById';
 import { getPageDataByName } from './pages/getPageDataByName';
+import { createProducer } from './producers/createProducer';
+import { deleteProducerById } from './producers/deleteProducerById';
+import { getAllProducers } from './producers/getAllProducers';
+import { getProducerById } from './producers/getProducerById';
+import { patchProducerById } from './producers/patchProducerById';
 import { createProduct } from './products/createProduct';
 import { deleteProductById } from './products/deleteProductById';
 import { getAllProducts } from './products/getAllProducts';
@@ -70,4 +75,9 @@ export {
   createProduct,
   updateProduct,
   deleteProductById,
+  getAllProducers,
+  createProducer,
+  getProducerById,
+  patchProducerById,
+  deleteProducerById,
 };

@@ -7,6 +7,7 @@ import { getProductLinks } from './getProductLinks';
 import { mapCategory } from './mapCategory';
 import { mapFilter, mapFilterInProduct } from './mapFilter';
 import { mapPackaging } from './mapPackaging';
+import { mapProducer } from './mapProducer';
 import { mapProduct } from './mapProduct';
 
 export {
@@ -21,4 +22,5 @@ export {
   mapPackaging,
   mapFilter,
   mapFilterInProduct,
+  mapProducer,
 };

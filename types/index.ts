@@ -45,6 +45,12 @@ import {
 } from './interfaces/pages.interfaces';
 import { IPagination } from './interfaces/pagination.interfaces';
 import {
+  IProducerApi,
+  IProducerPopulated,
+  IProducerMapped,
+  IProducerForm,
+} from './interfaces/producer.interfaces';
+import {
   IProductApi,
   IProductPopulated,
   IProductMapped,
@@ -117,5 +123,9 @@ export type {
   ICreateFilterFormField,
   IProductForm,
   IPackaginInProduct,
+  IProducerApi,
+  IProducerPopulated,
+  IProducerMapped,
+  IProducerForm,
 };
 export type { locale };

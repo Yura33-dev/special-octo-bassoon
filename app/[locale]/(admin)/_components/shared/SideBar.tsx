@@ -6,6 +6,7 @@ import {
   ArrowLeftFromLine,
   ArrowRightFromLine,
   Blocks,
+  Factory,
   LayoutDashboard,
   Package,
   ShoppingCart,
@@ -151,6 +152,18 @@ export default function SideBar({ className }: ISideBarProps) {
           >
             <SlidersHorizontal className='w-5 h-5' />
             <span>Фільтри</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={'/dashboard/producers'}
+            className={clsx(
+              'flex items-center justify-start gap-2 text-base transition-colors p-2 rounded-md hover:bg-primary-dark hover:text-white',
+              pathname.includes('producers') && 'bg-primary-dark text-white'
+            )}
+          >
+            <Factory className='w-5 h-5' />
+            <span>Виробники</span>
           </Link>
         </li>
         <li>

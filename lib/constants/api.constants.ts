@@ -44,6 +44,11 @@ export const FILTERS_FETCH_FAILED = 'Failed to fetch filters (admin)';
 export const PACKAGING_FETCH_FAILED = 'Failed to fetch packaging';
 
 {
+  /* Packaging  */
+}
+export const PRODUCERS_FETCH_FAILED = 'Failed to fetch producers';
+
+{
   /* Slides  */
 }
 
