@@ -4,11 +4,11 @@ import { revalidatePath } from 'next/cache';
 
 import dbConnect from '@/lib/db';
 import { Packaging } from '@/models';
-import { ICreatePackagingStructured, IPackaging, IPackagingApi } from '@/types';
+import { ICreatePackagingStructured, IPackagingApi } from '@/types';
 
 export async function createPackaging(
   packData: ICreatePackagingStructured
-): Promise<IPackaging | object> {
+): Promise<undefined | object> {
   try {
     await dbConnect();
 
@@ -19,7 +19,7 @@ export async function createPackaging(
     }
 
     revalidatePath('/*/dashboard/packaging');
-    return JSON.parse(JSON.stringify(packaging));
+    return;
   } catch (error) {
     console.error(`Помилка при створенні пакування. ${error}`);
     return {};

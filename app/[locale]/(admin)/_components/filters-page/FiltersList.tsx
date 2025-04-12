@@ -23,10 +23,12 @@ export default async function FiltersList({ filters }: IFiltersListProps) {
             <h2 className='font-semibold uppercase text-base'>
               {filter.translatedData[locale].filterTitle}
             </h2>
-            <EditButton
-              href={`/dashboard/filters/${filter.slug}`}
-              title='Редагувати'
-            />
+            {filter.slug !== 'virobnik' && (
+              <EditButton
+                href={`/dashboard/filters/${filter.slug}`}
+                title='Редагувати'
+              />
+            )}
           </div>
           <h3 className='pl-4 text-base'>Опції:</h3>
           <ul className='pl-4 mt-2 flex justify-start flex-wrap gap-2 text-sm'>

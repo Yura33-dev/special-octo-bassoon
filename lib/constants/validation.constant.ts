@@ -25,6 +25,8 @@ export const ALLOW_IMAGE_EXT_ARRAY = [
 
 //Other
 export const MIN_LENGTH = 'Поле має містити від 2 знаків';
+export const MAX_LENGTH_3 = 'Поле може містити до 3 символів';
+export const MAX_LENGTH_15 = 'Поле може містити до 15 символів';
 export const MAX_LENGTH_24 = 'Поле може містити до 24 символів';
 //
 export const ONLY_NUMBERS = 'Поле може містити тільки числа';
