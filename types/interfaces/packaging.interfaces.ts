@@ -82,6 +82,6 @@ export interface IPackaginInProduct {
   items: Array<{
     packId: string | null;
     quantity: number | null;
-    price: number;
+    price: number | null;
   }>;
 }
