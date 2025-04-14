@@ -22,9 +22,11 @@ import {
 } from './interfaces/filter.interfaces';
 import {
   IOrderApi,
+  IOrderPopulated,
+  IOrderMapped,
   IProductInOrderApi,
-  IOrder,
-  IProductInOrder,
+  IProductInOrderPopulated,
+  IProductInOrderMapped,
 } from './interfaces/order.interfaces';
 import {
   IPackagingApi,
@@ -115,9 +117,11 @@ export type {
   IFilterInProductMapped,
   IFilterInProduct,
   IOrderApi,
-  IOrder,
+  IOrderPopulated,
+  IOrderMapped,
   IProductInOrderApi,
-  IProductInOrder,
+  IProductInOrderPopulated,
+  IProductInOrderMapped,
   ICreatePackagingFormField,
   ICreatePackagingStructured,
   ICreateFilterFormField,
