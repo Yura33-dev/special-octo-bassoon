@@ -4,6 +4,8 @@ import { IProducerForm } from '@/types';
 
 import {
   AFTER_DOT_3,
+  CURRENCY_EXCHANGE_MANDATORY,
+  CURRENCY_EXCHANGERATE_DEPENDENCY,
   MANDATORY_FIELD,
   MAX_LENGTH_15,
   MAX_LENGTH_3,
@@ -45,4 +47,26 @@ export const producerValidationSchema: Yup.ObjectSchema<IProducerForm> =
       })
       .nullable()
       .default(null),
-  });
+  }).test(
+    'currency-exchangeRate-dependency',
+    CURRENCY_EXCHANGERATE_DEPENDENCY,
+    function (value) {
+      const { currency, exchangeRate } = value;
+
+      const hasCurrency = currency !== null && currency !== '';
+      const hasExchangeRate =
+        exchangeRate !== null && exchangeRate !== undefined;
+
+      if (
+        (hasCurrency && !hasExchangeRate) ||
+        (!hasCurrency && hasExchangeRate)
+      ) {
+        return this.createError({
+          path: hasCurrency ? 'exchangeRate' : 'currency',
+          message: CURRENCY_EXCHANGE_MANDATORY,
+        });
+      }
+
+      return true;
+    }
+  );

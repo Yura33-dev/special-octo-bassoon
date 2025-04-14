@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
 import { SingleValue } from 'react-select';
 
-import { IPackagingMapped, IProductForm } from '@/types';
+import { IPackagingMapped, IProducerMapped, IProductForm } from '@/types';
 
 import CustomCheckBox from '../../../shared/forms-elements/CustomCheckBox';
 import Input from '../../../shared/forms-elements/Input';
@@ -15,6 +15,7 @@ interface IPackagingProps {
   onAddPackaging: () => void;
   onDeletePackaging: (value: number) => void;
   formik: FormikProps<IProductForm>;
+  producer: IProducerMapped | null;
 }
 
 export default function Packaging({
@@ -23,6 +24,7 @@ export default function Packaging({
   onAddPackaging,
   onDeletePackaging,
   formik,
+  producer,
 }: IPackagingProps) {
   const selectedPackIds = formik.values.packaging.items.map(
     pack => pack.packId
@@ -40,7 +42,7 @@ export default function Packaging({
       <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-center flex-grow basis-full'>
         {formik.values.packaging.items.map((pack, index) => (
           <li key={index} className='p-4 bg-gray-300/50 rounded-md'>
-            <div className='flex flex-col-reverse items-end md:flex-row md:items-start gap-4 mb-5'>
+            <div className='flex flex-col-reverse items-end md:flex-row md:items-start gap-4 mb-2.5'>
               <PackagingSelect
                 className='min-h-[58px] w-full flex-grow basis-full'
                 packaging={filteredPackaging}
@@ -70,6 +72,12 @@ export default function Packaging({
               />
             </div>
 
+            {producer && producer.exchangeRate && (
+              <p className='mb-2.5 text-sm text-primary underline'>
+                Для цього виробника ціна має бути в {producer.currency}
+              </p>
+            )}
+
             <div className='mb-4 flex flex-col md:flex-row gap-2'>
               <Input
                 title='Кількість на складі'
@@ -85,6 +93,11 @@ export default function Packaging({
               />
 
               <Input
+                placeholder={
+                  producer && producer.exchangeRate && producer.currency
+                    ? `Курс: ${producer?.exchangeRate} / ${producer?.currency}`
+                    : 'Введіть ціну'
+                }
                 title='Ціна'
                 name={`packaging.items.[${index}].price`}
                 type='text'

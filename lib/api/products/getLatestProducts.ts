@@ -4,7 +4,7 @@ import { LATEST_PRODUCTS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProductApi, locale } from '@/types';
+import { IProductPopulated, locale } from '@/types';
 
 export async function getLatestProducts(locale: locale, limit: number = 20) {
   try {
@@ -19,10 +19,11 @@ export async function getLatestProducts(locale: locale, limit: number = 20) {
       .populate('packaging.default')
       .populate('packaging.items.packId')
       .populate('filters.filter')
-      .lean<Array<IProductApi>>()
+      .populate('producer')
+      .lean<Array<IProductPopulated>>()
       .exec();
 
-    const mappedProducts = products.map(product => mapProduct(product, locale));
+    const mappedProducts = products.map(product => mapProduct(product));
     return { products: mappedProducts };
   } catch (e) {
     console.error(LATEST_PRODUCTS_FETCH_FAILED, e);

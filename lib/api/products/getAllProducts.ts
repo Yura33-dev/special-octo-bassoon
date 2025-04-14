@@ -5,7 +5,7 @@ import { PRODUCTS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { calculatePaginationData, mapProduct } from '@/lib/utils';
 import { Category, Product } from '@/models';
-import { IProductApi, locale } from '@/types';
+import { IProductPopulated, locale } from '@/types';
 
 export async function getAllProducts(
   locale: locale,
@@ -52,7 +52,7 @@ export async function getAllProducts(
           },
         };
       })
-      .filter(Boolean); // Убираем null-значения
+      .filter(Boolean);
 
     if (filterConditions.length > 0) {
       query.$and = filterConditions;
@@ -68,14 +68,15 @@ export async function getAllProducts(
         .populate('packaging.default')
         .populate('packaging.items.packId')
         .populate('filters.filter')
-        .lean<Array<IProductApi>>()
+        .populate('producer')
+        .lean<Array<IProductPopulated>>()
         .exec(),
       Product.countDocuments(),
     ]);
 
     const paginationData = calculatePaginationData(productsCount, limit, page);
 
-    const mappedProducts = products.map(product => mapProduct(product, locale));
+    const mappedProducts = products.map(product => mapProduct(product));
 
     return {
       products: mappedProducts,

@@ -6,9 +6,10 @@ import {
   getAllCategories,
   getAllFilters,
   getAllPackaging,
+  getAllProducers,
   getProductBySlug,
 } from '@/lib/api';
-import { IProductMapped, locale } from '@/types';
+import { locale } from '@/types';
 
 import BackButton from '../../shared/BackButton';
 import PageMainHeader from '../../shared/page-elements/PageMainHeader';
@@ -24,12 +25,14 @@ export default async function EditProductPage({
 }: IEditProductPageProps) {
   const locale = (await getLocale()) as locale;
 
-  const [packaging, categories, filters, product] = await Promise.all([
-    getAllPackaging(locale),
-    getAllCategories(locale, { main: true }),
-    getAllFilters(locale),
-    (await getProductBySlug(productSlug, locale)) as IProductMapped,
-  ]);
+  const [packaging, categories, filters, product, producers] =
+    await Promise.all([
+      getAllPackaging(locale),
+      getAllCategories(locale, { main: true }),
+      getAllFilters(locale),
+      getProductBySlug(productSlug, locale),
+      getAllProducers(locale),
+    ]);
 
   if (!product) notFound();
 
@@ -47,7 +50,7 @@ export default async function EditProductPage({
           categories={categories}
           packaging={packaging}
           filters={filters}
-          isAddForm={false}
+          producers={producers}
         />
 
         <ProductDeleteModal

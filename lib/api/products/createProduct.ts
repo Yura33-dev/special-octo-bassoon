@@ -21,6 +21,13 @@ export async function createProduct(
     if (isProductExist)
       throw new Error('Продукт з таким ідентифікатором вже існує');
 
+    const normalizedPackagingPrice = product.packaging.items.map(packaging => ({
+      ...packaging,
+      price: packaging.price ? packaging.price * 100 : null,
+    }));
+
+    product.packaging.items = normalizedPackagingPrice;
+
     const createdProduct: IProductApi = await Product.create(product);
 
     if (!createProduct)

@@ -35,9 +35,18 @@ export const ONLY_POSITIVE_NUMBERS = 'Значення має бути біль�
 export const MIN_ARRAY_LENGTH_1 = 'Має бути доданий хоча б один елемент';
 export const AFTER_DOT_3 = 'Не більше 3 знаків після крапки';
 //
+// Product
+export const ATLEAST_ONE_PRODUCER = 'Вкажіть фільтр з виробником товару';
+
 // Packaging
 export const DEFAULT_PACKAGE_AT_LEAST =
   'Одне з пакуваннь має бути за замовчуванням';
 
 // Categories
 export const SPECIFY_BOTH_CATEGORIES = 'Потрібно вибрати категорії';
+
+// Producers
+export const CURRENCY_EXCHANGERATE_DEPENDENCY =
+  'Якщо заповнено одне з полів "валюта" або "курс", інше також обовʼязкове';
+export const CURRENCY_EXCHANGE_MANDATORY =
+  'Потрібно заповнити обидва поля — "валюта" та "курс"';

@@ -4,9 +4,9 @@ import { DB_CONNECTION_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProductApi, locale } from '@/types';
+import { IProductPopulated } from '@/types';
 
-export async function getProductById(productId: string, locale: locale) {
+export async function getProductById(productId: string) {
   const connection = await dbConnect();
 
   if (!connection) {
@@ -18,10 +18,11 @@ export async function getProductById(productId: string, locale: locale) {
     .populate('packaging.default')
     .populate('packaging.items.packId')
     .populate('filters.filter')
-    .lean<IProductApi>();
+    .populate('producer')
+    .lean<IProductPopulated>();
 
   if (product) {
-    const mappedProduct = mapProduct(product, locale);
+    const mappedProduct = mapProduct(product);
 
     return mappedProduct;
   }

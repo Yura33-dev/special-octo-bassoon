@@ -76,7 +76,7 @@ const productSchema = new mongoose.Schema<IProductApi>(
     },
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     visible: { type: Boolean, required: false, default: true },
-    producer: { type: String, required: true },
+    producer: { type: mongoose.Schema.Types.ObjectId, ref: 'Producer' },
     labels: [{ type: String, enum: ['top', 'sale'], default: [] }],
     imgUrl: { type: String, required: true },
     filters: [{ type: productFiltersSchema, default: null }],

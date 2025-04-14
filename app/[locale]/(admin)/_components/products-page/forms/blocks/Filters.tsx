@@ -12,7 +12,12 @@ interface IFiltersProps {
   title: string;
   formik: FormikProps<IProductForm>;
   onAddFilter: () => void;
-  onDeleteFilter: (value: string) => void;
+  onDeleteFilter: (value: {
+    id: string;
+    filter: string;
+    value: string;
+  }) => void;
+  handleSelectProducer: (value: string) => void;
 }
 
 export default function Filters({
@@ -21,6 +26,7 @@ export default function Filters({
   formik,
   onAddFilter,
   onDeleteFilter,
+  handleSelectProducer,
 }: IFiltersProps) {
   const usedFilterIds = formik.values.filters.map(fil => fil.filter);
   const globalFiltered = filters.filter(fil => !usedFilterIds.includes(fil.id));
@@ -30,6 +36,12 @@ export default function Filters({
       <h2 className='text-lg font-semibold md:mb-4'>{title}</h2>
 
       <AddElementButton title='фільтр' onClick={onAddFilter} />
+
+      {typeof get(formik.errors, `producer`) === 'string' ? (
+        <p className='mb-2 text-xs pl-2 text-red-600'>
+          {get(formik.errors, `producer`) as string}
+        </p>
+      ) : null}
 
       <ul className='grid gap-4 grid-cols-1 md:grid-cols-2  lg:grid-cols-3'>
         {formik.values.filters.map((filter, index) => (
@@ -114,6 +126,8 @@ export default function Filters({
                           : fil
                       )
                     );
+
+                    handleSelectProducer(value.variantSlug);
                   }}
                   classNames={{
                     container: ({ isFocused }) =>
@@ -142,7 +156,7 @@ export default function Filters({
 
             <DeleteElementButton
               title='фільтр'
-              onClick={() => onDeleteFilter(filter.id)}
+              onClick={() => onDeleteFilter(filter)}
               className='self-center'
             />
           </li>

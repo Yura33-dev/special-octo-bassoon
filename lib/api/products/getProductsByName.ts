@@ -4,7 +4,7 @@ import { PRODUCTS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProductApi, locale } from '@/types';
+import { IProductPopulated, locale } from '@/types';
 
 export async function getProductsByName(name: string, locale: locale) {
   try {
@@ -17,12 +17,11 @@ export async function getProductsByName(name: string, locale: locale) {
       .populate('packaging.default')
       .populate('packaging.items.packId')
       .populate('filters.filter')
-      .lean<Array<IProductApi>>();
+      .populate('producer')
+      .lean<Array<IProductPopulated>>();
 
     if (products) {
-      const mappedProducts = products.map(product =>
-        mapProduct(product, locale)
-      );
+      const mappedProducts = products.map(product => mapProduct(product));
 
       return mappedProducts;
     } else {

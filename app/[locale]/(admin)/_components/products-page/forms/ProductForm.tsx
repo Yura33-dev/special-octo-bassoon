@@ -1,9 +1,10 @@
 'use client';
 
 import { FormikHelpers, useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ShortUniqueId from 'short-unique-id';
 import { toast } from 'sonner';
+import { slugify } from 'transliteration';
 
 import { useRouter } from '@/i18n/routing';
 import { createProduct, updateProduct } from '@/lib/api';
@@ -16,6 +17,7 @@ import {
   IFilterMapped,
   IPackagingMapped,
   IProductMapped,
+  IProducerMapped,
 } from '@/types';
 
 import Categories from './blocks/Categories';
@@ -25,7 +27,6 @@ import Localization from './blocks/Localization';
 import Packaging from './blocks/Packaging';
 import Visual from './blocks/Visual';
 import DeleteButton from '../../shared/forms-elements/DeleteButton';
-import Input from '../../shared/forms-elements/Input';
 import SubmitButton from '../../shared/forms-elements/SubmitButton';
 
 interface IProductEditFormProps {
@@ -33,7 +34,8 @@ interface IProductEditFormProps {
   categories: Array<ICategoryMapped>;
   packaging: Array<IPackagingMapped>;
   filters: Array<IFilterMapped>;
-  isAddForm: boolean;
+  producers: Array<IProducerMapped>;
+  isAddForm?: boolean;
 }
 
 export default function ProductForm({
@@ -41,7 +43,8 @@ export default function ProductForm({
   categories,
   packaging,
   filters,
-  isAddForm,
+  producers,
+  isAddForm = false,
 }: IProductEditFormProps) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -52,107 +55,100 @@ export default function ProductForm({
     product?.translatedData['ru'].description ?? ''
   );
 
+  const [producer, setProducer] = useState<IProducerMapped | null>(null);
+
+  useEffect(() => {
+    if (!isAddForm) {
+      const filterObj = product?.filters.find(
+        filter => filter.filter.slug === 'virobnik'
+      );
+      const producerInProduct = producers.find(
+        producer =>
+          slugify(producer.translatedData['uk'].title) === filterObj?.value
+      );
+
+      setProducer(producerInProduct ?? null);
+    }
+  }, [isAddForm, product, producers]);
+
   const openModal = useModalStore(state => state.openModal);
 
   const router = useRouter();
 
-  let initialValues: IProductForm = {
+  const initialValues: IProductForm = {
     translatedData: {
       uk: {
-        name: '',
-        slug: '',
-        description: '',
-        country: '',
+        name: product?.translatedData['uk'].name ?? '',
+        slug: product?.translatedData['uk'].slug ?? '',
+        description: product?.translatedData['uk'].description ?? '',
+        country: product?.translatedData['uk'].country ?? '',
         meta: {
-          title: '',
-          keywords: '',
-          description: '',
+          title: product?.translatedData['uk'].meta.title ?? '',
+          keywords: product?.translatedData['uk'].meta.keywords ?? '',
+          description: product?.translatedData['uk'].meta.description ?? '',
         },
       },
       ru: {
-        name: '',
-        slug: '',
-        description: '',
-        country: '',
+        name: product?.translatedData['ru'].name ?? '',
+        slug: product?.translatedData['ru'].slug ?? '',
+        description: product?.translatedData['ru'].description ?? '',
+        country: product?.translatedData['ru'].country ?? '',
         meta: {
-          title: '',
-          keywords: '',
-          description: '',
+          title: product?.translatedData['ru'].meta.title ?? '',
+          keywords: product?.translatedData['ru'].meta.keywords ?? '',
+          description: product?.translatedData['ru'].meta.description ?? '',
         },
       },
     },
-    producer: '',
-
-    categories: [],
+    categories: product?.categories.map(category => category.id) ?? [],
 
     packaging: {
-      default: null,
-      items: [{ packId: null, quantity: null, price: 0 }],
+      default: product?.packaging.default.id ?? null,
+      items: product?.packaging.items.map(pack => ({
+        packId: pack.packId.id,
+        quantity: pack.quantity,
+        price: Number((pack.price / 100).toFixed(2)),
+      })) ?? [{ packId: null, quantity: null, price: null }],
     },
 
-    imgUrl: null,
-    visible: true,
+    imgUrl: product?.imgUrl ?? null,
+    visible: product?.visible ?? true,
 
-    filters: [],
-    labels: [],
+    filters:
+      product?.filters.map(filter => ({
+        id: filter.filter.id,
+        filter: filter.filter.id,
+        value: filter.value,
+      })) ?? [],
+
+    labels: product?.labels ?? [],
+
+    producer: product?.producer.id ?? null,
   };
 
-  if (product) {
-    initialValues = {
-      translatedData: {
-        uk: {
-          name: product.translatedData['uk'].name ?? '',
-          slug: product.translatedData['uk'].slug ?? '',
-          description: product.translatedData['uk'].description ?? '',
-          country: product.translatedData['uk'].country ?? '',
-          meta: {
-            title: product.translatedData['uk'].meta.title ?? '',
-            keywords: product.translatedData['uk'].meta.keywords ?? '',
-            description: product.translatedData['uk'].meta.description ?? '',
-          },
-        },
-        ru: {
-          name: product.translatedData['ru'].name ?? '',
-          slug: product.translatedData['ru'].slug ?? '',
-          description: product.translatedData['ru'].description ?? '',
-          country: product.translatedData['ru'].country ?? '',
-          meta: {
-            title: product.translatedData['ru'].meta.title ?? '',
-            keywords: product.translatedData['ru'].meta.keywords ?? '',
-            description: product.translatedData['ru'].meta.description ?? '',
-          },
-        },
-      },
-      categories: product.categories.map(category => category.id) ?? [],
+  const handleSelectProducer = (producerSlug: string) => {
+    const producer = producers.find(
+      producer => slugify(producer.translatedData['uk'].title) === producerSlug
+    );
 
-      packaging: {
-        default: product.packaging.default.id,
-        items: product.packaging.items.map(pack => ({
-          packId: pack.packId.id,
-          quantity: pack.quantity,
-          price: pack.price / 100,
-        })),
-      },
+    if (producer) {
+      setProducer(producer);
 
-      imgUrl: product.imgUrl,
-      visible: product.visible,
-
-      filters:
-        product.filters.map(filter => ({
-          id: filter.filter.id,
-          filter: filter.filter.id,
-          value: filter.value,
-        })) ?? [],
-
-      labels: product.labels,
-      producer: product.producer ?? '',
-    };
-  }
+      formik
+        .setFieldValue('producer', producer.id, false)
+        .then(() => {
+          formik.setFieldTouched('producer', true, false);
+        })
+        .then(() => {
+          formik.validateField('producer');
+        });
+    }
+  };
 
   const handleAddPackaging = () => {
     formik.setFieldValue('packaging.items', [
       ...formik.values.packaging.items,
-      { packId: null, quantity: null, price: 0 },
+      { packId: null, quantity: null, price: null },
     ]);
   };
 
@@ -174,10 +170,29 @@ export default function ProductForm({
     ]);
   };
 
-  const handleDeleteFilter = (filterId: string) => {
+  const handleDeleteFilter = (filter: {
+    id: string;
+    filter: string;
+    value: string;
+  }) => {
+    const producerFilter = producers.find(
+      producer => slugify(producer.translatedData['uk'].title) === filter.value
+    );
+
+    if (producerFilter) {
+      formik
+        .setFieldValue('producer', null, true)
+        .then(() => {
+          formik.setFieldTouched('producer', true, false);
+        })
+        .then(() => {
+          formik.validateField('producer');
+        });
+    }
+
     formik.setFieldValue(
       'filters',
-      formik.values.filters.filter(item => item.id !== filterId)
+      formik.values.filters.filter(item => item.id !== filter.id)
     );
   };
 
@@ -217,10 +232,6 @@ export default function ProductForm({
 
     values.translatedData['uk'].description = productDescriptionUk;
     values.translatedData['ru'].description = productDescriptionRu;
-    values.packaging.items = values.packaging.items.map(packaging => ({
-      ...packaging,
-      price: packaging.price * 100,
-    }));
 
     try {
       if (isAddForm) {
@@ -279,36 +290,27 @@ export default function ProductForm({
 
         <Categories title='Категорії' categories={categories} formik={formik} />
 
-        <Packaging
-          title='Пакування'
-          packaging={packaging}
-          onAddPackaging={handleAddPackaging}
-          onDeletePackaging={handleDeletePackaging}
-          formik={formik}
-        />
-
-        <Visual title='Візуальні дані' formik={formik} />
-
         <Filters
           title='Фільтри'
           filters={filters}
           formik={formik}
           onAddFilter={handleAddFilter}
           onDeleteFilter={handleDeleteFilter}
+          handleSelectProducer={handleSelectProducer}
         />
+
+        <Packaging
+          title='Пакування'
+          packaging={packaging}
+          onAddPackaging={handleAddPackaging}
+          onDeletePackaging={handleDeletePackaging}
+          formik={formik}
+          producer={producer}
+        />
+
+        <Visual title='Візуальні дані' formik={formik} />
 
         <Labels title='Лейбли' formik={formik} />
-
-        <Input
-          name='producer'
-          type='text'
-          title='Виробник'
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.producer}
-          errors={formik.errors}
-          touched={formik.touched}
-        />
       </div>
 
       <div className='flex gap-4 items-center justify-center mt-6'>

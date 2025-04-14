@@ -15,6 +15,7 @@ interface IProductItemProps {
 
 export default function ProductItem({ product }: IProductItemProps) {
   const locale = useLocale();
+
   return (
     <li key={product.id} className='bg-white rounded-md'>
       <div className='h-40'>
@@ -32,7 +33,8 @@ export default function ProductItem({ product }: IProductItemProps) {
           {product.translatedData[locale].name}
         </h2>
         <p className='text-sm'>
-          <span className='font-semibold'>Виробник:</span> {product.producer}
+          <span className='font-semibold'>Виробник:</span>{' '}
+          {product.producer.translatedData['uk'].title}
         </p>
 
         <ul className='text-sm mt-4'>
@@ -70,7 +72,12 @@ export default function ProductItem({ product }: IProductItemProps) {
                   pack.packId.translatedData[locale].measureValue,
                   pack.packId.translatedData[locale].measureIn
                 )}{' '}
-                - {formattedPrice(pack.price)}
+                -{' '}
+                {formattedPrice(
+                  product.producer.exchangeRate
+                    ? pack.price * product.producer.exchangeRate
+                    : pack.price
+                )}
               </li>
             ))}
           </ul>

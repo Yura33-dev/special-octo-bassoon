@@ -12,6 +12,13 @@ export async function updateProduct(
   try {
     await dbConnect();
 
+    const normalizedPackagingPrice = product.packaging.items.map(packaging => ({
+      ...packaging,
+      price: packaging.price ? packaging.price * 100 : null,
+    }));
+
+    product.packaging.items = normalizedPackagingPrice;
+
     const createdProduct: IProductApi | null = await Product.findOneAndUpdate(
       { 'translatedData.uk.slug': product.translatedData['uk'].slug },
       product

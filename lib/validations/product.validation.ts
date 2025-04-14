@@ -5,6 +5,7 @@ import { IProductForm } from '@/types';
 import {
   ALLOW_IMAGE_EXT,
   ALLOW_IMAGE_EXT_ARRAY,
+  ATLEAST_ONE_PRODUCER,
   DEFAULT_PACKAGE_AT_LEAST,
   FILE_NAME_REGEXP,
   LARGE_IMAGE_SIZE,
@@ -117,5 +118,5 @@ export const validationProductSchema: Yup.ObjectSchema<IProductForm> =
 
     labels: Yup.array().of(Yup.string().required()).default([]),
 
-    producer: Yup.string().required(MANDATORY_FIELD),
+    producer: Yup.string().required(ATLEAST_ONE_PRODUCER),
   });

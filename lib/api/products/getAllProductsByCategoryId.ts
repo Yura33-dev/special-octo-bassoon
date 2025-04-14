@@ -4,7 +4,7 @@ import { PRODUCTS_BY_CATEGORY_ID_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { calculatePaginationData, mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProductApi, locale } from '@/types';
+import { IProductPopulated, locale } from '@/types';
 
 export async function getAllProductsByCategoryId(
   locale: locale,
@@ -54,13 +54,14 @@ export async function getAllProductsByCategoryId(
         .populate('packaging.default')
         .populate('packaging.items.packId')
         .populate('filters.filter')
-        .lean<Array<IProductApi>>()
+        .populate('producer')
+        .lean<Array<IProductPopulated>>()
         .exec(),
     ]);
 
     const paginationData = calculatePaginationData(productsCount, limit, page);
 
-    const mappedProducts = products.map(product => mapProduct(product, locale));
+    const mappedProducts = products.map(product => mapProduct(product));
 
     return { products: mappedProducts, paginationData };
   } catch (e) {

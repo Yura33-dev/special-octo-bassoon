@@ -1,7 +1,12 @@
 import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
-import { getAllCategories, getAllFilters, getAllPackaging } from '@/lib/api';
+import {
+  getAllCategories,
+  getAllFilters,
+  getAllPackaging,
+  getAllProducers,
+} from '@/lib/api';
 import { locale } from '@/types';
 
 import BackButton from '../../shared/BackButton';
@@ -11,10 +16,11 @@ import ProductForm from '../forms/ProductForm';
 export default async function NewProductsPage() {
   const locale = (await getLocale()) as locale;
 
-  const [packaging, categories, filters] = await Promise.all([
+  const [packaging, categories, filters, producers] = await Promise.all([
     getAllPackaging(locale),
     getAllCategories(locale, { main: true }),
     getAllFilters(locale),
+    getAllProducers(locale),
   ]);
 
   return (
@@ -26,6 +32,7 @@ export default async function NewProductsPage() {
         packaging={packaging}
         categories={categories}
         filters={filters}
+        producers={producers}
         isAddForm
       />
     </Container>

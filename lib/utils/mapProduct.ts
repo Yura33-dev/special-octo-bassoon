@@ -3,6 +3,7 @@ import { IProductMapped, IProductPopulated } from '@/types';
 import { mapCategory } from './mapCategory';
 import { mapFilterInProduct } from './mapFilter';
 import { mapPackagingInProduct } from './mapPackaging';
+import { mapProducer } from './mapProducer';
 
 export function mapProduct(product: IProductPopulated): IProductMapped {
   return {
@@ -11,9 +12,9 @@ export function mapProduct(product: IProductPopulated): IProductMapped {
     packaging: mapPackagingInProduct(product.packaging),
     categories: product.categories.map(category => mapCategory(category)),
     visible: product.visible,
-    producer: product.producer,
     labels: product.labels,
     imgUrl: product.imgUrl,
     filters: product.filters.map(filter => mapFilterInProduct(filter)),
+    producer: mapProducer(product.producer),
   };
 }

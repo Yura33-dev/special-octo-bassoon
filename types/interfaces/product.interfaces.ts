@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 import {
   ICategory,
@@ -10,20 +10,22 @@ import {
   IFilterInProductMapped,
   IFilterInProductPopulated,
   IPackaginInProduct,
+  IProducerMapped,
+  IProducerPopulated,
   IProductPackVariantsApi,
   IProductPackVariantsMapped,
   IProductPackVariantsPopulated,
 } from '@/types';
 
 export interface IProductApi extends Document {
-  _id: string;
+  _id: ObjectId;
   translatedData: Record<string, ITranslatedData>;
   packaging: IProductPackVariantsApi;
   //   reviews: Array<string>;
   categories: Array<ICategoryApi>;
   labels: Array<Labels> | [];
   visible: boolean;
-  producer: string;
+  producer: ObjectId;
   imgUrl: string;
   filters: Array<IFilterInProductApi>;
   updatedAt: Date;
@@ -31,14 +33,14 @@ export interface IProductApi extends Document {
 }
 
 export interface IProductPopulated {
-  _id: string;
+  _id: ObjectId;
   translatedData: Record<string, ITranslatedData>;
   packaging: IProductPackVariantsPopulated;
   //   reviews: Array<string>;
   categories: Array<ICategoryPopulated>;
   labels: Array<Labels> | [];
   visible: boolean;
-  producer: string;
+  producer: IProducerPopulated;
   imgUrl: string;
   filters: Array<IFilterInProductPopulated>;
   updatedAt: Date;
@@ -52,7 +54,7 @@ export interface IProductMapped {
   //   reviews: Array<string>;
   categories: Array<ICategoryMapped>;
   visible: boolean;
-  producer: string;
+  producer: IProducerMapped;
   labels: Array<string>;
   imgUrl: string;
   filters: Array<IFilterInProductMapped>;
@@ -94,6 +96,6 @@ export interface IProductForm {
   imgUrl: File | string | null;
   visible: boolean;
   filters: Array<{ id: string; filter: string; value: string }>;
-  producer: string;
   labels: Array<string>;
+  producer: string | null;
 }

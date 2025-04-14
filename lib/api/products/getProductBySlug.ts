@@ -4,12 +4,12 @@ import { PRODUCT_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProduct, IProductMapped, IProductPopulated, locale } from '@/types';
+import { IProductMapped, IProductPopulated, locale } from '@/types';
 
 export async function getProductBySlug(
   slug: string,
   locale: locale
-): Promise<IProduct | IProductMapped | null> {
+): Promise<IProductMapped | null> {
   try {
     await dbConnect();
 
@@ -20,6 +20,7 @@ export async function getProductBySlug(
       .populate('packaging.default')
       .populate('packaging.items.packId')
       .populate('filters.filter')
+      .populate('producer')
       .lean<IProductPopulated>();
 
     if (!product)
