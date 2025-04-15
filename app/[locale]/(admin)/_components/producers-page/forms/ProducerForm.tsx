@@ -115,7 +115,7 @@ export default function ProducerForm({
           />
         </div>
 
-        <div className='p-4 bg-gray-200 mt-5 rounded-md col-span-full'>
+        <div className='p-4 bg-gray-200 rounded-md col-span-full'>
           <div className='flex flex-col gap-6 lg:flex-row lg:gap-8'>
             <Input
               title='Валюта'
