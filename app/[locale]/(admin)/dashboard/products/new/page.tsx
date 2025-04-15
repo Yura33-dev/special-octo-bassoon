@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 
+import AddProductPageSkeleton from '../../../_components/products-page/edit-page/EditProductPageSkeleton';
 import NewProductsPage from '../../../_components/products-page/new-page/NewProductsPage';
 
 export const metadata = {
@@ -8,7 +9,7 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<AddProductPageSkeleton />}>
       <NewProductsPage />
     </Suspense>
   );

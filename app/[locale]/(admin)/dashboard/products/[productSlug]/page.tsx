@@ -5,6 +5,7 @@ import { getProductBySlug } from '@/lib/api';
 import { IProductMapped, locale } from '@/types';
 
 import EditProductPage from '../../../_components/products-page/edit-page/EditProductPage';
+import EditProductPageSkeleton from '../../../_components/products-page/edit-page/EditProductPageSkeleton';
 
 interface IPageProps {
   params: {
@@ -32,7 +33,7 @@ export async function generateMetadata({
 
 export default function Page({ params }: IPageProps) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<EditProductPageSkeleton />}>
       <EditProductPage productSlug={params.productSlug} />
     </Suspense>
   );

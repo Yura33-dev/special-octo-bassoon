@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import ProductsPage from '../../_components/products-page/ProductsPage';
+import ProductsPageSkeleton from '../../_components/products-page/ProductsPageSkeleton';
 
 interface IProductsPageProps {
   searchParams: {
@@ -16,7 +17,7 @@ export const metadata = {
 
 export default async function Page({ searchParams }: IProductsPageProps) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<ProductsPageSkeleton />}>
       <ProductsPage searchParams={searchParams} />
     </Suspense>
   );
