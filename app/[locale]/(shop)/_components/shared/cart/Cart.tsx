@@ -2,8 +2,8 @@
 
 import clsx from 'clsx';
 import { X } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
-import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+// import { useEffect } from 'react';
 
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { useCartStore } from '@/providers/cart.provider';
@@ -12,21 +12,21 @@ import CartItem from './CartItem';
 import CartTotal from './CartTotal';
 
 export default function Cart() {
-  const locale = useLocale();
+  // const locale = useLocale();
 
   const isCartLoading = useCartStore(state => state.isCartLoading);
   const isCartOpen = useCartStore(state => state.isCartOpen);
   const closeCart = useCartStore(state => state.cartClose);
   const cart = useCartStore(state => state.cart);
-  const getTranslatedProducts = useCartStore(
-    state => state.fetchProductsInCart
-  );
+  // const getTranslatedProducts = useCartStore(
+  //   state => state.fetchProductsInCart
+  // );
 
   const t = useTranslations('Cart');
 
-  useEffect(() => {
-    getTranslatedProducts(locale);
-  }, [locale, getTranslatedProducts]);
+  // useEffect(() => {
+  //   getTranslatedProducts(locale);
+  // }, [locale, getTranslatedProducts]);
 
   return (
     <div
@@ -57,7 +57,7 @@ export default function Cart() {
       {!isCartLoading && (
         <ul className='mt-4 max-h-[75%] overflow-x-auto flex flex-col gap-6 py-2'>
           {cart.map(item => (
-            <CartItem key={item.packVariant.id} product={item} />
+            <CartItem key={item.packVariant.packId.id} product={item} />
           ))}
         </ul>
       )}

@@ -1,7 +1,6 @@
-import Link from 'next/link';
-
 import Container from '@/components/shared/Container';
 import LocaleSwitcher from '@/components/shared/LocaleSwitcher';
+import { Link } from '@/i18n/routing';
 
 import CartBtn from '../../ui/CartBtn';
 import HamburgerBtn from '../../ui/HamburgerBtn';

@@ -1,3 +1,4 @@
+import { IProductInCart } from './interfaces/cart.interfaces';
 import {
   ICategoryApi,
   ICategoryPopulated,
@@ -39,6 +40,7 @@ import {
   ICreatePackagingFormField,
   ICreatePackagingStructured,
   IPackaginInProduct,
+  IProductPackItemMapped,
 } from './interfaces/packaging.interfaces';
 import {
   IPageApi,
@@ -94,6 +96,7 @@ export type {
   IPackagingApi,
   IPackagingPopulated,
   IPackagingMapped,
+  IProductPackItemMapped,
   IProductPackVariantsPopulated,
   IProductPackVariantsMapped,
   ITranslatedPackagingData,
@@ -131,5 +134,6 @@ export type {
   IProducerPopulated,
   IProducerMapped,
   IProducerForm,
+  IProductInCart,
 };
 export type { locale };

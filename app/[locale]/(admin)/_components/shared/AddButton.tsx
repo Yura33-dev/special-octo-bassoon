@@ -26,8 +26,8 @@ export default function AddButton({
   if (type === 'link') {
     return (
       <Link
-        onClick={() => openModal(modalId)}
         href={href}
+        onClick={() => openModal(modalId)}
         className={clsx(
           'text-sm p-2 bg-primary rounded-md font-semibold flex items-center gap-3 justify-center transition-colors hover:bg-primary-dark text-white',
           className && className

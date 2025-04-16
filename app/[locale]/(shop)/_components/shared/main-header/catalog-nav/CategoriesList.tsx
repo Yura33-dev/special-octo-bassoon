@@ -2,19 +2,20 @@
 
 import clsx from 'clsx';
 import { ChevronRight } from 'lucide-react';
+import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import Container from '@/components/shared/Container';
 import { Link, usePathname } from '@/i18n/routing';
 import { useMediaQuery } from '@/lib/hooks';
 import { useGlobalStore } from '@/providers/globalStore.provider';
-import { ICategory } from '@/types';
+import { ICategoryMapped, locale } from '@/types';
 
 import CatalogNavBarButton from './CatalogNavBarButton';
 import CatalogNavBarChildCategories from './CatalogNavBarChildCategories';
 
 interface ICategoriesListProps {
-  categories: Array<ICategory>;
+  categories: Array<ICategoryMapped>;
 }
 
 export default function CategoriesList({ categories }: ICategoriesListProps) {
@@ -29,6 +30,7 @@ export default function CategoriesList({ categories }: ICategoriesListProps) {
     state => state.categoriesListClose
   );
 
+  const locale = useLocale() as locale;
   const isMobile = useMediaQuery('(max-width: 1024px)');
 
   const pathName = usePathname();
@@ -89,39 +91,40 @@ export default function CategoriesList({ categories }: ICategoriesListProps) {
           <div className='h-full w-full py-2 overflow-y-auto overflow-x-visible'>
             <ul className='flex flex-col h-full gap-y-3 text-sm lg:text-base lg:gap-y-0'>
               {categories &&
-                categories.map(({ slug, name, childCategories, id }) => (
+                categories.map(category => (
                   <li
-                    key={id}
+                    key={category.id}
                     className='px-4'
-                    onMouseEnter={() => handleMouseEnter(id)}
+                    onMouseEnter={() => handleMouseEnter(category.id)}
                     onMouseLeave={handleMouseLeave}
                   >
                     <h3>
                       <Link
-                        href={`/catalog/${slug}`}
+                        href={`/catalog/${category.slug[locale]}`}
                         className='flex items-center lg:justify-between p-2 gap-2 leading-tight'
                       >
-                        {name}
+                        {category.name[locale]}
                         <span>
                           <ChevronRight
                             size={16}
                             className={clsx(
                               'transition-colors',
-                              activeCategory === id && 'text-accent'
+                              activeCategory === category.id && 'text-accent'
                             )}
                           />
                         </span>
                       </Link>
                     </h3>
 
-                    {childCategories && childCategories.length > 0 && (
-                      <CatalogNavBarChildCategories
-                        childCategories={childCategories}
-                        parentCategorySlug={slug}
-                        parentCategoryId={id}
-                        activeCategory={activeCategory}
-                      />
-                    )}
+                    {category.childCategories &&
+                      category.childCategories.length > 0 && (
+                        <CatalogNavBarChildCategories
+                          childCategories={category.childCategories}
+                          parentCategorySlug={category.slug[locale]}
+                          parentCategoryId={category.id}
+                          activeCategory={activeCategory}
+                        />
+                      )}
                   </li>
                 ))}
             </ul>

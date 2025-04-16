@@ -1,10 +1,10 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
-import { IProductPack } from '@/types';
+import { IProductPackItemMapped } from '@/types';
 
 interface ICardPriceProps {
-  availablePackaging: Array<IProductPack>;
+  availablePackaging: Array<IProductPackItemMapped>;
   activePackaging: string;
 }
 
@@ -13,9 +13,10 @@ export default function CardInfo({
   activePackaging,
 }: ICardPriceProps) {
   const packaging =
-    availablePackaging.find(pack => pack.id === activePackaging) ??
+    availablePackaging.find(pack => pack.packId.id === activePackaging) ??
     availablePackaging[0];
 
+  const locale = useLocale();
   const t = useTranslations('ProductCard');
 
   return (
@@ -26,9 +27,9 @@ export default function CardInfo({
 
       <span className='badge border-none bg-primary text-white text-xs mb-3 block mx-auto leading-relaxed'>
         {formattedPackValue(
-          packaging.type,
-          packaging.measureValue,
-          packaging.measureIn
+          packaging.packId.translatedData[locale].type,
+          packaging.packId.translatedData[locale].measureValue,
+          packaging.packId.translatedData[locale].measureIn
         )}
       </span>
 

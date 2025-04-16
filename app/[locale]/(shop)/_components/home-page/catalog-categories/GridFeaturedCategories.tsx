@@ -1,17 +1,20 @@
 import { ArrowDownRight } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { Link } from '@/i18n/routing';
-import { ICategory } from '@/types';
+import { ICategoryMapped } from '@/types';
 
 interface IGridCategoriesProps {
-  featuredCategories: Array<ICategory>;
+  featuredCategories: Array<ICategoryMapped>;
 }
 
 export default async function GridFeaturedCategories({
   featuredCategories,
 }: IGridCategoriesProps) {
-  const t = await getTranslations('MainPage');
+  const [t, locale] = await Promise.all([
+    getTranslations('MainPage'),
+    getLocale(),
+  ]);
 
   return (
     <ul
@@ -42,8 +45,8 @@ export default async function GridFeaturedCategories({
       {featuredCategories.map(({ id, name, image, parentCategories, slug }) => {
         const link =
           parentCategories.length > 0
-            ? parentCategories[0].slug + '/' + slug
-            : '' + slug;
+            ? parentCategories[0].slug[locale] + '/' + slug[locale]
+            : '' + slug[locale];
 
         return (
           <li
@@ -70,7 +73,7 @@ export default async function GridFeaturedCategories({
                       after:duration-150 after:absolute after:bottom-[-4px] after:left-1/2 after:-translate-x-1/2 
                      group-hover:after:max-w-full'
               >
-                {name}
+                {name[locale]}
               </h3>
             </Link>
           </li>

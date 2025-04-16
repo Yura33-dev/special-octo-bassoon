@@ -14,9 +14,9 @@ export default function BackButton({
 }: IBackButtonProps) {
   return (
     <Link
+      href={href}
       className='flex justify-start items-center gap-4 mb-5 max-w-max rounded-md p-2 transition-colors
                       hover:bg-primary hover:text-white'
-      href={href}
     >
       <MoveLeft className='w-5 h-5' />
       <span>{title}</span>

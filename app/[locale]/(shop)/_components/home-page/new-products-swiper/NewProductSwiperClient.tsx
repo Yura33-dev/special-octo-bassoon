@@ -5,13 +5,13 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
-import { IProduct } from '@/types';
+import { IProductMapped } from '@/types';
 
 import NewProductSlide from './NewProductSlide';
 import NewProductsSwiperButton from './NewProductsSwiperButton';
 
 interface INewProductsSwiperClientProps {
-  products: Array<IProduct>;
+  products: Array<IProductMapped>;
 }
 
 export default function NewProductsSwiperClient({

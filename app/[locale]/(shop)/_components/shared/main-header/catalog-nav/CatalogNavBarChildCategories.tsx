@@ -1,10 +1,24 @@
+'use client';
+
 import clsx from 'clsx';
+import { useLocale } from 'next-intl';
 
 import { Link } from '@/i18n/routing';
-import { ICategory } from '@/types';
+import { locale } from '@/types';
 
 interface ICatalogNavBarChildCategoriesProps {
-  childCategories: Array<ICategory>;
+  childCategories: Array<{
+    id: string;
+    name: { [key: string]: string };
+    slug: { [key: string]: string };
+    sortOrder: number;
+    visible: boolean;
+    featured: boolean;
+    image: string;
+    main: boolean;
+    updatedAt: string | null;
+    createdAt: string | null;
+  }>;
   parentCategorySlug: string;
   parentCategoryId: string;
   activeCategory: string | null;
@@ -16,6 +30,7 @@ export default function CatalogNavBarChildCategories({
   parentCategoryId,
   activeCategory,
 }: ICatalogNavBarChildCategoriesProps) {
+  const locale = useLocale() as locale;
   return (
     <div
       className={clsx(
@@ -28,15 +43,13 @@ export default function CatalogNavBarChildCategories({
       )}
     >
       <ul className={clsx(`p-2`, 'grid grid-cols-3 auto-rows-auto')}>
-        {childCategories.map(({ slug: childCategorySlug, name, id }) => (
-          <li key={id} className='leading-tight'>
+        {childCategories.map(category => (
+          <li key={category.id} className='leading-tight'>
             <Link
-              href={`/catalog/${parentCategorySlug}/${childCategorySlug}`}
-              className='flex w-full h-full p-2 rounded-md
-            transition-colors duration-150 hover:bg-accent hover:text-white
-            '
+              href={`/catalog/${parentCategorySlug}/${category.slug[locale]}`}
+              className='flex w-full h-full p-2 rounded-md transition-colors duration-150 hover:bg-accent hover:text-white'
             >
-              {name}
+              {category.name[locale]}
             </Link>
           </li>
         ))}

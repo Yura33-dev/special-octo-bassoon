@@ -36,13 +36,13 @@ export default async function Footer() {
             {categories.map(category => (
               <li key={category.id} className='w-max relative'>
                 <Link
-                  href={`/catalog/${category.slug}`}
+                  href={`/catalog/${category.slug[locale]}`}
                   className='flex p-1  
                           after:content-[""] after:block after:w-full after:h-[2px] after:bg-accent after:absolute
                           after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:max-w-0 after:transition-all after:duration-150
                           hover:after:max-w-[calc(100%_-_8px)]'
                 >
-                  {category.name}
+                  {category.name[locale]}
                 </Link>
               </li>
             ))}

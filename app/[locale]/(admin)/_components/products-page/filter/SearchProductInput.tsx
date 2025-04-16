@@ -66,8 +66,8 @@ export default function SearchProductInput() {
             results.map(product => (
               <li key={product.id}>
                 <Link
-                  key={product.id}
                   href={`/dashboard/products/${product.translatedData[locale].slug}`}
+                  key={product.id}
                   className='block p-2 hover:bg-gray-100'
                 >
                   {product.translatedData[locale].name}

@@ -2,16 +2,17 @@
 
 import { Trash2 } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
+import { Link } from '@/i18n/routing';
 import {
   formattedPackValue,
   formattedPrice,
   getProductLinks,
 } from '@/lib/utils';
-import { IProductInCart, useCartStore } from '@/providers/cart.provider';
+import { useCartStore } from '@/providers/cart.provider';
+import { IProductInCart, locale } from '@/types';
 
 import CartCounter from './CartCounter';
 
@@ -21,18 +22,21 @@ interface ICartItemProps {
 
 export default function CartItem({ product }: ICartItemProps) {
   const t = useTranslations('Cart');
-  const { productLink } = getProductLinks(product);
+  const locale = useLocale() as locale;
 
-  const { data, imgUrl, packVariant } = product;
-  const { name } = data;
+  const { productLink } = getProductLinks(product, locale);
+
+  const { translatedData, imgUrl, packVariant } = product;
+  const { name } = translatedData[locale];
+  const { packId } = packVariant;
 
   const removeProductFromCart = useCartStore(state => state.removeProduct);
 
   const handleRemoveProduct = () => {
-    removeProductFromCart(packVariant.id);
+    removeProductFromCart(packId.id);
     toast.info(
       t('FromCart', {
-        title: `${name} (${formattedPackValue(packVariant.type, packVariant.measureValue, packVariant.measureIn)})`,
+        title: `${name} (${formattedPackValue(packId.translatedData[locale].type, packId.translatedData[locale].measureValue, packId.translatedData[locale].measureIn)})`,
       })
     );
   };
@@ -76,7 +80,7 @@ export default function CartItem({ product }: ICartItemProps) {
 
           <CartCounter
             quantity={packVariant.orderedQuantity}
-            packId={packVariant.id}
+            packId={packId.id}
           />
 
           <p className='my-2 sm:my-1 text-sm'>
@@ -85,9 +89,9 @@ export default function CartItem({ product }: ICartItemProps) {
 
           <div className='badge text-xs border-none bg-accent text-foreground'>
             {formattedPackValue(
-              packVariant.type,
-              packVariant.measureValue,
-              packVariant.measureIn
+              packId.translatedData[locale].type,
+              packId.translatedData[locale].measureValue,
+              packId.translatedData[locale].measureIn
             )}
           </div>
         </div>

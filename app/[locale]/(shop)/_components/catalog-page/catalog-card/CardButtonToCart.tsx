@@ -1,14 +1,15 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
+// import { routing } from '@/i18n/routing';
 import { formattedPackValue } from '@/lib/utils';
 import { useCartStore } from '@/providers/cart.provider';
-import { IProduct } from '@/types';
+import { IProductInCart, IProductMapped, locale } from '@/types';
 
 interface ICardButtonToCardProps {
-  product: IProduct;
+  product: IProductMapped;
   activePackaging: string;
 }
 
@@ -16,30 +17,37 @@ export default function CardButtonToCart({
   product,
   activePackaging,
 }: ICardButtonToCardProps) {
+  const locale = useLocale() as locale;
   const addProductToCart = useCartStore(state => state.addProduct);
 
   const t = useTranslations('Cart');
 
   const handleAddToCart = () => {
     const packVariant = product.packaging.items.filter(
-      packVariant => packVariant.id === activePackaging
+      packVariant => packVariant.packId.id === activePackaging
     );
 
-    const productObject = {
+    // const translatedData = routing.locales.reduce((result, locale) => {
+    //   result[locale] = {
+    //     name: product.translatedData[locale].name,
+    //   slug: product.translatedData[locale].slug,
+    //   };
+
+    //   return result;
+    // }, {} as Record<typeof routing.locales[number], {name: string, slug: string}>)
+
+    const productObject: IProductInCart = {
       id: product.id,
       imgUrl: product.imgUrl,
-      data: {
-        name: product.data.name,
-        slug: product.data.slug,
-      },
-      packVariant: { ...packVariant[0], orderedQuantity: 1 },
+      translatedData: product.translatedData,
       categories: product.categories,
+      packVariant: { ...packVariant[0], orderedQuantity: 1 },
     };
 
     addProductToCart(productObject);
     toast.success(
       t('ToCart', {
-        title: `${productObject.data.name} (${formattedPackValue(productObject.packVariant.type, productObject.packVariant.measureValue, productObject.packVariant.measureIn)})`,
+        title: `${productObject.translatedData[locale].name} (${formattedPackValue(productObject.packVariant.packId.translatedData[locale].type, productObject.packVariant.packId.translatedData[locale].measureValue, productObject.packVariant.packId.translatedData[locale].measureIn)})`,
       })
     );
   };

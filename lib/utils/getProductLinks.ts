@@ -1,7 +1,9 @@
-import { IProductInCart } from '@/providers/cart.provider';
-import { IProduct } from '@/types';
+import { IProductInCart, IProductMapped, locale } from '@/types';
 
-export const getProductLinks = (product: IProduct | IProductInCart) => {
+export const getProductLinks = (
+  product: IProductMapped | IProductInCart,
+  locale: locale
+) => {
   let mainCategorySlug: string | undefined;
   let mainCategoryName: string | undefined;
   let subCategorySlug: string | undefined;
@@ -9,15 +11,15 @@ export const getProductLinks = (product: IProduct | IProductInCart) => {
 
   product.categories.forEach(category => {
     if (category.main) {
-      mainCategorySlug = category.slug;
-      mainCategoryName = category.name;
+      mainCategorySlug = category.slug[locale];
+      mainCategoryName = category.name[locale];
     } else {
-      subCategorySlug = category.slug;
-      subCategoryName = category.name;
+      subCategorySlug = category.slug[locale];
+      subCategoryName = category.name[locale];
     }
   });
 
-  const productSlug = product.data.slug;
+  const productSlug = product.translatedData[locale].slug;
 
   return {
     mainCategory: {

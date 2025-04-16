@@ -4,9 +4,9 @@ import { LATEST_PRODUCTS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProductPopulated, locale } from '@/types';
+import { IProductPopulated } from '@/types';
 
-export async function getLatestProducts(locale: locale, limit: number = 20) {
+export async function getLatestProducts(limit: number = 20) {
   try {
     await dbConnect();
 

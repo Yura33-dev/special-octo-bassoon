@@ -50,8 +50,8 @@ export default function NestedCategoriesList({
                         focus-within:bg-teal-700/60 focus-within:outline-none'
         >
           <Link
-            className='basis-full focus-within:outline-none'
             href={`/dashboard/categories/${category.slug[locale]}`}
+            className='basis-full focus-within:outline-none'
           >
             <div className='flex justify-between items-center gap-4'>
               <div className='flex gap-2 items-center'>

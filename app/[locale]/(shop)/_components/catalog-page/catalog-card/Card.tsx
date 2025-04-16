@@ -1,9 +1,10 @@
 'use client';
 
+import { useLocale } from 'next-intl';
 import { useState } from 'react';
 
 import { getProductLinks } from '@/lib/utils';
-import { IProduct } from '@/types';
+import { IProductMapped, locale } from '@/types';
 
 import CardButtonToCart from './CardButtonToCart';
 import CardCategories from './CardCategories';
@@ -12,14 +13,19 @@ import CardInfo from './CardInfo';
 import CardPackVariants from './CardPackVariants';
 
 interface ICardProps {
-  product: IProduct;
+  product: IProductMapped;
 }
 
 export default function Card({ product }: ICardProps) {
-  const { mainCategory, subCategory, productLink } = getProductLinks(product);
+  const locale = useLocale() as locale;
+
+  const { mainCategory, subCategory, productLink } = getProductLinks(
+    product,
+    locale
+  );
 
   const [selectedPackId, setSelectedPackId] = useState<string>(
-    product.packaging.default?.id ?? product.packaging.items[0].id
+    product.packaging.default?.id ?? product.packaging.items[0].packId.id
   );
 
   const handleChangeActivePackaging = (packId: string) => {
@@ -30,14 +36,14 @@ export default function Card({ product }: ICardProps) {
     <li className='bg-white rounded-t-md rounded-b-md group lg:hover:rounded-b-none w-full max-w-[350px] sm:max-w-none lg:max-w-[280px]'>
       <CardImage
         productLink={productLink}
-        productName={product.data.name}
+        productName={product.translatedData[locale].name}
         productLabels={product.labels}
         productImage={product.imgUrl}
       />
 
       <div className='flex flex-col p-4 relative'>
         <h3 className='text-lg sm:text-xl font-semibold text-center mb-3 max-w-full truncate'>
-          {product.data.name}
+          {product.translatedData[locale].name}
         </h3>
 
         <CardInfo

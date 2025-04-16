@@ -42,7 +42,7 @@ export interface IProductPackVariantsPopulated {
 
 export interface IProductPackVariantsMapped {
   default: IPackagingMapped;
-  items: Array<IProductPackItemsMapped>;
+  items: Array<IProductPackItemMapped>;
 }
 
 interface IProductPackItemsApi {
@@ -57,7 +57,7 @@ interface IProductPackItemsPopulated {
   price: number;
 }
 
-interface IProductPackItemsMapped {
+export interface IProductPackItemMapped {
   packId: IPackagingMapped;
   quantity: number;
   price: number;

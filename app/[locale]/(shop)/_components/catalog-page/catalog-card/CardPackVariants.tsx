@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Link } from '@/i18n/routing';
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
-import { IProductPack } from '@/types';
+import { IProductPackItemMapped } from '@/types';
 
 interface ICardPackVariantsProps {
-  availablePackaging: Array<IProductPack>;
+  availablePackaging: Array<IProductPackItemMapped>;
   activePackaging: string;
   productLink: string;
   handleChangeActivePackaging: (packId: string) => void;
@@ -18,10 +18,11 @@ export default function CardPackVariants({
   handleChangeActivePackaging,
   productLink,
 }: ICardPackVariantsProps) {
+  const locale = useLocale();
   const t = useTranslations('ProductCard');
 
   const packagingInStock = availablePackaging.filter(
-    packVariant => packVariant.quantity > 0
+    packVariant => packVariant.quantity > 0 || packVariant.quantity === null
   );
 
   const visiblePackaging =
@@ -30,7 +31,7 @@ export default function CardPackVariants({
       : packagingInStock;
 
   const activePack =
-    visiblePackaging.find(pack => pack.id === activePackaging) ??
+    visiblePackaging.find(pack => pack.packId.id === activePackaging) ??
     visiblePackaging[0];
 
   return (
@@ -43,22 +44,24 @@ export default function CardPackVariants({
       <ul className='text-sm flex flex-col gap-1'>
         {visiblePackaging.length > 0 &&
           visiblePackaging.map(packageVariant => (
-            <li key={packageVariant.id}>
+            <li key={packageVariant.packId.id}>
               <button
                 type='button'
                 className={clsx(
                   `w-full flex text-left text-xs gap-2 border-[1px] rounded-md px-2 py-1 transition-colors`,
-                  activePack.id === packageVariant.id
+                  activePack.packId.id === packageVariant.packId.id
                     ? 'border-accent'
                     : 'border-gray-200'
                 )}
-                onClick={() => handleChangeActivePackaging(packageVariant.id)}
+                onClick={() =>
+                  handleChangeActivePackaging(packageVariant.packId.id)
+                }
               >
                 <span className='basis-2/3 max-w-2/3 truncate'>
                   {formattedPackValue(
-                    packageVariant.type,
-                    packageVariant.measureValue,
-                    packageVariant.measureIn
+                    packageVariant.packId.translatedData[locale].type,
+                    packageVariant.packId.translatedData[locale].measureValue,
+                    packageVariant.packId.translatedData[locale].measureIn
                   )}
                 </span>
                 <span className='basis-1/3 max-w-1/3 truncate'>{`${formattedPrice(packageVariant.price)}`}</span>
