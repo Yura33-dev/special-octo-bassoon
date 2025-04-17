@@ -28,6 +28,7 @@ export default function CardButtonToCart({
 
     const productObject: IProductInCart = {
       id: product.id,
+      producer: product.producer,
       imgUrl: product.imgUrl,
       translatedData: product.translatedData,
       categories: product.categories,

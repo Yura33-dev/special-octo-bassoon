@@ -46,6 +46,7 @@ export default function NewProductSlide({ product }: INewProductSlideProps) {
           {product.translatedData[locale].name}
         </h3>
         <CardInfo
+          producer={product.producer}
           availablePackaging={product.packaging.items}
           activePackaging={selectedPackId}
         />
@@ -55,6 +56,7 @@ export default function NewProductSlide({ product }: INewProductSlideProps) {
         <CardCategories mainCategory={mainCategory} subCategory={subCategory} />
 
         <CardPackVariants
+          producer={product.producer}
           availablePackaging={product.packaging.items}
           activePackaging={selectedPackId}
           handleChangeActivePackaging={handleChangeActivePackaging}

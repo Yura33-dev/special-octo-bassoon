@@ -47,6 +47,7 @@ export default function Card({ product }: ICardProps) {
         </h3>
 
         <CardInfo
+          producer={product.producer}
           availablePackaging={product.packaging.items}
           activePackaging={selectedPackId}
         />
@@ -56,6 +57,7 @@ export default function Card({ product }: ICardProps) {
         <CardCategories mainCategory={mainCategory} subCategory={subCategory} />
 
         <CardPackVariants
+          producer={product.producer}
           availablePackaging={product.packaging.items}
           activePackaging={selectedPackId}
           handleChangeActivePackaging={handleChangeActivePackaging}

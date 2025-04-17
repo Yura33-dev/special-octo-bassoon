@@ -1,8 +1,9 @@
 import { ICategoryMapped } from './category.interfaces';
+import { IProducerMapped } from './producer.interfaces';
 
 export interface IProductInCart {
   id: string;
-
+  producer: IProducerMapped;
   imgUrl: string;
   translatedData: {
     [locale: string]: {

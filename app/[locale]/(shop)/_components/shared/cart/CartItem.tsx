@@ -84,7 +84,14 @@ export default function CartItem({ product }: ICartItemProps) {
           />
 
           <p className='my-2 sm:my-1 text-sm'>
-            {t('Price')} <span>{formattedPrice(packVariant.price)}</span>
+            {t('Price')}{' '}
+            <span>
+              {formattedPrice(
+                product.producer.exchangeRate
+                  ? packVariant.price * product.producer.exchangeRate
+                  : packVariant.price
+              )}
+            </span>
           </p>
 
           <div className='badge text-xs border-none bg-accent text-foreground'>

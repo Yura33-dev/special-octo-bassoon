@@ -35,6 +35,7 @@ export default function ProductVariants({ product }: IPackagingProps) {
   const handleAddToCart = () => {
     const productObject: IProductInCart = {
       id: product.id,
+      producer: product.producer,
       imgUrl: product.imgUrl,
       translatedData: product.translatedData,
       categories: product.categories,
@@ -68,9 +69,11 @@ export default function ProductVariants({ product }: IPackagingProps) {
                 activePack.packId.id === pack.packId.id
                   ? 'border-accent'
                   : 'border-gray-300',
-                pack.quantity <= 0 && 'border-gray-200 text-gray-400'
+                pack.quantity <= 0 &&
+                  !!pack.quantity &&
+                  'border-gray-200 text-gray-400'
               )}
-              disabled={pack.quantity <= 0}
+              disabled={!!pack.quantity && pack.quantity <= 0}
             >
               {formattedPackValue(
                 pack.packId.translatedData[locale].type,
@@ -83,7 +86,11 @@ export default function ProductVariants({ product }: IPackagingProps) {
       </ul>
 
       <h2 className='text-2xl md:text-3xl font-medium flex flex-col gap-1 mb-5 md:mb-10'>
-        {formattedPrice(activePack.price)}
+        {formattedPrice(
+          product.producer.exchangeRate
+            ? activePack.price * product.producer.exchangeRate
+            : activePack.price
+        )}
         {activePack.packId.showPricePerUnit && (
           <span className='text-base md:text-sm font-normal'>
             {(

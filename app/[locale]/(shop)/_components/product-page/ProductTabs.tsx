@@ -48,10 +48,10 @@ export default function ProductTabs({ tabs }: IInfoTabsProps) {
         )}
 
         {activeTab === 'Description' && tabs.descriptionTab && (
-          <p
+          <div
             className=' bg-gray-200 p-5 rounded-b-md'
             dangerouslySetInnerHTML={{ __html: tabs.descriptionTab }}
-          ></p>
+          ></div>
         )}
 
         {activeTab === 'Reviews' && tabs.reviewsTab.length === 0 && (

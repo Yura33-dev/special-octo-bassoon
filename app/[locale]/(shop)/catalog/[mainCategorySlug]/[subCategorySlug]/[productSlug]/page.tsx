@@ -31,7 +31,7 @@ export default async function ProductPage({ params }: IProductPageProps) {
     getPageDataByName('CatalogPage', locale),
     getCategoryBySlug(params.mainCategorySlug, routing.locales),
     getCategoryBySlug(params.subCategorySlug, routing.locales),
-    getProductBySlug(params.productSlug, locale),
+    getProductBySlug(params.productSlug, routing.locales),
   ]);
 
   if (!catalogPageData || !category || !subcategory || !product) {
@@ -65,7 +65,7 @@ export default async function ProductPage({ params }: IProductPageProps) {
       />
       <section className='mt-4'>
         <Container>
-          <div className='flex flex-col gap-5 md:flex-row md:gap-10'>
+          <div className='flex flex-col gap-5 sm:flex-row md:gap-10'>
             <ProductImage
               src={product.imgUrl}
               alt={product.translatedData[locale].name}

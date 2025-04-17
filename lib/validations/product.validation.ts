@@ -63,7 +63,7 @@ export const validationProductSchema: Yup.ObjectSchema<IProductForm> =
           Yup.object({
             packId: Yup.string().required(MANDATORY_FIELD),
             quantity: Yup.number()
-              .positive(ONLY_POSITIVE_NUMBERS)
+              .min(0, ONLY_POSITIVE_NUMBERS)
               .typeError(ONLY_NUMBERS)
               .default(null)
               .nullable(),

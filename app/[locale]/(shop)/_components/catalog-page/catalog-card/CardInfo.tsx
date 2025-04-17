@@ -1,14 +1,16 @@
 import { useLocale, useTranslations } from 'next-intl';
 
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
-import { IProductPackItemMapped } from '@/types';
+import { IProducerMapped, IProductPackItemMapped } from '@/types';
 
 interface ICardPriceProps {
+  producer: IProducerMapped;
   availablePackaging: Array<IProductPackItemMapped>;
   activePackaging: string;
 }
 
 export default function CardInfo({
+  producer,
   availablePackaging,
   activePackaging,
 }: ICardPriceProps) {
@@ -22,7 +24,11 @@ export default function CardInfo({
   return (
     <>
       <p className='font-bold text-center text-lg sm:text-xl mb-2'>
-        {formattedPrice(packaging.price)}
+        {formattedPrice(
+          producer.exchangeRate
+            ? packaging.price * producer.exchangeRate
+            : packaging.price
+        )}
       </p>
 
       <span className='badge border-none bg-primary text-white text-xs mb-3 block mx-auto leading-relaxed'>

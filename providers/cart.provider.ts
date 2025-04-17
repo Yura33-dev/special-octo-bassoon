@@ -61,25 +61,40 @@ export const useCartStore = create<ICartStore>()(
 
       addProduct: (product: IProductInCart) =>
         set(state => {
-          const index = state.cart.findIndex(
-            item => item.packVariant.packId.id === product.packVariant.packId.id
+          const productsInCart = state.cart.filter(
+            cartItem => cartItem.id === product.id
           );
 
-          if (index > -1) {
-            return {
-              ...state,
-              cart: state.cart.map(item =>
-                item.packVariant.packId.id === product.packVariant.packId.id
-                  ? {
-                      ...item,
-                      packVariant: {
-                        ...item.packVariant,
-                        orderedQuantity: item.packVariant.orderedQuantity + 1,
-                      },
-                    }
-                  : item
-              ),
-            };
+          if (productsInCart.length > 0) {
+            const isPackagingInProductExist = productsInCart.find(
+              productInCart =>
+                productInCart.packVariant.packId.id ===
+                product.packVariant.packId.id
+            );
+
+            if (isPackagingInProductExist) {
+              return {
+                ...state,
+                cart: state.cart.map(item =>
+                  item.id === product.id &&
+                  isPackagingInProductExist.packVariant.packId.id ===
+                    item.packVariant.packId.id
+                    ? {
+                        ...item,
+                        packVariant: {
+                          ...item.packVariant,
+                          orderedQuantity: item.packVariant.orderedQuantity + 1,
+                        },
+                      }
+                    : item
+                ),
+              };
+            } else {
+              return {
+                ...state,
+                cart: [...state.cart, product],
+              };
+            }
           } else {
             return {
               ...state,
@@ -98,10 +113,10 @@ export const useCartStore = create<ICartStore>()(
 
       getTotalPrice: () => {
         return get().cart.reduce((total, product) => {
-          return (
-            total +
-            product.packVariant.price * product.packVariant.orderedQuantity
-          );
+          const productPrice = product.producer.exchangeRate
+            ? product.packVariant.price * product.producer.exchangeRate
+            : product.packVariant.price;
+          return total + productPrice * product.packVariant.orderedQuantity;
         }, 0);
       },
 

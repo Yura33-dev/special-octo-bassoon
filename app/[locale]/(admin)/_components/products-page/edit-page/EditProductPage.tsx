@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
+import { routing } from '@/i18n/routing';
 import {
   getAllCategories,
   getAllFilters,
@@ -30,7 +31,7 @@ export default async function EditProductPage({
       getAllPackaging(locale),
       getAllCategories({ main: true }),
       getAllFilters(locale),
-      getProductBySlug(productSlug, locale),
+      getProductBySlug(productSlug, routing.locales),
       getAllProducers(locale),
     ]);
 

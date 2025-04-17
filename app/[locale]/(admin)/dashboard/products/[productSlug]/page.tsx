@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
+import { routing } from '@/i18n/routing';
 import { getProductBySlug } from '@/lib/api';
-import { IProductMapped, locale } from '@/types';
 
 import EditProductPage from '../../../_components/products-page/edit-page/EditProductPage';
 import EditProductPageSkeleton from '../../../_components/products-page/edit-page/EditProductPageSkeleton';
@@ -17,17 +17,12 @@ interface IPageProps {
 export async function generateMetadata({
   params,
 }: IPageProps): Promise<Metadata> {
-  const product = await getProductBySlug(
-    params.productSlug,
-    params.locale as locale
-  );
+  const product = await getProductBySlug(params.productSlug, routing.locales);
 
   if (!product) return { title: 'Proground | Сталася помилка' };
 
-  const mappedProduct = product as IProductMapped;
-
   return {
-    title: `ProGround | Редагування ${mappedProduct.translatedData[params.locale].name}`,
+    title: `ProGround | Редагування ${product.translatedData[params.locale].name}`,
   };
 }
 

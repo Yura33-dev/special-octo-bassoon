@@ -3,9 +3,10 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { Link } from '@/i18n/routing';
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
-import { IProductPackItemMapped } from '@/types';
+import { IProducerMapped, IProductPackItemMapped } from '@/types';
 
 interface ICardPackVariantsProps {
+  producer: IProducerMapped;
   availablePackaging: Array<IProductPackItemMapped>;
   activePackaging: string;
   productLink: string;
@@ -13,6 +14,7 @@ interface ICardPackVariantsProps {
 }
 
 export default function CardPackVariants({
+  producer,
   availablePackaging,
   activePackaging,
   handleChangeActivePackaging,
@@ -64,7 +66,7 @@ export default function CardPackVariants({
                     packageVariant.packId.translatedData[locale].measureIn
                   )}
                 </span>
-                <span className='basis-1/3 max-w-1/3 truncate'>{`${formattedPrice(packageVariant.price)}`}</span>
+                <span className='basis-1/3 max-w-1/3 truncate'>{`${formattedPrice(producer.exchangeRate ? packageVariant.price * producer.exchangeRate : packageVariant.price)}`}</span>
               </button>
             </li>
           ))}
