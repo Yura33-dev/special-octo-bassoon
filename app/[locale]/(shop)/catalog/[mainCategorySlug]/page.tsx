@@ -2,11 +2,8 @@ import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
-import {
-  getCategoryBySlug,
-  getChildCategoriesByParentSlug,
-  getPageDataByName,
-} from '@/lib/api';
+import { routing } from '@/i18n/routing';
+import { getCategoryBySlug, getPageDataByName } from '@/lib/api';
 import { locale } from '@/types';
 
 import BreadCrumbs from '../../_components/shared/breadcrumbs/BreadCrumbs';
@@ -24,23 +21,22 @@ export default async function MainCategoryPage({
 
   const [catalogPageData, category] = await Promise.all([
     getPageDataByName('CatalogPage', locale),
-    getCategoryBySlug(params.mainCategorySlug, locale),
+    getCategoryBySlug(params.mainCategorySlug, routing.locales),
   ]);
 
   if (!catalogPageData || !category) {
     notFound();
   }
 
-  const subCategories = await getChildCategoriesByParentSlug(
-    category.slug,
-    locale
-  );
-
-  const generateBreadCrumbs = ['', `catalog`, `catalog/${category?.slug}`];
+  const generateBreadCrumbs = [
+    '',
+    `catalog`,
+    `catalog/${category?.slug[locale]}`,
+  ];
 
   const generateBreadTitles = [
     ...catalogPageData.data.breadcrumbTitles,
-    category.name,
+    category.name[locale],
   ];
 
   return (
@@ -52,7 +48,10 @@ export default async function MainCategoryPage({
 
       <section className='mt-4'>
         <Container>
-          <CatalogGrid categories={subCategories} />
+          <CatalogGrid
+            parentSlug={params.mainCategorySlug}
+            categories={category.childCategories}
+          />
         </Container>
       </section>
     </>

@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
-import { getFullCategoryBySlug } from '@/lib/api';
+import { routing } from '@/i18n/routing';
+import { getCategoryBySlug } from '@/lib/api';
 import { locale } from '@/types';
 
 import EditCategoryPage from '../../../_components/categories-page/edit-page/EditCategoryPage';
@@ -17,9 +18,9 @@ interface ICategoryDetailsPage {
 export async function generateMetadata({
   params,
 }: ICategoryDetailsPage): Promise<Metadata> {
-  const category = await getFullCategoryBySlug(
+  const category = await getCategoryBySlug(
     params.categorySlug,
-    params.locale
+    routing.locales
   );
 
   return {

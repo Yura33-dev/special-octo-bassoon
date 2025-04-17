@@ -12,12 +12,12 @@ export default async function CatalogPage() {
   const locale = (await getLocale()) as locale;
   const catalogPageData = await getPageDataByName('CatalogPage', locale);
 
-  const categories = await getAllCategories(locale, {
+  const categories = await getAllCategories({
     visible: true,
     main: true,
   });
 
-  if (!catalogPageData) {
+  if (!catalogPageData || !categories) {
     notFound();
   }
 

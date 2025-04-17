@@ -28,7 +28,7 @@ export default async function EditProductPage({
   const [packaging, categories, filters, product, producers] =
     await Promise.all([
       getAllPackaging(locale),
-      getAllCategories(locale, { main: true }),
+      getAllCategories({ main: true }),
       getAllFilters(locale),
       getProductBySlug(productSlug, locale),
       getAllProducers(locale),

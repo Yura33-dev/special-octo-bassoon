@@ -1,7 +1,6 @@
 'use client';
 
 import clsx from 'clsx';
-import { useLocale } from 'next-intl';
 
 import { Link } from '@/i18n/routing';
 
@@ -11,11 +10,9 @@ interface ILogoProps {
 }
 
 export default function Logo({ title = 'ProGround', className }: ILogoProps) {
-  const locale = useLocale();
-
   return (
     <Link
-      href={`/${locale}/`}
+      href='/'
       aria-label='Посилання на головну сторінку'
       className={clsx(
         `font-bold relative max-w-max

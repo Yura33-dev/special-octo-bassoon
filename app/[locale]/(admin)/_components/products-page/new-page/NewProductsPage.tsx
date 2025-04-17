@@ -18,7 +18,7 @@ export default async function NewProductsPage() {
 
   const [packaging, categories, filters, producers] = await Promise.all([
     getAllPackaging(locale),
-    getAllCategories(locale, { main: true }),
+    getAllCategories({ main: true }),
     getAllFilters(locale),
     getAllProducers(locale),
   ]);

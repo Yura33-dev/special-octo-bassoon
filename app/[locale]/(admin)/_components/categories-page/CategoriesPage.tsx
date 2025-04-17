@@ -1,9 +1,6 @@
-import { getLocale } from 'next-intl/server';
-
 import Container from '@/components/shared/Container';
 import { getAllCategories } from '@/lib/api';
 import { ADD_CATEGORY_ID } from '@/lib/constants';
-import { locale } from '@/types';
 
 import HeaderBody from './table/HeaderBody';
 import AddButton from '../shared/AddButton';
@@ -12,9 +9,7 @@ import Table from './table/Table';
 import PageMainHeader from '../shared/page-elements/PageMainHeader';
 
 export default async function CategoriesPage() {
-  const locale = (await getLocale()) as locale;
-
-  const categories = await getAllCategories(locale);
+  const categories = await getAllCategories();
   const mainCategories = categories.filter(category => category.main);
   const subCategories = categories.filter(category => !category.main);
 

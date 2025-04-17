@@ -14,7 +14,7 @@ export default async function Footer() {
   const [t, settings, categories] = await Promise.all([
     getTranslations('Footer'),
     getAllSettings(locale),
-    getAllCategories(locale, {
+    getAllCategories({
       visible: true,
       main: true,
     }),

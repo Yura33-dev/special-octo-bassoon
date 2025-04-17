@@ -1,30 +1,34 @@
 'use server';
 
-import { DB_CONNECTION_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
+import { mapCategory } from '@/lib/utils';
 import { Category } from '@/models';
-import { ICategoryApi, locale } from '@/types';
+import { ICategoryPopulated } from '@/types';
 
-export async function getCategoryBySlug(slug: string, locale: locale) {
-  const connection = await dbConnect();
+export async function getCategoryBySlug(
+  slug: string,
+  locales: readonly string[]
+) {
+  try {
+    await dbConnect();
 
-  if (!connection) {
-    throw new Error(DB_CONNECTION_FAILED);
-  }
+    const category = await Category.findOne({
+      $or: locales.map(locale => ({ [`slug.${locale}`]: slug })),
+    })
+      .populate('childCategories')
+      .populate('parentCategories')
+      .lean<ICategoryPopulated>();
 
-  const category = await Category.findOne({
-    [`slug.${locale}`]: slug,
-  })
-    .select('name slug _id')
-    .lean<ICategoryApi>();
-
-  if (category) {
-    return {
-      name: category.name[locale],
-      slug: category.slug[locale],
-      id: category._id.toString(),
-    };
-  } else {
-    return null;
+    if (!category) throw new Error('Категорія не знайдена');
+    return mapCategory(category);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error(
+        'Some error occured while category fetching by slug...',
+        error
+      );
+    }
   }
 }

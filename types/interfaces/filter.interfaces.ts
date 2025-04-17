@@ -29,13 +29,6 @@ export interface IFilterMapped {
   }>;
 }
 
-export interface IFilter {
-  id: string;
-  slug: string;
-  title: string;
-  variants: Array<{ slug: string; title: string }>;
-}
-
 export interface IFilterInProductApi {
   id: string;
   filter: ObjectId;
@@ -69,14 +62,6 @@ export interface IFilterInProductMapped {
   };
   value: string;
 }
-
-export interface IFilterInProduct {
-  id: string;
-  slug: string;
-  title: string;
-  variants: Array<{ slug: string; title: string }>;
-  value: string;
-} // TODO: delete
 
 interface IVariant {
   variantSlug: string;

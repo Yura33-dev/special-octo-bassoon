@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 interface IInfoTabsProps {
   tabs: {
-    descriptionTab: string | null;
+    descriptionTab: string | null | undefined;
     reviewsTab: Array<object> | [];
     buttons: Array<string>;
   };

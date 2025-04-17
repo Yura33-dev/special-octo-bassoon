@@ -4,8 +4,6 @@ import { deleteCategoryById } from './categories/deleteCategoryById';
 import { getAllCategories } from './categories/getAllCategories';
 import { getCategoryById } from './categories/getCategoryById';
 import { getCategoryBySlug } from './categories/getCategoryBySlug';
-import { getChildCategoriesByParentSlug } from './categories/getChildCategoryByParentSlug';
-import { getFullCategoryBySlug } from './categories/getFullCategoryBySlug';
 import { patchCategoryById } from './categories/patchCategoryById';
 import { removeNestedCategory } from './categories/removeNestedCategory';
 import { createFilter } from './filters/createFilter';
@@ -45,14 +43,12 @@ export {
   getProductBySlug,
   getProductsByName,
   getAllCategories,
-  getFullCategoryBySlug,
   getLatestProducts,
   getAllSettings,
   getProductSlug,
   getCategorySlug,
   getPageDataByName,
   getCategoryBySlug,
-  getChildCategoriesByParentSlug,
   getAllProductsByCategoryId,
   getFiltersFromProducts,
   getAllPackaging,

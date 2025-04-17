@@ -1,11 +1,9 @@
 import { Document, ObjectId } from 'mongoose';
 
 import {
-  ICategory,
   ICategoryApi,
   ICategoryMapped,
   ICategoryPopulated,
-  IFilterInProduct,
   IFilterInProductApi,
   IFilterInProductMapped,
   IFilterInProductPopulated,
@@ -58,19 +56,6 @@ export interface IProductMapped {
   labels: Array<string>;
   imgUrl: string;
   filters: Array<IFilterInProductMapped>;
-}
-
-export interface IProduct {
-  id: string;
-  data: ITranslatedData;
-  packaging: IProductPackVariantsMapped;
-  //   reviews: Array<string>;
-  categories: Array<Pick<ICategory, 'id' | 'name' | 'slug' | 'main'>>;
-  visible: boolean;
-  producer: string;
-  labels: Array<string>;
-  imgUrl: string;
-  filters: Array<IFilterInProduct> | null;
 }
 
 export interface ITranslatedData {

@@ -4,10 +4,9 @@ import { CATEGORIES_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapCategory } from '@/lib/utils';
 import { Category } from '@/models';
-import { ICategoryMapped, ICategoryPopulated, locale } from '@/types';
+import { ICategoryMapped, ICategoryPopulated } from '@/types';
 
 export async function getAllCategories(
-  locale: locale,
   filter: Record<string, string> | object = {}
 ): Promise<Array<ICategoryMapped> | []> {
   try {

@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 
 import Container from '@/components/shared/Container';
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
+import { routing } from '@/i18n/routing';
 import {
   getAllProductsByCategoryId,
   getCategoryBySlug,
@@ -36,8 +37,8 @@ export default async function SubcategoryPage({
 
   const [catalogPageData, category, subcategory] = await Promise.all([
     getPageDataByName('CatalogPage', locale),
-    getCategoryBySlug(params.mainCategorySlug, locale),
-    getCategoryBySlug(params.subCategorySlug, locale),
+    getCategoryBySlug(params.mainCategorySlug, routing.locales),
+    getCategoryBySlug(params.subCategorySlug, routing.locales),
   ]);
 
   if (!catalogPageData || !category || !subcategory) {
@@ -61,14 +62,14 @@ export default async function SubcategoryPage({
   const generateBreadCrumbs = [
     '',
     `catalog`,
-    `catalog/${category.slug}`,
-    `catalog/${category.slug}/${subcategory.slug}`,
+    `catalog/${category.slug[locale]}`,
+    `catalog/${category.slug[locale]}/${subcategory.slug[locale]}`,
   ];
 
   const generateBreadTitles = [
     ...catalogPageData.data.breadcrumbTitles,
-    category.name,
-    subcategory.name,
+    category.name[locale],
+    subcategory.name[locale],
   ];
 
   return (

@@ -1,9 +1,9 @@
-import { IPagination, IProduct } from '@/types';
+import { IPagination, IProductMapped } from '@/types';
 
 import ProductsListClient from './ProductsListClient';
 
 interface IProductsListProps {
-  products: Array<IProduct>;
+  products: Array<IProductMapped>;
   paginationData: IPagination;
 }
 

@@ -7,12 +7,12 @@ import { useTransition } from 'react';
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import Pagination from '@/components/shared/Pagination';
 import { useRouter } from '@/i18n/routing';
-import { IPagination, IProduct } from '@/types';
+import { IPagination, IProductMapped } from '@/types';
 
 import Card from '../catalog-page/catalog-card/Card';
 
 interface ICatalogGridProps {
-  products: Array<IProduct>;
+  products: Array<IProductMapped>;
   paginationData: IPagination;
 }
 

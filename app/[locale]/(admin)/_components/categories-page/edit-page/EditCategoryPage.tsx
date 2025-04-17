@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 
 import Container from '@/components/shared/Container';
-import { getAllCategories, getFullCategoryBySlug } from '@/lib/api';
+import { routing } from '@/i18n/routing';
+import { getAllCategories, getCategoryBySlug } from '@/lib/api';
 import { locale } from '@/types';
 
 import NestedCategories from './NestedCategories';
@@ -21,8 +22,8 @@ export default async function EditCategoryPage({
   locale,
 }: IEditCategoryPageProps) {
   const [category, categories] = await Promise.all([
-    getFullCategoryBySlug(categorySlug, locale),
-    getAllCategories(locale),
+    getCategoryBySlug(categorySlug, routing.locales),
+    getAllCategories(),
   ]);
 
   if (!category) {

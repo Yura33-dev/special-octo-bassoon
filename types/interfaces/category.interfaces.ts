@@ -93,21 +93,6 @@ export interface ICategoryMapped {
   createdAt: string | null;
 }
 
-export interface ICategory {
-  id: string;
-  name: string;
-  slug: string;
-  sortOrder: number;
-  visible: boolean;
-  featured: boolean;
-  image: string;
-  main: boolean;
-  childCategories: Array<ICategory>;
-  parentCategories: Array<ICategory>;
-  updatedAt: Date | null;
-  createdAt: Date | null;
-}
-
 export interface IMappedNestedCategories {
   _id: string;
   name: { [key: string]: string };
@@ -178,3 +163,5 @@ export interface ICreateCategoryStructured {
   childCategories: Array<string>;
   parentCategories: Array<string>;
 }
+
+// TODO: refactor IEditCategoryFormField  IEditCategoryStructured ICreateCategoryFormField ICreateCategoryStructured in one interface

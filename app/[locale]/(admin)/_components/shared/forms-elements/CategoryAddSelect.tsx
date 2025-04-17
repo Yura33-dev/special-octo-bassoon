@@ -45,7 +45,7 @@ export default function CategoryAddSelect({
   const loadCategories = useCallback(
     async (inputValue: string) => {
       try {
-        const response = await getAllCategories(locale, { main: !isMain });
+        const response = await getAllCategories({ main: !isMain });
         setCategories(response);
 
         return response.filter(category =>
