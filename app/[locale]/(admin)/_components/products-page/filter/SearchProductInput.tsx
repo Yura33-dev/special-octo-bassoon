@@ -5,7 +5,7 @@ import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
-import { Link } from '@/i18n/routing';
+import { Link, routing } from '@/i18n/routing';
 import { getProductsByName } from '@/lib/api';
 import { IProductMapped, locale } from '@/types';
 
@@ -25,7 +25,7 @@ export default function SearchProductInput() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const products = await getProductsByName(query, locale);
+        const products = await getProductsByName(query, routing.locales);
         setResults(products);
       } catch (error) {
         console.error('Search error:', error);
