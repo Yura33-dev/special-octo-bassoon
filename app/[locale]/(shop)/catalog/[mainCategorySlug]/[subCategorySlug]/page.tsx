@@ -36,7 +36,7 @@ export default async function SubcategoryPage({
   const locale = (await getLocale()) as locale;
 
   const [catalogPageData, category, subcategory] = await Promise.all([
-    getPageDataByName('CatalogPage', locale),
+    getPageDataByName('CatalogPage'),
     getCategoryBySlug(params.mainCategorySlug, routing.locales),
     getCategoryBySlug(params.subCategorySlug, routing.locales),
   ]);
@@ -67,43 +67,41 @@ export default async function SubcategoryPage({
   ];
 
   const generateBreadTitles = [
-    ...catalogPageData.data.breadcrumbTitles,
+    ...catalogPageData.translatedData[locale].breadcrumbTitles,
     category.name[locale],
     subcategory.name[locale],
   ];
 
   return (
-    <>
+    <section className='mt-12'>
       <BreadCrumbs
         breadcrumbLinks={generateBreadCrumbs}
         breadcrumbTitles={generateBreadTitles}
       />
 
-      <section className='mt-12'>
-        <Container>
-          <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
-            <Filter filters={[...filters]} />
-            <div className='basis-full flex flex-col gap-4'>
-              <h1 className='text-center text-xl md:text-2xl'>
-                {catalogPageData.data.h1}
-              </h1>
+      <Container>
+        <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
+          <Filter filters={[...filters]} />
+          <div className='basis-full flex flex-col gap-4'>
+            <h1 className='text-center text-xl md:text-2xl'>
+              {catalogPageData.translatedData[locale].h1}
+            </h1>
 
-              <Suspense
-                fallback={
-                  <div className='flex justify-center'>
-                    <CircleLoader />
-                  </div>
-                }
-              >
-                <ProductsList
-                  products={products}
-                  paginationData={paginationData}
-                />
-              </Suspense>
-            </div>
+            <Suspense
+              fallback={
+                <div className='flex justify-center'>
+                  <CircleLoader />
+                </div>
+              }
+            >
+              <ProductsList
+                products={products}
+                paginationData={paginationData}
+              />
+            </Suspense>
           </div>
-        </Container>
-      </section>
-    </>
+        </div>
+      </Container>
+    </section>
   );
 }

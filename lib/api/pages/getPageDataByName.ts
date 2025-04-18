@@ -1,32 +1,28 @@
 'use server';
 
-import { DB_CONNECTION_FAILED, PAGE_FETCH_FAILED } from '@/lib/constants';
+import { PAGE_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { Page } from '@/models';
-import { IPage, IPageApi, locale } from '@/types';
+import { IPageLeaned } from '@/types';
 
 export async function getPageDataByName(
-  page: string,
-  locale: locale
-): Promise<IPage | null> {
+  page: string
+): Promise<IPageLeaned | null> {
   try {
-    const connection = await dbConnect();
+    await dbConnect();
 
-    if (!connection) {
-      console.error(DB_CONNECTION_FAILED);
-      return null;
-    }
-
-    const data = await Page.findOne({ name: page }).lean<IPageApi>();
+    const data = await Page.findOne({ name: page }).lean<IPageLeaned>();
 
     if (!data) {
-      console.error(`Error: ${PAGE_FETCH_FAILED}`);
-      return null;
+      throw new Error(`Error: ${PAGE_FETCH_FAILED}`);
     }
 
-    return { name: data.name, data: data.translatedData[locale] };
+    return data;
   } catch (error: unknown) {
-    console.error(`Error: ${PAGE_FETCH_FAILED}. ${error}`);
-    return null;
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error(`Error: ${PAGE_FETCH_FAILED}. ${error}`);
+    }
   }
 }

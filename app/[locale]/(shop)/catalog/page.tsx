@@ -10,7 +10,7 @@ import CatalogGrid from '../_components/shared/catalogGrid/CatalogGrid';
 
 export default async function CatalogPage() {
   const locale = (await getLocale()) as locale;
-  const catalogPageData = await getPageDataByName('CatalogPage', locale);
+  const catalogPageData = await getPageDataByName('CatalogPage');
 
   const categories = await getAllCategories({
     visible: true,
@@ -22,21 +22,21 @@ export default async function CatalogPage() {
   }
 
   return (
-    <>
+    <section className='mt-12'>
       <BreadCrumbs
         breadcrumbLinks={['', 'catalog']}
-        breadcrumbTitles={catalogPageData.data.breadcrumbTitles}
+        breadcrumbTitles={
+          catalogPageData.translatedData[locale].breadcrumbTitles
+        }
       />
 
-      <section className='mt-12'>
-        <Container>
-          <h1 className='text-center text-xl md:text-2xl mb-6 md:mb-8'>
-            {catalogPageData.data.h1}
-          </h1>
+      <Container>
+        <h1 className='text-center text-xl md:text-2xl mb-6 md:mb-8'>
+          {catalogPageData.translatedData[locale].h1}
+        </h1>
 
-          <CatalogGrid categories={categories} />
-        </Container>
-      </section>
-    </>
+        <CatalogGrid categories={categories} />
+      </Container>
+    </section>
   );
 }

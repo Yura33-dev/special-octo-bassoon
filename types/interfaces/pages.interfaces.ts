@@ -2,16 +2,21 @@ import { Document } from 'mongoose';
 
 export interface IPageApi extends Document {
   name: string;
-  translatedData: { [key: string]: ITranslatedPageData };
+  translatedData: Map<string, ITranslatedPageData>;
+}
+
+export interface IPageLeaned {
+  name: string;
+  translatedData: { [locale: string]: ITranslatedPageData };
 }
 
 export interface ITranslatedPageData {
   h1: string;
   breadcrumbTitles: Array<string>;
   slug: string;
-}
-
-export interface IPage {
-  name: string;
-  data: ITranslatedPageData;
+  meta: {
+    title: string;
+    description: string;
+    keywords: string | null;
+  };
 }

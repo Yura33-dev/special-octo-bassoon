@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 
@@ -13,6 +14,7 @@ import {
   getPageDataByName,
   getProductBySlug,
 } from '@/lib/api';
+import { config } from '@/lib/config';
 import { locale } from '@/types';
 
 interface IProductPageProps {
@@ -24,11 +26,48 @@ interface IProductPageProps {
   };
 }
 
+export async function generateMetadata({
+  params,
+}: IProductPageProps): Promise<Metadata> {
+  const product = await getProductBySlug(params.productSlug, routing.locales);
+
+  if (!product) return { title: 'Proground | Невідомий продукт' };
+
+  return {
+    title: `ProGround | ${product.translatedData[params.locale].meta.title}`,
+    description: product.translatedData[params.locale].meta.description,
+    keywords: product.translatedData[params.locale].meta.keywords,
+    metadataBase: new URL(config.NEXT_PUBLIC_APP_URL),
+
+    openGraph: {
+      title: `ProGround | ${product.translatedData[params.locale].meta.title}`,
+      description: product.translatedData[params.locale].meta.description,
+      type: 'website',
+      url: `/catalog/${product.categories[0].slug[params.locale]}/${product.categories[1].slug[params.locale]}/${product.translatedData[params.locale].slug}`,
+      images: [
+        {
+          url: product.imgUrl || '/no-image.webp',
+          width: 1200,
+          height: 630,
+          alt: product.translatedData[params.locale].name,
+        },
+      ],
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      title: product.translatedData[params.locale].name,
+      description: product.translatedData[params.locale].meta.description,
+      images: [product.imgUrl || '/no-image.webp'],
+    },
+  };
+}
+
 export default async function ProductPage({ params }: IProductPageProps) {
   const locale = (await getLocale()) as locale;
 
   const [catalogPageData, category, subcategory, product] = await Promise.all([
-    getPageDataByName('CatalogPage', locale),
+    getPageDataByName('CatalogPage'),
     getCategoryBySlug(params.mainCategorySlug, routing.locales),
     getCategoryBySlug(params.subCategorySlug, routing.locales),
     getProductBySlug(params.productSlug, routing.locales),
@@ -47,7 +86,7 @@ export default async function ProductPage({ params }: IProductPageProps) {
   ];
 
   const generateBreadTitles = [
-    ...catalogPageData.data.breadcrumbTitles,
+    ...catalogPageData.translatedData[locale].breadcrumbTitles,
     category.name[locale],
     subcategory.name[locale],
     product.translatedData[locale].name,
@@ -58,38 +97,37 @@ export default async function ProductPage({ params }: IProductPageProps) {
   }
 
   return (
-    <>
+    <section className='mt-4'>
       <BreadCrumbs
         breadcrumbLinks={generateBreadCrumbs}
         breadcrumbTitles={generateBreadTitles}
       />
-      <section className='mt-4'>
-        <Container>
-          <div className='flex flex-col gap-5 sm:flex-row md:gap-10'>
-            <ProductImage
-              src={product.imgUrl}
-              alt={product.translatedData[locale].name}
-            />
 
-            <div className='basis-1/2'>
-              <h1 className='text-xl mb-5 md:text-4xl md:mb-10'>
-                {product.translatedData[locale].name}
-              </h1>
-              <ProductVariants product={product} />
-            </div>
-          </div>
-
-          <ProductInfo product={product} />
-
-          <ProductTabs
-            tabs={{
-              descriptionTab: product.translatedData[locale].description,
-              reviewsTab: [],
-              buttons: ['Description', 'Reviews'],
-            }}
+      <Container>
+        <div className='flex flex-col gap-5 sm:flex-row md:gap-10'>
+          <ProductImage
+            src={product.imgUrl}
+            alt={product.translatedData[locale].name}
           />
-        </Container>
-      </section>
-    </>
+
+          <div className='basis-1/2'>
+            <h1 className='text-xl mb-5 md:text-4xl md:mb-10'>
+              {product.translatedData[locale].name}
+            </h1>
+            <ProductVariants product={product} />
+          </div>
+        </div>
+
+        <ProductInfo product={product} />
+
+        <ProductTabs
+          tabs={{
+            descriptionTab: product.translatedData[locale].description,
+            reviewsTab: [],
+            buttons: ['Description', 'Reviews'],
+          }}
+        />
+      </Container>
+    </section>
   );
 }

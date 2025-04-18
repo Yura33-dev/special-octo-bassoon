@@ -11,24 +11,22 @@ export default function BreadCrumbs({
   breadcrumbTitles,
 }: IBreadCrumbsProps) {
   return (
-    <section className='mt-4'>
-      <Container>
-        <div className='breadcrumbs text-base'>
-          <ul>
-            {breadcrumbTitles.map((title, index) => {
-              return (
-                <li key={index}>
-                  {index === breadcrumbLinks.length - 1 ? (
-                    <span>{title}</span>
-                  ) : (
-                    <Link href={`/${breadcrumbLinks[index]}`}>{title}</Link>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </Container>
-    </section>
+    <Container className='mb-4'>
+      <div className='breadcrumbs text-base'>
+        <ul>
+          {breadcrumbTitles.map((title, index) => {
+            return (
+              <li key={index}>
+                {index === breadcrumbLinks.length - 1 ? (
+                  <span>{title}</span>
+                ) : (
+                  <Link href={`/${breadcrumbLinks[index]}`}>{title}</Link>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </Container>
   );
 }

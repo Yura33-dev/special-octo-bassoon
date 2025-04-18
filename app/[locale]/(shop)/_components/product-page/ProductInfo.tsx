@@ -2,15 +2,13 @@ import { ArrowRightLeft, HandCoins, Sprout, Truck } from 'lucide-react';
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import { getAllSettings } from '@/lib/api';
-import { IProduct, locale } from '@/types';
+import { IProductMapped, locale } from '@/types';
 
-interface IDeliveryAndPaymentProps {
-  product: IProduct;
+interface IProductInfoProps {
+  product: IProductMapped;
 }
 
-export default async function ProductInfo({
-  product,
-}: IDeliveryAndPaymentProps) {
+export default async function ProductInfo({ product }: IProductInfoProps) {
   const locale = (await getLocale()) as locale;
 
   const [t, settings] = await Promise.all([
@@ -32,12 +30,21 @@ export default async function ProductInfo({
             {t('ProductCharacteristics')}
           </span>
         </div>
-        {product.data.characteristics ? (
+
+        {product.filters ? (
           <ul className='px-2 mt-4 text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2'>
-            {product.data.characteristics.map((item, index) => (
-              <li key={index} className='flex flex-col'>
-                <span className='font-bold'>{item[0]}:</span>{' '}
-                <span>{item[1]}</span>
+            {product.filters.map(filter => (
+              <li key={filter.id} className='flex flex-col'>
+                <span className='font-bold'>
+                  {filter.filter.translatedData[locale].filterTitle}:
+                </span>{' '}
+                <span>
+                  {
+                    filter.filter.variants.find(
+                      variant => variant.variantSlug === filter.value
+                    )?.translatedData[locale].variantTitle
+                  }
+                </span>
               </li>
             ))}
           </ul>

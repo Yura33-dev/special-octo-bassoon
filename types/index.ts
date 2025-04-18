@@ -41,8 +41,8 @@ import {
 } from './interfaces/packaging.interfaces';
 import {
   IPageApi,
+  IPageLeaned,
   ITranslatedPageData,
-  IPage,
 } from './interfaces/pages.interfaces';
 import { IPagination } from './interfaces/pagination.interfaces';
 import {
@@ -98,7 +98,7 @@ export type {
   ISlideApi,
   ISlide,
   IPageApi,
-  IPage,
+  IPageLeaned,
   ITranslatedPageData,
   ITranslatedSlideData,
   IFilteredSlide,

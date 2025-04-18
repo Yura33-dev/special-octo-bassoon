@@ -1,4 +1,6 @@
-import { IPage } from '@/types';
+import { getLocale } from 'next-intl/server';
+
+import { IPageLeaned } from '@/types';
 
 import AboutSection from './sections/AboutSection';
 import FAQSection from './sections/FAQSection';
@@ -8,13 +10,14 @@ import NewProductsSection from './sections/NewProductsSection';
 import ConsultingBanner from '../shared/consulting-banner/ConsultingBanner';
 
 interface IHomePageProps {
-  dataPage: IPage;
+  dataPage: IPageLeaned;
 }
 
-export default function HomePage({ dataPage }: IHomePageProps) {
+export default async function HomePage({ dataPage }: IHomePageProps) {
+  const locale = await getLocale();
   return (
     <>
-      <h1 className='sr-only'>{dataPage.data.h1}</h1>
+      <h1 className='sr-only'>{dataPage.translatedData[locale].h1}</h1>
 
       <HeroSection />
       <FeaturedCategoriesSection />

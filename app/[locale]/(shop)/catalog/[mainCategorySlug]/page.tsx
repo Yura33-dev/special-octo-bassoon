@@ -20,7 +20,7 @@ export default async function MainCategoryPage({
   const locale = (await getLocale()) as locale;
 
   const [catalogPageData, category] = await Promise.all([
-    getPageDataByName('CatalogPage', locale),
+    getPageDataByName('CatalogPage'),
     getCategoryBySlug(params.mainCategorySlug, routing.locales),
   ]);
 
@@ -35,25 +35,23 @@ export default async function MainCategoryPage({
   ];
 
   const generateBreadTitles = [
-    ...catalogPageData.data.breadcrumbTitles,
+    ...catalogPageData.translatedData[locale].breadcrumbTitles,
     category.name[locale],
   ];
 
   return (
-    <>
+    <section className='mt-4'>
       <BreadCrumbs
         breadcrumbLinks={generateBreadCrumbs}
         breadcrumbTitles={generateBreadTitles}
       />
 
-      <section className='mt-4'>
-        <Container>
-          <CatalogGrid
-            parentSlug={params.mainCategorySlug}
-            categories={category.childCategories}
-          />
-        </Container>
-      </section>
-    </>
+      <Container>
+        <CatalogGrid
+          parentSlug={params.mainCategorySlug}
+          categories={category.childCategories}
+        />
+      </Container>
+    </section>
   );
 }
