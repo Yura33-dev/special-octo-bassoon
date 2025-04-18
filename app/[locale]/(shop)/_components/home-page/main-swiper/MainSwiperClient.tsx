@@ -17,7 +17,7 @@ interface IMainSwiperClientProps {
 }
 
 export default function MainSwiperClient({ slides }: IMainSwiperClientProps) {
-  const [_, setSwiperInit] = useState<boolean>(false);
+  const [_, setIsSwiperInit] = useState<boolean>(false);
 
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -45,7 +45,7 @@ export default function MainSwiperClient({ slides }: IMainSwiperClientProps) {
       loop={true}
       autoplay={{ delay: 5000, pauseOnMouseEnter: true }}
       slidesPerView={1}
-      onSwiper={_ => setSwiperInit(true)}
+      onSwiper={_ => setIsSwiperInit(true)}
       wrapperClass='mainSwiper'
       wrapperTag='ul'
       className='rounded-md shadow-xl h-[250px] md:h-[400px] w-full lg:!w-[calc(100%_-_320px)] lg:!mr-0 lg:!ml-auto'

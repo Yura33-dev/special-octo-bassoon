@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 
 import { getPageDataByName } from '@/lib/api';
 import { locale } from '@/types';
@@ -45,10 +44,5 @@ export default async function ShopHome() {
     notFound();
   }
 
-  // TODO: loading...
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <HomePage dataPage={data} />
-    </Suspense>
-  );
+  return <HomePage dataPage={data} />;
 }

@@ -8,6 +8,7 @@ import 'swiper/css';
 import { IProductMapped } from '@/types';
 
 import NewProductSlide from './NewProductSlide';
+import NewProductSlideSkeletons from './NewProductSlideSkeleton';
 import NewProductsSwiperButton from './NewProductsSwiperButton';
 
 interface INewProductsSwiperClientProps {
@@ -17,17 +18,19 @@ interface INewProductsSwiperClientProps {
 export default function NewProductsSwiperClient({
   products,
 }: INewProductsSwiperClientProps) {
-  const [_, setSwiperInit] = useState<boolean>(false);
+  const [isSwiperInit, setIsSwiperInit] = useState<boolean>(false);
 
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <>
-      <div className='flex justify-end items-center gap-4 absolute top-0 right-6'>
-        <NewProductsSwiperButton to='prev' btnRef={prevButtonRef} />
-        <NewProductsSwiperButton to='next' btnRef={nextButtonRef} />
-      </div>
+      {isSwiperInit && (
+        <div className='flex justify-end items-center gap-4 absolute top-0 right-6'>
+          <NewProductsSwiperButton to='prev' btnRef={prevButtonRef} />
+          <NewProductsSwiperButton to='next' btnRef={nextButtonRef} />
+        </div>
+      )}
 
       <Swiper
         modules={[Navigation, Autoplay]}
@@ -59,15 +62,22 @@ export default function NewProductsSwiperClient({
             spaceBetween: 20,
           },
         }}
-        onSwiper={_ => setSwiperInit(true)}
+        onSwiper={_ => setIsSwiperInit(true)}
         wrapperTag='ul'
         className='!pb-5 !px-2 !overflow-visible !overflow-x-clip !overflow-y-visible'
       >
-        {products.map(product => (
-          <SwiperSlide key={product.id} tag='li' className='card bg-background'>
-            <NewProductSlide product={product} />
-          </SwiperSlide>
-        ))}
+        {!isSwiperInit && <NewProductSlideSkeletons />}
+
+        {isSwiperInit &&
+          products.map(product => (
+            <SwiperSlide
+              key={product.id}
+              tag='li'
+              className='card bg-background'
+            >
+              <NewProductSlide product={product} />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </>
   );

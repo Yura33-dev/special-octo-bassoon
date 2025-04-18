@@ -9,9 +9,9 @@ import Cart from '../cart/Cart';
 
 // TODO: get data from database
 const HeaderData = [
-  { href: '/pro-graund-a', text: 'Про нас' },
-  { href: '/blog', text: 'Блог' },
-  { href: '/porivnannia-tovariv', text: 'Порівняння товарів' },
+  { href: '/', text: 'Про нас' },
+  { href: '/', text: 'Блог' },
+  { href: '/', text: 'Порівняння товарів' },
 ];
 
 export default function HeaderBar() {
