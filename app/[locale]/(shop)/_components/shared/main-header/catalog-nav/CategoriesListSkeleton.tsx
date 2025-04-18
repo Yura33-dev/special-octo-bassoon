@@ -5,6 +5,7 @@ import Skeleton from '@/components/shared/loaders/Skeleton';
 
 import CatalogNavBarButton from './CatalogNavBarButton';
 
+// TODO: there is not any skeletons
 export default function CategoriesListSkeleton() {
   return (
     <Container className='relative'>
