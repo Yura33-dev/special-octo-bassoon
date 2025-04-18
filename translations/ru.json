@@ -19,7 +19,8 @@
     "toBlogPage": "Блог",
     "toComparePage": "Сравнение товаров",
     "searchPlaceholder": "Поиск товаров",
-    "CategoriesCatalogBtn": "Каталог товаров"
+    "CategoriesCatalogBtn": "Каталог товаров",
+    "noRequestedProducts": "Товары не найдены"
   },
   "ProductCard": {
     "sale": "Распродажа",

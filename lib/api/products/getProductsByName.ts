@@ -4,14 +4,19 @@ import { PRODUCTS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProductPopulated, locale } from '@/types';
+import { IProductPopulated } from '@/types';
 
-export async function getProductsByName(name: string, locale: locale) {
+export async function getProductsByName(
+  name: string,
+  locales: readonly string[]
+) {
   try {
     await dbConnect();
 
     const products = await Product.find({
-      [`translatedData.${locale}.name`]: { $regex: name, $options: 'i' },
+      $or: locales.map(locale => ({
+        [`translatedData.${locale}.name`]: { $regex: name, $options: 'i' },
+      })),
     })
       .populate('categories')
       .populate('packaging.default')

@@ -19,7 +19,8 @@
     "toBlogPage": "Блог",
     "toComparePage": "Порівняння товарів",
     "searchPlaceholder": "Пошук товарів",
-    "CategoriesCatalogBtn": "Каталог товарів"
+    "CategoriesCatalogBtn": "Каталог товарів",
+    "noRequestedProducts": "Товарів не знайдено"
   },
   "ProductCard": {
     "sale": "Розпродаж",
