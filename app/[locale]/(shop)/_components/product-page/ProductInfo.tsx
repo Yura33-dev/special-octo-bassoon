@@ -13,7 +13,7 @@ export default async function ProductInfo({ product }: IProductInfoProps) {
 
   const [t, settings] = await Promise.all([
     getTranslations('ProductPage'),
-    getAllSettings(locale),
+    getAllSettings(),
   ]);
 
   return (
@@ -62,15 +62,17 @@ export default async function ProductInfo({ product }: IProductInfoProps) {
         </div>
 
         <ul className='px-4 mt-4 text-sm flex flex-col gap-2'>
-          {settings[0].translatedData.deliveryProductMethods.map(method => (
-            <li
-              key={method}
-              className='relative after:content-[""] after:block after:w-[6px] after:h-[6px] after:rounded-full after:bg-accent
+          {settings?.translatedData[locale].deliveryProductMethods.map(
+            method => (
+              <li
+                key={method}
+                className='relative after:content-[""] after:block after:w-[6px] after:h-[6px] after:rounded-full after:bg-accent
                         after:absolute after:top-1/2 after:-left-4 after:-translate-y-1/2'
-            >
-              {method}
-            </li>
-          ))}
+              >
+                {method}
+              </li>
+            )
+          )}
         </ul>
       </div>
 
@@ -83,15 +85,17 @@ export default async function ProductInfo({ product }: IProductInfoProps) {
         </div>
 
         <ul className='px-4 mt-4 text-sm flex flex-col gap-2'>
-          {settings[0].translatedData.paymentProductMethods.map(method => (
-            <li
-              key={method}
-              className='relative after:content-[""] after:block after:w-[6px] after:h-[6px] after:rounded-full after:bg-accent
+          {settings?.translatedData[locale].paymentProductMethods.map(
+            method => (
+              <li
+                key={method}
+                className='relative after:content-[""] after:block after:w-[6px] after:h-[6px] after:rounded-full after:bg-accent
                         after:absolute after:top-1/2 after:-left-4 after:-translate-y-1/2'
-            >
-              {method}
-            </li>
-          ))}
+              >
+                {method}
+              </li>
+            )
+          )}
         </ul>
       </div>
 
@@ -104,7 +108,7 @@ export default async function ProductInfo({ product }: IProductInfoProps) {
         </div>
 
         <ul className='px-4 mt-4 text-sm flex flex-col gap-2'>
-          <li>{settings[0].translatedData.refundProductMethod}</li>
+          <li>{settings?.translatedData[locale].refundProductMethod}</li>
         </ul>
       </div>
     </div>

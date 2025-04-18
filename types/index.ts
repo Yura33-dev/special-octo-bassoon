@@ -61,7 +61,8 @@ import {
 } from './interfaces/product.interfaces';
 import {
   ISettingsApi,
-  ISettings,
+  ISettingsLeaned,
+  ISettingsMapped,
   ITranslatedSettingsData,
 } from './interfaces/settings.interfaces';
 import {
@@ -103,7 +104,8 @@ export type {
   ITranslatedSlideData,
   IFilteredSlide,
   ISettingsApi,
-  ISettings,
+  ISettingsLeaned,
+  ISettingsMapped,
   ITranslatedSettingsData,
   IFilterApi,
   IFilterPopulated,

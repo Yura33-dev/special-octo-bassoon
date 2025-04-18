@@ -3,24 +3,32 @@ import { Document, ObjectId } from 'mongoose';
 export interface ISettingsApi extends Document {
   _id: ObjectId;
   siteName: string;
-  translatedData: ITranslatedSettingsData;
+  translatedData: Map<string, ITranslatedSettingsData>;
+  contacts: IContactsData;
+}
+
+export interface ISettingsLeaned {
+  _id: ObjectId;
+  siteName: string;
+  translatedData: Record<string, ITranslatedSettingsData>;
+  contacts: IContactsData;
+}
+
+export interface ISettingsMapped {
+  id: string;
+  siteName: string;
+  translatedData: Record<string, ITranslatedSettingsData>;
+  contacts: IContactsData;
 }
 
 export interface ITranslatedSettingsData {
-  [key: string]: {
-    slogan: string;
-    deliveryProductMethods: Array<string>;
-    paymentProductMethods: Array<string>;
-    refundProductMethod: string;
-  };
+  slogan: string;
+  deliveryProductMethods: Array<string>;
+  paymentProductMethods: Array<string>;
+  refundProductMethod: string;
 }
 
-export interface ISettings {
-  siteName: string;
-  translatedData: {
-    slogan: string;
-    deliveryProductMethods: Array<string>;
-    paymentProductMethods: Array<string>;
-    refundProductMethod: string;
-  };
+interface IContactsData {
+  phones: string[];
+  email: string;
 }

@@ -3,32 +3,26 @@
 import { SETTINGS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { Setting } from '@/models';
-import { ISettings, ISettingsApi, locale } from '@/types';
+import { ISettingsLeaned, ISettingsMapped } from '@/types';
 
-export async function getAllSettings(
-  locale: locale
-): Promise<Array<ISettings>> {
+export async function getAllSettings(): Promise<ISettingsMapped | undefined> {
   try {
     await dbConnect();
 
-    const settings = await Setting.find({}).lean<Array<ISettingsApi>>();
+    const settings = await Setting.find({}).lean<Array<ISettingsLeaned>>();
+    if (!settings) {
+      throw new Error('No settings found in DB');
+    }
 
-    const mappedSettings: Array<ISettings> = settings.map(setting => ({
-      siteName: setting.siteName,
-      translatedData: {
-        slogan: setting.translatedData[locale].slogan || '',
-        deliveryProductMethods:
-          setting.translatedData[locale].deliveryProductMethods || '',
-        paymentProductMethods:
-          setting.translatedData[locale].paymentProductMethods || '',
-        refundProductMethod:
-          setting.translatedData[locale].refundProductMethod || '',
-      },
-    }));
+    const mappedSettings: ISettingsMapped = {
+      id: settings[0]._id.toString(),
+      siteName: settings[0].siteName,
+      translatedData: settings[0].translatedData,
+      contacts: settings[0].contacts,
+    };
 
     return mappedSettings;
   } catch (error) {
     console.error(`${SETTINGS_FETCH_FAILED}: ${error}`);
-    return [];
   }
 }

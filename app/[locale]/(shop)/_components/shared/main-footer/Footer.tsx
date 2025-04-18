@@ -13,7 +13,7 @@ export default async function Footer() {
 
   const [t, settings, categories] = await Promise.all([
     getTranslations('Footer'),
-    getAllSettings(locale),
+    getAllSettings(),
     getAllCategories({
       visible: true,
       main: true,
@@ -25,7 +25,9 @@ export default async function Footer() {
       <Container>
         <div className='flex flex-col items-center mb-6 lg:mb-12'>
           <Logo className='text-2xl py-2' />
-          <span className='text-sm'>{settings[0].translatedData.slogan}</span>
+          <span className='text-sm'>
+            {settings?.translatedData[locale].slogan ?? 'Сталася помилка'}
+          </span>
         </div>
 
         <div className='flex flex-col gap-8 sm:gap-0 sm:gap-x-4 sm:gap-y-6 sm:flex-row sm:flex-wrap sm:justify-between'>
