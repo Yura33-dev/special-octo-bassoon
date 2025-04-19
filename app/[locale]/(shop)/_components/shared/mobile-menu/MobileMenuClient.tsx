@@ -6,6 +6,7 @@ import { useLocale } from 'next-intl';
 
 import LocaleSwitcher from '@/components/shared/LocaleSwitcher';
 import { Link, usePathname } from '@/i18n/routing';
+import { CLEAN_PHONE_REGEXP } from '@/lib/constants';
 import { useGlobalStore } from '@/providers/globalStore.provider';
 import { ICategoryMapped, ISettingsMapped } from '@/types';
 
@@ -86,7 +87,9 @@ export default function MobileMenuClient({
             <ul className='text-center flex flex-col gap-2'>
               {settings.contacts.phones.map((phone, index) => (
                 <li key={index}>
-                  <a href={`tel:${phone.replace(/[\s()-]/g, '')}`}>{phone}</a>
+                  <Link href={`tel:${phone.replace(CLEAN_PHONE_REGEXP, '')}`}>
+                    {phone}
+                  </Link>
                 </li>
               ))}
             </ul>

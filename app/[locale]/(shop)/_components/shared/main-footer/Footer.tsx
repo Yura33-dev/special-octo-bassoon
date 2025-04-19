@@ -1,9 +1,10 @@
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, Copyright, Mail, MapPin, Phone } from 'lucide-react';
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
 import { Link } from '@/i18n/routing';
 import { getAllCategories, getAllSettings } from '@/lib/api';
+import { CLEAN_PHONE_REGEXP } from '@/lib/constants';
 import { locale } from '@/types';
 
 import Logo from '../../ui/Logo';
@@ -54,53 +55,37 @@ export default async function Footer() {
             <li className='mb-3'>
               <h3 className='text-xl font-semibold'>{t('ContactsTitle')}</h3>
             </li>
-            <li className='p-1 flex gap-2 justify-start items-center relative w-max'>
-              <Phone className='w-4 h-4' />
-              <a
-                href='tel:+380955130057'
-                className='after:content-[""] after:block after:w-full after:h-[2px] after:bg-accent after:absolute
+            {settings?.contacts.phones.map((phone, index) => (
+              <li
+                key={index}
+                className='p-1 flex gap-2 justify-start items-center relative w-max'
+              >
+                <Phone className='w-4 h-4' />
+                <Link
+                  href={`tel:${phone.replace(CLEAN_PHONE_REGEXP, '')}`}
+                  className='after:content-[""] after:block after:w-full after:h-[2px] after:bg-accent after:absolute
                           after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:max-w-0 after:transition-all after:duration-150
                           hover:after:max-w-[calc(100%_-_8px)]'
-              >
-                +38 (095) 513-00-57
-              </a>
-            </li>
-            <li className='p-1 flex gap-2 justify-start items-center relative w-max'>
-              <Phone className='w-4 h-4' />
-              <a
-                href='tel:+380504243406'
-                className='after:content-[""] after:block after:w-full after:h-[2px] after:bg-accent after:absolute
-                          after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:max-w-0 after:transition-all after:duration-150
-                          hover:after:max-w-[calc(100%_-_8px)]'
-              >
-                +38 (050) 424-34-06
-              </a>
-            </li>
-            <li className='p-1 flex gap-2 justify-start items-center relative w-max'>
-              <Phone className='w-4 h-4' />
-              <a
-                href='tel:+380684866044'
-                className='after:content-[""] after:block after:w-full after:h-[2px] after:bg-accent after:absolute
-                          after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:max-w-0 after:transition-all after:duration-150
-                          hover:after:max-w-[calc(100%_-_8px)]'
-              >
-                +38 (068) 486-60-44
-              </a>
-            </li>
+                >
+                  {phone}
+                </Link>
+              </li>
+            ))}
+
             <li className='p-1 flex gap-2 justify-start items-center relative w-max'>
               <Mail className='w-4 h-4' />
-              <a
-                href='mailto:graund.a@ukr.net'
+              <Link
+                href={`mailto:${settings?.contacts.email}`}
                 className='after:content-[""] after:block after:w-full after:h-[2px] after:bg-accent after:absolute
                           after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:max-w-0 after:transition-all after:duration-150
                           hover:after:max-w-[calc(100%_-_8px)]'
               >
-                graund.a@ukr.net
-              </a>
+                {settings?.contacts.email}
+              </Link>
             </li>
           </ul>
 
-          <ul className='flex flex-col items-center sm:items-start '>
+          {/* <ul className='flex flex-col items-center sm:items-start '>
             <li className='mb-3'>
               <h3 className='text-xl font-semibold'>{t('CustomersTitle')}</h3>
             </li>
@@ -144,7 +129,7 @@ export default async function Footer() {
                 Блог
               </Link>
             </li>
-          </ul>
+          </ul> */}
 
           <ul className='flex flex-col items-center sm:items-start '>
             <li className='mb-3'>
@@ -152,16 +137,25 @@ export default async function Footer() {
             </li>
             <li className='p-1 flex gap-2 justify-start items-center'>
               <Clock className='w-4 h-4' />
-              Пн-Пт: 09:00 - 18:00 <br /> Сб-Нд: Вихідні
+              {
+                settings?.translatedData[locale].workSchedule.workDays
+              } <br />{' '}
+              {settings?.translatedData[locale].workSchedule.weekendDays}
             </li>
             <li className='p-1 flex gap-2 justify-start items-center'>
               <MapPin className='w-4 h-4' />
-              Україна, Харків
+              {settings?.translatedData[locale].location}
             </li>
             <li className='p-1 text-sm'>
-              ФО-П Вершкова О.О. <br /> ЄДРПОУ 3623003607
+              {settings?.translatedData[locale].FOP.title} <br />{' '}
+              {settings?.translatedData[locale].FOP.code}
             </li>
           </ul>
+        </div>
+
+        <div className='flex justify-center items-center gap-2 mt-10'>
+          <Copyright className='w-3 h-3' />
+          <p>ProGround {new Date().getFullYear()}</p>
         </div>
       </Container>
     </footer>

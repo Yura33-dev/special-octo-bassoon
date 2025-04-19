@@ -26,6 +26,15 @@ export interface ITranslatedSettingsData {
   deliveryProductMethods: Array<string>;
   paymentProductMethods: Array<string>;
   refundProductMethod: string;
+  workSchedule: {
+    workDays: string;
+    weekendDays: string;
+  };
+  location: string;
+  FOP: {
+    title: string;
+    code: string;
+  };
 }
 
 interface IContactsData {
