@@ -4,7 +4,7 @@ import MobileMenuClient from './MobileMenuClient';
 
 export default async function MobileMenu() {
   const [categories, settings] = await Promise.all([
-    getAllCategories({ main: true }),
+    getAllCategories({ main: true, visible: true }),
     getAllSettings(),
   ]);
 
