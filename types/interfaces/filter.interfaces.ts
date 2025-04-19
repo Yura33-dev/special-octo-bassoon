@@ -8,6 +8,8 @@ export interface IFilterApi extends Document {
     variantSlug: string;
     translatedData: Map<string, { variantTitle: string }>;
   }>;
+  createdAt: Date;
+  updatedAt: Date;
 }
 export interface IFilterPopulated {
   _id: ObjectId;
@@ -17,6 +19,8 @@ export interface IFilterPopulated {
     variantSlug: string;
     translatedData: Record<string, { variantTitle: string }>;
   }>;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IFilterMapped {
@@ -27,6 +31,8 @@ export interface IFilterMapped {
     variantSlug: string;
     translatedData: Record<string, { variantTitle: string }>;
   }>;
+  createdAt: string | null;
+  updatedAt: string | null;
 }
 
 export interface IFilterInProductApi {

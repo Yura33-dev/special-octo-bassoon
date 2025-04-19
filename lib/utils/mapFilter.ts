@@ -14,6 +14,8 @@ export function mapFilter(filter: IFilterPopulated): IFilterMapped {
       variantSlug: variant.variantSlug,
       translatedData: variant.translatedData,
     })),
+    createdAt: new Date(filter.createdAt).toISOString() ?? null,
+    updatedAt: new Date(filter.updatedAt).toISOString() ?? null,
   };
 }
 
