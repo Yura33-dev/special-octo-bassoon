@@ -4,10 +4,9 @@ import { PRODUCTS_BY_CATEGORY_ID_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { calculatePaginationData, mapProduct } from '@/lib/utils';
 import { Product } from '@/models';
-import { IProductPopulated, locale } from '@/types';
+import { IProductPopulated } from '@/types';
 
 export async function getAllProductsByCategoryId(
-  locale: locale,
   categoryId: string,
   page: number = 1,
   limit: number = 9,
@@ -61,9 +60,22 @@ export async function getAllProductsByCategoryId(
 
     const paginationData = calculatePaginationData(productsCount, limit, page);
 
-    const mappedProducts = products.map(product => mapProduct(product));
+    if (products.length > 0) {
+      const mappedProducts = products.map(product => mapProduct(product));
+      return { products: mappedProducts, paginationData };
+    }
 
-    return { products: mappedProducts, paginationData };
+    return {
+      products: [],
+      paginationData: {
+        page: 0,
+        perPage: 0,
+        totalItems: 0,
+        totalPages: 0,
+        hasNextPage: false,
+        hasPrevPage: false,
+      },
+    };
   } catch (e) {
     console.error(PRODUCTS_BY_CATEGORY_ID_FAILED, e);
     return {

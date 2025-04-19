@@ -23,10 +23,13 @@ export async function getLatestProducts(limit: number = 20) {
       .lean<Array<IProductPopulated>>()
       .exec();
 
-    const mappedProducts = products.map(product => mapProduct(product));
-    return { products: mappedProducts };
+    if (products.length > 0) {
+      return products.map(product => mapProduct(product));
+    } else {
+      return [];
+    }
   } catch (e) {
     console.error(LATEST_PRODUCTS_FETCH_FAILED, e);
-    return { products: [] };
+    return [];
   }
 }
