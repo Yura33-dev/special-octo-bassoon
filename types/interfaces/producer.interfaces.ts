@@ -4,7 +4,7 @@ export interface IProducerApi extends Document {
   _id: ObjectId;
   translatedData: Map<string, { title: string }>;
   currency: string | null;
-  exchangeRate: number;
+  exchangeRate: number | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -13,7 +13,7 @@ export interface IProducerPopulated {
   _id: ObjectId;
   translatedData: Record<string, { title: string }>;
   currency: string | null;
-  exchangeRate: number;
+  exchangeRate: number | null;
   createdAt: Date;
   updatedAt: Date;
 }

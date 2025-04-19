@@ -1,17 +1,23 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { slugify } from 'transliteration';
 
 import dbConnect from '@/lib/db';
 import { Filter, Producer, Product } from '@/models';
-import { IFilterApi, IProducerApi, IProductApi } from '@/types';
+import { IProducerApi } from '@/types';
 
 export async function deleteProducerById(
   producerId: string
 ): Promise<undefined> {
   try {
     await dbConnect();
+
+    const isProductWithProducerExist = await Product.exists({
+      producer: producerId,
+    });
+    if (isProductWithProducerExist) {
+      throw new Error('Спочатку видаліть цього виробника з усіх товарів');
+    }
 
     const deletedProducer: IProducerApi | null =
       await Producer.findOneAndDelete({
@@ -21,7 +27,7 @@ export async function deleteProducerById(
     if (!deletedProducer)
       throw new Error('Виробника з таким ідентифікатором не знайдено');
 
-    const updatedFilter: IFilterApi | null = await Filter.findOneAndUpdate(
+    await Filter.findOneAndUpdate(
       { slug: 'virobnik' },
       {
         $pull: {
@@ -33,31 +39,31 @@ export async function deleteProducerById(
       }
     );
 
-    if (updatedFilter) {
-      const productsWithProducer: Array<IProductApi> | null =
-        await Product.find({
-          'filters.value': slugify(
-            deletedProducer.translatedData.get('uk')?.title ?? ''
-          ),
-        });
+    // if (updatedFilter) {
+    //   const productsWithProducer: Array<IProductApi> | null =
+    //     await Product.find({
+    //       'filters.value': slugify(
+    //         deletedProducer.translatedData.get('uk')?.title ?? ''
+    //       ),
+    //     });
 
-      await Promise.all(
-        productsWithProducer.map(product =>
-          Product.updateOne(
-            { _id: product._id },
-            {
-              $pull: {
-                filters: {
-                  value: slugify(
-                    deletedProducer.translatedData.get('uk')?.title ?? ''
-                  ),
-                },
-              },
-            }
-          )
-        )
-      );
-    }
+    //   await Promise.all(
+    //     productsWithProducer.map(product =>
+    //       Product.updateOne(
+    //         { _id: product._id },
+    //         {
+    //           $pull: {
+    //             filters: {
+    //               value: slugify(
+    //                 deletedProducer.translatedData.get('uk')?.title ?? ''
+    //               ),
+    //             },
+    //           },
+    //         }
+    //       )
+    //     )
+    //   );
+    // }
 
     revalidatePath('/*/dashboard/filters');
     revalidatePath('/*/dashboard/products');
