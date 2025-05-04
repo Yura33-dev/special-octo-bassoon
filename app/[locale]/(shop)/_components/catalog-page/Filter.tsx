@@ -2,7 +2,12 @@
 
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import { ChevronDown, SlidersHorizontal } from 'lucide-react';
+import {
+  Check,
+  ChevronDown,
+  LoaderCircle,
+  SlidersHorizontal,
+} from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -27,6 +32,8 @@ export default function Filter({ filters }: IFilterProps) {
   const [checkedValues, setCheckedValues] = useState<{
     [key: string]: Set<string>;
   }>({});
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isFilterExpand, setIsFilterExpand] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 1024px)');
@@ -53,6 +60,8 @@ export default function Filter({ filters }: IFilterProps) {
     });
 
     setCheckedValues(newCheckedValues);
+
+    setIsLoading(false);
   }, [searchParams, filters]);
 
   const handleCheckboxChange = (
@@ -60,6 +69,8 @@ export default function Filter({ filters }: IFilterProps) {
     filterSlug: string,
     variantSlug: string
   ) => {
+    setIsLoading(true);
+
     const params = new URLSearchParams(searchParams.toString());
     const existingValues = params.getAll(filterSlug);
 
@@ -77,6 +88,7 @@ export default function Filter({ filters }: IFilterProps) {
 
     newValues.forEach(value => params.append(filterSlug, value));
 
+    params.set('page', '1');
     router.replace(`?${params.toString()}`, { scroll: false });
 
     setCheckedValues(prev => {
@@ -94,6 +106,22 @@ export default function Filter({ filters }: IFilterProps) {
     });
   };
 
+  const handleResetFilters = () => {
+    setIsLoading(true);
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    filters.forEach(({ slug }) => {
+      params.delete(slug);
+    });
+
+    params.delete('page');
+
+    router.replace(`?${params.toString()}`, { scroll: false });
+
+    setCheckedValues({});
+  };
+
   const handleFilterMoving = () => {
     setIsFilterExpand(state => !state);
   };
@@ -109,7 +137,8 @@ export default function Filter({ filters }: IFilterProps) {
       animate={isFilterExpand ? 'open' : 'closed'}
       transition={{ duration: 0.3, ease: 'linear' }}
       className={clsx(
-        'basis-auto lg:basis-[310px] flex-shrink-0 p-2 bg-white/60 border-gray-300 border-[1px] rounded-md mt-12 overflow-hidden',
+        'basis-auto flex-shrink-0 p-2 bg-white/60 border-gray-300 border-[1px] rounded-md mt-12 overflow-hidden',
+        'lg:basis-[310px]',
         hasMounted && isDesktop && 'sticky top-20',
         hasMounted && isDesktop && '!h-auto'
       )}
@@ -125,6 +154,9 @@ export default function Filter({ filters }: IFilterProps) {
           >
             {filterCount}
           </span>
+          {isLoading && (
+            <LoaderCircle className='w-5 h-5 text-accent absolute top-[6px] -right-[40px] animate-spin ' />
+          )}
         </h3>
         <SlidersHorizontal className='hidden lg:block w-5 h-5' />
         <button
@@ -140,32 +172,54 @@ export default function Filter({ filters }: IFilterProps) {
         </button>
       </div>
 
-      {filters.length <= 0 && <h3>{t('NoFilters')}</h3>}
+      <div className='lg:max-h-[70vh] lg:overflow-y-auto'>
+        {filters.length <= 0 && <h3>{t('NoFilters')}</h3>}
 
-      {filters.length > 0 &&
-        filters.map(({ slug, title, variants }) => (
-          <div
-            key={slug}
-            className='flex flex-col mb-4 border-b-[1px] pb-4 pl-2 border-gray-300 last:border-none'
-          >
-            <h3 className='font-semibold text-lg mb-2'>{title}</h3>
+        {filters.length > 0 &&
+          filters.map(({ slug, title, variants }) => (
+            <div
+              key={slug}
+              className='flex flex-col mb-4 border-b-[1px] pb-4 pl-2 border-gray-300 last:border-none'
+            >
+              <h3 className='font-semibold text-lg mb-2'>{title}</h3>
 
-            {variants.map(({ slug: variantSlug, title: variantTitle }) => (
-              <label
-                key={variantSlug}
-                className='flex items-center justify-start gap-2 w-max hover:cursor-pointer'
-              >
-                <input
-                  type='checkbox'
-                  checked={checkedValues[slug]?.has(variantSlug) || false}
-                  onChange={e => handleCheckboxChange(e, slug, variantSlug)}
-                  className='hover:cursor-pointer'
-                />
-                {variantTitle}
-              </label>
-            ))}
-          </div>
-        ))}
+              {variants.map(({ slug: variantSlug, title: variantTitle }) => (
+                <label
+                  key={variantSlug}
+                  className='group flex items-center justify-start gap-2 w-max hover:cursor-pointer'
+                >
+                  <input
+                    disabled={isLoading}
+                    type='checkbox'
+                    checked={checkedValues[slug]?.has(variantSlug) || false}
+                    onChange={e => handleCheckboxChange(e, slug, variantSlug)}
+                    className='hidden'
+                  />
+                  <div
+                    className={clsx(
+                      'w-4 h-4 flex items-center justify-center shrink-0 border-2 border-gray-400 rounded-[4px] transition',
+                      'group-has-[input:checked]:bg-primary group-has-[input:checked]:border-primary relative',
+                      isLoading && 'bg-gray-300 cursor-not-allowed'
+                    )}
+                  >
+                    <Check
+                      strokeWidth={3}
+                      className='w-3 h-3 text-white opacity-0 group-has-[input:checked]:opacity-100 absolute top-0 left-0 transition-opacity'
+                    />
+                  </div>
+                  <span className='text-sm text-gray-800'>{variantTitle}</span>
+                </label>
+              ))}
+            </div>
+          ))}
+      </div>
+      <button
+        type='button'
+        className='block p-2 bg-primary hover:bg-primary-dark transition-colors text-white text-sm rounded-md mt-4 mx-auto'
+        onClick={handleResetFilters}
+      >
+        {t('ResetFilter')}
+      </button>
     </motion.aside>
   );
 }
