@@ -52,7 +52,7 @@ export default function Filters({
             <div className='flex flex-col gap-2 basis-full'>
               <div className='min-h-[58px]'>
                 <Select
-                  id={filter.id}
+                  id={String(index)}
                   name='filters'
                   placeholder='Оберіть фільтр'
                   options={globalFiltered}

@@ -18,7 +18,7 @@ export default function CustomCheckBox({
   disabled = false,
 }: ICustomCheckBoxProps) {
   return (
-    <label className='flex flex-col'>
+    <label className='flex flex-col max-w-max'>
       <span className='text-sm font-semibold mb-1'>{title}</span>
 
       <div className='flex items-center gap-2'>

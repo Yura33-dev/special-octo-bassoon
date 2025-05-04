@@ -49,12 +49,12 @@ export function extractFilters(
       .map(filter => ({
         slug: filter.slug,
         title: filter.title,
-        variants: Array.from(filter.variants.entries()).map(
-          ([slug, title]) => ({
+        variants: Array.from(filter.variants.entries())
+          .map(([slug, title]) => ({
             slug,
             title,
-          })
-        ),
+          }))
+          .toSorted((a, b) => a.title.localeCompare(b.title)),
       }))
       .toSorted((first, second) => first.title.localeCompare(second.title)) ||
     []
