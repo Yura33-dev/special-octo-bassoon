@@ -16,7 +16,7 @@ export async function getPackagingById(
     }).lean<IPackagingPopulated>();
 
     if (!packaging) {
-      throw new Error('Пакування з таким ідентифікатором не існує');
+      return null;
     }
 
     return mapPackaging(packaging);

@@ -19,8 +19,8 @@ export async function getAllPackaging(
     return packaging
       .map(pack => mapPackaging(pack))
       .toSorted((a, b) => {
-        const typeComparison = a.translatedData[locale].type.localeCompare(
-          b.translatedData[locale].type
+        const typeComparison = a.translatedData[locale].measureIn.localeCompare(
+          b.translatedData[locale].measureIn
         );
         if (typeComparison !== 0) return typeComparison;
         return (
