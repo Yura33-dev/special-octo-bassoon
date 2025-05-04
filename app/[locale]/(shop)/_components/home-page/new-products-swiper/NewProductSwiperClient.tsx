@@ -25,12 +25,18 @@ export default function NewProductsSwiperClient({
 
   return (
     <>
-      {isSwiperInit && (
-        <div className='flex justify-end items-center gap-4 absolute top-0 right-6'>
-          <NewProductsSwiperButton to='prev' btnRef={prevButtonRef} />
-          <NewProductsSwiperButton to='next' btnRef={nextButtonRef} />
-        </div>
-      )}
+      <div className='flex justify-end items-center gap-4 absolute top-0 right-6'>
+        <NewProductsSwiperButton
+          disabled={!isSwiperInit}
+          to='prev'
+          btnRef={prevButtonRef}
+        />
+        <NewProductsSwiperButton
+          disabled={!isSwiperInit}
+          to='next'
+          btnRef={nextButtonRef}
+        />
+      </div>
 
       <Swiper
         modules={[Navigation, Autoplay]}
