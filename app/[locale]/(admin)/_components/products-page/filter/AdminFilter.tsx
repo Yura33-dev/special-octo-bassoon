@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { SlidersHorizontal } from 'lucide-react';
+import { LoaderCircle, SlidersHorizontal } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -26,6 +26,8 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
     [key: string]: Set<string>;
   }>({});
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
     const newCheckedValues: { [key: string]: Set<string> } = {};
@@ -38,6 +40,8 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
     });
 
     setCheckedValues(newCheckedValues);
+
+    setIsLoading(false);
   }, [searchParams, filters]);
 
   const handleCheckboxChange = (
@@ -45,6 +49,8 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
     filterSlug: string,
     variantSlug: string
   ) => {
+    setIsLoading(true);
+
     const params = new URLSearchParams(searchParams.toString());
     const existingValues = params.getAll(filterSlug);
 
@@ -62,6 +68,7 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
 
     newValues.forEach(value => params.append(filterSlug, value));
 
+    params.set('page', '1');
     router.replace(`?${params.toString()}`, { scroll: false });
 
     setCheckedValues(prev => {
@@ -79,6 +86,22 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
     });
   };
 
+  const handleResetFilters = () => {
+    setIsLoading(true);
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    filters.forEach(({ slug }) => {
+      params.delete(slug);
+    });
+
+    params.delete('page');
+
+    router.replace(`?${params.toString()}`, { scroll: false });
+
+    setCheckedValues({});
+  };
+
   const filterCount = Object.values(checkedValues)
     .map(set => Array.from(set))
     .flat().length;
@@ -89,7 +112,9 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
   return (
     <aside
       className={clsx(
-        'basis-auto flex-shrink-0 p-2 bg-white/60 border-gray-300 border-[1px] rounded-md lg:basis-[280px] h-auto lg:max-h-[80vh] lg:overflow-y-auto lg:sticky lg:top-20'
+        'basis-auto flex-shrink-0 p-2 bg-white/60 border-gray-300 border-[1px] rounded-md',
+        'lg:basis-[280px] h-auto lg:sticky lg:top-20',
+        'relative'
       )}
     >
       <div className='flex justify-between items-center mb-5 pb-2 border-b-[1px] border-gray-300'>
@@ -103,34 +128,49 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
           >
             {filterCount}
           </span>
+          {isLoading && (
+            <LoaderCircle className='w-5 h-5 text-accent absolute top-[6px] -right-[40px] animate-spin ' />
+          )}
         </h3>
         <SlidersHorizontal className='w-5 h-5' />
       </div>
 
-      <SearchProductInput />
+      <div className='lg:max-h-[65vh] lg:overflow-y-auto'>
+        <SearchProductInput />
 
-      {filters.length <= 0 && <h3>Немає доступних фільтрів</h3>}
+        {filters.length <= 0 && <h3>Немає доступних фільтрів</h3>}
 
-      {restFilters.length > 0 && (
-        <ul>
-          {subCategories && (
-            <FilterItem
-              filter={subCategories}
-              checkedValues={checkedValues}
-              handleCheckboxChange={handleCheckboxChange}
-            />
-          )}
+        {restFilters.length > 0 && (
+          <ul>
+            {subCategories && (
+              <FilterItem
+                filter={subCategories}
+                checkedValues={checkedValues}
+                handleCheckboxChange={handleCheckboxChange}
+                disabled={isLoading}
+              />
+            )}
 
-          {restFilters.map(filter => (
-            <FilterItem
-              key={filter.slug}
-              filter={filter}
-              checkedValues={checkedValues}
-              handleCheckboxChange={handleCheckboxChange}
-            />
-          ))}
-        </ul>
-      )}
+            {restFilters.map(filter => (
+              <FilterItem
+                key={filter.slug}
+                filter={filter}
+                checkedValues={checkedValues}
+                handleCheckboxChange={handleCheckboxChange}
+                disabled={isLoading}
+              />
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <button
+        type='button'
+        className='block p-2 bg-primary hover:bg-primary-dark transition-colors text-white text-sm rounded-md mt-4 mx-auto'
+        onClick={handleResetFilters}
+      >
+        Скинути
+      </button>
     </aside>
   );
 }

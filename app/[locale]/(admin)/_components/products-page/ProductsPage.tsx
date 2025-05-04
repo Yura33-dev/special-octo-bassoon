@@ -72,15 +72,17 @@ export default async function ProductsPage({
           </Link>
         </div>
 
-        {products.length > 0 ? (
-          <div className='flex flex-col-reverse lg:flex-row items-start gap-4 min-h-screen mt-10'>
+        <div className='flex flex-col-reverse lg:flex-row items-start gap-4 min-h-screen mt-10'>
+          {products.length > 0 ? (
             <ProductList products={products} paginationData={paginationData} />
+          ) : (
+            <h2 className='basis-full text-base'>
+              Список товарів порожній. Спробуйте змінити фільтри для пошуку
+            </h2>
+          )}
 
-            <AdminFilter filters={[...filters, categoriesFilterObject]} />
-          </div>
-        ) : (
-          <h2 className='mt-10 text-xl'>Список товарів порожній</h2>
-        )}
+          <AdminFilter filters={[...filters, categoriesFilterObject]} />
+        </div>
       </Container>
     </section>
   );

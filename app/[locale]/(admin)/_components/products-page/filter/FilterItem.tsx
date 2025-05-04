@@ -13,12 +13,14 @@ interface IFilterListProps {
     slug: string,
     variantSlug: string
   ) => void;
+  disabled: boolean;
 }
 
 export default function FilterItem({
   filter,
   checkedValues,
   handleCheckboxChange,
+  disabled,
 }: IFilterListProps) {
   return (
     <li
@@ -34,6 +36,7 @@ export default function FilterItem({
           <li key={variantSlug}>
             <label className='group flex items-start gap-2 cursor-pointer relative'>
               <input
+                disabled={disabled}
                 type='checkbox'
                 checked={checkedValues[filter.slug]?.has(variantSlug) || false}
                 onChange={e =>
@@ -43,8 +46,11 @@ export default function FilterItem({
               />
 
               <div
-                className='w-4 h-4 flex items-center justify-center shrink-0 border-2 border-gray-400 rounded-[4px] transition
-                          group-has-[input:checked]:bg-primary group-has-[input:checked]:border-primary relative'
+                className={clsx(
+                  'relative w-4 h-4 flex items-center justify-center shrink-0 border-2 border-gray-400 rounded-[4px]',
+                  'transition group-has-[input:checked]:bg-primary group-has-[input:checked]:border-primary',
+                  disabled && 'bg-gray-300 cursor-not-allowed'
+                )}
               >
                 <Check
                   strokeWidth={3}
