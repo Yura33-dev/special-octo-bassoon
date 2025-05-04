@@ -3,7 +3,11 @@ import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
 import { Link } from '@/i18n/routing';
-import { getAllProducts, getFiltersFromProducts } from '@/lib/api';
+import {
+  getAllCategories,
+  getAllProducts,
+  getFiltersFromProducts,
+} from '@/lib/api';
 import { DEFAULT_PAGE, PRODUCT_DISPLAY_LIMIT } from '@/lib/constants';
 import { locale } from '@/types';
 
@@ -27,24 +31,24 @@ export default async function ProductsPage({
 
   const locale = (await getLocale()) as locale;
 
-  const [{ filters }, { products, paginationData, totalProducts }] =
-    await Promise.all([
-      getFiltersFromProducts(locale),
-      getAllProducts(locale, page, limit, searchParams),
-    ]);
+  const [
+    { filters },
+    { products, paginationData, totalProducts },
+    subCategories,
+  ] = await Promise.all([
+    getFiltersFromProducts(locale),
+    getAllProducts(locale, page, limit, searchParams),
+    getAllCategories({ main: false }),
+  ]);
 
   const categoriesFilter = new Map<string, { title: string; slug: string }>();
 
-  products.forEach(product =>
-    product.categories.forEach(category => {
-      if (!category.main) {
-        categoriesFilter.set(category.slug[locale], {
-          title: category.name[locale],
-          slug: category.slug[locale],
-        });
-      }
-    })
-  );
+  subCategories.forEach(category => {
+    categoriesFilter.set(category.slug[locale], {
+      title: category.name[locale],
+      slug: category.slug[locale],
+    });
+  });
 
   const resultArray = Array.from(categoriesFilter.values());
 

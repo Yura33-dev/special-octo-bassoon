@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from '@/i18n/routing';
 
+import FilterItem from './FilterItem';
 import SearchProductInput from './SearchProductInput';
 
 interface IAdminFilterProps {
@@ -82,8 +83,11 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
     .map(set => Array.from(set))
     .flat().length;
 
+  const subCategories = filters.find(filter => filter.title === 'Підкатегорія');
+  const restFilters = filters.filter(filter => filter.title !== 'Підкатегорія');
+
   return (
-    <div
+    <aside
       className={clsx(
         'basis-auto flex-shrink-0 p-2 bg-white/60 border-gray-300 border-[1px] rounded-md lg:basis-[280px] h-auto lg:max-h-[80vh] lg:overflow-y-auto lg:sticky lg:top-20'
       )}
@@ -107,30 +111,26 @@ export default function AdminFilter({ filters }: IAdminFilterProps) {
 
       {filters.length <= 0 && <h3>Немає доступних фільтрів</h3>}
 
-      {filters.length > 0 &&
-        filters.map(({ slug, title, variants }) => (
-          <div
-            key={slug}
-            className='flex flex-row flex-wrap gap-4 items-center lg:gap-0 lg:items-start lg:flex-col mb-4 border-b-[1px] pb-4 pl-2 border-gray-300 last:border-none'
-          >
-            <h3 className='font-semibold text-lg lg:mb-2'>{title}</h3>
+      {restFilters.length > 0 && (
+        <ul>
+          {subCategories && (
+            <FilterItem
+              filter={subCategories}
+              checkedValues={checkedValues}
+              handleCheckboxChange={handleCheckboxChange}
+            />
+          )}
 
-            {variants.map(({ slug: variantSlug, title: variantTitle }) => (
-              <label
-                key={variantSlug}
-                className='flex items-center justify-start gap-2 w-max hover:cursor-pointer'
-              >
-                <input
-                  type='checkbox'
-                  checked={checkedValues[slug]?.has(variantSlug) || false}
-                  onChange={e => handleCheckboxChange(e, slug, variantSlug)}
-                  className='hover:cursor-pointer'
-                />
-                {variantTitle}
-              </label>
-            ))}
-          </div>
-        ))}
-    </div>
+          {restFilters.map(filter => (
+            <FilterItem
+              key={filter.slug}
+              filter={filter}
+              checkedValues={checkedValues}
+              handleCheckboxChange={handleCheckboxChange}
+            />
+          ))}
+        </ul>
+      )}
+    </aside>
   );
 }
