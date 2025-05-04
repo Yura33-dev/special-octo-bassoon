@@ -1,12 +1,13 @@
 'use client';
 
 import { FormikHelpers, useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useLocale } from 'next-intl';
+import { useState } from 'react';
 import ShortUniqueId from 'short-unique-id';
 import { toast } from 'sonner';
 import { slugify } from 'transliteration';
 
-import { useRouter } from '@/i18n/routing';
+import { routing, useRouter } from '@/i18n/routing';
 import { createProduct, updateProduct } from '@/lib/api';
 import { DELETE_PRODUCT_ID } from '@/lib/constants';
 import { validationProductSchema } from '@/lib/validations';
@@ -55,25 +56,11 @@ export default function ProductForm({
     product?.translatedData['ru'].description ?? ''
   );
 
-  const [producer, setProducer] = useState<IProducerMapped | null>(null);
-
-  useEffect(() => {
-    if (!isAddForm) {
-      const filterObj = product?.filters.find(
-        filter => filter.filter.slug === 'virobnik'
-      );
-      const producerInProduct = producers.find(
-        producer =>
-          slugify(producer.translatedData['uk'].title) === filterObj?.value
-      );
-
-      setProducer(producerInProduct ?? null);
-    }
-  }, [isAddForm, product, producers]);
-
   const openModal = useModalStore(state => state.openModal);
 
   const router = useRouter();
+
+  const locale = useLocale();
 
   const initialValues: IProductForm = {
     translatedData: {
@@ -115,15 +102,15 @@ export default function ProductForm({
     visible: product?.visible ?? true,
 
     filters:
-      product?.filters.map(filter => ({
-        id: filter.filter.id,
+      product?.filters?.map(filter => ({
+        id: filter.id,
         filter: filter.filter.id,
         value: filter.value,
       })) ?? [],
 
     labels: product?.labels ?? [],
 
-    producer: product?.producer.id ?? null,
+    producer: product?.producer?.id ?? null,
   };
 
   const handleSelectProducer = (producerSlug: string) => {
@@ -132,8 +119,6 @@ export default function ProductForm({
     );
 
     if (producer) {
-      setProducer(producer);
-
       formik
         .setFieldValue('producer', producer.id, false)
         .then(() => {
@@ -211,7 +196,7 @@ export default function ProductForm({
       formData.append('imageTitle', values.translatedData['uk'].slug);
       formData.append('folder', 'products');
 
-      const response = await fetch('/api/upload', {
+      const response = await fetch('/api/v1/admin/products/image', {
         method: 'POST',
         body: formData,
       });
@@ -241,7 +226,11 @@ export default function ProductForm({
         setProductDescriptionUk('');
         setProductDescriptionRu('');
       } else {
-        await updateProduct(values);
+        await updateProduct(
+          values,
+          product!.translatedData[locale].slug,
+          routing.locales
+        );
         router.replace('/dashboard/products');
         router.refresh();
         toast.success('Продукт успішно оновлено!');
@@ -305,7 +294,7 @@ export default function ProductForm({
           onAddPackaging={handleAddPackaging}
           onDeletePackaging={handleDeletePackaging}
           formik={formik}
-          producer={producer}
+          producer={product?.producer ?? null}
         />
 
         <Visual title='Візуальні дані' formik={formik} />

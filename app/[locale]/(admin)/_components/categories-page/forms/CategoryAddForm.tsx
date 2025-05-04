@@ -48,7 +48,7 @@ export default function CategoryAddForm() {
       formData.append('imageTitle', values.slugUk);
       formData.append('folder', 'categories');
 
-      const response = await fetch('/api/upload', {
+      const response = await fetch('/api/v1/admin/products/image', {
         method: 'POST',
         body: formData,
       });

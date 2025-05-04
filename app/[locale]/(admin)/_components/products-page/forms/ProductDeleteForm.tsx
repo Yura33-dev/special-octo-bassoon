@@ -32,7 +32,17 @@ export default function ProductDeleteForm({
     setIsSubmitting(true);
 
     try {
-      await deleteProductById(productId);
+      await Promise.all([
+        deleteProductById(productId),
+        fetch('/api/v1/admin/products/image', {
+          method: 'DELETE',
+          body: JSON.stringify({ productId }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }),
+      ]);
+
       router.replace('/dashboard/products');
       router.refresh();
       toast.success('Продукт успішно видалено!');
