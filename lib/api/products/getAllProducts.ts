@@ -61,7 +61,7 @@ export async function getAllProducts(
     const [productsCount, products, totalCount] = await Promise.all([
       Product.countDocuments(query),
       Product.find(query)
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: -1, _id: -1 })
         .skip(skip)
         .limit(limit)
         .populate('categories')

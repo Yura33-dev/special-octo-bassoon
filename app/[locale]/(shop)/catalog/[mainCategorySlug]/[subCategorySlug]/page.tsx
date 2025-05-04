@@ -11,6 +11,7 @@ import {
   getFiltersFromProducts,
   getPageDataByName,
 } from '@/lib/api';
+import { DEFAULT_PAGE, PRODUCT_DISPLAY_LIMIT } from '@/lib/constants';
 import { locale } from '@/types';
 
 import Filter from '../../../_components/catalog-page/Filter';
@@ -45,18 +46,12 @@ export default async function SubcategoryPage({
     notFound();
   }
 
-  const page = parseInt(searchParams.page || '1');
-  const limit = parseInt(searchParams.limit || '9');
+  const page = parseInt(searchParams.page || DEFAULT_PAGE);
+  const limit = parseInt(searchParams.limit || PRODUCT_DISPLAY_LIMIT);
 
   const [{ filters }, { products, paginationData }] = await Promise.all([
     getFiltersFromProducts(locale, { categories: subcategory.id }),
-    getAllProductsByCategoryId(
-      locale,
-      subcategory.id,
-      page,
-      limit,
-      searchParams
-    ),
+    getAllProductsByCategoryId(subcategory.id, page, limit, searchParams),
   ]);
 
   const generateBreadCrumbs = [

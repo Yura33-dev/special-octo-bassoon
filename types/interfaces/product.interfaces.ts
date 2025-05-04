@@ -62,7 +62,7 @@ export interface ITranslatedData {
   name: string;
   slug: string;
   description?: string | null;
-  country: string;
+  country: string | null;
   meta: IMetaData;
 }
 

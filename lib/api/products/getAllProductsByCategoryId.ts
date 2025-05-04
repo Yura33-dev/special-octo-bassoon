@@ -37,6 +37,7 @@ export async function getAllProductsByCategoryId(
 
     const query = {
       categories: categoryId,
+      visible: true,
       ...(filterConditions.length > 0 ? { $and: filterConditions } : {}),
     };
 
@@ -46,6 +47,7 @@ export async function getAllProductsByCategoryId(
         .sort({
           labels: -1,
           createdAt: -1,
+          _id: -1,
         })
         .skip(skip)
         .limit(limit)

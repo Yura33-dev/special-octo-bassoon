@@ -7,7 +7,9 @@ import { Product } from '@/models';
 import { IProductForm, IProductApi } from '@/types';
 
 export async function updateProduct(
-  product: IProductForm
+  product: IProductForm,
+  productSlug: string,
+  locales: readonly string[]
 ): Promise<IProductApi | undefined> {
   try {
     await dbConnect();
@@ -19,15 +21,20 @@ export async function updateProduct(
 
     product.packaging.items = normalizedPackagingPrice;
 
-    const createdProduct: IProductApi | null = await Product.findOneAndUpdate(
-      { 'translatedData.uk.slug': product.translatedData['uk'].slug },
-      product
+    const updatedProduct: IProductApi | null = await Product.findOneAndUpdate(
+      {
+        $or: locales.map(locale => ({
+          [`translatedData.${locale}.slug`]: productSlug,
+        })),
+      },
+      { $set: { ...product } },
+      { new: true }
     );
 
-    if (!createdProduct) throw new Error('Ідентифікатор товару не знайдений');
+    if (!updatedProduct) throw new Error('Ідентифікатор товару не знайдений');
 
     revalidatePath('/*/dashboard/products');
-    return JSON.parse(JSON.stringify(createdProduct));
+    return JSON.parse(JSON.stringify(updatedProduct));
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw error;

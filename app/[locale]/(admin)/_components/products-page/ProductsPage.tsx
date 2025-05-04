@@ -4,6 +4,7 @@ import { getLocale } from 'next-intl/server';
 import Container from '@/components/shared/Container';
 import { Link } from '@/i18n/routing';
 import { getAllProducts, getFiltersFromProducts } from '@/lib/api';
+import { DEFAULT_PAGE, PRODUCT_DISPLAY_LIMIT } from '@/lib/constants';
 import { locale } from '@/types';
 
 import AdminFilter from './filter/AdminFilter';
@@ -21,8 +22,8 @@ interface IProductsPageProps {
 export default async function ProductsPage({
   searchParams,
 }: IProductsPageProps) {
-  const page = parseInt(searchParams.page || '1');
-  const limit = parseInt(searchParams.limit || '9');
+  const page = parseInt(searchParams.page || DEFAULT_PAGE);
+  const limit = parseInt(searchParams.limit || PRODUCT_DISPLAY_LIMIT);
 
   const locale = (await getLocale()) as locale;
 

@@ -31,7 +31,7 @@ export default async function ProductInfo({ product }: IProductInfoProps) {
           </span>
         </div>
 
-        {product.filters ? (
+        {product.filters && product.filters.length > 0 ? (
           <ul className='px-2 mt-4 text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2'>
             {product.filters.map(filter => (
               <li key={filter.id} className='flex flex-col'>
