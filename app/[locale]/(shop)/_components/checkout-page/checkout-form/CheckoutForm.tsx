@@ -62,7 +62,7 @@ export default function CheckoutForm({ className }: ICheckoutFormProps) {
 
     const cartItems = cart.map(cartItem => ({
       productId: cartItem.id,
-      packId: cartItem.packVariant.id,
+      packId: cartItem.packVariant.packId.id,
       quantity: cartItem.packVariant.orderedQuantity,
       price: cartItem.packVariant.price,
     }));

@@ -4,7 +4,7 @@ import { FILTERS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { mapFilter } from '@/lib/utils';
 import { Filter } from '@/models';
-import { IFilterApi, IFilterMapped, locale } from '@/types';
+import { IFilterMapped, IFilterPopulated, locale } from '@/types';
 
 export async function getAllFilters(
   locale: locale
@@ -12,7 +12,7 @@ export async function getAllFilters(
   try {
     await dbConnect();
 
-    const filters = await Filter.find({}).lean<Array<IFilterApi>>();
+    const filters = await Filter.find({}).lean<Array<IFilterPopulated>>();
 
     const transformedFilters = filters
       .map(filter => mapFilter(filter))
