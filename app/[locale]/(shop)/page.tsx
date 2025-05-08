@@ -20,12 +20,16 @@ export async function generateMetadata({
     };
 
   return {
-    title: data.translatedData[params.locale].meta.title,
+    title:
+      data.translatedData[params.locale].meta.title ??
+      'Насіння оптом та в роздріб з доставкою по всій Україні',
     description: data.translatedData[params.locale].meta.description,
     keywords: data.translatedData[params.locale].meta.keywords,
 
     openGraph: {
-      title: data.translatedData[params.locale].meta.title,
+      title:
+        data.translatedData[params.locale].meta.title ??
+        'Насіння оптом та в роздріб з доставкою по всій Україні',
       description: data.translatedData[params.locale].meta.description,
     },
   };
