@@ -11,12 +11,14 @@ services:
     depends_on:
       - mongodb
     environment:
-      MONGODB_URI: mongodb://mongodb:27017/graund
+      DB_URI: mongodb://mongodb:27017/graund
     restart: always
 
   mongodb:
     image: mongo:8.0.9
     container_name: mongodb
+    ports: 
+      - 27017:27017
     volumes:
       - mongo_data:/data/db
     restart: always
