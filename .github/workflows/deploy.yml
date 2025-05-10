@@ -26,6 +26,11 @@ jobs:
         with:
           mask-password: true
 
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}" >> .env
+          echo "NEXT_PUBLIC_APP_URL=${{ vars.NEXT_PUBLIC_APP_URL }}" >> .env
+
       - name: Build, tag, and push Docker image
         env:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
