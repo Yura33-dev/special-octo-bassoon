@@ -11,8 +11,6 @@ export async function generateMetadata({
   params,
 }: IShopHomeProps): Promise<Metadata> {
   const data = await getPageDataByName('MainPage');
-  console.log('MainPage data:', JSON.stringify(data)); //TODO:delete log
-  console.log('Locale:', params.locale); // должен быть "uk" или "ru"
 
   if (!data)
     return {
