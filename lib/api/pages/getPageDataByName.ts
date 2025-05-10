@@ -14,15 +14,18 @@ export async function getPageDataByName(
     const data = await Page.findOne({ name: page }).lean<IPageLeaned>();
 
     if (!data) {
-      throw new Error(`Error: ${PAGE_FETCH_FAILED}`);
+      console.error(`Error: ${PAGE_FETCH_FAILED}`);
+      return null;
     }
 
     return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      console.error(error.message);
+      return null;
     } else {
-      throw new Error(`Error: ${PAGE_FETCH_FAILED}. ${error}`);
+      console.error(`Error: ${PAGE_FETCH_FAILED}. ${error}`);
+      return null;
     }
   }
 }

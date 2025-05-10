@@ -11,6 +11,8 @@ export async function generateMetadata({
   params,
 }: IShopHomeProps): Promise<Metadata> {
   const data = await getPageDataByName('MainPage');
+  console.log('MainPage data:', JSON.stringify(data)); //TODO:delete log
+  console.log('Locale:', params.locale); // должен быть "uk" или "ru"
 
   if (!data)
     return {
@@ -23,14 +25,14 @@ export async function generateMetadata({
     title:
       data.translatedData[params.locale].meta.title ??
       'Насіння оптом та в роздріб з доставкою по всій Україні',
-    description: data.translatedData[params.locale].meta.description,
-    keywords: data.translatedData[params.locale].meta.keywords,
+    description: data.translatedData[params.locale].meta.description ?? '',
+    keywords: data.translatedData[params.locale].meta.keywords ?? '',
 
     openGraph: {
       title:
         data.translatedData[params.locale].meta.title ??
         'Насіння оптом та в роздріб з доставкою по всій Україні',
-      description: data.translatedData[params.locale].meta.description,
+      description: data.translatedData[params.locale].meta.description ?? '',
     },
   };
 }
