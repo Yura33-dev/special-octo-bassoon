@@ -46,7 +46,10 @@ export default function Cart() {
       {!isCartLoading && (
         <ul className='mt-4 max-h-[75%] overflow-x-auto flex flex-col gap-6 py-2'>
           {cart.map(item => (
-            <CartItem key={item.packVariant.packId.id} product={item} />
+            <CartItem
+              key={`${item.packVariant.packId.id}-${item.id}`}
+              product={item}
+            />
           ))}
         </ul>
       )}

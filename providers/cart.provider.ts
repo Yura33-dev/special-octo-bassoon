@@ -9,10 +9,10 @@ interface ICartStore {
   isCartLoading: boolean;
   cartOpen: () => void;
   cartClose: () => void;
-  increaseProductQuantity: (packId: string) => void;
-  decreaseProductQuantity: (packId: string) => void;
+  increaseProductQuantity: (productId: string, packId: string) => void;
+  decreaseProductQuantity: (productId: string, packId: string) => void;
   addProduct: (product: IProductInCart) => void;
-  removeProduct: (packId: string) => void;
+  removeProduct: (productId: string, packId: string) => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
   fetchProductsInCart: (locale: string) => void;
@@ -27,11 +27,11 @@ export const useCartStore = create<ICartStore>()(
       cartOpen: () => set(state => ({ ...state, isCartOpen: true })),
       cartClose: () => set(state => ({ ...state, isCartOpen: false })),
 
-      increaseProductQuantity: (packId: string) =>
+      increaseProductQuantity: (productId: string, packId: string) =>
         set(state => ({
           ...state,
           cart: state.cart.map(item =>
-            item.packVariant.packId.id === packId
+            item.packVariant.packId.id === packId && item.id === productId
               ? {
                   ...item,
                   packVariant: {
@@ -43,11 +43,11 @@ export const useCartStore = create<ICartStore>()(
           ),
         })),
 
-      decreaseProductQuantity: (packId: string) =>
+      decreaseProductQuantity: (productId: string, packId: string) =>
         set(state => ({
           ...state,
           cart: state.cart.map(item =>
-            item.packVariant.packId.id === packId
+            item.packVariant.packId.id === packId && item.id === productId
               ? {
                   ...item,
                   packVariant: {
@@ -103,11 +103,12 @@ export const useCartStore = create<ICartStore>()(
           }
         }),
 
-      removeProduct: (packId: string) =>
+      removeProduct: (productId: string, packId: string) =>
         set(state => ({
           ...state,
           cart: state.cart.filter(
-            item => item.packVariant.packId.id !== packId
+            item =>
+              !(item.packVariant.packId.id === packId && item.id === productId)
           ),
         })),
 

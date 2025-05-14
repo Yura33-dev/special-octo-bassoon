@@ -33,7 +33,7 @@ export default function CartItem({ product }: ICartItemProps) {
   const removeProductFromCart = useCartStore(state => state.removeProduct);
 
   const handleRemoveProduct = () => {
-    removeProductFromCart(packId.id);
+    removeProductFromCart(product.id, packId.id);
     toast.info(
       t('FromCart', {
         title: `${name} (${formattedPackValue(packId.translatedData[locale].type, packId.translatedData[locale].measureValue, packId.translatedData[locale].measureIn)})`,
@@ -81,6 +81,7 @@ export default function CartItem({ product }: ICartItemProps) {
           <CartCounter
             quantity={packVariant.orderedQuantity}
             packId={packId.id}
+            productId={product.id}
           />
 
           <p className='my-2 sm:my-1 text-sm'>
