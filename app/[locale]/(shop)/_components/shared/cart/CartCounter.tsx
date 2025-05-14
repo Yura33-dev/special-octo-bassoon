@@ -7,18 +7,23 @@ import { useCartStore } from '@/providers/cart.provider';
 interface ICartCounterProps {
   quantity: number;
   packId: string;
+  productId: string;
 }
 
-export default function CartCounter({ quantity, packId }: ICartCounterProps) {
+export default function CartCounter({
+  quantity,
+  productId,
+  packId,
+}: ICartCounterProps) {
   const increaseQuantity = useCartStore(state => state.increaseProductQuantity);
   const decreaseQuantity = useCartStore(state => state.decreaseProductQuantity);
 
   const handleIncreaseProductQuantity = () => {
-    increaseQuantity(packId);
+    increaseQuantity(productId, packId);
   };
 
   const handleDecreaseProductQuantity = () => {
-    decreaseQuantity(packId);
+    decreaseQuantity(productId, packId);
   };
 
   return (
@@ -26,7 +31,7 @@ export default function CartCounter({ quantity, packId }: ICartCounterProps) {
       <button
         type='button'
         className='btn bg-primary min-h-0 h-auto p-1 text-white rounded-sm border-none md:hover:bg-accent disabled:bg-slate-300'
-        disabled={quantity === 1}
+        disabled={quantity <= 1}
         onClick={handleDecreaseProductQuantity}
       >
         <Minus className='w-4 h-4' />
