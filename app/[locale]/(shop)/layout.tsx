@@ -3,6 +3,7 @@ import { Fira_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { Suspense } from 'react';
 import { Toaster } from 'sonner';
 
 import { routing } from '@/i18n/routing';
@@ -10,6 +11,7 @@ import { locale } from '@/types';
 import '@/app/globals.css';
 
 import Footer from './_components/shared/main-footer/Footer';
+import FooterSkeleton from './_components/shared/main-footer/FooterSkeleton';
 import Header from './_components/shared/main-header/Header';
 import MobileMenu from './_components/shared/mobile-menu/MobileMenu';
 
@@ -48,7 +50,10 @@ export default async function ShopLayout({
         <NextIntlClientProvider messages={translations}>
           <Header />
           <main className='flex-shrink-0 flex-grow basis-full'>{children}</main>
-          <Footer />
+
+          <Suspense fallback={<FooterSkeleton />}>
+            <Footer />
+          </Suspense>
 
           <MobileMenu />
           <Toaster richColors />
