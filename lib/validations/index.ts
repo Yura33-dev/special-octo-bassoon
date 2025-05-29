@@ -1,3 +1,4 @@
+import { bannerValidationSchema } from './banner.validation';
 import {
   editCategorySchema,
   createCategorySchema,
@@ -14,4 +15,5 @@ export {
   createFilterSchema,
   validationProductSchema,
   producerValidationSchema,
+  bannerValidationSchema,
 };

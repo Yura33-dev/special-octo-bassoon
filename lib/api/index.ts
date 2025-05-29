@@ -12,6 +12,7 @@ import { getAllFilters } from './filters/getAllFilters';
 import { getFilterBySlug } from './filters/getFilterBySlug';
 import { getFiltersFromProducts } from './filters/getFiltersFromProducts';
 import { patchFilterBySlug } from './filters/patchFilterBySlug';
+import { imageUploader } from './images/imageUploader';
 import { getAllOrders } from './orders/getAllOrders';
 import { createPackaging } from './packaging/createPackaging';
 import { deletePackagingById } from './packaging/deletePackagingById';
@@ -34,6 +35,9 @@ import { getProductBySlug } from './products/getProductBySlug';
 import { getProductsByName } from './products/getProductsByName';
 import { updateProduct } from './products/updateProduct';
 import { getAllSettings } from './settings/getAllSettings';
+import { createSlide } from './slides/createSlide';
+import { deleteSlideById } from './slides/deleteSlideById';
+import { patchSlideById } from './slides/patchSlideById';
 import { getCategorySlug } from './slugs/getCategorySlug';
 import { getProductSlug } from './slugs/getProductSlug';
 
@@ -76,4 +80,8 @@ export {
   getProducerById,
   patchProducerById,
   deleteProducerById,
+  patchSlideById,
+  createSlide,
+  imageUploader,
+  deleteSlideById,
 };
