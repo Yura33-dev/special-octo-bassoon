@@ -67,9 +67,10 @@ import {
 } from './interfaces/settings.interfaces';
 import {
   ISlideApi,
-  ISlide,
+  ISlidePopulated,
+  ISlideMapped,
+  ISlideForm,
   ITranslatedSlideData,
-  IFilteredSlide,
 } from './interfaces/slide.interfaces';
 import { locale } from './types/global.types';
 
@@ -97,12 +98,13 @@ export type {
   ITranslatedPackagingData,
   IPagination,
   ISlideApi,
-  ISlide,
+  ISlidePopulated,
+  ISlideMapped,
+  ISlideForm,
   IPageApi,
   IPageLeaned,
   ITranslatedPageData,
   ITranslatedSlideData,
-  IFilteredSlide,
   ISettingsApi,
   ISettingsLeaned,
   ISettingsMapped,
