@@ -56,3 +56,7 @@ export const CURRENCY_EXCHANGERATE_DEPENDENCY =
   'Якщо заповнено одне з полів "валюта" або "курс", інше також обовʼязкове';
 export const CURRENCY_EXCHANGE_MANDATORY =
   'Потрібно заповнити обидва поля — "валюта" та "курс"';
+
+// Ordres
+export const DELIVERY_METHOD = 'Оберіть один із варіантів доставки';
+export const PAYMENT_METHOD = 'Оберіть один із варіантів доставки';
