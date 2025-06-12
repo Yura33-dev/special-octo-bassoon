@@ -29,7 +29,7 @@ const orderSchema = new mongoose.Schema<IOrderApi>(
     fatherName: { type: String, default: null },
     status: {
       type: String,
-      enum: ['new', 'processing', 'delivery', 'done'],
+      enum: ['new', 'processing', 'delivery', 'done', 'canceled'],
       default: 'new',
       required: true,
     },
