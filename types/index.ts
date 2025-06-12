@@ -25,6 +25,10 @@ import {
   IProductInOrderApi,
   IProductInOrderPopulated,
   IProductInOrderMapped,
+  IOrderState,
+  IOrderData,
+  IOrderForm,
+  OrderStatus,
 } from './interfaces/order.interfaces';
 import {
   IPackagingApi,
@@ -118,6 +122,10 @@ export type {
   IOrderApi,
   IOrderPopulated,
   IOrderMapped,
+  IOrderState,
+  IOrderData,
+  IOrderForm,
+  OrderStatus,
   IProductInOrderApi,
   IProductInOrderPopulated,
   IProductInOrderMapped,

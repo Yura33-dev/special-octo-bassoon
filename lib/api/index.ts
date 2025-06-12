@@ -13,7 +13,12 @@ import { getFilterBySlug } from './filters/getFilterBySlug';
 import { getFiltersFromProducts } from './filters/getFiltersFromProducts';
 import { patchFilterBySlug } from './filters/patchFilterBySlug';
 import { imageUploader } from './images/imageUploader';
+import { archiveOrderById } from './orders/archiveOrderById';
+import { createOrder } from './orders/createOrder';
+import { deleteOrderById } from './orders/deleteOrderById';
 import { getAllOrders } from './orders/getAllOrders';
+import { getOrderById } from './orders/getOrderById';
+import { patchOrderById } from './orders/patchOrderById';
 import { createPackaging } from './packaging/createPackaging';
 import { deletePackagingById } from './packaging/deletePackagingById';
 import { getAllPackaging } from './packaging/getAllPackaging';
@@ -84,4 +89,9 @@ export {
   createSlide,
   imageUploader,
   deleteSlideById,
+  createOrder,
+  getOrderById,
+  patchOrderById,
+  archiveOrderById,
+  deleteOrderById,
 };

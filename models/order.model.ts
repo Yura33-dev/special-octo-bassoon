@@ -33,6 +33,7 @@ const orderSchema = new mongoose.Schema<IOrderApi>(
       default: 'new',
       required: true,
     },
+    isArchive: { type: Boolean, default: false },
   },
   { timestamps: true, versionKey: false }
 );

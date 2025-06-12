@@ -21,3 +21,9 @@ export const DELETE_PRODUCER_ID = 'delete_producer_id';
 
 export const ADD_BANNER_ID = 'add_banner_id';
 export const DELETE_BANNER_ID = 'delete_banner_id';
+
+export const ADD_ORDER_ID = 'add_order_id';
+export const DELETE_ORDER_ID = 'delete_order_id';
+export const ARCHIVE_ORDER_ID = 'archive_order_id';
+export const ADD_PRODUCTS_IN_ORDER = 'add_products_in_order_id';
+export const DELETE_PRODUCTS_FROM_ORDER = 'delete_products_from_order_id';

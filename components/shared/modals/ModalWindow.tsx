@@ -15,6 +15,7 @@ interface IModalWindowProps {
   className?: string;
   isModalSlot?: boolean;
   initial?: boolean;
+  withoutBackdrop?: boolean;
 }
 
 export default function ModalWindow({
@@ -24,6 +25,7 @@ export default function ModalWindow({
   className,
   isModalSlot = false,
   initial = false,
+  withoutBackdrop = false,
 }: IModalWindowProps) {
   const closeModal = useModalStore(state => state.closeModal);
   const modals = useModalStore(state => state.modals);
@@ -69,7 +71,12 @@ export default function ModalWindow({
           animate={{ opacity: 1, pointerEvents: 'all' }}
           exit={{ opacity: 0, pointerEvents: 'none' }}
           transition={{ duration: 0.2 }}
-          className='fixed top-0 left-0 z-10 w-full h-full bg-black/60 backdrop-blur-sm flex justify-center items-center'
+          className={clsx(
+            'fixed top-0 left-0 z-10 w-full h-full flex justify-center items-center',
+            withoutBackdrop
+              ? 'bg-transparent backdrop-blur-sm'
+              : 'bg-black/60 backdrop-blur-sm'
+          )}
         >
           <motion.div
             initial={{ opacity: 0 }}
@@ -78,13 +85,15 @@ export default function ModalWindow({
               duration: 0.2,
             }}
             className={clsx(
-              'bg-white rounded-md p-4 w-full h-full max-w-[95%] max-h-[685px] lg:h-max overflow-y-auto',
+              'bg-white rounded-md p-4 w-full h-full max-h-[685px] lg:h-max overflow-y-auto',
+              !className?.includes('max-w-') && 'max-w-[95%]',
               className && className
             )}
           >
             <div className='flex justify-between items-center mb-8'>
               <h3 className='text-2xl font-semibold'>{title}</h3>
               <button
+                type='button'
                 className='btn block h-auto min-h-min p-1 bg-primary hover:bg-primary-dark border-none'
                 aria-label='Закрити модальне вікно'
                 onClick={handleCloseModal}

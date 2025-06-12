@@ -4,6 +4,7 @@ import {
   createCategorySchema,
 } from './category.validation';
 import { createFilterSchema } from './filter.validation';
+import { orderSchema } from './order.validation';
 import { createPackSchema } from './packaging.validation';
 import { producerValidationSchema } from './producer.validation';
 import { validationProductSchema } from './product.validation';
@@ -16,4 +17,5 @@ export {
   validationProductSchema,
   producerValidationSchema,
   bannerValidationSchema,
+  orderSchema,
 };
