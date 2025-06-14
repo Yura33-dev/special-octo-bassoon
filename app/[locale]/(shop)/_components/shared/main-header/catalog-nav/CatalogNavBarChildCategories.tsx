@@ -32,13 +32,15 @@ export default function CatalogNavBarChildCategories({
   activeCategory,
 }: ICatalogNavBarChildCategoriesProps) {
   const locale = useLocale() as locale;
+
+  const visibleSubcategories = childCategories.filter(cat => cat.visible);
   return (
     <div
       className={clsx(
         'absolute top-0 z-[2] bg-white rounded-md text-foreground',
         'w-[35vw] h-full transition-all opacity-0 pointer-events-none overflow-auto ml-1',
 
-        activeCategory === parentCategoryId && childCategories.length > 0
+        activeCategory === parentCategoryId && visibleSubcategories.length > 0
           ? 'opacity-100 pointer-events-auto left-full'
           : 'pointer-events-none left-3/4'
       )}
@@ -46,7 +48,7 @@ export default function CatalogNavBarChildCategories({
       <AnimatePresence>
         {activeCategory === parentCategoryId && (
           <ul className={clsx(`p-2`, 'grid grid-cols-3 auto-rows-auto')}>
-            {childCategories.map(category => (
+            {visibleSubcategories.map(category => (
               <motion.li
                 key={category.id}
                 initial={{ opacity: 0 }}
