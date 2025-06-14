@@ -1,7 +1,6 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { slugify } from 'transliteration';
 
 import dbConnect from '@/lib/db';
 import { Filter, Producer } from '@/models';
@@ -13,12 +12,7 @@ export async function createProducer(
   try {
     await dbConnect();
 
-    const isProducerExist = await Producer.exists({
-      $or: [
-        { 'translatedData.uk.title': data.translatedData['uk'].title },
-        { 'translatedData.ru.title': data.translatedData['ru'].title },
-      ],
-    });
+    const isProducerExist = await Producer.exists({ slug: data.slug });
 
     if (isProducerExist) {
       throw new Error('Такий виробник вже існує');
@@ -34,7 +28,7 @@ export async function createProducer(
     const producerRuTitle = producer.translatedData.get('ru')?.title;
 
     const FilterObject = {
-      variantSlug: slugify(producerUkTitle ?? 'Назва не вказана'),
+      variantSlug: producer.slug,
       translatedData: {
         uk: { variantTitle: producerUkTitle ?? 'Назва не вказана' },
         ru: { variantTitle: producerRuTitle ?? 'Назва не вказана' },

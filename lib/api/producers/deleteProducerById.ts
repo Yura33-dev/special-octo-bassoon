@@ -39,32 +39,6 @@ export async function deleteProducerById(
       }
     );
 
-    // if (updatedFilter) {
-    //   const productsWithProducer: Array<IProductApi> | null =
-    //     await Product.find({
-    //       'filters.value': slugify(
-    //         deletedProducer.translatedData.get('uk')?.title ?? ''
-    //       ),
-    //     });
-
-    //   await Promise.all(
-    //     productsWithProducer.map(product =>
-    //       Product.updateOne(
-    //         { _id: product._id },
-    //         {
-    //           $pull: {
-    //             filters: {
-    //               value: slugify(
-    //                 deletedProducer.translatedData.get('uk')?.title ?? ''
-    //               ),
-    //             },
-    //           },
-    //         }
-    //       )
-    //     )
-    //   );
-    // }
-
     revalidatePath('/*/dashboard/filters');
     revalidatePath('/*/dashboard/products');
 
