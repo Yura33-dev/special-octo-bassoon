@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { ICreateCategoryFormField, IEditCategoryFormField } from '@/types';
+import { ICategoryForm } from '@/types';
 
 import {
   ALLOW_IMAGE_EXT,
@@ -8,94 +8,35 @@ import {
   FILE_NAME_REGEXP,
   LARGE_IMAGE_SIZE,
   LATIN_FILE_NAME,
+  MANDATORY_FIELD,
+  MAX_LENGTH_30,
+  MIN_LENGTH,
+  SORT_ORDER_GT_ZERO,
+  SORT_ORDER_INTEGER,
+  SORT_ORDER_NUMBER,
 } from '../constants';
 
-export const editCategorySchema: Yup.ObjectSchema<IEditCategoryFormField> =
+export const categoryValidationSchema: Yup.ObjectSchema<ICategoryForm> =
   Yup.object({
-    nameUk: Yup.string()
-      .min(3, 'Категорія має містити мінімум 3 символи')
-      .max(29, 'Категорія може містити макс. 29 символів')
-      .required('Обов`язкове поле'),
-    nameRu: Yup.string()
-      .min(3, 'Категорія має містити мінімум 3 символи')
-      .max(29, 'Категорія може містити макс. 29 символів')
-      .required('Обов`язкове поле'),
-    slugUk: Yup.string()
-      .min(3, 'Посилання категорії має містити мінімум 3 символи')
-      .matches(
-        /^[a-zA-Z0-9-]+$/,
-        'Тільки латиниця, цифри та дефіс без пробілів'
-      )
-      .required('Обов`язкове поле'),
-    slugRu: Yup.string()
-      .min(3, 'Посилання категорії має містити мінімум 3 символи')
-      .matches(
-        /^[a-zA-Z0-9-]+$/,
-        'Тільки латиниця, цифри та дефіс без пробілів'
-      )
-      .required('Обов`язкове поле'),
+    name: Yup.object({
+      uk: Yup.string()
+        .min(2, MIN_LENGTH)
+        .max(30, MAX_LENGTH_30)
+        .required(MANDATORY_FIELD),
+      ru: Yup.string().required(MANDATORY_FIELD),
+    }),
+    slug: Yup.object({
+      uk: Yup.string().min(2, MIN_LENGTH).required(MANDATORY_FIELD),
+      ru: Yup.string().min(2, MIN_LENGTH).required(MANDATORY_FIELD),
+    }),
+    main: Yup.boolean().required(MANDATORY_FIELD),
     sortOrder: Yup.number()
-      .typeError('Порядок сортування має бути числом')
-      .integer('Порядок сортування може бути тільки цілим числом')
-      .min(0, 'Порядок сортування може бути від 0')
-      .required('Обов`язкове поле'),
+      .typeError(SORT_ORDER_NUMBER)
+      .integer(SORT_ORDER_INTEGER)
+      .min(0, SORT_ORDER_GT_ZERO)
+      .required(MANDATORY_FIELD),
     featured: Yup.boolean().default(false),
     visible: Yup.boolean().default(true),
-    image: Yup.mixed<File>()
-      .test('fileType', ALLOW_IMAGE_EXT, value => {
-        if (!value || typeof value.name !== 'string') return true;
-        return ALLOW_IMAGE_EXT_ARRAY.includes(value.type);
-      })
-      .test('fileSize', LARGE_IMAGE_SIZE, value => {
-        if (!value || typeof value.name !== 'string') return true;
-        return value.size <= 5 * 1024 * 1024;
-      })
-      .test('fileName', LATIN_FILE_NAME, value => {
-        if (!value || typeof value.name !== 'string') return true;
-
-        const fileNameWithoutExtension = value.name
-          .split('.')
-          .slice(0, -1)
-          .join('.');
-
-        return FILE_NAME_REGEXP.test(fileNameWithoutExtension);
-      })
-      .nullable()
-      .default(null),
-  });
-
-export const createCategorySchema: Yup.ObjectSchema<ICreateCategoryFormField> =
-  Yup.object({
-    nameUk: Yup.string()
-      .min(3, 'Категорія має містити мінімум 3 символи')
-      .max(29, 'Категорія може містити макс. 29 символів')
-      .required('Обов`язкове поле'),
-    nameRu: Yup.string()
-      .min(3, 'Категорія має містити мінімум 3 символи')
-      .max(29, 'Категорія може містити макс. 29 символів')
-      .required('Обов`язкове поле'),
-    slugUk: Yup.string()
-      .min(3, 'Посилання категорії має містити мінімум 3 символи')
-      .matches(
-        /^[a-zA-Z0-9-]+$/,
-        'Тільки латиниця, цифри та дефіс без пробілів'
-      )
-      .required('Обов`язкове поле'),
-    slugRu: Yup.string()
-      .min(3, 'Посилання категорії має містити мінімум 3 символи')
-      .matches(
-        /^[a-zA-Z0-9-]+$/,
-        'Тільки латиниця, цифри та дефіс без пробілів'
-      )
-      .required('Обов`язкове поле'),
-    sortOrder: Yup.number()
-      .typeError('Порядок сортування має бути числом')
-      .integer('Порядок сортування може бути тільки цілим числом')
-      .min(0, 'Порядок сортування може бути від 0')
-      .required('Обов`язкове поле'),
-    featured: Yup.boolean().default(false),
-    visible: Yup.boolean().default(true),
-    main: Yup.boolean().default(true),
     childCategories: Yup.array().of(Yup.string().required()).default([]),
     parentCategories: Yup.array().of(Yup.string().required()).default([]),
     image: Yup.mixed<File>()

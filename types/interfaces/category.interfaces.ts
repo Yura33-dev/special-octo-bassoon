@@ -118,50 +118,14 @@ export interface IMappedNestedCategories {
   createdAt: Date;
 }
 
-export interface IEditCategoryFormField {
-  nameUk: string;
-  nameRu: string;
-  slugUk: string;
-  slugRu: string;
-  sortOrder: number;
-  featured: boolean;
-  visible: boolean;
-  image: File | string | null;
-}
-
-export interface IEditCategoryStructured {
-  name: { [key: string]: string };
-  slug: { [key: string]: string };
-  sortOrder: number;
-  featured: boolean;
-  visible: boolean;
-  image?: string;
-}
-
-export interface ICreateCategoryFormField {
-  nameUk: string;
-  nameRu: string;
-  slugUk: string;
-  slugRu: string;
-  main: boolean;
-  sortOrder: number;
-  featured: boolean;
-  visible: boolean;
-  image: File | string | null;
-  childCategories: Array<string>;
-  parentCategories: Array<string>;
-}
-
-export interface ICreateCategoryStructured {
+export interface ICategoryForm {
   name: { [key: string]: string };
   slug: { [key: string]: string };
   main: boolean;
   sortOrder: number;
   featured: boolean;
   visible: boolean;
-  image: string;
-  childCategories: Array<string>;
-  parentCategories: Array<string>;
+  image?: string | null | File;
+  childCategories?: Array<string>;
+  parentCategories?: Array<string>;
 }
-
-// TODO: refactor IEditCategoryFormField  IEditCategoryStructured ICreateCategoryFormField ICreateCategoryStructured in one interface

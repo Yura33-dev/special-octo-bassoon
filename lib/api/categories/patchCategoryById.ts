@@ -4,11 +4,11 @@ import { revalidatePath } from 'next/cache';
 
 import dbConnect from '@/lib/db';
 import { Category } from '@/models';
-import { ICategoryApi, IEditCategoryStructured } from '@/types';
+import { ICategoryApi, ICategoryForm } from '@/types';
 
 export async function patchCategoryById(
   categoryId: string,
-  data: Partial<IEditCategoryStructured>
+  data: Partial<ICategoryForm>
 ): Promise<ICategoryApi | null> {
   try {
     await dbConnect();
@@ -24,7 +24,11 @@ export async function patchCategoryById(
     revalidatePath('/*/dashboard/categories');
     return JSON.parse(JSON.stringify(result));
   } catch (error: unknown) {
-    console.error('Some error occured while category patching...', error);
-    throw new Error('Сталася помилка при оновлені категорії');
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      console.error('Some error occured while category patching...', error);
+      throw new Error('Сталася помилка при оновлені категорії');
+    }
   }
 }
