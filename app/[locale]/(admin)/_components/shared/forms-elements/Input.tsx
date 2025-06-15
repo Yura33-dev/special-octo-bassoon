@@ -15,6 +15,7 @@ interface IInputProps {
   errors: FormikErrors<any>;
   className?: string;
   labelClassName?: string;
+  disabled?: boolean;
 }
 
 export default function Input({
@@ -29,6 +30,7 @@ export default function Input({
   errors,
   className,
   labelClassName,
+  disabled = false,
 }: IInputProps) {
   const errorMessage = get(errors, name);
 
@@ -39,6 +41,7 @@ export default function Input({
     >
       <span className='text-sm font-semibold mb-1'>{title}</span>
       <input
+        disabled={disabled}
         id={name}
         name={name}
         type={type}
@@ -49,6 +52,7 @@ export default function Input({
         className={clsx(
           'w-full p-1 pl-3 text-gray-600 rounded-md text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-primary',
           'placeholder:text-xs',
+          'disabled:bg-gray-300 disabled:hover:cursor-not-allowed',
           className && className
         )}
       />

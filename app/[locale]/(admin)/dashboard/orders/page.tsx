@@ -7,10 +7,18 @@ export const metadata = {
   title: 'ProGround | Замовлення',
 };
 
-export default async function page() {
+interface IOrdersPageProps {
+  searchParams: {
+    page?: string;
+    limit?: string;
+    [key: string]: string | undefined;
+  };
+}
+
+export default async function page({ searchParams }: IOrdersPageProps) {
   return (
     <Suspense fallback={<OrdersPageSkeleton />}>
-      <OrdersPage />
+      <OrdersPage searchParams={searchParams} />
     </Suspense>
   );
 }

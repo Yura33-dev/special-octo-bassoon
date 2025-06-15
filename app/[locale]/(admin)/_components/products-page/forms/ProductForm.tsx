@@ -5,7 +5,6 @@ import { useLocale } from 'next-intl';
 import { useState } from 'react';
 import ShortUniqueId from 'short-unique-id';
 import { toast } from 'sonner';
-import { slugify } from 'transliteration';
 
 import { routing, useRouter } from '@/i18n/routing';
 import { createProduct, updateProduct } from '@/lib/api';
@@ -114,8 +113,8 @@ export default function ProductForm({
   };
 
   const handleSelectProducer = (producerSlug: string) => {
-    const producer = producers.find(
-      producer => slugify(producer.translatedData['uk'].title) === producerSlug
+    const producer = producers.find(producer =>
+      producer.slug === producerSlug ? producer : undefined
     );
 
     if (producer) {
@@ -160,11 +159,11 @@ export default function ProductForm({
     filter: string;
     value: string;
   }) => {
-    const producerFilter = producers.find(
-      producer => slugify(producer.translatedData['uk'].title) === filter.value
+    const producer = producers.find(producer =>
+      producer.slug === filter.value ? producer : undefined
     );
 
-    if (producerFilter) {
+    if (producer) {
       formik
         .setFieldValue('producer', null, true)
         .then(() => {

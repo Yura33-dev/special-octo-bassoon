@@ -30,23 +30,37 @@ export async function generateMetadata({
   params,
 }: IProductPageProps): Promise<Metadata> {
   const product = await getProductBySlug(params.productSlug, routing.locales);
-
   if (!product) return { title: 'Proground | Невідомий продукт' };
 
+  const currentUrl = `${config.NEXT_PUBLIC_APP_URL}/${params.locale}/catalog/${product.categories[0].slug[params.locale]}/${product.categories[1].slug[params.locale]}/${product.translatedData[params.locale].slug}`;
+
   return {
-    title: `ProGround | ${product.translatedData[params.locale].meta.title}`,
-    description: product.translatedData[params.locale].meta.description,
-    keywords: product.translatedData[params.locale].meta.keywords,
+    title: product.translatedData[params.locale].meta.title,
     metadataBase: new URL(config.NEXT_PUBLIC_APP_URL),
 
-    openGraph: {
-      title: `ProGround | ${product.translatedData[params.locale].meta.title}`,
+    alternates: {
+      canonical: currentUrl,
+      languages: {
+        uk: `${config.NEXT_PUBLIC_APP_URL}/uk/catalog/${product.categories[0].slug['uk']}/${product.categories[1].slug['uk']}/${product.translatedData['uk'].slug}`,
+        ru: `${config.NEXT_PUBLIC_APP_URL}/ru/catalog/${product.categories[0].slug['ru']}/${product.categories[1].slug['ru']}/${product.translatedData['ru'].slug}`,
+        'x-default': `${config.NEXT_PUBLIC_APP_URL}/uk/catalog/${product.categories[0].slug['uk']}/${product.categories[1].slug['uk']}/${product.translatedData['uk'].slug}`,
+      },
+    },
+
+    other: {
+      title: product.translatedData[params.locale].meta.title,
       description: product.translatedData[params.locale].meta.description,
-      type: 'website',
+      keywords: product.translatedData[params.locale].meta.keywords ?? '',
+    },
+
+    openGraph: {
+      title: product.translatedData[params.locale].meta.title,
+      description: product.translatedData[params.locale].meta.description,
       url: `/catalog/${product.categories[0].slug[params.locale]}/${product.categories[1].slug[params.locale]}/${product.translatedData[params.locale].slug}`,
+      type: 'website',
       images: [
         {
-          url: product.imgUrl || '/no-image.webp',
+          url: product.imgUrl ?? `${config.NEXT_PUBLIC_APP_URL}/no-image.webp`,
           width: 1200,
           height: 630,
           alt: product.translatedData[params.locale].name,
@@ -58,7 +72,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: product.translatedData[params.locale].name,
       description: product.translatedData[params.locale].meta.description,
-      images: [product.imgUrl || '/no-image.webp'],
+      images: [product.imgUrl ?? `${config.NEXT_PUBLIC_APP_URL}/no-image.webp`],
     },
   };
 }

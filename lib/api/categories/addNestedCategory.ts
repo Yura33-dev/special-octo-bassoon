@@ -49,7 +49,11 @@ export async function addNestedCategory(
     revalidatePath('/*/dashboard/categories');
     return true;
   } catch (error: unknown) {
-    console.error('Some error occured while category patching...', error);
-    throw new Error('Сталася помилка при оновлені категорії');
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      console.error('Some error occured while category patching...', error);
+      throw new Error('Сталася помилка при оновлені категорії');
+    }
   }
 }

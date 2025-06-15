@@ -2,23 +2,26 @@ import mongoose, { model, models } from 'mongoose';
 
 import { ISlideApi, ITranslatedSlideData } from '@/types';
 
-const translatedSlideDataSchema = new mongoose.Schema<ITranslatedSlideData>({
-  image: { type: String, default: null },
-  linkTo: { type: String, default: null },
-  visible: { type: Boolean, default: true },
-  name: {
-    type: String,
-    default: null,
+const translatedSlideDataSchema = new mongoose.Schema<ITranslatedSlideData>(
+  {
+    image: { type: String, default: null },
+    linkTo: { type: String, default: null },
+    visible: { type: Boolean, default: true },
+    name: {
+      type: String,
+      default: null,
+    },
+    sortOrder: {
+      type: Number,
+      default: 0,
+    },
   },
-  sortOrder: {
-    type: Number,
-    deafult: 0,
-  },
-});
+  { _id: false }
+);
 
 const slideSchema = new mongoose.Schema<ISlideApi>(
   {
-    translatedSlideData: {
+    translatedData: {
       type: Map,
       of: translatedSlideDataSchema,
       required: true,

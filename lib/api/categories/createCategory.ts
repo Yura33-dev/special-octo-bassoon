@@ -4,10 +4,10 @@ import { revalidatePath } from 'next/cache';
 
 import dbConnect from '@/lib/db';
 import { Category } from '@/models';
-import { ICategoryApi, ICreateCategoryStructured } from '@/types';
+import { ICategoryApi, ICategoryForm } from '@/types';
 
 export async function createCategory(
-  categoryData: ICreateCategoryStructured
+  categoryData: ICategoryForm
 ): Promise<ICategoryApi | undefined> {
   try {
     await dbConnect();
@@ -29,14 +29,20 @@ export async function createCategory(
       throw new Error('Не вдалося зберегти категорію, спробуйте ще раз');
     }
 
-    if (categoryData.parentCategories.length > 0) {
+    if (
+      categoryData.parentCategories &&
+      categoryData.parentCategories.length > 0
+    ) {
       await Category.updateMany(
         { _id: { $in: categoryData.parentCategories } },
         { $addToSet: { childCategories: result._id } }
       );
     }
 
-    if (categoryData.childCategories.length > 0) {
+    if (
+      categoryData.childCategories &&
+      categoryData.childCategories.length > 0
+    ) {
       await Category.updateMany(
         { _id: { $in: categoryData.childCategories } },
         { $addToSet: { parentCategories: result._id } }

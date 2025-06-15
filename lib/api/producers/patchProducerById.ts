@@ -1,7 +1,6 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { slugify } from 'transliteration';
 
 import dbConnect from '@/lib/db';
 import { Filter, Producer, Product } from '@/models';
@@ -30,7 +29,7 @@ export async function patchProducerById(
       },
       {
         $set: {
-          'variants.$.variantSlug': slugify(data.translatedData['uk'].title),
+          'variants.$.variantSlug': data.slug,
           'variants.$.translatedData.uk.variantTitle':
             data.translatedData['uk'].title,
           'variants.$.translatedData.ru.variantTitle':
@@ -41,31 +40,17 @@ export async function patchProducerById(
 
     if (updatedFilter) {
       const productsWithProducer: Array<IProductApi> | null =
-        await Product.find({
-          'filters.value': slugify(
-            producer.translatedData.get('uk')?.title ?? ''
-          ),
-        });
+        await Product.find({ 'filters.value': producer.slug });
 
       await Promise.all(
         productsWithProducer.map(product =>
           Product.updateOne(
             { _id: product._id },
             {
-              $set: {
-                'filters.$[filter].value': slugify(
-                  data.translatedData['uk'].title
-                ),
-              },
+              $set: { 'filters.$[filter].value': data.slug },
             },
             {
-              arrayFilters: [
-                {
-                  'filter.value': slugify(
-                    producer.translatedData.get('uk')?.title ?? ''
-                  ),
-                },
-              ],
+              arrayFilters: [{ 'filter.value': producer.slug }],
             }
           )
         )
@@ -74,10 +59,15 @@ export async function patchProducerById(
 
     revalidatePath('/*/dashboard/filters');
     revalidatePath('/*/dashboard/products');
+    revalidatePath('/*/dashboard/producers');
 
     return;
   } catch (error: unknown) {
-    console.error('Some error occured while producers patching...', error);
-    throw new Error('Сталася помилка при оновлені виробника');
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      console.error('Some error occured while producers patching...', error);
+      throw new Error('Сталася помилка при оновлені виробника');
+    }
   }
 }

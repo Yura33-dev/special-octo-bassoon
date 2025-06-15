@@ -8,7 +8,7 @@ import { locale } from '@/types';
 import NestedCategories from './NestedCategories';
 import BackButton from '../../shared/BackButton';
 import PageMainHeader from '../../shared/page-elements/PageMainHeader';
-import CategoryEditForm from '../forms/CategoryEditForm';
+import CategoryForm from '../forms/CategoryForm';
 import CategoryDeleteModal from '../modals/CategoryDeleteModal';
 import NestedCategoryAddModal from '../modals/NestedCategoryAddModal';
 
@@ -53,7 +53,7 @@ export default async function EditCategoryPage({
         <BackButton href='/dashboard/categories' title='Всі категорії' />
         <PageMainHeader htmlTitle={true} title={title} className='mb-8' />
 
-        <CategoryEditForm category={category} />
+        <CategoryForm category={category} />
 
         <NestedCategories category={category} />
 

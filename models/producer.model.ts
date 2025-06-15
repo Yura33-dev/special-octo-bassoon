@@ -18,6 +18,7 @@ const producerSchema = new mongoose.Schema<IProducerApi>(
     },
     currency: { type: String, default: null },
     exchangeRate: { type: Number, default: null },
+    slug: { type: String, required: true },
   },
   { timestamps: true, versionKey: false }
 );

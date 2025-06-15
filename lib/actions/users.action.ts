@@ -13,34 +13,12 @@ import {
   MANDATORY_FIELD,
 } from '@/lib/constants';
 import { Order } from '@/models';
-import { IOrderApi, IProductInOrderApi } from '@/types';
-
-interface OrderData {
-  delivery: string;
-  payment: string;
-  customerName: string;
-  customerPhone: string;
-  customerEmail: string;
-  city: string;
-  products: Array<IProductInOrderApi>;
-  customerLastName: string;
-  customerFatherName: string;
-  postNumber: string;
-  postCode: string;
-  totalPrice: number;
-  orderId?: string;
-}
-
-export type OrderState = {
-  success: boolean;
-  errors: Partial<Record<keyof OrderData, string>>;
-  orderNumber: string | null;
-};
+import { IOrderApi, IOrderData, IOrderState } from '@/types';
 
 export async function submitOrder(
-  _: OrderState,
+  _: IOrderState,
   formData: FormData
-): Promise<OrderState> {
+): Promise<IOrderState> {
   const parsedData = parseFormData(formData);
 
   const errors = validateData(parsedData);
@@ -73,10 +51,10 @@ export async function submitOrder(
   return { success: true, errors: {}, orderNumber };
 }
 
-function validateData(data: OrderData) {
+function validateData(data: IOrderData) {
   const errors: Record<string, string> = {};
 
-  const requiredFields: Array<keyof OrderData> = [
+  const requiredFields: Array<keyof IOrderData> = [
     'delivery',
     'payment',
     'customerName',
@@ -124,7 +102,7 @@ function validateData(data: OrderData) {
   return errors;
 }
 
-function parseFormData(formData: FormData): OrderData {
+function parseFormData(formData: FormData): IOrderData {
   const data: Record<string, string | number | object[]> = {};
 
   formData.forEach((value, key) => {
@@ -143,5 +121,5 @@ function parseFormData(formData: FormData): OrderData {
     }
   });
 
-  return data as unknown as OrderData;
+  return data as unknown as IOrderData;
 }

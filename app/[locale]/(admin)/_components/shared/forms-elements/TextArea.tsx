@@ -11,7 +11,7 @@ interface ITextAreaProps {
   placeholer?: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
-  value: string;
+  value: string | null;
   touched: FormikTouched<any>;
   errors: FormikErrors<any>;
   className?: string;
@@ -44,7 +44,7 @@ export default function TextArea({
         name={name}
         onChange={onChange}
         onBlur={onBlur}
-        value={value}
+        value={value ?? undefined}
         className={clsx(
           'p-1 pl-3 text-gray-600 rounded-md text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-primary',
           'placeholder:text-xs',

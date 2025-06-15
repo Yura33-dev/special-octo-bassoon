@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useLocale } from 'next-intl';
 import { useRef, useState } from 'react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,23 +9,33 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import { Link } from '@/i18n/routing';
-import { IFilteredSlide, ISlide } from '@/types';
+import { ISlideMapped, locale } from '@/types';
 
 import MainSwiperButton from './MainSwiperButton';
 
 interface IMainSwiperClientProps {
-  slides: Array<ISlide>;
+  slides: Array<ISlideMapped>;
 }
 
 export default function MainSwiperClient({ slides }: IMainSwiperClientProps) {
+  const locale = useLocale() as locale;
   const [_, setIsSwiperInit] = useState<boolean>(false);
 
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const filteredSlides = slides.filter(
-    slide => slide.image && slide.name && slide.visible
-  ) as unknown as Array<IFilteredSlide>;
+  const filteredSlides = slides
+    .filter(
+      slide =>
+        slide.translatedData[locale].image &&
+        slide.translatedData[locale].image !== 'no-image.webp' &&
+        slide.translatedData[locale].visible
+    )
+    .toSorted(
+      (first, second) =>
+        first.translatedData[locale].sortOrder -
+        second.translatedData[locale].sortOrder
+    );
 
   if (filteredSlides.length <= 0)
     return <div className='mt-[250px] lg:mt-[450px]'></div>;
@@ -59,12 +70,12 @@ export default function MainSwiperClient({ slides }: IMainSwiperClientProps) {
 
       {filteredSlides.map(slide => (
         <SwiperSlide key={slide.id} tag='li'>
-          {slide.linkTo ? (
-            <Link href={slide.linkTo}>
+          {slide.translatedData[locale].linkTo ? (
+            <Link href={slide.translatedData[locale].linkTo}>
               <div className='relative h-full'>
                 <Image
-                  alt={slide.name}
-                  src={slide.image}
+                  alt={slide.translatedData[locale].name}
+                  src={slide.translatedData[locale].image as string}
                   width={1000}
                   height={500}
                   className='w-full h-full object-cover'
@@ -75,8 +86,8 @@ export default function MainSwiperClient({ slides }: IMainSwiperClientProps) {
           ) : (
             <div className='relative h-full'>
               <Image
-                alt={slide.name}
-                src={slide.image}
+                alt={slide.translatedData[locale].name}
+                src={slide.translatedData[locale].image as string}
                 width={1000}
                 height={500}
                 className='w-full h-full object-cover'

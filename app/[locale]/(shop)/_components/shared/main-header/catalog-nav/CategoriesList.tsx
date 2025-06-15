@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { ChevronRight } from 'lucide-react';
 import { useLocale } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Container from '@/components/shared/Container';
 import { Link, usePathname } from '@/i18n/routing';
@@ -21,56 +21,52 @@ interface ICategoriesListProps {
 export default function CategoriesList({ categories }: ICategoriesListProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isOverflowVisible, setIsOverflowVisible] = useState(false);
+  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
+  const overflowTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   const isCategoriesListOpen = useGlobalStore(
     state => state.isCategoriesListOpen
   );
-  const categoriesListOpen = useGlobalStore(state => state.categoriesListOpen);
-  const categoriesListClose = useGlobalStore(
-    state => state.categoriesListClose
+  const setCategoriesListOpen = useGlobalStore(
+    state => state.setCategoriesListOpen
   );
 
   const locale = useLocale() as locale;
   const isMobile = useMediaQuery('(max-width: 1024px)');
-
   const pathName = usePathname();
 
-  let hoverTimeout: NodeJS.Timeout | null = null;
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
-    if (pathName === '/' && !isMobile) {
-      categoriesListOpen();
-    } else {
-      categoriesListClose();
-    }
-  }, [pathName, isMobile, categoriesListOpen, categoriesListClose]);
+    if (!isMounted) return;
+
+    setCategoriesListOpen(pathName === '/' && !isMobile);
+  }, [isMounted, pathName, isMobile, setCategoriesListOpen]);
 
   useEffect(() => {
-    return () => {
-      if (hoverTimeout) clearTimeout(hoverTimeout);
-    };
-  }, [hoverTimeout]);
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
+    if (overflowTimeout.current) clearTimeout(overflowTimeout.current);
     if (isCategoriesListOpen) {
-      timeout = setTimeout(() => setIsOverflowVisible(true), 300);
+      overflowTimeout.current = setTimeout(
+        () => setIsOverflowVisible(true),
+        300
+      );
     } else {
       setIsOverflowVisible(false);
     }
-
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(overflowTimeout.current!);
   }, [isCategoriesListOpen]);
 
   const handleMouseEnter = (id: string) => {
-    if (hoverTimeout) clearTimeout(hoverTimeout);
-    hoverTimeout = setTimeout(() => setActiveCategory(id), 200);
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    hoverTimeout.current = setTimeout(() => setActiveCategory(id), 200);
   };
 
   const handleMouseLeave = () => {
-    if (hoverTimeout) clearTimeout(hoverTimeout);
-    hoverTimeout = setTimeout(() => setActiveCategory(null), 200);
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    hoverTimeout.current = setTimeout(() => setActiveCategory(null), 200);
   };
 
   return (
@@ -82,7 +78,7 @@ export default function CategoriesList({ categories }: ICategoriesListProps) {
           className={clsx(
             `absolute top-full left-0 bg-white rounded-md transition-all duration-300 overflow-hidden
           mt-4
-          h-max lg:h-[400px]
+          h-auto lg:h-[400px]
           w-full lg:max-w-[310px]`,
             isCategoriesListOpen ? 'max-h-[400px]' : 'max-h-[0px]',
             isOverflowVisible && 'lg:overflow-visible'
@@ -117,7 +113,9 @@ export default function CategoriesList({ categories }: ICategoriesListProps) {
                     </h3>
 
                     {category.childCategories &&
-                      category.childCategories.length > 0 && (
+                      category.childCategories.length > 0 &&
+                      isMounted &&
+                      !isMobile && (
                         <CatalogNavBarChildCategories
                           childCategories={category.childCategories}
                           parentCategorySlug={category.slug[locale]}

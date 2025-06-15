@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeftFromLine,
   ArrowRightFromLine,
+  BetweenHorizontalStart,
   Blocks,
   Factory,
   LayoutDashboard,
@@ -164,6 +165,18 @@ export default function SideBar({ className }: ISideBarProps) {
           >
             <Factory className='w-5 h-5' />
             <span>Виробники</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={'/dashboard/banners'}
+            className={clsx(
+              'flex items-center justify-start gap-2 text-base transition-colors p-2 rounded-md hover:bg-primary-dark hover:text-white',
+              pathname.includes('banners') && 'bg-primary-dark text-white'
+            )}
+          >
+            <BetweenHorizontalStart className='w-5 h-5' />
+            <span>Банери</span>
           </Link>
         </li>
         <li>

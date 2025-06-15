@@ -3,6 +3,7 @@ import { IProducerMapped, IProducerPopulated } from '@/types';
 export function mapProducer(producer: IProducerPopulated): IProducerMapped {
   return {
     id: producer._id.toString(),
+    slug: producer.slug ?? 'ne-vstanovleno',
     translatedData: producer.translatedData,
     currency: producer.currency,
     exchangeRate: producer.exchangeRate,

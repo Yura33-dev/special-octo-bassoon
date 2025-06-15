@@ -1,13 +1,9 @@
-import Container from '@/components/shared/Container';
+import InDevelopmentPage from '@/components/shared/temporarily-pages/InDevelopmentPage';
 
 export const metadata = {
   title: 'ProGround | Дашборд',
 };
 
 export default async function Dashboard() {
-  return (
-    <Container>
-      <h1>Dashboard main page</h1>
-    </Container>
-  );
+  return <InDevelopmentPage title='Dashboard' />;
 }

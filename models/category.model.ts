@@ -1,6 +1,16 @@
 import mongoose, { models, model } from 'mongoose';
 
-import { ICategoryApi } from '@/types';
+import { ICategoryApi, ISEO } from '@/types';
+
+const metaDataSchema = new mongoose.Schema<ISEO>(
+  {
+    title: { type: String, default: null },
+    description: { type: String, default: null },
+    keywords: { type: String, default: null },
+    seoText: { type: String, default: null },
+  },
+  { _id: false }
+);
 
 const categorySchema = new mongoose.Schema<ICategoryApi>(
   {
@@ -46,6 +56,7 @@ const categorySchema = new mongoose.Schema<ICategoryApi>(
         ref: 'Category',
       },
     ],
+    meta: { type: Map, of: metaDataSchema, required: true },
   },
   { timestamps: true, versionKey: false }
 );

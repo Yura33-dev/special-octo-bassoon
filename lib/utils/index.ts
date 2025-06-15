@@ -10,6 +10,7 @@ import { mapOrder } from './mapOrder';
 import { mapPackaging } from './mapPackaging';
 import { mapProducer } from './mapProducer';
 import { mapProduct } from './mapProduct';
+import { mapSlide } from './mapSlide';
 
 export {
   calculatePaginationData,
@@ -25,4 +26,5 @@ export {
   mapFilterInProduct,
   mapProducer,
   mapOrder,
+  mapSlide,
 };

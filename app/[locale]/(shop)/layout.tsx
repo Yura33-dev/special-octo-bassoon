@@ -1,8 +1,9 @@
-import type { Metadata } from 'next';
+import { GoogleTagManager } from '@next/third-parties/google';
 import { Fira_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { Suspense } from 'react';
 import { Toaster } from 'sonner';
 
 import { routing } from '@/i18n/routing';
@@ -10,6 +11,7 @@ import { locale } from '@/types';
 import '@/app/globals.css';
 
 import Footer from './_components/shared/main-footer/Footer';
+import FooterSkeleton from './_components/shared/main-footer/FooterSkeleton';
 import Header from './_components/shared/main-header/Header';
 import MobileMenu from './_components/shared/mobile-menu/MobileMenu';
 
@@ -19,12 +21,6 @@ const fira = Fira_Sans({
   weight: ['400', '500', '700', '600', '800', '900'],
   display: 'swap',
 });
-
-export const metadata: Metadata = {
-  title: 'Насіння оптом та в роздріб з доставкою по всій Україні',
-  description:
-    'Купити насіння з доставкою по Україні. Інтернет магазин продажу насіння.✔️Гарантія якості ✔️Вигідні ціни ✔️Швидка доставка',
-};
 
 export default async function ShopLayout({
   children,
@@ -42,13 +38,17 @@ export default async function ShopLayout({
 
   return (
     <html lang={locale}>
+      <GoogleTagManager gtmId='GTM-5KXW6VPN' />
       <body
         className={`${fira.className} subpixel-antialiased min-h-[100dvh] flex flex-col relative`}
       >
         <NextIntlClientProvider messages={translations}>
           <Header />
           <main className='flex-shrink-0 flex-grow basis-full'>{children}</main>
-          <Footer />
+
+          <Suspense fallback={<FooterSkeleton />}>
+            <Footer />
+          </Suspense>
 
           <MobileMenu />
           <Toaster richColors />

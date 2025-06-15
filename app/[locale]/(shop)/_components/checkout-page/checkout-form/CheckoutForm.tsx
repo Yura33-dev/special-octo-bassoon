@@ -7,11 +7,10 @@ import { useFormState } from 'react-dom';
 
 import ModalWindow from '@/components/shared/modals/ModalWindow';
 import { submitOrder } from '@/lib/actions';
-import { OrderState } from '@/lib/actions/users.action';
 import { SUCCESS_ORDER_ID } from '@/lib/constants';
 import { formattedPrice } from '@/lib/utils';
-import { useModalStore } from '@/providers';
-import { useCartStore } from '@/providers/cart.provider';
+import { useCartStore, useModalStore } from '@/providers';
+import { IOrderState } from '@/types';
 
 import CheckoutButton from './CheckoutButton';
 import CustomRadioInput from './CustomRadioInput';
@@ -23,7 +22,7 @@ interface ICheckoutFormProps {
   className?: string;
 }
 
-const initialState: OrderState = {
+const initialState: IOrderState = {
   errors: {},
   success: false,
   orderNumber: null,

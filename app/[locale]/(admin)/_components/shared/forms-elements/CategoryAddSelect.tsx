@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { FormikErrors, FormikTouched } from 'formik';
 import { get } from 'lodash';
 import { useLocale } from 'next-intl';
 import { useCallback, useState } from 'react';
@@ -11,7 +12,7 @@ import AsyncSelect from 'react-select/async';
 import { getAllCategories } from '@/lib/api';
 import { ICategoryMapped, locale } from '@/types';
 
-interface ICategoryAddSelectProps {
+interface ICategoryAddSelectProps<T> {
   title: string;
   placeholder?: string;
   name: string;
@@ -20,13 +21,13 @@ interface ICategoryAddSelectProps {
     actionMeta: ActionMeta<ICategoryMapped>
   ) => void;
   value: Array<string>;
-  touched: Record<string, boolean>;
-  errors: Record<string, string | string[]>;
+  touched: FormikTouched<T>;
+  errors: FormikErrors<T>;
   isMain: boolean;
   className?: string;
 }
 
-export default function CategoryAddSelect({
+export default function CategoryAddSelect<T>({
   title,
   placeholder,
   name,
@@ -36,7 +37,7 @@ export default function CategoryAddSelect({
   isMain,
   value,
   className,
-}: ICategoryAddSelectProps) {
+}: ICategoryAddSelectProps<T>) {
   const locale = useLocale() as locale;
 
   const animatedComponents = makeAnimated();
@@ -94,7 +95,7 @@ export default function CategoryAddSelect({
         }}
       />
       {get(touched, name) && get(errors, name) ? (
-        <p className='mt-1 text-xs pl-2 text-red-600'>{errors[name]}</p>
+        <p className='mt-1 text-xs pl-2 text-red-600'>{get(errors, name)}</p>
       ) : null}
     </div>
   );

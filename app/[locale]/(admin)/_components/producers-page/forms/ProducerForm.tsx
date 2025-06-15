@@ -3,6 +3,7 @@
 import { FormikHelpers, useFormik } from 'formik';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { slugify } from 'transliteration';
 
 import { createProducer, patchProducerById } from '@/lib/api';
 import { DELETE_PRODUCER_ID } from '@/lib/constants';
@@ -33,6 +34,7 @@ export default function ProducerForm({
     },
     currency: producer?.currency ?? null,
     exchangeRate: producer?.exchangeRate ?? null,
+    slug: producer?.slug ?? '',
   };
 
   const onSubmit = async (
@@ -85,7 +87,11 @@ export default function ProducerForm({
             placeholder='Syngenta'
             name='translatedData.uk.title'
             type='text'
-            onChange={formik.handleChange}
+            onChange={e => {
+              const value = e.target.value;
+              formik.setFieldValue('translatedData.uk.title', value);
+              formik.setFieldValue('slug', slugify(value, { lowercase: true }));
+            }}
             onBlur={formik.handleBlur}
             value={formik.values.translatedData['uk'].title}
             touched={formik.touched}
@@ -142,6 +148,21 @@ export default function ProducerForm({
               labelClassName='basis-full min-h-[72px]'
             />
           </div>
+        </div>
+
+        <div className='p-4 bg-gray-200 rounded-md col-span-full'>
+          <Input
+            title='Ідентифікатор'
+            name='slug'
+            type='text'
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.slug}
+            touched={formik.touched}
+            errors={formik.errors}
+            labelClassName='basis-full min-h-[72px]'
+            disabled={true}
+          />
         </div>
       </div>
 
