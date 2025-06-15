@@ -1,3 +1,4 @@
+import { GoogleTagManager } from '@next/third-parties/google';
 import { Fira_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
@@ -37,6 +38,7 @@ export default async function ShopLayout({
 
   return (
     <html lang={locale}>
+      <GoogleTagManager gtmId='GTM-5KXW6VPN' />
       <body
         className={`${fira.className} subpixel-antialiased min-h-[100dvh] flex flex-col relative`}
       >
