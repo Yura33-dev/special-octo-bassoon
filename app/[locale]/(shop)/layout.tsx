@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { Fira_Sans } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
@@ -21,12 +20,6 @@ const fira = Fira_Sans({
   weight: ['400', '500', '700', '600', '800', '900'],
   display: 'swap',
 });
-
-export const metadata: Metadata = {
-  title: 'Насіння оптом та в роздріб з доставкою по всій Україні',
-  description:
-    'Купити насіння з доставкою по Україні. Інтернет магазин продажу насіння.✔️Гарантія якості ✔️Вигідні ціни ✔️Швидка доставка',
-};
 
 export default async function ShopLayout({
   children,

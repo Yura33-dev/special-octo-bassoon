@@ -10,6 +10,7 @@ import {
   LATIN_FILE_NAME,
   MANDATORY_FIELD,
   MAX_LENGTH_30,
+  MAX_LENGTH_50,
   MIN_LENGTH,
   SORT_ORDER_GT_ZERO,
   SORT_ORDER_INTEGER,
@@ -37,6 +38,28 @@ export const categoryValidationSchema: Yup.ObjectSchema<ICategoryForm> =
       .required(MANDATORY_FIELD),
     featured: Yup.boolean().default(false),
     visible: Yup.boolean().default(true),
+    meta: Yup.object({
+      uk: Yup.object({
+        title: Yup.string()
+          .min(2, MIN_LENGTH)
+          .max(50, MAX_LENGTH_50)
+          .nullable()
+          .default(null),
+        description: Yup.string().min(2, MIN_LENGTH).nullable().default(null),
+        keywords: Yup.string().min(2, MIN_LENGTH).nullable().default(null),
+        seoText: Yup.string().nullable().default(null),
+      }),
+      ru: Yup.object({
+        title: Yup.string()
+          .min(2, MIN_LENGTH)
+          .max(50, MAX_LENGTH_50)
+          .nullable()
+          .default(null),
+        description: Yup.string().min(2, MIN_LENGTH).nullable().default(null),
+        keywords: Yup.string().min(2, MIN_LENGTH).nullable().default(null),
+        seoText: Yup.string().nullable().default(null),
+      }),
+    }),
     childCategories: Yup.array().of(Yup.string().required()).default([]),
     parentCategories: Yup.array().of(Yup.string().required()).default([]),
     image: Yup.mixed<File>()

@@ -11,6 +11,7 @@ export interface ICategoryApi extends Document {
   main: boolean;
   childCategories: Array<ObjectId>;
   parentCategories: Array<ObjectId>;
+  meta: Map<string, ISEO>;
   updatedAt: Date;
   createdAt: Date;
 }
@@ -52,6 +53,7 @@ export interface ICategoryPopulated {
     updatedAt: Date | null;
     createdAt: Date | null;
   }>;
+  meta: Record<string, ISEO>;
   updatedAt: Date;
   createdAt: Date;
 }
@@ -89,6 +91,7 @@ export interface ICategoryMapped {
     updatedAt: string | null;
     createdAt: string | null;
   }>;
+  meta: Record<string, ISEO>;
   updatedAt: string | null;
   createdAt: string | null;
 }
@@ -114,6 +117,7 @@ export interface IMappedNestedCategories {
     slug: string;
     image: string;
   }>;
+  meta: Record<string, ISEO>;
   updatedAt: Date;
   createdAt: Date;
 }
@@ -126,6 +130,14 @@ export interface ICategoryForm {
   featured: boolean;
   visible: boolean;
   image?: string | null | File;
+  meta: Record<string, ISEO>;
   childCategories?: Array<string>;
   parentCategories?: Array<string>;
+}
+
+export interface ISEO {
+  title: string | null;
+  description: string | null;
+  keywords: string | null;
+  seoText: string | null;
 }

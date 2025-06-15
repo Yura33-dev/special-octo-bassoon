@@ -2,8 +2,9 @@
 
 import clsx from 'clsx';
 import { useFormik } from 'formik';
+import dynamic from 'next/dynamic';
 import { useLocale } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { slugify } from 'transliteration';
 
@@ -20,6 +21,7 @@ import DeleteButton from '../../shared/forms-elements/DeleteButton';
 import FileUploader from '../../shared/forms-elements/FileUploader';
 import Input from '../../shared/forms-elements/Input';
 import SubmitButton from '../../shared/forms-elements/SubmitButton';
+import TextArea from '../../shared/forms-elements/TextArea';
 
 interface ICategoryFormProps {
   category?: ICategoryMapped;
@@ -31,6 +33,13 @@ export default function CategoryForm({
   category,
 }: ICategoryFormProps) {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [seoText, setSeoText] = useState<{
+    uk: string | null;
+    ru: string | null;
+  }>({
+    uk: category?.meta['uk'].seoText ?? null,
+    ru: category?.meta['ru'].seoText ?? null,
+  });
 
   const closeModal = useModalStore(state => state.closeModal);
   const openModal = useModalStore(state => state.openModal);
@@ -48,6 +57,17 @@ export default function CategoryForm({
     image: category?.image ?? null,
     childCategories: [],
     parentCategories: [],
+    meta: category?.meta ?? {
+      uk: { title: null, description: null, keywords: null, seoText: null },
+      ru: { title: null, description: null, keywords: null, seoText: null },
+    },
+  };
+
+  const handleChangeSeoText = (text: string, locale: 'uk' | 'ru') => {
+    setSeoText(prevState => ({
+      ...(prevState ?? { uk: '', ru: '' }),
+      [locale]: text,
+    }));
   };
 
   const onSubmit = async (values: ICategoryForm) => {
@@ -78,11 +98,12 @@ export default function CategoryForm({
 
     values.image =
       typeof values.image === 'string' ? values.image : '/no-image.webp';
+    values.meta['uk'].seoText = seoText?.uk ?? null;
+    values.meta['ru'].seoText = seoText?.ru ?? null;
 
     try {
       if (isAddForm) {
         await createCategory(values);
-        console.log(values);
         closeModal(ADD_CATEGORY_ID);
       } else if (!isAddForm && category) {
         const updatedCategory = await patchCategoryById(category.id, {
@@ -93,6 +114,7 @@ export default function CategoryForm({
           visible: values.visible,
           featured: values.featured,
           image: values.image,
+          meta: values.meta,
         });
         router.replace(updatedCategory?.slug[locale] ?? category.slug[locale]);
       }
@@ -140,14 +162,17 @@ export default function CategoryForm({
     }
   }, [formik, formik.values.main]);
 
+  const ReactQuill = useMemo(
+    () => dynamic(() => import('react-quill-new'), { ssr: false }),
+    []
+  );
+
   return (
     <form onSubmit={formik.handleSubmit}>
       {/* Localization */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-        <div className='flex flex-col gap-4 p-4 bg-gray-200 rounded-md'>
-          <h2 className='text-lg font-semibold md:mb-4'>
-            Українська локалізація
-          </h2>
+        <div className='flex flex-col gap-8 p-4 bg-gray-200 rounded-md'>
+          <h2 className='text-lg font-semibold'>Українська локалізація</h2>
 
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-2'>
             <Input
@@ -181,12 +206,60 @@ export default function CategoryForm({
               className='sm:max-w-72'
             />
           </div>
+
+          <div>
+            <h3 className='text-lg font-semibold mb-2'>SEO-налаштування</h3>
+            <div className='grid grid-cols-1 gap-4'>
+              <Input
+                title='Заголовок'
+                name='meta.uk.title'
+                type='text'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.meta.uk.title}
+                touched={formik.touched}
+                errors={formik.errors}
+              />
+
+              <Input
+                title='Ключові слова'
+                name='meta.uk.keywords'
+                type='text'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.meta.uk.keywords}
+                touched={formik.touched}
+                errors={formik.errors}
+              />
+
+              <TextArea
+                title='Опис'
+                name='meta.uk.description'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.meta.uk.description}
+                touched={formik.touched}
+                errors={formik.errors}
+                className='min-h-16'
+                labelClassName='col-span-full min-h-[108px]'
+              />
+
+              <div>
+                <span className='text-sm font-semibold block mb-2'>
+                  SEO-текст на сторінку категорії
+                </span>
+                <ReactQuill
+                  theme='snow'
+                  value={seoText?.uk ?? undefined}
+                  onChange={value => handleChangeSeoText(value, 'uk')}
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className='flex flex-col gap-4 p-4 bg-gray-200 rounded-md'>
-          <h2 className='text-lg font-semibold md:mb-4'>
-            Російська локалізація
-          </h2>
+        <div className='flex flex-col gap-8 p-4 bg-gray-200 rounded-md'>
+          <h2 className='text-lg font-semibold'>Російська локалізація</h2>
 
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-2'>
             <Input
@@ -219,6 +292,56 @@ export default function CategoryForm({
               errors={formik.errors}
               className='sm:max-w-72'
             />
+          </div>
+
+          <div>
+            <h3 className='text-lg font-semibold mb-2'>SEO-налаштування</h3>
+            <div className='grid grid-cols-1 gap-4'>
+              <Input
+                title='Заголовок'
+                name='meta.ru.title'
+                type='text'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.meta.ru.title}
+                touched={formik.touched}
+                errors={formik.errors}
+              />
+
+              <Input
+                title='Ключові слова'
+                name='meta.ru.keywords'
+                type='text'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.meta.ru.keywords}
+                touched={formik.touched}
+                errors={formik.errors}
+              />
+
+              <TextArea
+                title='Опис'
+                name='meta.ru.description'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.meta.ru.description}
+                touched={formik.touched}
+                errors={formik.errors}
+                className='min-h-16'
+                labelClassName='col-span-full min-h-[108px]'
+              />
+
+              <div>
+                <span className='text-sm font-semibold block mb-2'>
+                  SEO-текст на сторінку категорії
+                </span>
+                <ReactQuill
+                  theme='snow'
+                  value={seoText?.ru ?? undefined}
+                  onChange={value => handleChangeSeoText(value, 'ru')}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

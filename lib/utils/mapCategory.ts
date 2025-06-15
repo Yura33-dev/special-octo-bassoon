@@ -48,5 +48,9 @@ export function mapCategory(category: ICategoryPopulated): ICategoryMapped {
         ? new Date(childCat.createdAt).toISOString()
         : null,
     })),
+    meta: category.meta ?? {
+      uk: { title: null, description: null, keywords: null, seoText: null },
+      ru: { title: null, description: null, keywords: null, seoText: null },
+    },
   };
 }

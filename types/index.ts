@@ -5,6 +5,7 @@ import {
   ICategoryMapped,
   IMappedNestedCategories,
   ICategoryForm,
+  ISEO,
 } from './interfaces/category.interfaces';
 import {
   IFilterApi,
@@ -80,6 +81,7 @@ export type {
   ICategoryPopulated,
   ICategoryMapped,
   ICategoryForm,
+  ISEO,
   IMappedNestedCategories,
   IProductApi,
   IProductPopulated,
