@@ -7,7 +7,7 @@ import {
   CURRENCY_EXCHANGE_MANDATORY,
   CURRENCY_EXCHANGERATE_DEPENDENCY,
   MANDATORY_FIELD,
-  MAX_LENGTH_15,
+  MAX_LENGTH_24,
   MAX_LENGTH_3,
   MIN_LENGTH,
   NUMBERS_AFTER_DOT_REGEXP,
@@ -22,16 +22,20 @@ export const producerValidationSchema: Yup.ObjectSchema<IProducerForm> =
       uk: Yup.object().shape({
         title: Yup.string()
           .min(2, MIN_LENGTH)
-          .max(15, MAX_LENGTH_15)
+          .max(24, MAX_LENGTH_24)
           .required(MANDATORY_FIELD),
       }),
       ru: Yup.object().shape({
         title: Yup.string()
           .min(2, MIN_LENGTH)
-          .max(15, MAX_LENGTH_15)
+          .max(24, MAX_LENGTH_24)
           .required(MANDATORY_FIELD),
       }),
     }),
+    slug: Yup.string()
+      .typeError(ONLY_LETTERS)
+      .min(2, MIN_LENGTH)
+      .required(MANDATORY_FIELD),
     currency: Yup.string()
       .typeError(ONLY_LETTERS)
       .min(2, MIN_LENGTH)

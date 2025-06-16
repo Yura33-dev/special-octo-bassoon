@@ -1,3 +1,5 @@
+import { getTranslations } from 'next-intl/server';
+
 import Container from '@/components/shared/Container';
 import LocaleSwitcher from '@/components/shared/LocaleSwitcher';
 import { Link } from '@/i18n/routing';
@@ -7,14 +9,14 @@ import HamburgerBtn from '../../ui/HamburgerBtn';
 import Logo from '../../ui/Logo';
 import Cart from '../cart/Cart';
 
-// TODO: get data from database
-const HeaderData = [
-  { href: '/', text: 'Про нас' },
-  { href: '/', text: 'Блог' },
-  { href: '/', text: 'Порівняння товарів' },
-];
+export default async function HeaderBar() {
+  const t = await getTranslations('Header');
 
-export default function HeaderBar() {
+  const HeaderData = [
+    { href: '/about-us', text: t('toAboutPage') },
+    { href: '/compare', text: t('toComparePage') },
+  ];
+
   return (
     <div className='bg-primary py-2 fixed w-full top-0 left-0 z-10 shadow-sm'>
       <Container className='text-primary-foreground flex flex-col'>

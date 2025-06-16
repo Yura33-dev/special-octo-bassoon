@@ -186,7 +186,7 @@ export default function Filter({ filters }: IFilterProps) {
               {variants.map(({ slug: variantSlug, title: variantTitle }) => (
                 <label
                   key={variantSlug}
-                  className='group flex items-center justify-start gap-2 w-max hover:cursor-pointer'
+                  className='group flex items-start justify-start gap-2 hover:cursor-pointer'
                 >
                   <input
                     disabled={isLoading}

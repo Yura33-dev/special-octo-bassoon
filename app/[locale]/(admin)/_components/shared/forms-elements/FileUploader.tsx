@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 interface IFileUploaderProps<T> {
-  name: keyof T;
+  name: string;
   imageUrl: string | null;
   onChange: (file: File | null) => void;
   touched: FormikTouched<T>;
@@ -80,7 +80,11 @@ export default function FileUploader<T>({
 
       <div className='relative w-36 h-36'>
         <Image
-          src={preview ?? '/no-image.webp'}
+          src={
+            typeof preview === 'string' && preview !== ''
+              ? preview
+              : '/no-image.webp'
+          }
           alt='Preview'
           className='w-full h-full object-cover rounded-md'
           width={200}

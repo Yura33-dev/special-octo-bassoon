@@ -11,6 +11,7 @@ export interface ICategoryApi extends Document {
   main: boolean;
   childCategories: Array<ObjectId>;
   parentCategories: Array<ObjectId>;
+  meta: Map<string, ISEO>;
   updatedAt: Date;
   createdAt: Date;
 }
@@ -52,6 +53,7 @@ export interface ICategoryPopulated {
     updatedAt: Date | null;
     createdAt: Date | null;
   }>;
+  meta: Record<string, ISEO>;
   updatedAt: Date;
   createdAt: Date;
 }
@@ -89,6 +91,7 @@ export interface ICategoryMapped {
     updatedAt: string | null;
     createdAt: string | null;
   }>;
+  meta: Record<string, ISEO>;
   updatedAt: string | null;
   createdAt: string | null;
 }
@@ -114,54 +117,27 @@ export interface IMappedNestedCategories {
     slug: string;
     image: string;
   }>;
+  meta: Record<string, ISEO>;
   updatedAt: Date;
   createdAt: Date;
 }
 
-export interface IEditCategoryFormField {
-  nameUk: string;
-  nameRu: string;
-  slugUk: string;
-  slugRu: string;
-  sortOrder: number;
-  featured: boolean;
-  visible: boolean;
-  image: File | string | null;
-}
-
-export interface IEditCategoryStructured {
-  name: { [key: string]: string };
-  slug: { [key: string]: string };
-  sortOrder: number;
-  featured: boolean;
-  visible: boolean;
-  image?: string;
-}
-
-export interface ICreateCategoryFormField {
-  nameUk: string;
-  nameRu: string;
-  slugUk: string;
-  slugRu: string;
-  main: boolean;
-  sortOrder: number;
-  featured: boolean;
-  visible: boolean;
-  image: File | string | null;
-  childCategories: Array<string>;
-  parentCategories: Array<string>;
-}
-
-export interface ICreateCategoryStructured {
+export interface ICategoryForm {
   name: { [key: string]: string };
   slug: { [key: string]: string };
   main: boolean;
   sortOrder: number;
   featured: boolean;
   visible: boolean;
-  image: string;
-  childCategories: Array<string>;
-  parentCategories: Array<string>;
+  image?: string | null | File;
+  meta: Record<string, ISEO>;
+  childCategories?: Array<string>;
+  parentCategories?: Array<string>;
 }
 
-// TODO: refactor IEditCategoryFormField  IEditCategoryStructured ICreateCategoryFormField ICreateCategoryStructured in one interface
+export interface ISEO {
+  title: string | null;
+  description: string | null;
+  keywords: string | null;
+  seoText: string | null;
+}

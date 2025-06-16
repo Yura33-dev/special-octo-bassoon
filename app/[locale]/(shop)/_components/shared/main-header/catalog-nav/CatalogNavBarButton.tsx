@@ -14,7 +14,7 @@ export default function CatalogNavBarButton() {
   const t = useTranslations('Header');
 
   const categoriesListToggle = useGlobalStore(
-    state => state.categoriesListToggle
+    state => state.toggleCategoriesList
   );
 
   useEffect(() => {

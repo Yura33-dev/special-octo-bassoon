@@ -4,7 +4,7 @@ export function mapOrder(order: IOrderPopulated): IOrderMapped {
   return {
     id: order._id.toString(),
     phone: order.phone,
-    name: order.phone,
+    name: order.name,
     email: order.email,
     deliveryBy: order.deliveryBy,
     paymentType: order.paymentType,
@@ -17,7 +17,10 @@ export function mapOrder(order: IOrderPopulated): IOrderMapped {
       productId: {
         id: product.productId._id.toString(),
         image: product.productId.imgUrl,
-        producer: product.productId.producer.translatedData['uk'].title,
+        producer: {
+          name: product.productId.producer.translatedData['uk'].title,
+          exchangeRate: product.productId.producer.exchangeRate ?? 0,
+        },
         translatedData: {
           uk: {
             name: product.productId.translatedData['uk'].name,
@@ -31,14 +34,18 @@ export function mapOrder(order: IOrderPopulated): IOrderMapped {
         id: product.packId._id.toString(),
         translatedData: {
           uk: {
-            type: product.packId.translatedData['uk'].type,
-            measureIn: product.packId.translatedData['uk'].measureIn,
-            measureValue: product.packId.translatedData['uk'].measureValue,
+            type: product.packId.translatedData['uk'].type ?? 'N/A unknown',
+            measureIn:
+              product.packId.translatedData['uk'].measureIn ?? 'N/A unknown',
+            measureValue:
+              product.packId.translatedData['uk'].measureValue ?? 'N/A unknown',
           },
           ru: {
-            type: product.packId.translatedData['ru'].type,
-            measureIn: product.packId.translatedData['ru'].measureIn,
-            measureValue: product.packId.translatedData['ru'].measureValue,
+            type: product.packId.translatedData['ru'].type ?? 'N/A unknown',
+            measureIn:
+              product.packId.translatedData['ru'].measureIn ?? 'N/A unknown',
+            measureValue:
+              product.packId.translatedData['ru'].measureValue ?? 'N/A unknown',
           },
         },
       },
@@ -48,6 +55,7 @@ export function mapOrder(order: IOrderPopulated): IOrderMapped {
     totalPrice: order.totalPrice,
     orderNumber: order.orderNumber,
     status: order.status,
+    isArchive: order.isArchive ?? false,
     updatedAt: order.updatedAt ? new Date(order.updatedAt).toISOString() : null,
     createdAt: order.createdAt ? new Date(order.createdAt).toISOString() : null,
   };

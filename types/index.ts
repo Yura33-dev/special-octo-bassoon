@@ -4,10 +4,8 @@ import {
   ICategoryPopulated,
   ICategoryMapped,
   IMappedNestedCategories,
-  IEditCategoryFormField,
-  IEditCategoryStructured,
-  ICreateCategoryFormField,
-  ICreateCategoryStructured,
+  ICategoryForm,
+  ISEO,
 } from './interfaces/category.interfaces';
 import {
   IFilterApi,
@@ -25,6 +23,10 @@ import {
   IProductInOrderApi,
   IProductInOrderPopulated,
   IProductInOrderMapped,
+  IOrderState,
+  IOrderData,
+  IOrderForm,
+  OrderStatus,
 } from './interfaces/order.interfaces';
 import {
   IPackagingApi,
@@ -67,9 +69,10 @@ import {
 } from './interfaces/settings.interfaces';
 import {
   ISlideApi,
-  ISlide,
+  ISlidePopulated,
+  ISlideMapped,
+  ISlideForm,
   ITranslatedSlideData,
-  IFilteredSlide,
 } from './interfaces/slide.interfaces';
 import { locale } from './types/global.types';
 
@@ -77,11 +80,9 @@ export type {
   ICategoryApi,
   ICategoryPopulated,
   ICategoryMapped,
-  ICreateCategoryFormField,
-  ICreateCategoryStructured,
+  ICategoryForm,
+  ISEO,
   IMappedNestedCategories,
-  IEditCategoryFormField,
-  IEditCategoryStructured,
   IProductApi,
   IProductPopulated,
   IProductMapped,
@@ -97,12 +98,13 @@ export type {
   ITranslatedPackagingData,
   IPagination,
   ISlideApi,
-  ISlide,
+  ISlidePopulated,
+  ISlideMapped,
+  ISlideForm,
   IPageApi,
   IPageLeaned,
   ITranslatedPageData,
   ITranslatedSlideData,
-  IFilteredSlide,
   ISettingsApi,
   ISettingsLeaned,
   ISettingsMapped,
@@ -116,6 +118,10 @@ export type {
   IOrderApi,
   IOrderPopulated,
   IOrderMapped,
+  IOrderState,
+  IOrderData,
+  IOrderForm,
+  OrderStatus,
   IProductInOrderApi,
   IProductInOrderPopulated,
   IProductInOrderMapped,

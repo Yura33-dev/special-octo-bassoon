@@ -6,9 +6,8 @@ interface IGlobalStore {
   mobileMenuOpen: () => void;
   mobileMenuClose: () => void;
   isCategoriesListOpen: boolean;
-  categoriesListOpen: () => void;
-  categoriesListClose: () => void;
-  categoriesListToggle: () => void;
+  setCategoriesListOpen: (value: boolean) => void;
+  toggleCategoriesList: () => void;
 }
 export const useGlobalStore = create<IGlobalStore>()(
   devtools(set => ({
@@ -17,11 +16,9 @@ export const useGlobalStore = create<IGlobalStore>()(
     mobileMenuClose: () =>
       set(state => ({ ...state, isMobileMenuOpen: false })),
     isCategoriesListOpen: true,
-    categoriesListOpen: () =>
-      set(state => ({ ...state, isCategoriesListOpen: true })),
-    categoriesListClose: () =>
-      set(state => ({ ...state, isCategoriesListOpen: false })),
-    categoriesListToggle: () =>
+    setCategoriesListOpen: value =>
+      set(state => ({ ...state, isCategoriesListOpen: value })),
+    toggleCategoriesList: () =>
       set(state => ({
         ...state,
         isCategoriesListOpen: !state.isCategoriesListOpen,

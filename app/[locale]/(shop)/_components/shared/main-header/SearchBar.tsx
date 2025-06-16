@@ -119,7 +119,7 @@ export default function SearchBar() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             className={clsx(
-              'absolute top-[55px] z-[1] bg-white border shadow-md w-full max-w-[320px] sm:max-w-[500px] overflow-y-auto',
+              'absolute top-[55px] z-[1] bg-white border shadow-md w-full max-w-[320px] sm:max-w-[700px] overflow-y-auto',
               'rounded-md max-h-[300px] overflow-auto'
             )}
           >
@@ -130,27 +130,37 @@ export default function SearchBar() {
                   className='flex items-center gap-2 p-2 transition-colors hover:bg-gray-100'
                   onClick={handleClickOnItem}
                 >
-                  <div className='max-w-16 max-h-16 aspect-square'>
-                    <Image
-                      src={product.imgUrl}
-                      width={100}
-                      height={100}
-                      alt={product.translatedData[locale].name}
-                      className='rounded-md w-full h-full object-cover'
-                    />
+                  <div className='basis-3/4 flex items-center gap-4'>
+                    <div className='hidden sm:block max-w-16 max-h-16 aspect-square'>
+                      <Image
+                        src={product.imgUrl}
+                        width={100}
+                        height={100}
+                        alt={product.translatedData[locale].name}
+                        className='rounded-md w-full h-full object-cover'
+                      />
+                    </div>
+                    <h3 className='text-xs sm:text-base'>
+                      {product.translatedData[locale].name}
+                    </h3>
                   </div>
-                  <h3>{product.translatedData[locale].name}, від</h3>
-                  <span>
-                    {formattedPrice(
-                      Math.min(
-                        ...product.packaging.items.map(item => {
-                          return product.producer.exchangeRate
-                            ? item.price * product.producer.exchangeRate
-                            : item.price;
-                        })
-                      )
-                    )}
-                  </span>
+
+                  <div className='basis-1/4 flex gap-2'>
+                    <span className='hidden text-xs sm:text-base sm:inline-block'>
+                      від
+                    </span>
+                    <span className='text-xs sm:text-base'>
+                      {formattedPrice(
+                        Math.min(
+                          ...product.packaging.items.map(item => {
+                            return product.producer.exchangeRate
+                              ? item.price * product.producer.exchangeRate
+                              : item.price;
+                          })
+                        )
+                      )}
+                    </span>
+                  </div>
                 </Link>
               </li>
             ))}

@@ -24,8 +24,8 @@ export default function CheckoutCart({ className }: ICheckoutCartProps) {
         <div className='bg-white rounded-md p-4'>
           <h2 className='text-xl mb-2'>{t('Title')}</h2>
           <ul className='max-h-[574px] overflow-x-auto flex flex-col gap-4 pr-2'>
-            {cart.map(item => (
-              <CartItem key={item.packVariant.packId.id} product={item} />
+            {cart.map((item, index) => (
+              <CartItem key={index} product={item} />
             ))}
           </ul>
         </div>
