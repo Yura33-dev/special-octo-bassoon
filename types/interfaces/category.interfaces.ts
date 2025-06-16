@@ -36,6 +36,7 @@ export interface ICategoryPopulated {
     main: boolean;
     childCategories: Array<string>;
     parentCategories: Array<string>;
+    meta: Record<string, ISEO>;
     updatedAt: Date | null;
     createdAt: Date | null;
   }>;
@@ -50,6 +51,7 @@ export interface ICategoryPopulated {
     main: boolean;
     childCategories: Array<string>;
     parentCategories: Array<string>;
+    meta: Record<string, ISEO>;
     updatedAt: Date | null;
     createdAt: Date | null;
   }>;
@@ -76,6 +78,7 @@ export interface ICategoryMapped {
     featured: boolean;
     image: string;
     main: boolean;
+    meta: Record<string, ISEO>;
     updatedAt: string | null;
     createdAt: string | null;
   }>;
@@ -88,6 +91,7 @@ export interface ICategoryMapped {
     featured: boolean;
     image: string;
     main: boolean;
+    meta: Record<string, ISEO>;
     updatedAt: string | null;
     createdAt: string | null;
   }>;

@@ -25,6 +25,7 @@ export function mapCategory(category: ICategoryPopulated): ICategoryMapped {
       featured: parentCat.featured,
       image: parentCat.image,
       main: parentCat.main,
+      meta: parentCat.meta,
       updatedAt: parentCat.updatedAt
         ? new Date(parentCat.updatedAt).toISOString()
         : null,
@@ -41,6 +42,7 @@ export function mapCategory(category: ICategoryPopulated): ICategoryMapped {
       featured: childCat.featured,
       image: childCat.image,
       main: childCat.main,
+      meta: childCat.meta,
       updatedAt: childCat.updatedAt
         ? new Date(childCat.updatedAt).toISOString()
         : null,
