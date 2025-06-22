@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 import { routing } from '@/i18n/routing';
-import { getAllCategories, getAllProducts } from '@/lib/api';
+import { getAllCategories, getProductsSiteMap } from '@/lib/api';
 import { config } from '@/lib/config';
 import dbConnect from '@/lib/db';
 
@@ -31,7 +31,7 @@ export const revalidate = 3600 * 12;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   await dbConnect();
 
-  const { products } = await getAllProducts();
+  const products = await getProductsSiteMap();
   const categories = await getAllCategories();
 
   // home

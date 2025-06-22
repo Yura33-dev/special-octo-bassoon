@@ -38,6 +38,7 @@ import { getLatestProducts } from './products/getLatestProducts';
 import { getProductById } from './products/getProductById';
 import { getProductBySlug } from './products/getProductBySlug';
 import { getProductsByName } from './products/getProductsByName';
+import { getProductsSiteMap } from './products/getProductsSiteMap';
 import { updateProduct } from './products/updateProduct';
 import { getAllSettings } from './settings/getAllSettings';
 import { createSlide } from './slides/createSlide';
@@ -94,4 +95,5 @@ export {
   patchOrderById,
   archiveOrderById,
   deleteOrderById,
+  getProductsSiteMap,
 };
