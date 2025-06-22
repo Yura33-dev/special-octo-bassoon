@@ -144,46 +144,50 @@ export default async function SubcategoryPage({
   ];
 
   return (
-    <section className='mt-12'>
-      <BreadCrumbs
-        breadcrumbLinks={generateBreadCrumbs}
-        breadcrumbTitles={generateBreadTitles}
-      />
+    <>
+      <section className='my-4'>
+        <BreadCrumbs
+          breadcrumbLinks={generateBreadCrumbs}
+          breadcrumbTitles={generateBreadTitles}
+        />
+      </section>
 
-      <Container>
-        <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
-          <Filter filters={[...filters]} />
-          <div className='basis-full flex flex-col gap-4'>
-            <h1 className='text-center text-xl md:text-2xl'>
-              {catalogPageData.translatedData[locale].h1}
-            </h1>
+      <section>
+        <Container>
+          <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
+            <Filter filters={[...filters]} />
+            <div className='basis-full flex flex-col gap-4'>
+              <h1 className='text-center text-xl md:text-2xl'>
+                {catalogPageData.translatedData[locale].h1}
+              </h1>
 
-            <Suspense
-              fallback={
-                <div className='flex justify-center'>
-                  <CircleLoader />
-                </div>
-              }
-            >
-              <ProductsList
-                products={products}
-                paginationData={paginationData}
-              />
-            </Suspense>
+              <Suspense
+                fallback={
+                  <div className='flex justify-center'>
+                    <CircleLoader />
+                  </div>
+                }
+              >
+                <ProductsList
+                  products={products}
+                  paginationData={paginationData}
+                />
+              </Suspense>
+            </div>
           </div>
-        </div>
 
-        {subcategory.meta[locale].seoText && (
-          <div className='l-container ql-snow'>
-            <div
-              className='ql-editor mt-20'
-              dangerouslySetInnerHTML={{
-                __html: subcategory.meta[locale].seoText,
-              }}
-            ></div>
-          </div>
-        )}
-      </Container>
-    </section>
+          {subcategory.meta[locale].seoText && (
+            <div className='l-container ql-snow'>
+              <div
+                className='ql-editor mt-20'
+                dangerouslySetInnerHTML={{
+                  __html: subcategory.meta[locale].seoText,
+                }}
+              ></div>
+            </div>
+          )}
+        </Container>
+      </section>
+    </>
   );
 }
