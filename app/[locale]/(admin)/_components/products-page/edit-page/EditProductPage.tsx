@@ -40,10 +40,11 @@ export default async function EditProductPage({
   return (
     <section>
       <Container>
-        <BackButton title='Всі продукти' href='/dashboard/products' />
+        <BackButton title='Всі продукти' />
         <PageMainHeader
           title={`Редагувати ${product.translatedData[locale].name}`}
           className='mb-8'
+          link={`${product.categories[0].slug[locale]}/${product.categories[1].slug[locale]}/${product.translatedData[locale].slug}`}
         />
 
         <ProductForm

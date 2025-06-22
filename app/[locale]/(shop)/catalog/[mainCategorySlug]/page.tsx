@@ -114,29 +114,33 @@ export default async function MainCategoryPage({
   ];
 
   return (
-    <section className='mt-4'>
-      <BreadCrumbs
-        breadcrumbLinks={generateBreadCrumbs}
-        breadcrumbTitles={generateBreadTitles}
-      />
-
-      <Container>
-        <CatalogGrid
-          parentSlug={params.mainCategorySlug}
-          categories={category.childCategories}
+    <>
+      <section className='my-4'>
+        <BreadCrumbs
+          breadcrumbLinks={generateBreadCrumbs}
+          breadcrumbTitles={generateBreadTitles}
         />
+      </section>
 
-        {category.meta[locale].seoText && (
-          <div className='l-container ql-snow'>
-            <div
-              className='ql-editor mt-20'
-              dangerouslySetInnerHTML={{
-                __html: category.meta[locale].seoText,
-              }}
-            ></div>
-          </div>
-        )}
-      </Container>
-    </section>
+      <section>
+        <Container>
+          <CatalogGrid
+            parentSlug={params.mainCategorySlug}
+            categories={category.childCategories}
+          />
+
+          {category.meta[locale].seoText && (
+            <div className='l-container ql-snow'>
+              <div
+                className='ql-editor mt-20'
+                dangerouslySetInnerHTML={{
+                  __html: category.meta[locale].seoText,
+                }}
+              ></div>
+            </div>
+          )}
+        </Container>
+      </section>
+    </>
   );
 }

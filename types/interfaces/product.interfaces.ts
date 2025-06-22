@@ -56,6 +56,8 @@ export interface IProductMapped {
   labels: Array<string>;
   imgUrl: string;
   filters: Array<IFilterInProductMapped>;
+  updatedAt: string;
+  createdAt: string;
 }
 
 export interface ITranslatedData {

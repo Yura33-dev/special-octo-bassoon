@@ -22,21 +22,25 @@ export default async function CatalogPage() {
   }
 
   return (
-    <section className='mt-12'>
-      <BreadCrumbs
-        breadcrumbLinks={['', 'catalog']}
-        breadcrumbTitles={
-          catalogPageData.translatedData[locale].breadcrumbTitles
-        }
-      />
+    <>
+      <section className='my-4'>
+        <BreadCrumbs
+          breadcrumbLinks={['', 'catalog']}
+          breadcrumbTitles={
+            catalogPageData.translatedData[locale].breadcrumbTitles
+          }
+        />
+      </section>
 
-      <Container>
-        <h1 className='text-center text-xl md:text-2xl mb-6 md:mb-8'>
-          {catalogPageData.translatedData[locale].h1}
-        </h1>
+      <section>
+        <Container>
+          <h1 className='text-center text-xl md:text-2xl mb-6 md:mb-8'>
+            {catalogPageData.translatedData[locale].h1}
+          </h1>
 
-        <CatalogGrid categories={categories} />
-      </Container>
-    </section>
+          <CatalogGrid categories={categories} />
+        </Container>
+      </section>
+    </>
   );
 }

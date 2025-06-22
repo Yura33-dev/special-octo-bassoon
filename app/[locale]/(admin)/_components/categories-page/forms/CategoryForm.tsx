@@ -252,6 +252,7 @@ export default function CategoryForm({
                   theme='snow'
                   value={seoText?.uk ?? undefined}
                   onChange={value => handleChangeSeoText(value, 'uk')}
+                  className='max-h-[650px] overflow-auto'
                 />
               </div>
             </div>
@@ -339,6 +340,7 @@ export default function CategoryForm({
                   theme='snow'
                   value={seoText?.ru ?? undefined}
                   onChange={value => handleChangeSeoText(value, 'ru')}
+                  className='max-h-[650px] overflow-auto'
                 />
               </div>
             </div>
@@ -408,7 +410,7 @@ export default function CategoryForm({
           <FileUploader<ICategoryForm>
             labelClassName='mt-6'
             name='image'
-            imageUrl={null}
+            imageUrl={category?.image ?? null}
             onChange={file => formik.setFieldValue('image', file)}
             touched={formik.touched}
             errors={formik.errors}

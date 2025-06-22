@@ -100,29 +100,27 @@ export default function Localization({
 
         <div>
           <h3 className='text-base font-semibold mb-2'>SEO-налаштування</h3>
-          <div className='grid grid-cols-1 auto-rows-[minmax(72px,auto)] sm:grid-cols-2 gap-4 sm:gap-2'>
-            <Input
+          <div className='grid grid-cols-1 auto-rows-[minmax(72px,auto)] gap-4 sm:gap-2'>
+            <TextArea
               title='Заголовок товару'
               name={`translatedData.${locale}.meta.title`}
-              type='text'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.translatedData[locale].meta.title}
               touched={formik.touched}
               errors={formik.errors}
-              className='sm:max-w-72'
+              className='min-h-16'
             />
 
-            <Input
+            <TextArea
               title='Ключові слова'
               name={`translatedData.${locale}.meta.keywords`}
-              type='text'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.translatedData[locale].meta.keywords ?? ''}
               touched={formik.touched}
               errors={formik.errors}
-              className='sm:max-w-72'
+              className='min-h-16'
             />
 
             <TextArea

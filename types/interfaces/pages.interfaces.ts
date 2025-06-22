@@ -14,9 +14,12 @@ export interface ITranslatedPageData {
   h1: string;
   breadcrumbTitles: Array<string>;
   slug: string;
-  meta: {
-    title: string;
-    description: string;
-    keywords: string | null;
-  };
+  meta: ISEOPageData;
+}
+
+export interface ISEOPageData {
+  title: string;
+  description: string;
+  keywords: string | null;
+  image: string;
 }

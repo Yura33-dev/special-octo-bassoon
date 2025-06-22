@@ -1,0 +1,10 @@
+User-Agent: *
+Allow: /
+Disallow: /checkout/
+Disallow: /compare/
+Disallow: /about-us/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /*?
+
+Sitemap: https://proground.com.ua/sitemap.xml

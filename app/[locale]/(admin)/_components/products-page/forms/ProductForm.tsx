@@ -137,12 +137,17 @@ export default function ProductForm({
   };
 
   const handleDeletePackaging = (packIndex: number) => {
-    const restPackaging = [
-      ...formik.values.packaging.items.slice(0, packIndex),
-      ...formik.values.packaging.items.slice(packIndex + 1),
-    ];
+    const deletedPack = formik.values.packaging.items[packIndex];
+    if (formik.values.packaging.default === deletedPack.packId) {
+      formik.setFieldValue('packaging.default', null);
+    }
 
-    formik.setFieldValue('packaging.items', restPackaging);
+    formik.setFieldValue(
+      'packaging.items',
+      formik.values.packaging.items.filter(
+        item => item.packId !== deletedPack.packId
+      )
+    );
   };
 
   const handleAddFilter = () => {
@@ -220,19 +225,25 @@ export default function ProductForm({
     try {
       if (isAddForm) {
         await createProduct(values);
-        toast.success('Продукт успішно створено!');
         helpers.resetForm();
         setProductDescriptionUk('');
         setProductDescriptionRu('');
       } else {
-        await updateProduct(
+        const updatedProduct = await updateProduct(
           values,
           product!.translatedData[locale].slug,
           routing.locales
         );
-        router.replace('/dashboard/products');
-        router.refresh();
-        toast.success('Продукт успішно оновлено!');
+
+        if (
+          product &&
+          product.translatedData[locale].slug !==
+            updatedProduct?.translatedData[locale].slug
+        ) {
+          router.replace(
+            updatedProduct?.translatedData[locale].slug ?? '/dashboard/products'
+          );
+        }
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -244,6 +255,7 @@ export default function ProductForm({
       }
     } finally {
       setIsSubmitting(false);
+      toast.success(`Продукт успішно ${isAddForm ? 'створено!' : 'оновлено!'}`);
     }
   };
 
@@ -296,7 +308,11 @@ export default function ProductForm({
           producer={product?.producer ?? null}
         />
 
-        <Visual title='Візуальні дані' formik={formik} />
+        <Visual
+          title='Візуальні дані'
+          formik={formik}
+          productImage={product?.imgUrl ?? null}
+        />
 
         <Labels title='Лейбли' formik={formik} />
       </div>

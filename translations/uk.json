@@ -67,10 +67,12 @@
     "ProductDelivery": "Доставка",
     "ProductPayments": "Розрахунок",
     "ProductRefund": "Повернення",
+    "AboutProduct": "Про товар",
     "Description": "Опис",
     "Reviews": "Відгуки",
     "NoDescription": "Опис товару відсутній. Будь ласка, зверніться до менеджера магазину для уточнення деталей",
-    "NoReviews": "Відгуків на цей товар ще немає"
+    "NoReviews": "Відгуків на цей товар ще немає",
+    "SimilarProducts": "Схожі товари"
   },
   "CheckoutPage": {
     "CheckoutTitle": "Оформлення замовлення",

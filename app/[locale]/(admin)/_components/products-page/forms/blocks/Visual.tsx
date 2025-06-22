@@ -8,9 +8,10 @@ import FileUploader from '../../../shared/forms-elements/FileUploader';
 interface IVisualProps {
   title: string;
   formik: FormikProps<IProductForm>;
+  productImage: string | null;
 }
 
-export default function Visual({ title, formik }: IVisualProps) {
+export default function Visual({ title, formik, productImage }: IVisualProps) {
   return (
     <div className='col-span-full bg-gray-200/60 rounded-md p-4'>
       <h2 className='text-lg font-semibold md:mb-4'>{title}</h2>
@@ -18,11 +19,7 @@ export default function Visual({ title, formik }: IVisualProps) {
       <div className='flex gap-8'>
         <FileUploader<IProductForm>
           name='imgUrl'
-          imageUrl={
-            typeof formik.values.imgUrl === 'string'
-              ? formik.values.imgUrl
-              : null
-          }
+          imageUrl={productImage}
           onChange={file => formik.setFieldValue('imgUrl', file)}
           touched={formik.touched}
           errors={formik.errors}

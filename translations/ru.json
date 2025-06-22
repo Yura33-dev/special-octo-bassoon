@@ -67,10 +67,12 @@
     "ProductDelivery": "Доставка",
     "ProductPayments": "Оплата",
     "ProductRefund": "Возврат",
+    "AboutProduct": "О продукте",
     "Description": "Описание",
     "Reviews": "Отзывы",
     "NoDescription": "Описание товара отсутствует. Пожалуйста, обратитесь к менеджеру магазина для уточнения деталей",
-    "NoReviews": "Отзывов на этот товар еще нет"
+    "NoReviews": "Отзывов на этот товар еще нет",
+    "SimilarProducts": "Похожие товары"
   },
   "CheckoutPage": {
     "CheckoutTitle": "Оформление заказа",

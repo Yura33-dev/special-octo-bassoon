@@ -11,7 +11,7 @@ export default function BreadCrumbs({
   breadcrumbTitles,
 }: IBreadCrumbsProps) {
   return (
-    <Container className='mb-4'>
+    <Container>
       <div className='breadcrumbs text-base'>
         <ul>
           {breadcrumbTitles.map((title, index) => {
