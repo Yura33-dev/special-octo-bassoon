@@ -93,10 +93,13 @@ export default function ProductVariants({ product }: IPackagingProps) {
         )}
         {activePack.packId.showPricePerUnit && (
           <span className='text-base md:text-sm font-normal'>
-            {(
-              activePack.price /
-              100 /
-              activePack.packId.translatedData[locale].measureValue
+            {(product.producer.exchangeRate
+              ? (activePack.price * product.producer.exchangeRate) /
+                100 /
+                activePack.packId.translatedData[locale].measureValue
+              : activePack.price /
+                100 /
+                activePack.packId.translatedData[locale].measureValue
             ).toFixed(2)}{' '}
             грн/
             {activePack.packId.translatedData[locale].measureIn}

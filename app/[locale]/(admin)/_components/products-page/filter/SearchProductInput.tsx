@@ -40,7 +40,7 @@ export default function SearchProductInput({
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const products = await getProductsByName(query, routing.locales);
+        const products = await getProductsByName(query, routing.locales, true);
         setResults(products);
       } catch (error) {
         console.error('Search error:', error);

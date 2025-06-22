@@ -8,7 +8,7 @@ import { Category, Product } from '@/models';
 import { IProductPopulated, locale } from '@/types';
 
 export async function getAllProducts(
-  locale: locale,
+  locale: locale = 'uk',
   page: number = 1,
   limit: number = 9,
   filter: { [key: string]: string | string[] | undefined } = {}

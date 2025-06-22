@@ -1,10 +1,14 @@
 import clsx from 'clsx';
+import { SquareArrowOutUpRight } from 'lucide-react';
+
+import { Link } from '@/i18n/routing';
 
 interface IPageHeaderProps {
   title: string;
   length?: number;
   className?: string;
   htmlTitle?: boolean;
+  link?: string;
 }
 
 export default function PageMainHeader({
@@ -12,6 +16,7 @@ export default function PageMainHeader({
   length,
   className,
   htmlTitle = false,
+  link,
 }: IPageHeaderProps) {
   if (htmlTitle) {
     return (
@@ -23,8 +28,21 @@ export default function PageMainHeader({
   }
 
   return (
-    <h1 className={clsx('text-2xl font-semibold', className && className)}>
+    <h1
+      className={clsx(
+        'text-2xl font-semibold',
+        link && 'flex gap-4 items-center',
+        className && className
+      )}
+    >
       {title} {length && length > 0 ? `(${length})` : null}
+      {link && (
+        <span>
+          <Link href={`/catalog/${link}`} target='_blank'>
+            <SquareArrowOutUpRight className='w-5 h-5' />
+          </Link>
+        </span>
+      )}
     </h1>
   );
 }

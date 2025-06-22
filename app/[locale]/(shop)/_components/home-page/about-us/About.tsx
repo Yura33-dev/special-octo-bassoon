@@ -14,7 +14,7 @@ export default function About() {
       </div>
       <div className='basis-full md:basis-1/2 '>
         <p className='text-justify'>
-          <strong> GRAUND-A </strong> - магазин, який пропонує широкий вибір
+          <strong> ProGround </strong> - магазин, який пропонує широкий вибір
           засобів захисту рослин, регуляторів росту, добрив, а також насіння
           овочевих, технічних та кормових культур. Клієнтами нашого магазину є:
           великі агропідприємства, невеликі фермерські господарства, торгові
@@ -25,7 +25,7 @@ export default function About() {
         </p>
         <br />
         <h3>
-          Засій своє майбутнє з <strong> GRAUND-A! </strong>{' '}
+          Засій своє майбутнє з <strong> ProGround! </strong>{' '}
         </h3>
         <br />
         <p className='text-justify'>

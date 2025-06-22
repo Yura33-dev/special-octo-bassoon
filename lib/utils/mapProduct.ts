@@ -16,5 +16,11 @@ export function mapProduct(product: IProductPopulated): IProductMapped {
     imgUrl: product.imgUrl,
     filters: product.filters.map(filter => mapFilterInProduct(filter)),
     producer: mapProducer(product.producer),
+    updatedAt: product.updatedAt
+      ? new Date(product.updatedAt).toISOString()
+      : 'Дата невідома',
+    createdAt: product.createdAt
+      ? new Date(product.createdAt).toISOString()
+      : 'Дата невідома',
   };
 }

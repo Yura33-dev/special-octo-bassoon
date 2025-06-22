@@ -1,4 +1,7 @@
+'use client';
+
 import { FormikProps } from 'formik';
+import { useEffect } from 'react';
 import { SingleValue } from 'react-select';
 
 import { IPackagingMapped, IProducerMapped, IProductForm } from '@/types';
@@ -32,6 +35,16 @@ export default function Packaging({
   const filteredPackaging = packaging.filter(
     item => !selectedPackIds.includes(item.id)
   );
+
+  useEffect(() => {
+    const defaultIsExist = formik.values.packaging.items.some(
+      item => item.packId === formik.values.packaging.default
+    );
+
+    if (!defaultIsExist && formik.values.packaging.default !== null) {
+      formik.setFieldValue('packaging.default', null);
+    }
+  }, [formik]);
 
   return (
     <div className='col-span-full bg-gray-200/60 rounded-md p-4'>

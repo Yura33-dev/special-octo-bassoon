@@ -45,6 +45,7 @@ import {
   IPageApi,
   IPageLeaned,
   ITranslatedPageData,
+  ISEOPageData,
 } from './interfaces/pages.interfaces';
 import { IPagination } from './interfaces/pagination.interfaces';
 import {
@@ -103,6 +104,7 @@ export type {
   ISlideForm,
   IPageApi,
   IPageLeaned,
+  ISEOPageData,
   ITranslatedPageData,
   ITranslatedSlideData,
   ISettingsApi,
