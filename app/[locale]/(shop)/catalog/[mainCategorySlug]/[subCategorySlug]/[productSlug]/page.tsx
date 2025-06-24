@@ -57,7 +57,7 @@ export async function generateMetadata({
     openGraph: {
       title: product.translatedData[params.locale].meta.title,
       description: product.translatedData[params.locale].meta.description,
-      url: `/catalog/${product.categories[0].slug[params.locale]}/${product.categories[1].slug[params.locale]}/${product.translatedData[params.locale].slug}`,
+      url: currentUrl,
       type: 'website',
       images: [
         {
