@@ -64,7 +64,7 @@ export async function generateMetadata({
         category.meta[params.locale].description ??
         'Купити насіння з доставкою по Україні. Інтернет магазин продажу насіння.✔️Гарантія якості ✔️Вигідні ціни ✔️Швидка доставка',
       type: 'website',
-      url: `/catalog/${category?.slug[params.locale]}`,
+      url: currentUrl,
       images: [
         {
           url: category.image ?? `${config.NEXT_PUBLIC_APP_URL}/no-image.webp`,
