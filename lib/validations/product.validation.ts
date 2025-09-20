@@ -11,7 +11,7 @@ import {
   LARGE_IMAGE_SIZE,
   LATIN_FILE_NAME,
   MANDATORY_FIELD,
-  MAX_LENGTH_30,
+  MAX_LENGTH_50,
   MIN_ARRAY_LENGTH_1,
   MIN_LENGTH,
   ONLY_NUMBERS,
@@ -25,7 +25,7 @@ export const validationProductSchema: Yup.ObjectSchema<IProductForm> =
       uk: Yup.object().shape({
         name: Yup.string()
           .min(2, MIN_LENGTH)
-          .max(30, MAX_LENGTH_30)
+          .max(50, MAX_LENGTH_50)
           .required(MANDATORY_FIELD),
         slug: Yup.string().required(MANDATORY_FIELD),
         description: Yup.string().nullable(),
@@ -41,7 +41,7 @@ export const validationProductSchema: Yup.ObjectSchema<IProductForm> =
       ru: Yup.object().shape({
         name: Yup.string()
           .min(2, MIN_LENGTH)
-          .max(30, MAX_LENGTH_30)
+          .max(50, MAX_LENGTH_50)
           .required(MANDATORY_FIELD),
         slug: Yup.string().required(MANDATORY_FIELD),
         description: Yup.string().nullable(),
