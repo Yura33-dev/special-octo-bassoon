@@ -1,5 +1,6 @@
 'use server';
 
+import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
 import dbConnect from '@/lib/db';
@@ -16,10 +17,34 @@ export async function updateProduct(
 
     const normalizedPackagingPrice = product.packaging.items.map(packaging => ({
       ...packaging,
+      packId: packaging.packId
+        ? new mongoose.Types.ObjectId(packaging.packId)
+        : null,
       price: packaging.price ? packaging.price * 100 : null,
     }));
 
-    product.packaging.items = normalizedPackagingPrice;
+    const normalizedProduct = {
+      ...product,
+      categories: product.categories.map(
+        categoryId => new mongoose.Types.ObjectId(categoryId)
+      ),
+      producer: product.producer
+        ? new mongoose.Types.ObjectId(product.producer)
+        : null,
+      packaging: {
+        default: product.packaging.default
+          ? new mongoose.Types.ObjectId(product.packaging.default)
+          : null,
+        items: normalizedPackagingPrice,
+      },
+      filters: product.filters.map(filter => ({
+        id: filter.id,
+        filter: new mongoose.Types.ObjectId(filter.filter),
+        values: filter.values || [],
+      })),
+      imgUrl:
+        typeof product.imgUrl === 'string' ? product.imgUrl : '/no-image.webp',
+    };
 
     const updatedProduct: IProductApi | null = await Product.findOneAndUpdate(
       {
@@ -27,7 +52,7 @@ export async function updateProduct(
           [`translatedData.${locale}.slug`]: productSlug,
         })),
       },
-      { $set: { ...product } },
+      { $set: normalizedProduct },
       { new: true }
     );
 

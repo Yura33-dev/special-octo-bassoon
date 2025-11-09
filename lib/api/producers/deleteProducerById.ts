@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 
 import dbConnect from '@/lib/db';
-import { Filter, Producer, Product } from '@/models';
+import { Producer, Product } from '@/models';
 import { IProducerApi } from '@/types';
 
 export async function deleteProducerById(
@@ -27,19 +27,6 @@ export async function deleteProducerById(
     if (!deletedProducer)
       throw new Error('Виробника з таким ідентифікатором не знайдено');
 
-    await Filter.findOneAndUpdate(
-      { slug: 'virobnik' },
-      {
-        $pull: {
-          variants: {
-            'translatedData.uk.variantTitle':
-              deletedProducer.translatedData.get('uk')?.title,
-          },
-        },
-      }
-    );
-
-    revalidatePath('/*/dashboard/filters');
     revalidatePath('/*/dashboard/products');
 
     return;

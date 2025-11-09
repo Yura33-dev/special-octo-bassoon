@@ -5,6 +5,7 @@ import Container from '@/components/shared/Container';
 import { Link } from '@/i18n/routing';
 import {
   getAllCategories,
+  getAllProducers,
   getAllProducts,
   getFiltersFromProducts,
 } from '@/lib/api';
@@ -35,13 +36,16 @@ export default async function ProductsPage({
     { filters },
     { products, paginationData, totalProducts },
     subCategories,
+    producers,
   ] = await Promise.all([
     getFiltersFromProducts(locale),
     getAllProducts(locale, page, limit, searchParams),
     getAllCategories({ main: false }),
+    getAllProducers(locale),
   ]);
 
   const categoriesFilter = new Map<string, { title: string; slug: string }>();
+  const producersFilter = new Map<string, { title: string; slug: string }>();
 
   subCategories.forEach(category => {
     categoriesFilter.set(category.slug[locale], {
@@ -50,12 +54,27 @@ export default async function ProductsPage({
     });
   });
 
-  const resultArray = Array.from(categoriesFilter.values());
+  producers.forEach(producer => {
+    producersFilter.set(producer.slug, {
+      title: producer.translatedData[locale].title,
+      slug: producer.slug,
+    });
+  });
+
+  const resultCategoriesFilterArray = Array.from(categoriesFilter.values());
+
+  const resultProducersFilterArray = Array.from(producersFilter.values());
 
   const categoriesFilterObject = {
     slug: 'category',
     title: 'Підкатегорія',
-    variants: resultArray,
+    variants: resultCategoriesFilterArray,
+  };
+
+  const producersFilterObject = {
+    slug: 'producer',
+    title: 'Виробник',
+    variants: resultProducersFilterArray,
   };
 
   return (
@@ -81,7 +100,13 @@ export default async function ProductsPage({
             </h2>
           )}
 
-          <AdminFilter filters={[...filters, categoriesFilterObject]} />
+          <AdminFilter
+            filters={[
+              categoriesFilterObject,
+              producersFilterObject,
+              ...filters,
+            ]}
+          />
         </div>
       </Container>
     </section>

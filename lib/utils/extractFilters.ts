@@ -28,17 +28,19 @@ export function extractFilters(
 
         const createFilter = filtersMap.get(item.filter.slug)!;
 
-        const matchedVariant = item.filter.variants.find(
-          v => v.variantSlug === item.value
+        const matchedVariant = item.filter.variants.filter(variant =>
+          item.values.includes(variant.variantSlug)
         );
-        if (
-          matchedVariant &&
-          !createFilter.variants.has(matchedVariant.variantSlug)
-        ) {
-          createFilter.variants.set(
-            matchedVariant.variantSlug,
-            matchedVariant.translatedData[locale].variantTitle
-          );
+
+        if (matchedVariant && matchedVariant.length > 0) {
+          matchedVariant.forEach(variant => {
+            if (!createFilter.variants.has(variant.variantSlug)) {
+              createFilter.variants.set(
+                variant.variantSlug,
+                variant.translatedData[locale].variantTitle
+              );
+            }
+          });
         }
       });
     }

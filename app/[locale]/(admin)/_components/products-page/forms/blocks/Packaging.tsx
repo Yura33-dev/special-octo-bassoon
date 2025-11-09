@@ -18,7 +18,7 @@ interface IPackagingProps {
   onAddPackaging: () => void;
   onDeletePackaging: (value: number) => void;
   formik: FormikProps<IProductForm>;
-  producer: IProducerMapped | null;
+  producers: IProducerMapped[];
 }
 
 export default function Packaging({
@@ -27,7 +27,7 @@ export default function Packaging({
   onAddPackaging,
   onDeletePackaging,
   formik,
-  producer,
+  producers,
 }: IPackagingProps) {
   const selectedPackIds = formik.values.packaging.items.map(
     pack => pack.packId
@@ -45,6 +45,10 @@ export default function Packaging({
       formik.setFieldValue('packaging.default', null);
     }
   }, [formik]);
+
+  const producer = producers.find(
+    producer => producer.id === formik.values.producer
+  );
 
   return (
     <div className='col-span-full bg-gray-200/60 rounded-md p-4'>

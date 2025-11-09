@@ -36,11 +36,11 @@ export interface IProductPopulated {
   packaging: IProductPackVariantsPopulated;
   //   reviews: Array<string>;
   categories: Array<ICategoryPopulated>;
-  labels: Array<Labels> | [];
+  labels: Labels[];
   visible: boolean;
   producer: IProducerPopulated;
   imgUrl: string;
-  filters: Array<IFilterInProductPopulated>;
+  filters: IFilterInProductPopulated[];
   updatedAt: Date;
   createdAt: Date;
 }
@@ -82,7 +82,7 @@ export interface IProductForm {
   categories: Array<string>;
   imgUrl: File | string | null;
   visible: boolean;
-  filters: Array<{ id: string; filter: string; value: string }>;
+  filters: { id: string; filter: string; values: string[] }[];
   labels: Array<string>;
   producer: string | null;
 }

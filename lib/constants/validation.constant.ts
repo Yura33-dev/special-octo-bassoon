@@ -43,7 +43,7 @@ export const SORT_ORDER_INTEGER =
 export const SORT_ORDER_GT_ZERO = 'Порядок сортування може бути від 0';
 
 // Product
-export const ATLEAST_ONE_PRODUCER = 'Вкажіть фільтр з виробником товару';
+export const ATLEAST_ONE_PRODUCER = 'Вкажіть виробника товару';
 
 // Packaging
 export const DEFAULT_PACKAGE_AT_LEAST =

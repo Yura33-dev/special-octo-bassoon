@@ -11,6 +11,7 @@ import {
   getCategoryBySlug,
   getFiltersFromProducts,
   getPageDataByName,
+  getProducersByCategoryId,
 } from '@/lib/api';
 import { config } from '@/lib/config';
 import { DEFAULT_PAGE, PRODUCT_DISPLAY_LIMIT } from '@/lib/constants';
@@ -125,10 +126,29 @@ export default async function SubcategoryPage({
   const page = parseInt(searchParams.page || DEFAULT_PAGE);
   const limit = parseInt(searchParams.limit || PRODUCT_DISPLAY_LIMIT);
 
-  const [{ filters }, { products, paginationData }] = await Promise.all([
-    getFiltersFromProducts(locale, { categories: subcategory.id }),
-    getAllProductsByCategoryId(subcategory.id, page, limit, searchParams),
-  ]);
+  const [{ filters }, { products, paginationData }, producers] =
+    await Promise.all([
+      getFiltersFromProducts(locale, { categories: subcategory.id }),
+      getAllProductsByCategoryId(subcategory.id, page, limit, searchParams),
+      getProducersByCategoryId(subcategory.id, locale),
+    ]);
+
+  const producersFilter = new Map<string, { title: string; slug: string }>();
+
+  producers.forEach(producer => {
+    producersFilter.set(producer.slug, {
+      title: producer.translatedData[locale].title,
+      slug: producer.slug,
+    });
+  });
+
+  const resultProducersFilterArray = Array.from(producersFilter.values());
+
+  const producersFilterObject = {
+    slug: 'producer',
+    title: 'Виробник',
+    variants: resultProducersFilterArray,
+  };
 
   const generateBreadCrumbs = [
     '',
@@ -155,7 +175,7 @@ export default async function SubcategoryPage({
       <section>
         <Container>
           <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
-            <Filter filters={[...filters]} />
+            <Filter filters={[producersFilterObject, ...filters]} />
             <div className='basis-full flex flex-col gap-4'>
               <h1 className='text-center text-xl md:text-2xl'>
                 {catalogPageData.translatedData[locale].h1}

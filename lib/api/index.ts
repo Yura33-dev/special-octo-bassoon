@@ -29,6 +29,7 @@ import { createProducer } from './producers/createProducer';
 import { deleteProducerById } from './producers/deleteProducerById';
 import { getAllProducers } from './producers/getAllProducers';
 import { getProducerById } from './producers/getProducerById';
+import { getProducersByCategoryId } from './producers/getProducersByCategoryId';
 import { patchProducerById } from './producers/patchProducerById';
 import { createProduct } from './products/createProduct';
 import { deleteProductById } from './products/deleteProductById';
@@ -82,6 +83,7 @@ export {
   updateProduct,
   deleteProductById,
   getAllProducers,
+  getProducersByCategoryId,
   createProducer,
   getProducerById,
   patchProducerById,
