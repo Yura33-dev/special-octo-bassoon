@@ -30,6 +30,7 @@ async function dbConnect(
   if (!cached.promise) {
     const options: mongoose.ConnectOptions = {
       bufferCommands: false,
+      dbName: 'proground',
     };
 
     cached.promise = (async () => {

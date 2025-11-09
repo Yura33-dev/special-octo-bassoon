@@ -53,12 +53,16 @@ const packagingSchema = new mongoose.Schema<IProductPackVariantsApi>(
 const productFiltersSchema = new mongoose.Schema<{
   id: string;
   filter: IFilterApi;
-  value: string;
+  values: string[];
 }>(
   {
-    id: { type: String, requered: true },
-    filter: { type: mongoose.Schema.Types.ObjectId, ref: 'Filter' },
-    value: { type: String, requred: true },
+    id: { type: String, required: true },
+    filter: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Filter',
+      required: true,
+    },
+    values: { type: [String], default: [], required: true },
   },
   { _id: false }
 );
@@ -79,7 +83,7 @@ const productSchema = new mongoose.Schema<IProductApi>(
     producer: { type: mongoose.Schema.Types.ObjectId, ref: 'Producer' },
     labels: [{ type: String, enum: ['top', 'sale'], default: [] }],
     imgUrl: { type: String, required: true },
-    filters: [{ type: productFiltersSchema, default: null }],
+    filters: [{ type: productFiltersSchema, default: [] }],
   },
   { timestamps: true, versionKey: false }
 );

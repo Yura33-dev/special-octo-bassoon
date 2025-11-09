@@ -111,7 +111,10 @@ export const validationProductSchema: Yup.ObjectSchema<IProductForm> =
         Yup.object({
           id: Yup.string().required(),
           filter: Yup.string().required(MANDATORY_FIELD),
-          value: Yup.string().required(MANDATORY_FIELD),
+          values: Yup.array()
+            .of(Yup.string().required())
+            .min(1, MANDATORY_FIELD)
+            .required(MANDATORY_FIELD),
         })
       )
       .default([]),

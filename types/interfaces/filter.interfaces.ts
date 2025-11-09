@@ -38,7 +38,7 @@ export interface IFilterMapped {
 export interface IFilterInProductApi {
   id: string;
   filter: ObjectId;
-  value: string;
+  values: string[];
 }
 
 export interface IFilterInProductPopulated {
@@ -52,7 +52,7 @@ export interface IFilterInProductPopulated {
       translatedData: Record<string, { variantTitle: string }>;
     }>;
   };
-  value: string;
+  values: string[];
 }
 
 export interface IFilterInProductMapped {
@@ -66,7 +66,7 @@ export interface IFilterInProductMapped {
       translatedData: Record<string, { variantTitle: string }>;
     }>;
   };
-  value: string;
+  values: string[];
 }
 
 interface IVariant {

@@ -33,6 +33,6 @@ export function mapFilterInProduct(
         translatedData: variant.translatedData,
       })),
     },
-    value: filter.value,
+    values: filter.values,
   };
 }

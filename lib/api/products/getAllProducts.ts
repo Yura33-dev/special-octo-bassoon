@@ -4,7 +4,7 @@
 import { PRODUCTS_FETCH_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { calculatePaginationData, mapProduct } from '@/lib/utils';
-import { Category, Product } from '@/models';
+import { Category, Product, Filter, Producer } from '@/models';
 import { IProductPopulated, locale } from '@/types';
 
 export async function getAllProducts(
@@ -38,24 +38,56 @@ export async function getAllProducts(
       }
     }
 
+    if (parsedFilter.producer) {
+      const producerSlug = parsedFilter.producer as string;
+
+      const producers = await Producer.find({
+        slug: producerSlug,
+      });
+
+      if (producers.length > 0) {
+        query.producer = { $in: producers.map(producer => producer._id) };
+      }
+    }
+
     // Фильтрация по другим параметрам ("filters")
-    const filterConditions = Object.keys(parsedFilter)
-      .map(filterSlug => {
-        if (filterSlug === 'category') return null;
+    const filterSlugs = Object.keys(parsedFilter).filter(
+      key => key !== 'category' && key !== 'producer'
+    );
 
-        const filterValues = parsedFilter[filterSlug];
-        return {
-          filters: {
-            $elemMatch: {
-              value: { $in: filterValues },
+    if (filterSlugs.length > 0) {
+      const filters = await Filter.find({
+        slug: { $in: filterSlugs },
+      });
+
+      const filterConditions = filterSlugs
+        .map(filterSlug => {
+          const filterValues = parsedFilter[filterSlug];
+          if (!filterValues) return null;
+
+          // Найти ObjectId фильтра по slug
+          const filterDoc = filters.find(f => f.slug === filterSlug);
+          if (!filterDoc) return null;
+
+          // Нормализуем filterValues в массив
+          const valuesArray = Array.isArray(filterValues)
+            ? filterValues
+            : [filterValues];
+
+          return {
+            filters: {
+              $elemMatch: {
+                filter: filterDoc._id,
+                values: { $in: valuesArray },
+              },
             },
-          },
-        };
-      })
-      .filter(Boolean);
+          };
+        })
+        .filter(Boolean);
 
-    if (filterConditions.length > 0) {
-      query.$and = filterConditions;
+      if (filterConditions.length > 0) {
+        query.$and = filterConditions;
+      }
     }
 
     const [productsCount, products, totalCount] = await Promise.all([

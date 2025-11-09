@@ -1,10 +1,21 @@
 'use server';
 
+import { Types } from 'mongoose';
+
 import { PRODUCTS_BY_CATEGORY_ID_FAILED } from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { calculatePaginationData, mapProduct } from '@/lib/utils';
-import { Product } from '@/models';
+import { Filter, Producer, Product } from '@/models';
 import { IProductPopulated } from '@/types';
+
+interface queryType {
+  [key: string]:
+    | string
+    | boolean
+    | { $in: Types.ObjectId[] }
+    | Array<Record<string, unknown> | null>
+    | undefined;
+}
 
 export async function getAllProductsByCategoryId(
   categoryId: string,
@@ -23,23 +34,60 @@ export async function getAllProductsByCategoryId(
       )
     );
 
-    const filterConditions = Object.keys(parsedFilter).map(filterSlug => {
-      const filterValues = parsedFilter[filterSlug];
-
-      return {
-        filters: {
-          $elemMatch: {
-            value: { $in: filterValues },
-          },
-        },
-      };
-    });
-
-    const query = {
+    const query: queryType = {
       categories: categoryId,
       visible: true,
-      ...(filterConditions.length > 0 ? { $and: filterConditions } : {}),
     };
+
+    if (parsedFilter.producer) {
+      const producerSlug = parsedFilter.producer as string;
+
+      const producers = await Producer.find({
+        slug: producerSlug,
+      });
+
+      if (producers.length > 0) {
+        query.producer = { $in: producers.map(producer => producer._id) };
+      }
+    }
+
+    // Фильтрация по другим параметрам ("filters")
+    const filterSlugs = Object.keys(parsedFilter).filter(
+      key => key !== 'producer'
+    );
+
+    if (filterSlugs.length > 0) {
+      const filters = await Filter.find({
+        slug: { $in: filterSlugs },
+      });
+
+      const filterConditions = filterSlugs
+        .map(filterSlug => {
+          const filterValues = parsedFilter[filterSlug];
+          if (!filterValues) return null;
+
+          const filterDoc = filters.find(f => f.slug === filterSlug);
+          if (!filterDoc) return null;
+
+          const valuesArray = Array.isArray(filterValues)
+            ? filterValues
+            : [filterValues];
+
+          return {
+            filters: {
+              $elemMatch: {
+                filter: filterDoc._id,
+                values: { $in: valuesArray },
+              },
+            },
+          };
+        })
+        .filter(Boolean);
+
+      if (filterConditions.length > 0) {
+        query.$and = filterConditions;
+      }
+    }
 
     const [productsCount, products] = await Promise.all([
       Product.countDocuments(query),

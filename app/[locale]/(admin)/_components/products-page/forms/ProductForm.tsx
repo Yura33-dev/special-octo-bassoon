@@ -25,6 +25,7 @@ import Filters from './blocks/Filters';
 import Labels from './blocks/Labels';
 import Localization from './blocks/Localization';
 import Packaging from './blocks/Packaging';
+import Producer from './blocks/Producer';
 import Visual from './blocks/Visual';
 import DeleteButton from '../../shared/forms-elements/DeleteButton';
 import SubmitButton from '../../shared/forms-elements/SubmitButton';
@@ -104,29 +105,12 @@ export default function ProductForm({
       product?.filters?.map(filter => ({
         id: filter.id,
         filter: filter.filter.id,
-        value: filter.value,
+        values: filter.values,
       })) ?? [],
 
     labels: product?.labels ?? [],
 
     producer: product?.producer?.id ?? null,
-  };
-
-  const handleSelectProducer = (producerSlug: string) => {
-    const producer = producers.find(producer =>
-      producer.slug === producerSlug ? producer : undefined
-    );
-
-    if (producer) {
-      formik
-        .setFieldValue('producer', producer.id, false)
-        .then(() => {
-          formik.setFieldTouched('producer', true, false);
-        })
-        .then(() => {
-          formik.validateField('producer');
-        });
-    }
   };
 
   const handleAddPackaging = () => {
@@ -155,30 +139,15 @@ export default function ProductForm({
 
     formik.setFieldValue('filters', [
       ...formik.values.filters,
-      { id: uid.rnd(), filter: null, value: null },
+      { id: uid.rnd(), filter: null, values: [] },
     ]);
   };
 
   const handleDeleteFilter = (filter: {
     id: string;
     filter: string;
-    value: string;
+    values: string[];
   }) => {
-    const producer = producers.find(producer =>
-      producer.slug === filter.value ? producer : undefined
-    );
-
-    if (producer) {
-      formik
-        .setFieldValue('producer', null, true)
-        .then(() => {
-          formik.setFieldTouched('producer', true, false);
-        })
-        .then(() => {
-          formik.validateField('producer');
-        });
-    }
-
     formik.setFieldValue(
       'filters',
       formik.values.filters.filter(item => item.id !== filter.id)
@@ -290,13 +259,14 @@ export default function ProductForm({
 
         <Categories title='Категорії' categories={categories} formik={formik} />
 
+        <Producer title='Виробник' producers={producers} formik={formik} />
+
         <Filters
           title='Фільтри'
           filters={filters}
           formik={formik}
           onAddFilter={handleAddFilter}
           onDeleteFilter={handleDeleteFilter}
-          handleSelectProducer={handleSelectProducer}
         />
 
         <Packaging
@@ -305,7 +275,7 @@ export default function ProductForm({
           onAddPackaging={handleAddPackaging}
           onDeletePackaging={handleDeletePackaging}
           formik={formik}
-          producer={product?.producer ?? null}
+          producers={producers}
         />
 
         <Visual

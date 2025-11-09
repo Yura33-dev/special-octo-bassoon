@@ -39,11 +39,12 @@ export default async function ProductInfo({ product }: IProductInfoProps) {
                   {filter.filter.translatedData[locale].filterTitle}:
                 </span>{' '}
                 <span>
-                  {
-                    filter.filter.variants.find(
-                      variant => variant.variantSlug === filter.value
-                    )?.translatedData[locale].variantTitle
-                  }
+                  {filter.filter.variants
+                    .filter(variant =>
+                      filter.values.includes(variant.variantSlug)
+                    )
+                    .map(variant => variant.translatedData[locale].variantTitle)
+                    .join(', ')}
                 </span>
               </li>
             ))}
