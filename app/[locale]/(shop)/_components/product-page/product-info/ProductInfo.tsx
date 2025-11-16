@@ -4,6 +4,8 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { getAllSettings } from '@/lib/api';
 import { IProductMapped, locale } from '@/types';
 
+import ProductInfoItem from './ProductInfoItem';
+
 interface IProductInfoProps {
   product: IProductMapped;
 }
@@ -31,27 +33,23 @@ export default async function ProductInfo({ product }: IProductInfoProps) {
           </span>
         </div>
 
-        {product.filters && product.filters.length > 0 ? (
-          <ul className='px-2 mt-4 text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2'>
-            {product.filters.map(filter => (
-              <li key={filter.id} className='flex flex-col'>
-                <span className='font-bold'>
-                  {filter.filter.translatedData[locale].filterTitle}:
-                </span>{' '}
-                <span>
-                  {filter.filter.variants
-                    .filter(variant =>
-                      filter.values.includes(variant.variantSlug)
-                    )
-                    .map(variant => variant.translatedData[locale].variantTitle)
-                    .join(', ')}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className='px-4 text-sm mt-4'>{t('NoCharacteristics')}</p>
-        )}
+        <ul className='px-2 mt-4 text-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2'>
+          <ProductInfoItem
+            title={t('ProductProducer')}
+            variants={product.producer.translatedData[locale].title}
+          />
+
+          {product.filters.map(filter => (
+            <ProductInfoItem
+              key={filter.id}
+              title={filter.filter.translatedData[locale].filterTitle}
+              variants={filter.filter.variants
+                .filter(variant => filter.values.includes(variant.variantSlug))
+                .map(variant => variant.translatedData[locale].variantTitle)
+                .join(', ')}
+            />
+          ))}
+        </ul>
       </div>
 
       <div className='bg-teal-700/10 lg:col-start-3 lg:col-end-4 lg:row-span-full p-2 rounded-md'>

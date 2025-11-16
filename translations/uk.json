@@ -63,7 +63,7 @@
   "ProductPage": {
     "ProductPackaging": "Пакування:",
     "ProductCharacteristics": "Характеристика",
-    "NoCharacteristics": "Нажаль, інформація відсутня. Будь ласка, зв`яжіться з нашим менеджером для уточнення деталей по цьому товару!",
+    "ProductProducer": "Виробник",
     "ProductDelivery": "Доставка",
     "ProductPayments": "Розрахунок",
     "ProductRefund": "Повернення",

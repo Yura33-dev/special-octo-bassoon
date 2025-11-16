@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getLocale, getTranslations } from 'next-intl/server';
 
+import ProductInfo from '@/app/[locale]/(shop)/_components/product-page/product-info/ProductInfo';
 import ProductImage from '@/app/[locale]/(shop)/_components/product-page/ProductImage';
-import ProductInfo from '@/app/[locale]/(shop)/_components/product-page/ProductInfo';
 import ProductTabs from '@/app/[locale]/(shop)/_components/product-page/ProductTabs';
 import ProductVariants from '@/app/[locale]/(shop)/_components/product-page/ProductVariants';
 import SimilarProducts from '@/app/[locale]/(shop)/_components/product-page/similar-products/SimilarProducts';
