@@ -42,9 +42,13 @@ export default function Card({ product }: ICardProps) {
       />
 
       <div className='flex flex-col p-4 relative'>
-        <h3 className='text-lg sm:text-xl font-semibold text-center mb-3 max-w-full truncate'>
+        <h3 className='text-lg sm:text-xl font-semibold text-center mb-2 max-w-full truncate'>
           {product.translatedData[locale].name}
         </h3>
+
+        <span className='text-center text-sm block mb-1'>
+          {product.producer.translatedData[locale].title}
+        </span>
 
         <CardInfo
           producer={product.producer}
