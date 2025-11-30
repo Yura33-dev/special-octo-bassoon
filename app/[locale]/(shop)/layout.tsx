@@ -38,7 +38,7 @@ export default async function ShopLayout({
 
   return (
     <html lang={locale}>
-      <GoogleTagManager gtmId='GTM-5KXW6VPN' />
+      <GoogleTagManager gtmId='GTM-T4WHZGP8' />
       <body
         className={`${fira.className} subpixel-antialiased min-h-[100dvh] flex flex-col relative`}
       >
