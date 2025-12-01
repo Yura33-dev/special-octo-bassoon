@@ -15,18 +15,24 @@ export function mapOrder(order: IOrderPopulated): IOrderMapped {
     fatherName: order.fatherName ?? null,
     products: order.products.map(product => ({
       productId: {
-        id: product.productId._id.toString(),
-        image: product.productId.imgUrl,
+        id: product.productId?._id?.toString() ?? 'Видалений товар',
+        image: product.productId?.imgUrl ?? '/no-image.webp',
         producer: {
-          name: product.productId.producer.translatedData['uk'].title,
-          exchangeRate: product.productId.producer.exchangeRate ?? 0,
+          name:
+            product.productId?.producer?.translatedData['uk']?.title ??
+            'Видалений виробник',
+          exchangeRate: product.productId?.producer?.exchangeRate ?? 0,
         },
         translatedData: {
           uk: {
-            name: product.productId.translatedData['uk'].name,
+            name:
+              product.productId?.translatedData['uk']?.name ??
+              'Видалений товар',
           },
           ru: {
-            name: product.productId.translatedData['ru'].name,
+            name:
+              product.productId?.translatedData['ru']?.name ??
+              'Удаленный товар',
           },
         },
       },
