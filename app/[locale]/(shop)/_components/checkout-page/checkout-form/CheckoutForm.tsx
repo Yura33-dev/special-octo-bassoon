@@ -1,11 +1,13 @@
 'use client';
 
 import clsx from 'clsx';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 
 import ModalWindow from '@/components/shared/modals/ModalWindow';
+import { usePathname, useRouter } from '@/i18n/routing';
 import { submitOrder } from '@/lib/actions';
 import { SUCCESS_ORDER_ID } from '@/lib/constants';
 import { formattedPrice } from '@/lib/utils';
@@ -29,6 +31,10 @@ const initialState: IOrderState = {
 };
 
 export default function CheckoutForm({ className }: ICheckoutFormProps) {
+  const router = useRouter();
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+
   const cart = useCartStore(state => state.cart);
   const totalCartPrice = useCartStore(state => state.getTotalPrice());
   const cleanCart = useCartStore(state => state.cleanCart);
@@ -53,8 +59,13 @@ export default function CheckoutForm({ className }: ICheckoutFormProps) {
       formRef.current.reset();
       cleanCart();
       openModal(SUCCESS_ORDER_ID);
+
+      //
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('success', 'true');
+      router.replace(`${pathName}?${params.toString()}`, { scroll: false });
     }
-  }, [data.success, cleanCart, openModal]);
+  }, [data.success, cleanCart, openModal, pathName, searchParams, router]);
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
