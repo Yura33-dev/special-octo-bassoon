@@ -2,6 +2,7 @@
 
 import ShortUniqueId from 'short-unique-id';
 
+import { redirect } from '@/i18n/routing';
 import {
   INCORRECT_EMAIL,
   INCORRECT_FATHERNAME,
@@ -47,6 +48,10 @@ export async function submitOrder(
   };
 
   const { orderNumber }: IOrderApi = await Order.create(orderObject);
+  redirect({
+    href: { pathname: '/checkout/success', query: { order: orderNumber } },
+    locale: parsedData.locale,
+  });
 
   return { success: true, errors: {}, orderNumber };
 }
