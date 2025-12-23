@@ -3,10 +3,9 @@
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
 import React, { cloneElement, ReactElement, useEffect } from 'react';
 
-import { usePathname, useRouter } from '@/i18n/routing';
+import { useRouter } from '@/i18n/routing';
 import { useModalStore } from '@/providers';
 
 interface IModalWindowProps {
@@ -32,8 +31,6 @@ export default function ModalWindow({
   const modals = useModalStore(state => state.modals);
 
   const router = useRouter();
-  const pathName = usePathname();
-  const queryParams = useSearchParams();
 
   useEffect(() => {
     const isAnyModalOpen = Object.values(modals).some(isOpen => isOpen);
@@ -61,17 +58,6 @@ export default function ModalWindow({
       timer = setTimeout(() => router.back(), 210);
     } else {
       closeModal(modalId);
-
-      const params = new URLSearchParams(queryParams.toString());
-      if (params.get('success')) {
-        params.delete('success');
-
-        const newPath = params.toString()
-          ? `${pathName}?${params.toString()}`
-          : pathName;
-
-        router.replace(newPath, { scroll: false });
-      }
     }
 
     return () => clearTimeout(timer);
