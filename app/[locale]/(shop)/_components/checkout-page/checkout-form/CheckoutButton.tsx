@@ -12,10 +12,15 @@ export default function CheckoutButton() {
   return (
     <button
       type='submit'
-      className='min-w-[185px] btn bg-accent border-none hover:bg-primary hover:text-white mt-4'
+      className='min-w-[185px] btn bg-accent border-none hover:bg-primary hover:text-white mt-4
+                  disabled:bg-gray-200 disabled:cursor-not-allowed'
       disabled={pending}
     >
-      {pending ? <CircleLoader className='border-white' /> : t('Order')}
+      {pending ? (
+        <CircleLoader className='border-accent w-8 h-8' />
+      ) : (
+        t('Order')
+      )}
     </button>
   );
 }

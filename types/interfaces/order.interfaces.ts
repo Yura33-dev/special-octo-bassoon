@@ -122,6 +122,7 @@ export interface IOrderData {
   postCode: string;
   totalPrice: number;
   orderId?: string;
+  locale: string;
 }
 
 export interface IOrderState {

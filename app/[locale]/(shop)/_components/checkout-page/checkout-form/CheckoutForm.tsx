@@ -1,24 +1,19 @@
 'use client';
 
 import clsx from 'clsx';
-import { useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
+import { useMemo, useRef, useState } from 'react';
 import { useFormState } from 'react-dom';
 
-import ModalWindow from '@/components/shared/modals/ModalWindow';
-import { usePathname, useRouter } from '@/i18n/routing';
 import { submitOrder } from '@/lib/actions';
-import { SUCCESS_ORDER_ID } from '@/lib/constants';
 import { formattedPrice } from '@/lib/utils';
-import { useCartStore, useModalStore } from '@/providers';
+import { useCartStore } from '@/providers';
 import { IOrderState } from '@/types';
 
 import CheckoutButton from './CheckoutButton';
 import CustomRadioInput from './CustomRadioInput';
 import CustomTextInput from './CustomTextInput';
 import NoProductsYet from './NoProductsYet';
-import SuccessSubmit from './SuccessSubmit';
 
 interface ICheckoutFormProps {
   className?: string;
@@ -31,72 +26,53 @@ const initialState: IOrderState = {
 };
 
 export default function CheckoutForm({ className }: ICheckoutFormProps) {
-  const router = useRouter();
-  const pathName = usePathname();
-  const searchParams = useSearchParams();
-
   const cart = useCartStore(state => state.cart);
   const totalCartPrice = useCartStore(state => state.getTotalPrice());
-  const cleanCart = useCartStore(state => state.cleanCart);
-  const openModal = useModalStore(state => state.openModal);
 
   const [deliveryMethod, setDeliveryMethod] = useState<string>('np');
   const [paymentMethod, setPaymentMethod] = useState<string>('bank');
-  const [total, setTotal] = useState<number>(0);
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const [data, formAction] = useFormState(submitOrder, initialState);
 
   const t = useTranslations('CheckoutPage');
+  const locale = useLocale();
 
-  useEffect(() => {
-    setTotal(totalCartPrice);
-  }, [totalCartPrice]);
-
-  useEffect(() => {
-    if (data.success && formRef.current) {
-      formRef.current.reset();
-      cleanCart();
-      openModal(SUCCESS_ORDER_ID);
-
-      //
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('success', 'true');
-      router.replace(`${pathName}?${params.toString()}`, { scroll: false });
-    }
-  }, [data.success, cleanCart, openModal, pathName, searchParams, router]);
-
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const cartItems = cart.map(cartItem => ({
-      productId: cartItem.id,
-      packId: cartItem.packVariant.packId.id,
-      quantity: cartItem.packVariant.orderedQuantity,
-      price: cartItem.packVariant.price,
-    }));
-
-    const formData = new FormData(e.currentTarget);
-    formData.append('totalPrice', totalCartPrice.toString());
-    formData.append('products', JSON.stringify(cartItems));
-
-    formAction(formData);
-  };
+  const cartItemsJson = useMemo(
+    () =>
+      JSON.stringify(
+        cart.map(item => ({
+          productId: item.id,
+          packId: item.packVariant.packId.id,
+          quantity: item.packVariant.orderedQuantity,
+          price: item.packVariant.price,
+        }))
+      ),
+    [cart]
+  );
 
   return (
     <>
-      {cart.length <= 0 && <NoProductsYet />}
-
-      {cart.length > 0 && (
+      {cart.length <= 0 ? (
+        <NoProductsYet />
+      ) : (
         <form
           ref={formRef}
-          onSubmit={handleFormSubmit}
+          action={formAction}
           className={clsx(
             className && `${className}`,
             'grid grid-cols-2 gap-4 md:content-start'
           )}
         >
+          <input
+            type='hidden'
+            name='totalPrice'
+            value={totalCartPrice.toString()}
+          />
+          <input type='hidden' name='products' value={cartItemsJson} />
+          <input type='hidden' name='locale' value={locale} />
+
           <div className='bg-white p-4 rounded-md col-span-full sm:min-h-[150px] sm:col-start-1 sm:col-end-2'>
             <h2 className='text-lg mb-4'>{t('DeliveryMethodTitle')}</h2>
 
@@ -223,21 +199,13 @@ export default function CheckoutForm({ className }: ICheckoutFormProps) {
 
           <div className='bg-white rounded-md p-4 text-center col-span-full sm:min-h-[150px]'>
             <h5 className='text-xl'>
-              {t('TotalCost')} {formattedPrice(total)}
+              {t('TotalCost')} {formattedPrice(totalCartPrice)}
             </h5>
 
             <CheckoutButton />
           </div>
         </form>
       )}
-
-      <ModalWindow
-        title='Дякуємо!'
-        modalId={SUCCESS_ORDER_ID}
-        className='max-w-[500px]'
-      >
-        <SuccessSubmit order={data.orderNumber} />
-      </ModalWindow>
     </>
   );
 }
