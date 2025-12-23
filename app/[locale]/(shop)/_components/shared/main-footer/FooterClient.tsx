@@ -52,24 +52,26 @@ export default function FooterClient({
             ))}
           </ul>
 
-          <ul className='flex flex-col items-center sm:items-start '>
+          <ul className='flex flex-col gap-y-2 items-center sm:items-start '>
             <li className='mb-3'>
               <h3 className='text-xl font-semibold'>{t('ContactsTitle')}</h3>
             </li>
             {settings?.contacts.phones.map((phone, index) => (
-              <li
-                key={index}
-                className='p-1 flex gap-2 justify-start items-center relative w-max'
-              >
-                <Phone className='w-4 h-4' />
-                <Link
-                  href={`tel:${phone.replace(CLEAN_PHONE_REGEXP, '')}`}
-                  className='after:content-[""] after:block after:w-full after:h-[2px] after:bg-accent after:absolute
-                          after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:max-w-0 after:transition-all after:duration-150
-                          hover:after:max-w-[calc(100%_-_8px)]'
-                >
-                  {phone}
-                </Link>
+              <li key={index} className='p-1'>
+                <div className='flex gap-2 justify-start items-center relative w-max mx-auto sm:mx-0'>
+                  <Phone className='w-4 h-4' />
+                  <Link
+                    href={`tel:${phone[0].replace(CLEAN_PHONE_REGEXP, '')}`}
+                    className='after:content-[""] after:block after:w-full after:h-[2px] after:bg-accent after:absolute
+                  after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:max-w-0 after:transition-all after:duration-150
+                  hover:after:max-w-[calc(100%_-_8px)]'
+                  >
+                    {phone[0]}
+                  </Link>
+                </div>
+                <span className='block text-center md:text-left text-xs max-w-60 sm:max-w-max'>
+                  {phone[1]}
+                </span>
               </li>
             ))}
 

@@ -38,6 +38,6 @@ export interface ITranslatedSettingsData {
 }
 
 interface IContactsData {
-  phones: string[];
+  phones: Array<[string, string]>;
   email: string;
 }
