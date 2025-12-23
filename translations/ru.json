@@ -82,6 +82,10 @@
     "DeliveryAddress": "Доставка",
     "TotalCost": "К оплате:",
     "NoProductsYet": "Добавьте товар в корзину, чтобы сделать заказ или вернитесь на главную страницу",
-    "GoToMain": "На главную"
+    "GoToMain": "На главную",
+    "SuccessTitle": "Заказ оформлен",
+    "SuccessHeader": "Спасибо за заказ!",
+    "SuccessDescription": "Мы получили ваш заказ и уже собираем его к отправке!",
+    "SuccessOrderNumber": "Номер заказа: {order}"
   }
 }
