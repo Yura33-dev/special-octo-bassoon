@@ -87,9 +87,13 @@ export default function MobileMenuClient({
             <ul className='text-center flex flex-col gap-2'>
               {settings.contacts.phones.map((phone, index) => (
                 <li key={index}>
-                  <Link href={`tel:${phone.replace(CLEAN_PHONE_REGEXP, '')}`}>
-                    {phone}
+                  <Link
+                    href={`tel:${phone[0].replace(CLEAN_PHONE_REGEXP, '')}`}
+                  >
+                    {phone[0]}
                   </Link>
+
+                  <span className='block text-sm'>{phone[1]}</span>
                 </li>
               ))}
             </ul>
