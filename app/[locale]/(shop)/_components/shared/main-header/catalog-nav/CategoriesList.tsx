@@ -1,8 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import { ChevronRight } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { ChevronRight, Percent } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
 import Container from '@/components/shared/Container';
@@ -31,6 +31,8 @@ export default function CategoriesList({ categories }: ICategoriesListProps) {
   const setCategoriesListOpen = useGlobalStore(
     state => state.setCategoriesListOpen
   );
+
+  const t = useTranslations('SalesPage');
 
   const locale = useLocale() as locale;
   const isMobile = useMediaQuery('(max-width: 1024px)');
@@ -125,6 +127,21 @@ export default function CategoriesList({ categories }: ICategoriesListProps) {
                       )}
                   </li>
                 ))}
+              <li className='px-4 mt-6'>
+                <h3 className='text-primary'>
+                  <Link
+                    href={'/catalog/sales'}
+                    className='flex items-center lg:justify-between p-2 gap-2
+                                leading-tight rounded-md bg-accent text-foreground hover:bg-primary 
+                                hover:text-background transition-colors'
+                  >
+                    {t('SalesTitle')}
+                    <span>
+                      <Percent size={18} />
+                    </span>
+                  </Link>
+                </h3>
+              </li>
             </ul>
           </div>
         </div>
