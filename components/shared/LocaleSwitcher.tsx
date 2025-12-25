@@ -23,32 +23,67 @@ export default function LocaleSwitcher() {
   ) => {
     if (!selectedOption) return;
 
-    const localizedSlugs = await getLocalizedSlugs(
-      params as {
-        mainCategorySlug: string | null;
-        subCategorySlug: string | null;
-        productSlug: string | null;
-      },
-      locale as locale,
-      selectedOption.value as locale
-    );
+    if (pathName.includes('catalog')) {
+      const pathSegments = pathName
+        .replace(/^\/catalog\/?/, '')
+        .split('/')
+        .filter(Boolean);
 
-    const mainCategoryLink = `${localizedSlugs.mainCategorySlug ? `/${localizedSlugs.mainCategorySlug}` : ''}`;
-    const subCategoryLink = `${localizedSlugs.subCategorySlug ? `/${localizedSlugs.subCategorySlug}` : ''}`;
-    const productLink = `${localizedSlugs.productSlug ? `/${localizedSlugs.productSlug}` : ''}`;
+      const mainCategorySlug = params.mainCategorySlug as string | undefined;
+      const subCategorySlug = params.subCategorySlug as string | undefined;
+      const productSlug = params.productSlug as string | undefined;
 
-    const generatePath = pathName.includes('catalog')
-      ? `/catalog${mainCategoryLink}${subCategoryLink}${productLink}`
-      : `${pathName}`;
+      const dynamicSegmentsCount = [
+        mainCategorySlug,
+        subCategorySlug,
+        productSlug,
+      ].filter(Boolean).length;
 
-    const newPath = generatePath.length === 0 ? '/' : generatePath;
+      const staticSegments = pathSegments.slice(dynamicSegmentsCount);
+      const staticPath =
+        staticSegments.length > 0 ? `/${staticSegments.join('/')}` : '';
 
-    const urlString =
-      searchParams.toString().length > 0
-        ? `${newPath}?${searchParams.toString()}`
-        : `${newPath}`;
+      if (dynamicSegmentsCount > 0) {
+        const localizedSlugs = await getLocalizedSlugs(
+          {
+            mainCategorySlug: mainCategorySlug || null,
+            subCategorySlug: subCategorySlug || null,
+            productSlug: productSlug || null,
+          },
+          locale as locale,
+          selectedOption.value as locale
+        );
 
-    router.replace(urlString, { locale: selectedOption.value });
+        const mainCategoryLink = `${localizedSlugs.mainCategorySlug ? `/${localizedSlugs.mainCategorySlug}` : ''}`;
+        const subCategoryLink = `${localizedSlugs.subCategorySlug ? `/${localizedSlugs.subCategorySlug}` : ''}`;
+        const productLink = `${localizedSlugs.productSlug ? `/${localizedSlugs.productSlug}` : ''}`;
+
+        const generatePath = `/catalog${mainCategoryLink}${subCategoryLink}${productLink}${staticPath}`;
+        const newPath = generatePath.length === 0 ? '/' : generatePath;
+
+        const urlString =
+          searchParams.toString().length > 0
+            ? `${newPath}?${searchParams.toString()}`
+            : `${newPath}`;
+
+        router.replace(urlString, { locale: selectedOption.value });
+      } else {
+        const generatePath = `/catalog${staticPath}`;
+        const urlString =
+          searchParams.toString().length > 0
+            ? `${generatePath}?${searchParams.toString()}`
+            : `${generatePath}`;
+
+        router.replace(urlString, { locale: selectedOption.value });
+      }
+    } else {
+      const urlString =
+        searchParams.toString().length > 0
+          ? `${pathName}?${searchParams.toString()}`
+          : `${pathName}`;
+
+      router.replace(urlString, { locale: selectedOption.value });
+    }
   };
 
   const options = routing.locales.map(cur => ({
