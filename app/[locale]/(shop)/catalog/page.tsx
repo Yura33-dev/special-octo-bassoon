@@ -123,7 +123,7 @@ export default async function CatalogPage({ params }: ICatalogPageProps) {
             {catalogPageData.translatedData[params.locale].h1}
           </h1>
 
-          <CatalogGrid categories={categories} />
+          <CatalogGrid categories={categories} locale={params.locale} />
         </Container>
       </section>
 

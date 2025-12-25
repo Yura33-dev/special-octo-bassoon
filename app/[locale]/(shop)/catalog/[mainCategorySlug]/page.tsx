@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
 import { routing } from '@/i18n/routing';
@@ -91,8 +90,6 @@ export async function generateMetadata({
 export default async function MainCategoryPage({
   params,
 }: IMainCategoryPageProps) {
-  const locale = (await getLocale()) as locale;
-
   const [catalogPageData, category] = await Promise.all([
     getPageDataByName('CatalogPage'),
     getCategoryBySlug(params.mainCategorySlug, routing.locales),
@@ -105,12 +102,12 @@ export default async function MainCategoryPage({
   const generateBreadCrumbs = [
     '',
     `catalog`,
-    `catalog/${category?.slug[locale]}`,
+    `catalog/${category?.slug[params.locale]}`,
   ];
 
   const generateBreadTitles = [
-    ...catalogPageData.translatedData[locale].breadcrumbTitles,
-    category.name[locale],
+    ...catalogPageData.translatedData[params.locale].breadcrumbTitles,
+    category.name[params.locale],
   ];
 
   return (
@@ -127,14 +124,15 @@ export default async function MainCategoryPage({
           <CatalogGrid
             parentSlug={params.mainCategorySlug}
             categories={category.childCategories}
+            locale={params.locale}
           />
 
-          {category.meta[locale].seoText && (
+          {category.meta[params.locale].seoText && (
             <div className='l-container ql-snow'>
               <div
                 className='ql-editor mt-20'
                 dangerouslySetInnerHTML={{
-                  __html: category.meta[locale].seoText,
+                  __html: category.meta[params.locale].seoText ?? '',
                 }}
               ></div>
             </div>

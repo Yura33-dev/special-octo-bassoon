@@ -32,6 +32,8 @@ export const PRODUCT_FETCH_FAILED = 'Failed to fetch product';
 export const PRODUCTS_BY_CATEGORY_ID_FAILED =
   'Failed to fetch products by category ID:';
 export const LATEST_PRODUCTS_FETCH_FAILED = 'Failed to fetch latest products.';
+export const LABELS_PRODUCTS_FETCH_FAILED =
+  'Failed to fetch products with labels';
 
 {
   /* Filters  */

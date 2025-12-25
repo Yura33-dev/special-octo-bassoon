@@ -137,7 +137,7 @@ export default function Filter({ filters }: IFilterProps) {
       animate={isFilterExpand ? 'open' : 'closed'}
       transition={{ duration: 0.3, ease: 'linear' }}
       className={clsx(
-        'basis-auto flex-shrink-0 p-2 bg-white/60 border-gray-300 border-[1px] rounded-md mt-12 overflow-hidden',
+        'basis-auto flex-shrink-0 p-2 bg-white/60 border-gray-300 border-[1px] rounded-md lg:mt-12 overflow-hidden',
         'lg:basis-[310px]',
         hasMounted && isDesktop && 'sticky top-20',
         hasMounted && isDesktop && '!h-auto'

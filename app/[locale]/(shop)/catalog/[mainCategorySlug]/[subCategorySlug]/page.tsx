@@ -1,10 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
-import { Suspense } from 'react';
 
 import Container from '@/components/shared/Container';
-import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { routing } from '@/i18n/routing';
 import {
   getAllProductsByCategoryId,
@@ -181,18 +179,10 @@ export default async function SubcategoryPage({
                 {catalogPageData.translatedData[locale].h1}
               </h1>
 
-              <Suspense
-                fallback={
-                  <div className='flex justify-center'>
-                    <CircleLoader />
-                  </div>
-                }
-              >
-                <ProductsList
-                  products={products}
-                  paginationData={paginationData}
-                />
-              </Suspense>
+              <ProductsList
+                products={products}
+                paginationData={paginationData}
+              />
             </div>
           </div>
 
