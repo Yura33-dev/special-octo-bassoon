@@ -1,20 +1,21 @@
-import { getLocale } from 'next-intl/server';
-
 import { Link } from '@/i18n/routing';
-import { ICategoryMapped } from '@/types';
+import { getPageDataByName } from '@/lib/api';
+import { ICategoryMapped, locale } from '@/types';
 
 interface ICatalogProps {
   categories:
     | Array<ICategoryMapped>
     | ICategoryMapped['childCategories'][number][];
   parentSlug?: string | null;
+  locale: locale;
 }
 
 export default async function CatalogGrid({
   categories,
   parentSlug = null,
+  locale,
 }: ICatalogProps) {
-  const locale = await getLocale();
+  const salesPageData = await getPageDataByName('SalesPage');
 
   return (
     <ul
@@ -61,6 +62,35 @@ export default async function CatalogGrid({
           </li>
         );
       })}
+      {salesPageData && (
+        <li
+          style={{
+            backgroundImage: `url(${salesPageData.translatedData[locale].meta.image})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+          }}
+          className='overflow-hidden relative rounded-md 
+                    after:content-[""] after:absolute after:z-[2]  after:block after:w-full after:h-full 
+                    after:duration-150 after:transition-colors after:bg-black/40 hover:after:bg-black/50'
+        >
+          <Link
+            href={'catalog/sales'}
+            className='group flex w-full h-full justify-center items-end 
+                      text-2xl font-bold text-white uppercase p-2 
+                      absolute z-[3]'
+          >
+            <h3
+              className='relative text-xl font-medium mb-3
+                            after:content-[""] after:block after:w-full after:max-w-0 after:h-[2px] after:bg-accent after:transition-all
+                            after:duration-150 after:absolute after:bottom-[-4px] after:left-1/2 after:-translate-x-1/2 
+                            group-hover:after:max-w-full'
+            >
+              {salesPageData.translatedData[locale].h1}
+            </h3>
+          </Link>
+        </li>
+      )}
     </ul>
   );
 }

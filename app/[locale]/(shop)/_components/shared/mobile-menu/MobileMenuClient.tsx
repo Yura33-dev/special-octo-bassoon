@@ -1,8 +1,8 @@
 'use client';
 
 import clsx from 'clsx';
-import { X } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { Percent, X } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 
 import LocaleSwitcher from '@/components/shared/LocaleSwitcher';
 import { Link, usePathname } from '@/i18n/routing';
@@ -23,6 +23,9 @@ export default function MobileMenuClient({
 }: IMobileMenuClientProps) {
   const isMobileMenuOpen = useGlobalStore(state => state.isMobileMenuOpen);
   const closeMobileMenu = useGlobalStore(state => state.mobileMenuClose);
+
+  const t = useTranslations('SalesPage');
+
   const locale = useLocale();
 
   const pathName = usePathname();
@@ -81,6 +84,21 @@ export default function MobileMenuClient({
                 </Link>
               </li>
             ))}
+
+            <li className='px-4 mt-6'>
+              <h3 className='text-primary'>
+                <Link
+                  href={'/catalog/sales'}
+                  className='flex items-center lg:justify-between p-2 gap-2 leading-tight rounded-md bg-accent text-foreground transition-colors'
+                  onClick={handleClick}
+                >
+                  {t('SalesTitle')}
+                  <span>
+                    <Percent size={18} />
+                  </span>
+                </Link>
+              </h3>
+            </li>
           </ul>
 
           {settings && settings.contacts.phones.length > 0 && (

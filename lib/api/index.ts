@@ -30,11 +30,13 @@ import { deleteProducerById } from './producers/deleteProducerById';
 import { getAllProducers } from './producers/getAllProducers';
 import { getProducerById } from './producers/getProducerById';
 import { getProducersByCategoryId } from './producers/getProducersByCategoryId';
+import { getProducersFromProducts } from './producers/getProducersFromProducts';
 import { patchProducerById } from './producers/patchProducerById';
 import { createProduct } from './products/createProduct';
 import { deleteProductById } from './products/deleteProductById';
 import { getAllProducts } from './products/getAllProducts';
 import { getAllProductsByCategoryId } from './products/getAllProductsByCategoryId';
+import { getAllProductsByLabels } from './products/getAllProductsByLabels';
 import { getLatestProducts } from './products/getLatestProducts';
 import { getProductById } from './products/getProductById';
 import { getProductBySlug } from './products/getProductBySlug';
@@ -53,6 +55,7 @@ export {
   getProductById,
   getProductBySlug,
   getProductsByName,
+  getAllProductsByLabels,
   getAllCategories,
   getLatestProducts,
   getAllSettings,
@@ -87,6 +90,7 @@ export {
   createProducer,
   getProducerById,
   patchProducerById,
+  getProducersFromProducts,
   deleteProducerById,
   patchSlideById,
   createSlide,
