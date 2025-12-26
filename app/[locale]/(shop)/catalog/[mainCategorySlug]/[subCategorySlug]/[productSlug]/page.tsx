@@ -7,7 +7,7 @@ import ProductImage from '@/app/[locale]/(shop)/_components/product-page/Product
 import ProductTabs from '@/app/[locale]/(shop)/_components/product-page/ProductTabs';
 import ProductVariants from '@/app/[locale]/(shop)/_components/product-page/ProductVariants';
 import SimilarProducts from '@/app/[locale]/(shop)/_components/product-page/similar-products/SimilarProducts';
-import BreadCrumbs from '@/app/[locale]/(shop)/_components/shared/breadcrumbs/BreadCrumbs';
+import BreadCrumbsWrapper from '@/app/[locale]/(shop)/_components/shared/breadcrumbs/BreadCrumbsWrapper';
 import Container from '@/components/shared/Container';
 import { routing } from '@/i18n/routing';
 import {
@@ -109,19 +109,11 @@ export default async function ProductPage({ params }: IProductPageProps) {
     product.translatedData[locale].name,
   ];
 
-  if (!product) {
-    notFound();
-  }
-
   return (
-    <>
-      <section className='my-4'>
-        <BreadCrumbs
-          breadcrumbLinks={generateBreadCrumbs}
-          breadcrumbTitles={generateBreadTitles}
-        />
-      </section>
-
+    <BreadCrumbsWrapper
+      breadcrumbLinks={generateBreadCrumbs}
+      breadcrumbTitles={generateBreadTitles}
+    >
       <section>
         <Container>
           <div className='flex flex-col gap-5 sm:flex-row md:gap-10'>
@@ -163,6 +155,6 @@ export default async function ProductPage({ params }: IProductPageProps) {
           <SimilarProducts categoryId={subcategory.id} />
         </Container>
       </section>
-    </>
+    </BreadCrumbsWrapper>
   );
 }

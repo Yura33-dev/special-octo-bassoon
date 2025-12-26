@@ -16,7 +16,7 @@ import { DEFAULT_PAGE, PRODUCT_DISPLAY_LIMIT } from '@/lib/constants';
 import { locale } from '@/types';
 
 import Filter from '../../../_components/catalog-page/Filter';
-import BreadCrumbs from '../../../_components/shared/breadcrumbs/BreadCrumbs';
+import BreadCrumbsWrapper from '../../../_components/shared/breadcrumbs/BreadCrumbsWrapper';
 import ProductsList from '../../../_components/subCategory-page/ProductsList';
 
 interface ISubcategoryPageProps {
@@ -162,14 +162,10 @@ export default async function SubcategoryPage({
   ];
 
   return (
-    <>
-      <section className='my-4'>
-        <BreadCrumbs
-          breadcrumbLinks={generateBreadCrumbs}
-          breadcrumbTitles={generateBreadTitles}
-        />
-      </section>
-
+    <BreadCrumbsWrapper
+      breadcrumbLinks={generateBreadCrumbs}
+      breadcrumbTitles={generateBreadTitles}
+    >
       <section>
         <Container>
           <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
@@ -198,6 +194,6 @@ export default async function SubcategoryPage({
           )}
         </Container>
       </section>
-    </>
+    </BreadCrumbsWrapper>
   );
 }

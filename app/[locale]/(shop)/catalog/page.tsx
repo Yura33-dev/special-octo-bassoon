@@ -6,7 +6,7 @@ import { getAllCategories, getPageDataByName } from '@/lib/api';
 import { config } from '@/lib/config';
 import { locale } from '@/types';
 
-import BreadCrumbs from '../_components/shared/breadcrumbs/BreadCrumbs';
+import BreadCrumbsWrapper from '../_components/shared/breadcrumbs/BreadCrumbsWrapper';
 import CatalogGrid from '../_components/shared/catalogGrid/CatalogGrid';
 
 export async function generateMetadata({
@@ -107,16 +107,12 @@ export default async function CatalogPage({ params }: ICatalogPageProps) {
   }
 
   return (
-    <>
-      <section className='my-4'>
-        <BreadCrumbs
-          breadcrumbLinks={['', 'catalog']}
-          breadcrumbTitles={
-            catalogPageData.translatedData[params.locale].breadcrumbTitles
-          }
-        />
-      </section>
-
+    <BreadCrumbsWrapper
+      breadcrumbLinks={['', 'catalog']}
+      breadcrumbTitles={
+        catalogPageData.translatedData[params.locale].breadcrumbTitles
+      }
+    >
       <section>
         <Container>
           <h1 className='text-center text-xl md:text-2xl mb-6 md:mb-8'>
@@ -339,6 +335,6 @@ export default async function CatalogPage({ params }: ICatalogPageProps) {
           </Container>
         </section>
       )}
-    </>
+    </BreadCrumbsWrapper>
   );
 }
