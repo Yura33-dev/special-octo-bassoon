@@ -7,7 +7,7 @@ import { getCategoryBySlug, getPageDataByName } from '@/lib/api';
 import { config } from '@/lib/config';
 import { locale } from '@/types';
 
-import BreadCrumbs from '../../_components/shared/breadcrumbs/BreadCrumbs';
+import BreadCrumbsWrapper from '../../_components/shared/breadcrumbs/BreadCrumbsWrapper';
 import CatalogGrid from '../../_components/shared/catalogGrid/CatalogGrid';
 
 interface IMainCategoryPageProps {
@@ -111,14 +111,10 @@ export default async function MainCategoryPage({
   ];
 
   return (
-    <>
-      <section className='my-4'>
-        <BreadCrumbs
-          breadcrumbLinks={generateBreadCrumbs}
-          breadcrumbTitles={generateBreadTitles}
-        />
-      </section>
-
+    <BreadCrumbsWrapper
+      breadcrumbLinks={generateBreadCrumbs}
+      breadcrumbTitles={generateBreadTitles}
+    >
       <section>
         <Container>
           <CatalogGrid
@@ -139,6 +135,6 @@ export default async function MainCategoryPage({
           )}
         </Container>
       </section>
-    </>
+    </BreadCrumbsWrapper>
   );
 }
