@@ -18,7 +18,7 @@ export default function CardImage({
   productLabels,
 }: ICardImageProps) {
   return (
-    <Link href={productLink} className='group'>
+    <Link href={productLink}>
       <div className='relative h-[200px] rounded-md overflow-hidden'>
         <Image
           src={productImage}
