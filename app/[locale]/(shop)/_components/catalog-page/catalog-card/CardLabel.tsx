@@ -15,8 +15,9 @@ export default function CardLabel({ labels }: ICardLabelProps) {
         <span
           key={index}
           className={clsx(
-            `badge h-auto w-auto px-2 py-1 rounded-md bg-accent border-none text-white text-base font-semibold
-              transition-colors duration-150 group-hover:bg-primary tracking-wide`
+            `badge h-auto w-auto px-2 py-1 rounded-md bg-accent border-none text-white font-semibold
+              transition-colors duration-150 tracking-wide text-sm`,
+            label === 'Розпродаж' && 'bg-red-600'
           )}
         >
           {label}

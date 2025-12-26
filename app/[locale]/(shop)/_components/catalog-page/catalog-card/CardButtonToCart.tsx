@@ -45,7 +45,8 @@ export default function CardButtonToCart({
 
   return (
     <button
-      className='btn bg-accent border-none text-foreground mb-5 hover:bg-primary hover:text-white uppercase text-sm sm:text-base'
+      className='btn bg-accent border-none text-foreground hover:bg-primary hover:text-white 
+                    uppercase text-sm sm:text-base flex-0'
       onClick={handleAddToCart}
     >
       {t('buttonToCart')}
