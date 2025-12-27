@@ -21,6 +21,8 @@ export async function updateProduct(
         ? new mongoose.Types.ObjectId(packaging.packId)
         : null,
       price: packaging.price ? packaging.price * 100 : null,
+      oldPrice: packaging.oldPrice ? packaging.oldPrice * 100 : 0,
+      inStock: packaging.inStock,
     }));
 
     const normalizedProduct = {

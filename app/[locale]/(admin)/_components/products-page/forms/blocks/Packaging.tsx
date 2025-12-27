@@ -97,7 +97,7 @@ export default function Packaging({
 
             <div className='mb-4 flex flex-col md:flex-row gap-2'>
               <Input
-                title='Кількість на складі'
+                title='На складі'
                 name={`packaging.items.[${index}].quantity`}
                 type='text'
                 onChange={formik.handleChange}
@@ -126,6 +126,24 @@ export default function Packaging({
                 className='sm:max-w-72'
                 labelClassName='min-h-[72px] md:min-h-[88px] basis-1/2'
               />
+
+              <Input
+                placeholder={
+                  producer && producer.exchangeRate && producer.currency
+                    ? `Курс: ${producer?.exchangeRate} / ${producer?.currency}`
+                    : 'Введіть ціну'
+                }
+                title='Стара ціна'
+                name={`packaging.items[${index}].oldPrice`}
+                type='text'
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.packaging.items[index].oldPrice}
+                touched={formik.touched}
+                errors={formik.errors}
+                className='sm:max-w-72'
+                labelClassName='min-h-[72px] md:min-h-[88px] basis-1/2'
+              />
             </div>
 
             <div className='min-h-[68px]'>
@@ -133,11 +151,25 @@ export default function Packaging({
                 title='Пакування за замовчуванням'
                 falseTitle='Ні'
                 trueTitle='Так'
-                onClick={() =>
-                  formik.values.packaging.default === null
-                    ? formik.setFieldValue('packaging.default', pack.packId)
-                    : formik.setFieldValue('packaging.default', null)
-                }
+                onClick={() => {
+                  if (formik.values.packaging.default === null) {
+                    const updatedItems = formik.values.packaging.items.map(
+                      (item, idx) =>
+                        idx === index ? { ...item, inStock: true } : item
+                    );
+
+                    formik.setValues({
+                      ...formik.values,
+                      packaging: {
+                        ...formik.values.packaging,
+                        default: pack.packId,
+                        items: updatedItems,
+                      },
+                    });
+                  } else {
+                    formik.setFieldValue('packaging.default', null);
+                  }
+                }}
                 value={
                   !!formik.values.packaging.default &&
                   !!pack.packId &&
@@ -156,6 +188,22 @@ export default function Packaging({
                     {String(formik.errors.packaging.default)}
                   </p>
                 )}
+            </div>
+
+            <div className='min-h-[68px]'>
+              <CustomCheckBox
+                title='Пакування в наявності'
+                falseTitle='Ні'
+                trueTitle='Так'
+                onClick={() =>
+                  formik.setFieldValue(
+                    `packaging.items[${index}].inStock`,
+                    !pack.inStock
+                  )
+                }
+                value={pack.inStock ?? false}
+                disabled={formik.values.packaging.default === pack.packId}
+              />
             </div>
           </li>
         ))}
