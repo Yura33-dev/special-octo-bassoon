@@ -3,9 +3,9 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import UseDiscountLabels from '@/lib/hooks/useDiscountLabels';
+import { UseDiscountLabels } from '@/lib/hooks';
 import { formattedPackValue, getProductLinks } from '@/lib/utils';
-import { IProductMapped, locale } from '@/types';
+import { IProductMapped, IProductPackItemMapped, locale } from '@/types';
 
 import CardButtonToCart from './CardButtonToCart';
 import CardCategories from './CardCategories';
@@ -21,26 +21,24 @@ export default function ProductCard({ product }: IProductCardProps) {
   const locale = useLocale() as locale;
   const t = useTranslations('ProductCard');
 
-  const [selectedPackId, setSelectedPackId] = useState<string>(
-    product.packaging.default?.id ?? product.packaging.items[0].packId.id
+  const [selectedPack, setSelectedPack] = useState<IProductPackItemMapped>(
+    product.packaging.items.find(
+      pack => pack.packId === product.packaging.default
+    ) ?? product.packaging.items[0]
   );
 
   const { appliedLabels, handleUpdateLabels } = UseDiscountLabels({
     labels: product.labels,
   });
 
-  const handleChangeActivePackaging = (packId: string) => {
-    setSelectedPackId(packId);
+  const handleChangeActivePackaging = (pack: IProductPackItemMapped) => {
+    setSelectedPack(pack);
   };
 
   const { mainCategory, subCategory, productLink } = getProductLinks(
     product,
     locale
   );
-
-  const selectedPack =
-    product.packaging.items.find(pack => pack.packId.id === selectedPackId) ??
-    product.packaging.items[0];
 
   return (
     <>
@@ -79,7 +77,7 @@ export default function ProductCard({ product }: IProductCardProps) {
 
           <CardButtonToCart
             product={product}
-            activePackaging={selectedPackId}
+            activePackaging={selectedPack.packId.id}
           />
         </div>
 
@@ -87,8 +85,8 @@ export default function ProductCard({ product }: IProductCardProps) {
 
         <CardPackVariants
           producer={product.producer}
-          availablePackaging={product.packaging.items}
-          activePackaging={selectedPackId}
+          packaging={product.packaging.items}
+          activePackaging={selectedPack}
           handleChangeActivePackaging={handleChangeActivePackaging}
           productLink={productLink}
         />

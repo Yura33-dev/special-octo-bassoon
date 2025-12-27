@@ -7,34 +7,21 @@ import { IProducerMapped, IProductPackItemMapped } from '@/types';
 
 interface ICardPackVariantsProps {
   producer: IProducerMapped;
-  availablePackaging: Array<IProductPackItemMapped>;
-  activePackaging: string;
+  packaging: Array<IProductPackItemMapped>;
+  activePackaging: IProductPackItemMapped;
   productLink: string;
-  handleChangeActivePackaging: (packId: string) => void;
+  handleChangeActivePackaging: (pack: IProductPackItemMapped) => void;
 }
 
 export default function CardPackVariants({
   producer,
-  availablePackaging,
+  packaging,
   activePackaging,
   handleChangeActivePackaging,
   productLink,
 }: ICardPackVariantsProps) {
   const locale = useLocale();
   const t = useTranslations('ProductCard');
-
-  const packagingInStock = availablePackaging.filter(
-    packVariant => packVariant.quantity > 0 || packVariant.quantity === null
-  );
-
-  const visiblePackaging =
-    packagingInStock.length > 3
-      ? packagingInStock.slice(0, 3)
-      : packagingInStock;
-
-  const activePack =
-    visiblePackaging.find(pack => pack.packId.id === activePackaging) ??
-    visiblePackaging[0];
 
   return (
     <div
@@ -44,20 +31,18 @@ export default function CardPackVariants({
     >
       <h4 className='mb-1 font-semibold'>{t('packagingTitle')}</h4>
       <ul className='text-sm flex flex-col gap-1'>
-        {visiblePackaging.length > 0 &&
-          visiblePackaging.map(packageVariant => (
+        {packaging.length > 0 &&
+          packaging.map(packageVariant => (
             <li key={packageVariant.packId.id}>
               <button
                 type='button'
                 className={clsx(
                   `w-full flex text-left text-xs gap-2 border-[1px] rounded-md px-2 py-1 transition-colors`,
-                  activePack.packId.id === packageVariant.packId.id
+                  activePackaging.packId.id === packageVariant.packId.id
                     ? 'border-accent'
                     : 'border-gray-200'
                 )}
-                onClick={() =>
-                  handleChangeActivePackaging(packageVariant.packId.id)
-                }
+                onClick={() => handleChangeActivePackaging(packageVariant)}
               >
                 <span className='basis-2/3 max-w-2/3 truncate'>
                   {formattedPackValue(
@@ -71,7 +56,7 @@ export default function CardPackVariants({
             </li>
           ))}
 
-        {availablePackaging.length > 3 && (
+        {packaging.length > 3 && (
           <li className='rounded-md'>
             <Link
               href={productLink}
