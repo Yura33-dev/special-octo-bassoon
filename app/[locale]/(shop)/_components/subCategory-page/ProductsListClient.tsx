@@ -9,7 +9,8 @@ import Pagination from '@/components/shared/Pagination';
 import { useRouter } from '@/i18n/routing';
 import { IPagination, IProductMapped } from '@/types';
 
-import Card from '../catalog-page/catalog-card/Card';
+import CardWrapperElement from '../shared/catalogGrid/product-card/CardWrapperElement';
+import ProductCard from '../shared/catalogGrid/product-card/ProductCard';
 
 interface ICatalogGridProps {
   products: Array<IProductMapped>;
@@ -49,7 +50,9 @@ export default function ProductsListClient({
       ) : (
         <ul className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 '>
           {products.map(product => (
-            <Card key={product.id} product={product} />
+            <CardWrapperElement key={product.id}>
+              <ProductCard product={product} />
+            </CardWrapperElement>
           ))}
         </ul>
       )}

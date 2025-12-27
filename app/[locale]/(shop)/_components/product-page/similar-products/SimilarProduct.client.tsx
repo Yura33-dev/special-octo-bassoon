@@ -7,7 +7,7 @@ import 'swiper/css';
 
 import { IProductMapped } from '@/types';
 
-import ProductSlide from '../../home-page/new-products-swiper/NewProductSlide';
+import ProductCard from '../../shared/catalogGrid/product-card/ProductCard';
 
 interface ISimilarProductClientProps {
   products: IProductMapped[];
@@ -51,8 +51,8 @@ export default function SimilarProductClient({
       className='!pb-5 !px-2 !overflow-visible !overflow-x-clip !overflow-y-visible'
     >
       {products.map(product => (
-        <SwiperSlide key={product.id} tag='li'>
-          <ProductSlide product={product} />
+        <SwiperSlide key={product.id} tag='li' className='bg-white'>
+          <ProductCard product={product} />
         </SwiperSlide>
       ))}
     </Swiper>

@@ -17,7 +17,7 @@ import { locale } from '@/types';
 
 import Filter from '../../../_components/catalog-page/Filter';
 import BreadCrumbsWrapper from '../../../_components/shared/breadcrumbs/BreadCrumbsWrapper';
-import ProductsList from '../../../_components/subCategory-page/ProductsList';
+import ProductsListClient from '../../../_components/subCategory-page/ProductsListClient';
 
 interface ISubcategoryPageProps {
   params: {
@@ -175,7 +175,7 @@ export default async function SubcategoryPage({
                 {catalogPageData.translatedData[locale].h1}
               </h1>
 
-              <ProductsList
+              <ProductsListClient
                 products={products}
                 paginationData={paginationData}
               />
