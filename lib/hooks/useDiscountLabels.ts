@@ -6,7 +6,7 @@ interface IUseDiscountLabelsProps {
   labels: string[];
 }
 
-export default function UseDiscountLabels({ labels }: IUseDiscountLabelsProps) {
+export function UseDiscountLabels({ labels }: IUseDiscountLabelsProps) {
   const [appliedLabels, setAppliedLabels] = useState<string[]>(labels);
 
   const handleUpdateLabels = useCallback((value: boolean) => {
