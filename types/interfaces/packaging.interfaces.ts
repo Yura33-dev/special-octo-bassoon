@@ -49,18 +49,24 @@ interface IProductPackItemsApi {
   packId: string;
   quantity: number;
   price: number;
+  oldPrice: number;
+  inStock: boolean;
 }
 
 interface IProductPackItemsPopulated {
   packId: IPackagingPopulated;
   quantity: number;
   price: number;
+  oldPrice: number;
+  inStock: boolean;
 }
 
 export interface IProductPackItemMapped {
   packId: IPackagingMapped;
   quantity: number;
   price: number;
+  oldPrice: number;
+  inStock: boolean;
 }
 
 export interface ICreatePackagingFormField {
@@ -83,5 +89,7 @@ export interface IPackaginInProduct {
     packId: string | null;
     quantity: number | null;
     price: number | null;
+    oldPrice: number | null;
+    inStock: boolean | null;
   }>;
 }

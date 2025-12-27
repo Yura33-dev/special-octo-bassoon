@@ -71,6 +71,8 @@ export const validationProductSchema: Yup.ObjectSchema<IProductForm> =
               .positive(ONLY_POSITIVE_NUMBERS)
               .required(MANDATORY_FIELD)
               .typeError(ONLY_NUMBERS),
+            oldPrice: Yup.number().default(0).typeError(ONLY_NUMBERS),
+            inStock: Yup.boolean().default(true),
           })
         )
         .min(1, MIN_ARRAY_LENGTH_1)

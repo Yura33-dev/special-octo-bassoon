@@ -95,7 +95,19 @@ export default function ProductForm({
         packId: pack.packId.id,
         quantity: pack.quantity,
         price: Number((pack.price / 100).toFixed(2)),
-      })) ?? [{ packId: null, quantity: null, price: null }],
+        oldPrice: Number(
+          (pack.oldPrice ? pack.oldPrice / 100 : 0 / 100).toFixed(2)
+        ),
+        inStock: pack.inStock ?? true,
+      })) ?? [
+        {
+          packId: null,
+          quantity: null,
+          price: null,
+          oldPrice: null,
+          inStock: true,
+        },
+      ],
     },
 
     imgUrl: product?.imgUrl ?? null,
@@ -116,7 +128,13 @@ export default function ProductForm({
   const handleAddPackaging = () => {
     formik.setFieldValue('packaging.items', [
       ...formik.values.packaging.items,
-      { packId: null, quantity: null, price: null },
+      {
+        packId: null,
+        quantity: null,
+        price: null,
+        oldPrice: null,
+        inStock: true,
+      },
     ]);
   };
 

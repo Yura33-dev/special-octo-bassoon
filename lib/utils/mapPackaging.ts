@@ -48,6 +48,8 @@ export function mapPackagingInProduct(
       },
       quantity: packItem.quantity,
       price: packItem.price,
+      oldPrice: packItem.oldPrice,
+      inStock: packItem.inStock,
     })),
   };
 }
