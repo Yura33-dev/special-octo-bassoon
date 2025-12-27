@@ -28,7 +28,7 @@ export default function Labels({ title, formik }: ILabelsProps) {
       <div className=' flex justify-start items-center gap-6'>
         {[
           { title: 'Лейбл ТОП', label: 'top' },
-          { title: 'Лейбл Розпродаж', label: 'sale' },
+          // { title: 'Лейбл Розпродаж', label: 'sale' },
         ].map(btn => (
           <button
             key={btn.label}
