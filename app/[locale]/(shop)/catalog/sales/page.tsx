@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 
 import Container from '@/components/shared/Container';
 import {
-  // getAllProducers,
   getAllProductsByLabels,
   getFiltersFromProducts,
   getPageDataByName,
@@ -15,7 +14,7 @@ import { locale } from '@/types';
 
 import Filter from '../../_components/catalog-page/Filter';
 import BreadCrumbsWrapper from '../../_components/shared/breadcrumbs/BreadCrumbsWrapper';
-import ProductsList from '../../_components/subCategory-page/ProductsList';
+import ProductsListClient from '../../_components/subCategory-page/ProductsListClient';
 
 interface ISalesPageProps {
   params: {
@@ -146,7 +145,7 @@ export default async function SalesPage({
                 {salesPageData.translatedData[params.locale].h1}
               </h1>
 
-              <ProductsList
+              <ProductsListClient
                 products={products}
                 paginationData={paginationData}
               />

@@ -7,9 +7,9 @@ import 'swiper/css';
 
 import { IProductMapped } from '@/types';
 
-import NewProductSlide from './NewProductSlide';
 import NewProductSlideSkeletons from './NewProductSlideSkeleton';
 import NewProductsSwiperButton from './NewProductsSwiperButton';
+import ProductCard from '../../shared/catalogGrid/product-card/ProductCard';
 
 interface INewProductsSwiperClientProps {
   products: Array<IProductMapped>;
@@ -76,12 +76,8 @@ export default function NewProductsSwiperClient({
 
         {isSwiperInit &&
           products.map(product => (
-            <SwiperSlide
-              key={product.id}
-              tag='li'
-              className='card bg-background'
-            >
-              <NewProductSlide product={product} />
+            <SwiperSlide key={product.id} tag='li' className='card bg-white'>
+              <ProductCard product={product} />
             </SwiperSlide>
           ))}
       </Swiper>
