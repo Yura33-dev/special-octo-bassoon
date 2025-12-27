@@ -2,6 +2,7 @@ import { calculatePaginationData } from './calculatePagination';
 import { extractFilters } from './extractFilters';
 import { formattedPackValue } from './formattedPackValue';
 import { formattedPrice } from './formattedPrice';
+import { formattedDiscount } from './formattedPrice';
 import { getLocalizedSlugs } from './getLocalizedSlugs';
 import { getProductLinks } from './getProductLinks';
 import { mapCategory } from './mapCategory';
@@ -16,6 +17,7 @@ export {
   calculatePaginationData,
   getProductLinks,
   formattedPrice,
+  formattedDiscount,
   mapProduct,
   mapCategory,
   getLocalizedSlugs,
