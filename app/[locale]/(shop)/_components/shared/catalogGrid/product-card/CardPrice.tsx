@@ -1,8 +1,11 @@
 'use client';
+
 import { useEffect, useMemo } from 'react';
 
-import { formattedDiscount, formattedPrice } from '@/lib/utils';
+import { formattedPrice } from '@/lib/utils';
 import { IProducerMapped, IProductPackItemMapped } from '@/types';
+
+import CardLabelDiscount from './CardLabelDiscount';
 
 interface ICardPriceProps {
   producer: IProducerMapped;
@@ -51,9 +54,7 @@ export default function CardPrice({
               {formattedPrice(oldPrice)}
             </span>
 
-            <span className='block bg-red-600 text-white text-xs rounded-md w-max px-1.5 py-0.5'>
-              -{formattedDiscount(oldPrice, price)}
-            </span>
+            <CardLabelDiscount oldPrice={oldPrice} price={price} />
           </>
         )}
       </p>
