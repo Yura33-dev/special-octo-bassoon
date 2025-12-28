@@ -3,13 +3,17 @@ import { notFound } from 'next/navigation';
 
 import Container from '@/components/shared/Container';
 import {
-  getAllProductsByLabels,
   getFiltersFromProducts,
   getPageDataByName,
   getProducersFromProducts,
+  getProductsByLabelsAndDiscounts,
 } from '@/lib/api';
 import { config } from '@/lib/config';
-import { DEFAULT_PAGE, PRODUCT_DISPLAY_LIMIT } from '@/lib/constants';
+import {
+  DEFAULT_PAGE,
+  PRODUCT_DISPLAY_LIMIT,
+  PRODUCT_LABELS,
+} from '@/lib/constants';
 import { locale } from '@/types';
 
 import Filter from '../../_components/catalog-page/Filter';
@@ -118,15 +122,30 @@ export default async function SalesPage({
   const page = parseInt(searchParams.page || DEFAULT_PAGE);
   const limit = parseInt(searchParams.limit || PRODUCT_DISPLAY_LIMIT);
 
+  const filterDiscountProducts = {
+    visible: true,
+    $or: [
+      { labels: { $in: PRODUCT_LABELS } },
+      {
+        'packaging.items': {
+          $elemMatch: {
+            oldPrice: { $exists: true, $gt: 0 },
+          },
+        },
+      },
+    ],
+  };
+
   const [{ products, paginationData }, { filters }, producers] =
     await Promise.all([
-      getAllProductsByLabels(['top', 'sale'], page, limit, searchParams),
-      getFiltersFromProducts(params.locale, {
-        labels: { $in: ['top', 'sale'] },
-      }),
-      getProducersFromProducts(params.locale, {
-        labels: { $in: ['top', 'sale'] },
-      }),
+      getProductsByLabelsAndDiscounts(
+        PRODUCT_LABELS,
+        page,
+        limit,
+        searchParams
+      ),
+      getFiltersFromProducts(params.locale, filterDiscountProducts),
+      getProducersFromProducts(params.locale, filterDiscountProducts),
     ]);
 
   return (
