@@ -40,6 +40,7 @@ import { getAllProductsByLabels } from './products/getAllProductsByLabels';
 import { getLatestProducts } from './products/getLatestProducts';
 import { getProductById } from './products/getProductById';
 import { getProductBySlug } from './products/getProductBySlug';
+import { getProductsByLabelsAndDiscounts } from './products/getProductsByLabelsAndDiscounts';
 import { getProductsByName } from './products/getProductsByName';
 import { getProductsSiteMap } from './products/getProductsSiteMap';
 import { updateProduct } from './products/updateProduct';
@@ -102,4 +103,5 @@ export {
   archiveOrderById,
   deleteOrderById,
   getProductsSiteMap,
+  getProductsByLabelsAndDiscounts,
 };

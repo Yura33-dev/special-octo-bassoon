@@ -1,15 +1,19 @@
 'use server';
 
-import { PRODUCTS_BY_CATEGORY_ID_FAILED } from '@/lib/constants';
+import {
+  DEFAULT_PAGE,
+  LABELS_PRODUCTS_FETCH_FAILED,
+  PRODUCT_DISPLAY_LIMIT,
+} from '@/lib/constants';
 import dbConnect from '@/lib/db';
 import { calculatePaginationData, mapProduct } from '@/lib/utils';
 import { Filter, Producer, Product } from '@/models';
 import { IProductPopulated, queryType } from '@/types';
 
-export async function getAllProductsByCategoryId(
-  categoryId: string,
-  page: number = 1,
-  limit: number = 9,
+export async function getProductsByLabelsAndDiscounts(
+  labels: string[],
+  page: number = parseInt(DEFAULT_PAGE),
+  limit: number = parseInt(PRODUCT_DISPLAY_LIMIT),
   filter: { [key: string]: string | string[] | undefined } = {}
 ) {
   try {
@@ -24,9 +28,17 @@ export async function getAllProductsByCategoryId(
     );
 
     const query: queryType = {
-      categories: categoryId,
       visible: true,
-      'packaging.items.inStock': true,
+      $or: [
+        { labels: { $in: labels } },
+        {
+          'packaging.items': {
+            $elemMatch: {
+              oldPrice: { $exists: true, $gt: 0 },
+            },
+          },
+        },
+      ],
     };
 
     if (parsedFilter.producer) {
@@ -83,7 +95,6 @@ export async function getAllProductsByCategoryId(
       Product.countDocuments(query),
       Product.find(query)
         .sort({
-          labels: -1,
           createdAt: -1,
           _id: -1,
         })
@@ -103,12 +114,14 @@ export async function getAllProductsByCategoryId(
     if (products.length > 0) {
       const mappedProducts = products.map(product => {
         const mappedProduct = mapProduct(product);
+
         mappedProduct.packaging.items = mappedProduct.packaging.items.filter(
           pack => pack.inStock === true
         );
 
         return mappedProduct;
       });
+
       return { products: mappedProducts, paginationData };
     }
 
@@ -124,7 +137,7 @@ export async function getAllProductsByCategoryId(
       },
     };
   } catch (e) {
-    console.error(PRODUCTS_BY_CATEGORY_ID_FAILED, e);
+    console.error(LABELS_PRODUCTS_FETCH_FAILED, e);
     return {
       products: [],
       paginationData: {
