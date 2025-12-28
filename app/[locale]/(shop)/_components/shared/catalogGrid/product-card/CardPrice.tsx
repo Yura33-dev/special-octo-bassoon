@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
+import { UsePackPrice } from '@/lib/hooks';
 import { formattedPrice } from '@/lib/utils';
 import { IProducerMapped, IProductPackItemMapped } from '@/types';
 
@@ -18,20 +19,11 @@ export default function CardPrice({
   selectedPack,
   setDiscountLabel,
 }: ICardPriceProps) {
-  const { price, oldPrice, isDiscountExist } = useMemo(() => {
-    const exchangeRate = producer.exchangeRate ?? 1;
-
-    const calculatedPrice = selectedPack.price * exchangeRate;
-    const calculatedOldPrice = selectedPack.oldPrice
-      ? selectedPack.oldPrice * exchangeRate
-      : null;
-
-    return {
-      price: calculatedPrice,
-      oldPrice: calculatedOldPrice,
-      isDiscountExist: !!calculatedOldPrice,
-    };
-  }, [producer.exchangeRate, selectedPack.price, selectedPack.oldPrice]);
+  const { price, oldPrice, isDiscountExist } = UsePackPrice({
+    exchange: producer.exchangeRate,
+    price: selectedPack.price,
+    oldPrice: selectedPack.oldPrice,
+  });
 
   useEffect(() => {
     if (isDiscountExist) {
