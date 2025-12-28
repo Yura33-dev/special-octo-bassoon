@@ -2,9 +2,10 @@
 
 import clsx from 'clsx';
 import { useLocale, useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
+import { UsePackPrice } from '@/lib/hooks';
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
 import { useCartStore } from '@/providers/cart.provider';
 import {
@@ -12,6 +13,8 @@ import {
   IProductMapped,
   IProductPackItemMapped,
 } from '@/types';
+
+import CardLabelDiscount from '../shared/catalogGrid/product-card/CardLabelDiscount';
 
 interface IPackagingProps {
   product: IProductMapped;
@@ -24,12 +27,14 @@ export default function ProductVariants({ product }: IPackagingProps) {
 
   const addProductToCart = useCartStore(state => state.addProduct);
 
-  const [activePack, setActivePack] = useState<IProductPackItemMapped>(
-    product.packaging.items[0]
+  const [selectedPack, setSelectedPack] = useState<IProductPackItemMapped>(
+    product.packaging.items.find(
+      pack => pack.packId.id === product.packaging.default.id
+    ) ?? product.packaging.items[0]
   );
 
-  const toggleActivePack = (pack: IProductPackItemMapped) => {
-    setActivePack(pack);
+  const handleChangeActivePackaging = (pack: IProductPackItemMapped) => {
+    setSelectedPack(pack);
   };
 
   const handleAddToCart = () => {
@@ -39,7 +44,7 @@ export default function ProductVariants({ product }: IPackagingProps) {
       imgUrl: product.imgUrl,
       translatedData: product.translatedData,
       categories: product.categories,
-      packVariant: { ...activePack, orderedQuantity: 1 },
+      packVariant: { ...selectedPack, orderedQuantity: 1 },
     };
 
     addProductToCart(productObject);
@@ -50,30 +55,42 @@ export default function ProductVariants({ product }: IPackagingProps) {
     );
   };
 
-  const sortedPackaging = product.packaging.items.toSorted(
-    (first, second) =>
-      first.packId.translatedData[locale].measureValue -
-      second.packId.translatedData[locale].measureValue
-  );
+  const sortedPackaging = useMemo(() => {
+    return [...product.packaging.items].sort((a, b) => {
+      if (a.inStock !== b.inStock) {
+        return Number(a.inStock) - Number(b.inStock);
+      }
+
+      return (
+        a.packId.translatedData[locale].measureValue -
+        b.packId.translatedData[locale].measureValue
+      );
+    });
+  }, [product.packaging.items, locale]);
+
+  const { price, oldPrice, isDiscountExist } = UsePackPrice({
+    exchange: product.producer.exchangeRate,
+    price: selectedPack.price,
+    oldPrice: selectedPack.oldPrice,
+  });
 
   return (
     <>
       <h2 className='text-base mb-3'>{t2('ProductPackaging')}</h2>
       <ul className='mb-5 grid grid-cols-[repeat(auto-fill,_minmax(120px,_1fr))] gap-4 md:mb-10'>
         {sortedPackaging.map(pack => (
-          <li key={pack.packId.id}>
+          <li key={pack.packId.id} className='flex flex-col items-center gap-2'>
             <button
-              onClick={() => toggleActivePack(pack)}
+              onClick={() => handleChangeActivePackaging(pack)}
               className={clsx(
                 'text-sm p-1 rounded-md text-center border-[2px] bg-teal-600/5 transition-colors',
-                activePack.packId.id === pack.packId.id
+                selectedPack.packId.id === pack.packId.id
                   ? 'border-accent'
                   : 'border-gray-300',
-                pack.quantity <= 0 &&
-                  !!pack.quantity &&
-                  'border-gray-200 text-gray-400'
+                !pack.inStock &&
+                  'border-gray-200 text-gray-400 hover:cursor-not-allowed'
               )}
-              disabled={!!pack.quantity && pack.quantity <= 0}
+              disabled={!pack.inStock}
             >
               {formattedPackValue(
                 pack.packId.translatedData[locale].type,
@@ -81,31 +98,39 @@ export default function ProductVariants({ product }: IPackagingProps) {
                 pack.packId.translatedData[locale].measureIn
               )}
             </button>
+            {!pack.inStock && (
+              <span className='text-sm text-gray-600'>{t2('OutStock')}</span>
+            )}
           </li>
         ))}
       </ul>
 
-      <h2 className='text-2xl md:text-3xl font-medium flex flex-col gap-1 mb-5 md:mb-10'>
-        {formattedPrice(
-          product.producer.exchangeRate
-            ? activePack.price * product.producer.exchangeRate
-            : activePack.price
+      <div className='mb-5 md:mb-10'>
+        <h2 className='text-2xl md:text-3xl font-medium flex flex-col gap-1'>
+          {formattedPrice(price)}
+          {selectedPack.packId.showPricePerUnit && (
+            <span className='text-base md:text-sm font-normal'>
+              {(product.producer.exchangeRate
+                ? (selectedPack.price * product.producer.exchangeRate) /
+                  100 /
+                  selectedPack.packId.translatedData[locale].measureValue
+                : selectedPack.price /
+                  100 /
+                  selectedPack.packId.translatedData[locale].measureValue
+              ).toFixed(2)}{' '}
+              грн/
+              {selectedPack.packId.translatedData[locale].measureIn}
+            </span>
+          )}
+        </h2>
+
+        <h2 className='text-gray-400/80 line-through text-2xl'>
+          {oldPrice && <span>{formattedPrice(oldPrice)}</span>}
+        </h2>
+        {isDiscountExist && oldPrice && (
+          <CardLabelDiscount oldPrice={oldPrice} price={price} />
         )}
-        {activePack.packId.showPricePerUnit && (
-          <span className='text-base md:text-sm font-normal'>
-            {(product.producer.exchangeRate
-              ? (activePack.price * product.producer.exchangeRate) /
-                100 /
-                activePack.packId.translatedData[locale].measureValue
-              : activePack.price /
-                100 /
-                activePack.packId.translatedData[locale].measureValue
-            ).toFixed(2)}{' '}
-            грн/
-            {activePack.packId.translatedData[locale].measureIn}
-          </span>
-        )}
-      </h2>
+      </div>
 
       <button
         className='btn w-full lg:max-w-[150px] border-none bg-accent uppercase text-base hover:bg-primary hover:text-white'
