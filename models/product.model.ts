@@ -1,5 +1,6 @@
 import mongoose, { model, models } from 'mongoose';
 
+import { PRODUCT_LABELS } from '@/lib/constants';
 import {
   IFilterApi,
   IMetaData,
@@ -83,7 +84,7 @@ const productSchema = new mongoose.Schema<IProductApi>(
     categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     visible: { type: Boolean, required: false, default: true },
     producer: { type: mongoose.Schema.Types.ObjectId, ref: 'Producer' },
-    labels: [{ type: String, enum: ['top', 'sale'], default: [] }],
+    labels: [{ type: String, enum: PRODUCT_LABELS, default: [] }],
     imgUrl: { type: String, required: true },
     filters: [{ type: productFiltersSchema, default: [] }],
   },
