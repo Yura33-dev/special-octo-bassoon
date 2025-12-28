@@ -104,7 +104,7 @@ export default function ProductForm({
           packId: null,
           quantity: null,
           price: null,
-          oldPrice: null,
+          oldPrice: 0,
           inStock: true,
         },
       ],
@@ -132,7 +132,7 @@ export default function ProductForm({
         packId: null,
         quantity: null,
         price: null,
-        oldPrice: null,
+        oldPrice: 0,
         inStock: true,
       },
     ]);

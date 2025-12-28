@@ -96,7 +96,7 @@ export default function Packaging({
             )}
 
             <div className='mb-4 flex flex-col md:flex-row gap-2'>
-              <Input
+              {/* <Input
                 title='На складі'
                 name={`packaging.items.[${index}].quantity`}
                 type='text'
@@ -107,7 +107,7 @@ export default function Packaging({
                 errors={formik.errors}
                 className='sm:max-w-72'
                 labelClassName='min-h-[72px] md:min-h-[80px] basis-1/2'
-              />
+              /> */}
 
               <Input
                 placeholder={
