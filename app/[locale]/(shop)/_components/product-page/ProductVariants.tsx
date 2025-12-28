@@ -79,11 +79,11 @@ export default function ProductVariants({ product }: IPackagingProps) {
       <h2 className='text-base mb-3'>{t2('ProductPackaging')}</h2>
       <ul className='mb-5 grid grid-cols-[repeat(auto-fill,_minmax(120px,_1fr))] gap-4 md:mb-10'>
         {sortedPackaging.map(pack => (
-          <li key={pack.packId.id} className='flex flex-col items-center gap-2'>
+          <li key={pack.packId.id} className='flex flex-col items-center gap-1'>
             <button
               onClick={() => handleChangeActivePackaging(pack)}
               className={clsx(
-                'text-sm p-1 rounded-md text-center border-[2px] bg-teal-600/5 transition-colors',
+                'text-sm p-1 rounded-md text-center border-[2px] bg-teal-600/5 transition-colors relative',
                 selectedPack.packId.id === pack.packId.id
                   ? 'border-accent'
                   : 'border-gray-300',
@@ -100,6 +100,11 @@ export default function ProductVariants({ product }: IPackagingProps) {
             </button>
             {!pack.inStock && (
               <span className='text-sm text-gray-600'>{t2('OutStock')}</span>
+            )}
+            {pack.inStock && pack.oldPrice > 0 && (
+              <div className='bg-red-700 px-2.5 py-1 rounded-md text-xs text-white uppercase'>
+                {t2('Discount')}
+              </div>
             )}
           </li>
         ))}

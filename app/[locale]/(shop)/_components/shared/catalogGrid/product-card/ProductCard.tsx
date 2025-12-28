@@ -23,7 +23,7 @@ export default function ProductCard({ product }: IProductCardProps) {
 
   const [selectedPack, setSelectedPack] = useState<IProductPackItemMapped>(
     product.packaging.items.find(
-      pack => pack.packId === product.packaging.default
+      pack => pack.packId.id === product.packaging.default.id
     ) ?? product.packaging.items[0]
   );
 
