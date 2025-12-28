@@ -42,6 +42,7 @@ import {
   DEFAULT_PAGE,
   ORDERS_DISPLAY_LIMIT,
 } from './other.constant';
+import { PRODUCT_LABELS } from './productsLabels.constant';
 import {
   SLUG_REGEXP,
   FILE_NAME_REGEXP,
@@ -164,4 +165,5 @@ export {
   DELIVERY_METHOD,
   PAYMENT_METHOD,
   PHONE_NUMBER_REGEXP,
+  PRODUCT_LABELS,
 };

@@ -75,7 +75,7 @@ import {
   ISlideForm,
   ITranslatedSlideData,
 } from './interfaces/slide.interfaces';
-import { locale } from './types/global.types';
+import { locale, queryType } from './types/global.types';
 
 export type {
   ICategoryApi,
@@ -138,4 +138,4 @@ export type {
   IProducerForm,
   IProductInCart,
 };
-export type { locale };
+export type { locale, queryType };

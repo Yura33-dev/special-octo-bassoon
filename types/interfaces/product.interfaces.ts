@@ -74,7 +74,7 @@ export interface IMetaData {
   keywords?: string | null;
 }
 
-type Labels = 'top' | 'sale';
+type Labels = 'top';
 
 export interface IProductForm {
   translatedData: Record<string, ITranslatedData>;
