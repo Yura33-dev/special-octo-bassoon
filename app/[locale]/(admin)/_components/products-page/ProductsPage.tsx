@@ -79,6 +79,12 @@ export default async function ProductsPage({
     variants: [{ slug: 'top', title: 'ТОП' }],
   };
 
+  const discountFilterObject = {
+    slug: 'discount',
+    title: 'Знижка',
+    variants: [{ slug: 'true', title: 'Товар зі знижкою' }],
+  };
+
   return (
     <section>
       <Container>
@@ -105,9 +111,10 @@ export default async function ProductsPage({
           <AdminFilter
             filters={[
               categoriesFilterObject,
-              labelsFilterObject,
               producersFilterObject,
               ...filters,
+              labelsFilterObject,
+              discountFilterObject,
             ]}
           />
         </div>

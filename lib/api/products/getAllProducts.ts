@@ -54,9 +54,21 @@ export async function getAllProducts(
       query.labels = { $in: parsedFilter.labels as string[] };
     }
 
+    if (parsedFilter.discount) {
+      query['packaging.items'] = {
+        $elemMatch: {
+          oldPrice: { $gt: 0 },
+        },
+      };
+    }
+
     // Фильтрация по другим параметрам ("filters")
     const filterSlugs = Object.keys(parsedFilter).filter(
-      key => key !== 'category' && key !== 'producer' && key !== 'labels'
+      key =>
+        key !== 'category' &&
+        key !== 'producer' &&
+        key !== 'labels' &&
+        key !== 'discount'
     );
 
     if (filterSlugs.length > 0) {
