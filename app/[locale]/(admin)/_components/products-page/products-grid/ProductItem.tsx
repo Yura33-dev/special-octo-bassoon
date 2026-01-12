@@ -2,7 +2,7 @@
 
 import { CircleCheck, CircleX } from 'lucide-react';
 import Image from 'next/image';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
 import { IProductMapped } from '@/types';
@@ -15,6 +15,7 @@ interface IProductItemProps {
 
 export default function ProductItem({ product }: IProductItemProps) {
   const locale = useLocale();
+  const t = useTranslations('ProductCard');
 
   return (
     <li key={product.id} className='bg-white rounded-md'>
@@ -92,7 +93,7 @@ export default function ProductItem({ product }: IProductItemProps) {
                   key={label}
                   className='py-1 px-2 bg-accent rounded-md text-sm'
                 >
-                  {label}
+                  {t(`${label}`)}
                 </li>
               ))}
             </ul>

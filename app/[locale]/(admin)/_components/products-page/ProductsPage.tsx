@@ -32,17 +32,13 @@ export default async function ProductsPage({
 
   const locale = (await getLocale()) as locale;
 
-  const [
-    { filters },
-    { products, paginationData, totalProducts },
-    subCategories,
-    producers,
-  ] = await Promise.all([
-    getFiltersFromProducts(locale),
-    getAllProducts(locale, page, limit, searchParams),
-    getAllCategories({ main: false }),
-    getAllProducers(locale),
-  ]);
+  const [{ filters }, { products, paginationData }, subCategories, producers] =
+    await Promise.all([
+      getFiltersFromProducts(locale),
+      getAllProducts(locale, page, limit, searchParams),
+      getAllCategories({ main: false }),
+      getAllProducers(locale),
+    ]);
 
   const categoriesFilter = new Map<string, { title: string; slug: string }>();
   const producersFilter = new Map<string, { title: string; slug: string }>();
@@ -77,11 +73,17 @@ export default async function ProductsPage({
     variants: resultProducersFilterArray,
   };
 
+  const labelsFilterObject = {
+    slug: 'labels',
+    title: 'Лейбл',
+    variants: [{ slug: 'top', title: 'ТОП' }],
+  };
+
   return (
     <section>
       <Container>
         <div className='flex flex-col items-start gap-4 sm:flex-row sm:items-center justify-between sm:gap-8'>
-          <PageMainHeader title='Продукти' length={totalProducts} />
+          <PageMainHeader title='Продукти' length={paginationData.totalItems} />
           <Link
             href='/dashboard/products/new'
             className='text-sm p-2 bg-primary rounded-md font-semibold flex items-center gap-3 justify-center transition-colors hover:bg-primary-dark text-white'
@@ -103,6 +105,7 @@ export default async function ProductsPage({
           <AdminFilter
             filters={[
               categoriesFilterObject,
+              labelsFilterObject,
               producersFilterObject,
               ...filters,
             ]}
