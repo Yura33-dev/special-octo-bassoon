@@ -73,6 +73,7 @@ export const validationProductSchema: Yup.ObjectSchema<IProductForm> =
               .typeError(ONLY_NUMBERS),
             oldPrice: Yup.number().default(0).typeError(ONLY_NUMBERS),
             inStock: Yup.boolean().default(true),
+            madeToOrder: Yup.boolean().default(false),
           })
         )
         .min(1, MIN_ARRAY_LENGTH_1)

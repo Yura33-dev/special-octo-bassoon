@@ -77,6 +77,7 @@
     "NoReviews": "Отзывов на этот товар еще нет",
     "SimilarProducts": "Похожие товары",
     "OutStock": "Нет в наличии",
+    "MadeToOrder": "Под заказ",
     "Discount": "акция"
   },
   "CheckoutPage": {

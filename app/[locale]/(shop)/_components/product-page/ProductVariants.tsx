@@ -57,8 +57,21 @@ export default function ProductVariants({ product }: IPackagingProps) {
 
   const sortedPackaging = useMemo(() => {
     return [...product.packaging.items].sort((a, b) => {
-      if (a.inStock !== b.inStock) {
-        return Number(a.inStock) - Number(b.inStock);
+      const getSortPriority = (item: IProductPackItemMapped) => {
+        if (item.inStock) {
+          return 0;
+        }
+        if (item.madeToOrder && !item.inStock) {
+          return 1;
+        }
+        return 2;
+      };
+
+      const priorityA = getSortPriority(a);
+      const priorityB = getSortPriority(b);
+
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB;
       }
 
       return (
@@ -98,8 +111,13 @@ export default function ProductVariants({ product }: IPackagingProps) {
                 pack.packId.translatedData[locale].measureIn
               )}
             </button>
-            {!pack.inStock && (
+            {!pack.inStock && !pack.madeToOrder && (
               <span className='text-sm text-gray-600'>{t2('OutStock')}</span>
+            )}
+            {!pack.inStock && pack.madeToOrder && (
+              <span className='text-sm text-yellow-700'>
+                {t2('MadeToOrder')}
+              </span>
             )}
             {pack.inStock && pack.oldPrice > 0 && (
               <div className='bg-red-700 px-2.5 py-1 rounded-md text-xs text-white uppercase'>
