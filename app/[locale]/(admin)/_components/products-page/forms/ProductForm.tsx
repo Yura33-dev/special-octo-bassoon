@@ -99,6 +99,7 @@ export default function ProductForm({
           (pack.oldPrice ? pack.oldPrice / 100 : 0 / 100).toFixed(2)
         ),
         inStock: pack.inStock ?? true,
+        madeToOrder: pack.madeToOrder ?? false,
       })) ?? [
         {
           packId: null,
@@ -106,6 +107,7 @@ export default function ProductForm({
           price: null,
           oldPrice: 0,
           inStock: true,
+          madeToOrder: false,
         },
       ],
     },

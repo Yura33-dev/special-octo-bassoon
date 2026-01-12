@@ -155,7 +155,9 @@ export default function Packaging({
                   if (formik.values.packaging.default === null) {
                     const updatedItems = formik.values.packaging.items.map(
                       (item, idx) =>
-                        idx === index ? { ...item, inStock: true } : item
+                        idx === index
+                          ? { ...item, inStock: true, madeToOrder: false }
+                          : item
                     );
 
                     formik.setValues({
@@ -192,7 +194,7 @@ export default function Packaging({
 
             <div className='min-h-[68px]'>
               <CustomCheckBox
-                title='Пакування в наявності'
+                title='Наявність'
                 falseTitle='Ні'
                 trueTitle='Так'
                 onClick={() =>
@@ -202,6 +204,45 @@ export default function Packaging({
                   )
                 }
                 value={pack.inStock ?? false}
+                disabled={
+                  formik.values.packaging.default === pack.packId ||
+                  pack.madeToOrder === true
+                }
+              />
+            </div>
+
+            <div className='min-h-[68px]'>
+              <CustomCheckBox
+                title='Під замовлення'
+                falseTitle='Ні'
+                trueTitle='Так'
+                onClick={() => {
+                  if (
+                    pack.madeToOrder === false &&
+                    pack.packId !== formik.values.packaging.default
+                  ) {
+                    const updatedItems = formik.values.packaging.items.map(
+                      (item, idx) =>
+                        idx === index
+                          ? { ...item, inStock: false, madeToOrder: true }
+                          : item
+                    );
+
+                    formik.setValues({
+                      ...formik.values,
+                      packaging: {
+                        ...formik.values.packaging,
+                        items: updatedItems,
+                      },
+                    });
+                  } else {
+                    formik.setFieldValue(
+                      `packaging.items[${index}].madeToOrder`,
+                      false
+                    );
+                  }
+                }}
+                value={pack.madeToOrder ?? false}
                 disabled={formik.values.packaging.default === pack.packId}
               />
             </div>

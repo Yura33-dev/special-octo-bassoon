@@ -51,6 +51,7 @@ interface IProductPackItemsApi {
   price: number;
   oldPrice: number;
   inStock: boolean;
+  madeToOrder: boolean;
 }
 
 interface IProductPackItemsPopulated {
@@ -59,6 +60,7 @@ interface IProductPackItemsPopulated {
   price: number;
   oldPrice: number;
   inStock: boolean;
+  madeToOrder: boolean;
 }
 
 export interface IProductPackItemMapped {
@@ -67,6 +69,7 @@ export interface IProductPackItemMapped {
   price: number;
   oldPrice: number;
   inStock: boolean;
+  madeToOrder: boolean;
 }
 
 export interface ICreatePackagingFormField {
@@ -91,5 +94,6 @@ export interface IPackaginInProduct {
     price: number | null;
     oldPrice: number | null;
     inStock: boolean | null;
+    madeToOrder: boolean | null;
   }>;
 }

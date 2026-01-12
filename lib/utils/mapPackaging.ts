@@ -50,6 +50,7 @@ export function mapPackagingInProduct(
       price: packItem.price,
       oldPrice: packItem.oldPrice,
       inStock: packItem.inStock,
+      madeToOrder: packItem.madeToOrder || false,
     })),
   };
 }

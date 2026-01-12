@@ -47,6 +47,7 @@ const packagingSchema = new mongoose.Schema<IProductPackVariantsApi>(
         price: { type: Number, required: true },
         oldPrice: { type: Number, default: 0 },
         inStock: { type: Boolean, default: true },
+        madeToOrder: { type: Boolean, default: false },
       },
     ],
   },
