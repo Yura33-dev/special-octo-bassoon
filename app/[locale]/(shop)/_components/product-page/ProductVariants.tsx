@@ -96,14 +96,15 @@ export default function ProductVariants({ product }: IPackagingProps) {
             <button
               onClick={() => handleChangeActivePackaging(pack)}
               className={clsx(
-                'text-sm p-1 rounded-md text-center border-[2px] bg-teal-600/5 transition-colors relative',
+                'text-sm p-1 rounded-md text-center border-[2px] bg-teal-600/5 transition-colors relative w-full h-full',
                 selectedPack.packId.id === pack.packId.id
                   ? 'border-accent'
                   : 'border-gray-300',
                 !pack.inStock &&
+                  !pack.madeToOrder &&
                   'border-gray-200 text-gray-400 hover:cursor-not-allowed'
               )}
-              disabled={!pack.inStock}
+              disabled={!pack.inStock && !pack.madeToOrder}
             >
               {formattedPackValue(
                 pack.packId.translatedData[locale].type,
@@ -155,12 +156,16 @@ export default function ProductVariants({ product }: IPackagingProps) {
         )}
       </div>
 
-      <button
-        className='btn w-full lg:max-w-[150px] border-none bg-accent uppercase text-base hover:bg-primary hover:text-white'
-        onClick={handleAddToCart}
-      >
-        {t('buttonToCart')}
-      </button>
+      {selectedPack.inStock ? (
+        <button
+          className='btn w-full lg:max-w-[150px] border-none bg-accent uppercase text-base hover:bg-primary hover:text-white'
+          onClick={handleAddToCart}
+        >
+          {t('buttonToCart')}
+        </button>
+      ) : (
+        <p className='text-sm text-gray-500'>{t2('MadeToOrderDescription')}</p>
+      )}
     </>
   );
 }

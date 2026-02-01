@@ -1,15 +1,21 @@
 'use client';
 
+import clsx from 'clsx';
 import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
 import { formattedPackValue } from '@/lib/utils';
 import { useCartStore } from '@/providers/cart.provider';
-import { IProductInCart, IProductMapped, locale } from '@/types';
+import {
+  IProductInCart,
+  IProductMapped,
+  IProductPackItemMapped,
+  locale,
+} from '@/types';
 
 interface ICardButtonToCardProps {
   product: IProductMapped;
-  activePackaging: string;
+  activePackaging: IProductPackItemMapped;
 }
 
 export default function CardButtonToCart({
@@ -20,10 +26,11 @@ export default function CardButtonToCart({
   const addProductToCart = useCartStore(state => state.addProduct);
 
   const t = useTranslations('Cart');
+  const tCatalogPage = useTranslations('CatalogPage');
 
   const handleAddToCart = () => {
     const packVariant = product.packaging.items.filter(
-      packVariant => packVariant.packId.id === activePackaging
+      packVariant => packVariant.packId.id === activePackaging.packId.id
     );
 
     const productObject: IProductInCart = {
@@ -45,11 +52,17 @@ export default function CardButtonToCart({
 
   return (
     <button
-      className='btn bg-accent border-none text-foreground hover:bg-primary hover:text-white 
-                    uppercase text-sm sm:text-base flex-0'
+      className={clsx(
+        'btn bg-accent border-none text-foreground hover:bg-primary hover:text-white uppercase text-sm sm:text-base flex-0 disabled:bg-gray-300 disabled:hover:cursor-not-allowed'
+      )}
       onClick={handleAddToCart}
+      disabled={!activePackaging.inStock && activePackaging.madeToOrder}
     >
-      {t('buttonToCart')}
+      {!activePackaging.inStock &&
+        activePackaging.madeToOrder &&
+        tCatalogPage('ProductMadeToOrder')}
+
+      {activePackaging.inStock && t('buttonToCart')}
     </button>
   );
 }

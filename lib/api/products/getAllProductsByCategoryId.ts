@@ -26,7 +26,6 @@ export async function getAllProductsByCategoryId(
     const query: queryType = {
       categories: categoryId,
       visible: true,
-      'packaging.items.inStock': true,
     };
 
     if (parsedFilter.producer) {
@@ -101,14 +100,7 @@ export async function getAllProductsByCategoryId(
     const paginationData = calculatePaginationData(productsCount, limit, page);
 
     if (products.length > 0) {
-      const mappedProducts = products.map(product => {
-        const mappedProduct = mapProduct(product);
-        mappedProduct.packaging.items = mappedProduct.packaging.items.filter(
-          pack => pack.inStock === true
-        );
-
-        return mappedProduct;
-      });
+      const mappedProducts = products.map(product => mapProduct(product));
       return { products: mappedProducts, paginationData };
     }
 
