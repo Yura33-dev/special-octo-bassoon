@@ -153,21 +153,7 @@ export default function Packaging({
                 trueTitle='Так'
                 onClick={() => {
                   if (formik.values.packaging.default === null) {
-                    const updatedItems = formik.values.packaging.items.map(
-                      (item, idx) =>
-                        idx === index
-                          ? { ...item, inStock: true, madeToOrder: false }
-                          : item
-                    );
-
-                    formik.setValues({
-                      ...formik.values,
-                      packaging: {
-                        ...formik.values.packaging,
-                        default: pack.packId,
-                        items: updatedItems,
-                      },
-                    });
+                    formik.setFieldValue('packaging.default', pack.packId);
                   } else {
                     formik.setFieldValue('packaging.default', null);
                   }
@@ -204,10 +190,7 @@ export default function Packaging({
                   )
                 }
                 value={pack.inStock ?? false}
-                disabled={
-                  formik.values.packaging.default === pack.packId ||
-                  pack.madeToOrder === true
-                }
+                disabled={pack.madeToOrder ?? false}
               />
             </div>
 
@@ -217,10 +200,7 @@ export default function Packaging({
                 falseTitle='Ні'
                 trueTitle='Так'
                 onClick={() => {
-                  if (
-                    pack.madeToOrder === false &&
-                    pack.packId !== formik.values.packaging.default
-                  ) {
+                  if (pack.madeToOrder === false) {
                     const updatedItems = formik.values.packaging.items.map(
                       (item, idx) =>
                         idx === index
@@ -243,7 +223,7 @@ export default function Packaging({
                   }
                 }}
                 value={pack.madeToOrder ?? false}
-                disabled={formik.values.packaging.default === pack.packId}
+                disabled={pack.inStock ?? false}
               />
             </div>
           </li>

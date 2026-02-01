@@ -75,17 +75,16 @@ export default function ProductCard({ product }: IProductCardProps) {
         <div className='mb-5 flex-1 flex flex-col justify-end gap-y-3'>
           <p className='text-center text-xs sm:text-sm'>{t('bulk')}</p>
 
-          <CardButtonToCart
-            product={product}
-            activePackaging={selectedPack.packId.id}
-          />
+          <CardButtonToCart product={product} activePackaging={selectedPack} />
         </div>
 
         <CardCategories mainCategory={mainCategory} subCategory={subCategory} />
 
         <CardPackVariants
           producer={product.producer}
-          packaging={product.packaging.items}
+          packaging={product.packaging.items.filter(
+            pack => pack.inStock || pack.madeToOrder
+          )}
           activePackaging={selectedPack}
           handleChangeActivePackaging={handleChangeActivePackaging}
           productLink={productLink}
