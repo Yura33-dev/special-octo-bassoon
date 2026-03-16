@@ -1,19 +1,33 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
 
 import Container from '@/components/shared/Container';
 import { routing } from '@/i18n/routing';
-import { getCategoryBySlug, getPageDataByName } from '@/lib/api';
+import {
+  getAllProductsByCategoryId,
+  getCategoryBySlug,
+  getFiltersFromProducts,
+  getPageDataByName,
+  getProducersByCategoryId,
+} from '@/lib/api';
 import { config } from '@/lib/config';
+import { DEFAULT_PAGE, PRODUCT_DISPLAY_LIMIT } from '@/lib/constants';
 import { locale } from '@/types';
 
+import Filter from '../../_components/catalog-page/Filter';
 import BreadCrumbsWrapper from '../../_components/shared/breadcrumbs/BreadCrumbsWrapper';
-import CatalogGrid from '../../_components/shared/catalogGrid/CatalogGrid';
+import ProductsListClient from '../../_components/subCategory-page/ProductsListClient';
 
 interface IMainCategoryPageProps {
   params: {
     mainCategorySlug: string;
     locale: locale;
+  };
+  searchParams: {
+    page?: string;
+    limit?: string;
+    [key: string]: string | undefined;
   };
 }
 
@@ -89,7 +103,10 @@ export async function generateMetadata({
 
 export default async function MainCategoryPage({
   params,
+  searchParams,
 }: IMainCategoryPageProps) {
+  const locale = (await getLocale()) as locale;
+
   const [catalogPageData, category] = await Promise.all([
     getPageDataByName('CatalogPage'),
     getCategoryBySlug(params.mainCategorySlug, routing.locales),
@@ -98,6 +115,33 @@ export default async function MainCategoryPage({
   if (!catalogPageData || !category) {
     notFound();
   }
+
+  const page = parseInt(searchParams.page || DEFAULT_PAGE);
+  const limit = parseInt(searchParams.limit || PRODUCT_DISPLAY_LIMIT);
+
+  const [{ filters }, { products, paginationData }, producers] =
+    await Promise.all([
+      getFiltersFromProducts(locale, { categories: category.id }),
+      getAllProductsByCategoryId(category.id, page, limit, searchParams),
+      getProducersByCategoryId(category.id, locale),
+    ]);
+
+  const producersFilter = new Map<string, { title: string; slug: string }>();
+
+  producers.forEach(producer => {
+    producersFilter.set(producer.slug, {
+      title: producer.translatedData[locale].title,
+      slug: producer.slug,
+    });
+  });
+
+  const resultProducersFilterArray = Array.from(producersFilter.values());
+
+  const producersFilterObject = {
+    slug: 'producer',
+    title: 'Виробник',
+    variants: resultProducersFilterArray,
+  };
 
   const generateBreadCrumbs = [
     '',
@@ -117,11 +161,19 @@ export default async function MainCategoryPage({
     >
       <section>
         <Container>
-          <CatalogGrid
-            parentSlug={params.mainCategorySlug}
-            categories={category.childCategories}
-            locale={params.locale}
-          />
+          <div className='flex flex-col items-stretch gap-6 lg:flex-row lg:items-start'>
+            <Filter filters={[producersFilterObject, ...filters]} />
+            <div className='basis-full flex flex-col gap-4'>
+              <h1 className='text-center text-xl md:text-2xl'>
+                {catalogPageData.translatedData[locale].h1}
+              </h1>
+
+              <ProductsListClient
+                products={products}
+                paginationData={paginationData}
+              />
+            </div>
+          </div>
 
           {category.meta[params.locale].seoText && (
             <div className='l-container ql-snow'>
