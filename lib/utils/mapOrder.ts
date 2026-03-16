@@ -10,9 +10,6 @@ export function mapOrder(order: IOrderPopulated): IOrderMapped {
     paymentType: order.paymentType,
     deliveryTo: order.deliveryTo,
     postNumber: order.postNumber ?? null,
-    postCode: order.postCode ?? null,
-    surname: order.surname ?? null,
-    fatherName: order.fatherName ?? null,
     products: order.products.map(product => ({
       productId: {
         id: product.productId?._id?.toString() ?? 'Видалений товар',

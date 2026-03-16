@@ -8,7 +8,6 @@ export const orderStatuses = {
 
 export const deliveryType: Record<string, string> = {
   np: 'Нова пошта',
-  ukr: 'Укр.пошта',
 };
 
 export const paymentType: Record<string, string> = {

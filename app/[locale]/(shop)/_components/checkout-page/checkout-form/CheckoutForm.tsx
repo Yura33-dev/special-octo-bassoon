@@ -79,15 +79,6 @@ export default function CheckoutForm({ className }: ICheckoutFormProps) {
             <div className='flex flex-col'>
               <CustomRadioInput
                 option={{
-                  title: 'Укрпошта',
-                  value: 'ukr',
-                  name: 'delivery',
-                  selected: deliveryMethod,
-                  setSelected: setDeliveryMethod,
-                }}
-              />
-              <CustomRadioInput
-                option={{
                   title: 'Нова пошта',
                   value: 'np',
                   name: 'delivery',
@@ -127,30 +118,12 @@ export default function CheckoutForm({ className }: ICheckoutFormProps) {
             <h2 className='text-lg mb-4'>{t('ContactsData')}</h2>
 
             <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
-              {deliveryMethod === 'ukr' && (
-                <CustomTextInput
-                  label='Прізвище'
-                  type='text'
-                  name='customerLastName'
-                  errorMessage={data.errors.customerLastName}
-                />
-              )}
-
               <CustomTextInput
-                label='Ім`я'
+                label='ПІБ'
                 type='text'
                 name='customerName'
                 errorMessage={data.errors.customerName}
               />
-
-              {deliveryMethod === 'ukr' && (
-                <CustomTextInput
-                  label='По-батькові'
-                  type='text'
-                  name='customerFatherName'
-                  errorMessage={data.errors.customerFatherName}
-                />
-              )}
 
               <CustomTextInput
                 label='Телефон'
@@ -179,21 +152,12 @@ export default function CheckoutForm({ className }: ICheckoutFormProps) {
                 errorMessage={data.errors.city}
               />
 
-              {deliveryMethod === 'ukr' ? (
-                <CustomTextInput
-                  label='Поштовий індекс'
-                  type='text'
-                  name='postCode'
-                  errorMessage={data.errors.postCode}
-                />
-              ) : (
-                <CustomTextInput
-                  label='Номер відділення'
-                  type='text'
-                  name='postNumber'
-                  errorMessage={data.errors.postNumber}
-                />
-              )}
+              <CustomTextInput
+                label='Номер відділення'
+                type='text'
+                name='postNumber'
+                errorMessage={data.errors.postNumber}
+              />
             </div>
           </div>
 

@@ -13,7 +13,7 @@ import OrderData from './order-parts/OrderData';
 import OrderFooter from './order-parts/OrderFooter';
 import OrderHeader from './order-parts/OrderHeader';
 import OrderProducts from './order-parts/OrderProducts';
-import { deliveryType, orderStatuses, paymentType } from './orderData';
+import { orderStatuses, paymentType } from './orderData';
 
 interface IOrderItemProps {
   order: IOrderMapped;
@@ -45,15 +45,11 @@ export default function OrderItem({ order }: IOrderItemProps) {
 
       <OrderData
         name={order.name}
-        fatherName={order.fatherName}
-        surname={order.surname}
         phone={order.phone}
         email={order.email}
         deliveryTo={order.deliveryTo}
         deliveryBy={order.deliveryBy}
-        deliveryType={deliveryType[order.deliveryBy]}
         postNumber={order.postNumber}
-        postCode={order.postCode}
         paymentType={paymentType[order.paymentType]}
       />
 
