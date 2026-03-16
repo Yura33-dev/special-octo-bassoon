@@ -7,8 +7,8 @@ import {
   INCORRECT_EMAIL,
   INCORRECT_PHONE,
   MANDATORY_FIELD,
-  MAX_LENGTH_15,
-  MAX_LENGTH_24,
+  MAX_LENGTH_30,
+  MAX_LENGTH_50,
   MIN_LENGTH,
   PAYMENT_METHOD,
   PHONE_NUMBER_REGEXP,
@@ -23,11 +23,11 @@ export const orderSchema: Yup.ObjectSchema<IOrderForm> = Yup.object({
     .required(MANDATORY_FIELD),
   deliveryTo: Yup.string()
     .min(2, MIN_LENGTH)
-    .max(24, MAX_LENGTH_24)
+    .max(50, MAX_LENGTH_50)
     .required(MANDATORY_FIELD),
   name: Yup.string()
     .min(2, MIN_LENGTH)
-    .max(15, MAX_LENGTH_15)
+    .max(30, MAX_LENGTH_30)
     .required(MANDATORY_FIELD),
   phone: Yup.string()
     .matches(PHONE_NUMBER_REGEXP, INCORRECT_PHONE)
