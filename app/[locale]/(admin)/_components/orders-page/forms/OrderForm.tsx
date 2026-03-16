@@ -76,9 +76,6 @@ export default function OrderForm({
     orderNumber: order?.orderNumber ?? orderId,
     products: order?.products ?? [],
     postNumber: order?.postNumber ?? '',
-    postCode: order?.postCode ?? '',
-    surname: order?.surname ?? '',
-    fatherName: order?.fatherName ?? '',
     status: order?.status ?? 'new',
     isArchive: order?.isArchive ?? false,
     createdAt: order?.createdAt ?? '',
@@ -212,15 +209,6 @@ export default function OrderForm({
         <div className='flex flex-col'>
           <RadioInput
             option={{
-              title: 'Укрпошта',
-              value: 'ukr',
-              name: 'delivery',
-              selected: formik.values.deliveryBy,
-              setSelected: () => formik.setFieldValue('deliveryBy', 'ukr'),
-            }}
-          />
-          <RadioInput
-            option={{
               title: 'Нова пошта',
               value: 'np',
               name: 'delivery',
@@ -259,20 +247,6 @@ export default function OrderForm({
         <h2 className='text-lg mb-4'>Контактні дані</h2>
 
         <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
-          {formik.values.deliveryBy === 'ukr' && (
-            <Input
-              title='Прізвище'
-              name='surname'
-              type='text'
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.surname ?? ''}
-              touched={formik.touched}
-              errors={formik.errors}
-              labelClassName='min-h-[72px]'
-            />
-          )}
-
           <Input
             title='Ім`я'
             name='name'
@@ -284,20 +258,6 @@ export default function OrderForm({
             errors={formik.errors}
             labelClassName='min-h-[72px]'
           />
-
-          {formik.values.deliveryBy === 'ukr' && (
-            <Input
-              title='По батькові'
-              name='fatherName'
-              type='text'
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.fatherName ?? ''}
-              touched={formik.touched}
-              errors={formik.errors}
-              labelClassName='min-h-[72px]'
-            />
-          )}
 
           <Input
             title='Телефон'
@@ -342,31 +302,17 @@ export default function OrderForm({
             labelClassName='min-h-[72px]'
           />
 
-          {formik.values.deliveryBy === 'ukr' ? (
-            <Input
-              title='Поштовий індекс'
-              name='postCode'
-              type='text'
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.postCode ?? ''}
-              touched={formik.touched}
-              errors={formik.errors}
-              labelClassName='min-h-[72px]'
-            />
-          ) : (
-            <Input
-              title='Номер відділення'
-              name='postNumber'
-              type='text'
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.postNumber ?? ''}
-              touched={formik.touched}
-              errors={formik.errors}
-              labelClassName='min-h-[72px]'
-            />
-          )}
+          <Input
+            title='Номер відділення'
+            name='postNumber'
+            type='text'
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.postNumber ?? ''}
+            touched={formik.touched}
+            errors={formik.errors}
+            labelClassName='min-h-[72px]'
+          />
         </div>
       </div>
 

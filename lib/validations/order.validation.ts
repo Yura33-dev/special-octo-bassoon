@@ -16,7 +16,7 @@ import {
 
 export const orderSchema: Yup.ObjectSchema<IOrderForm> = Yup.object({
   deliveryBy: Yup.string()
-    .oneOf(['np', 'ukr'], DELIVERY_METHOD)
+    .oneOf(['np'], DELIVERY_METHOD)
     .required(MANDATORY_FIELD),
   paymentType: Yup.string()
     .oneOf(['bank', 'afterpayment'], PAYMENT_METHOD)
@@ -33,10 +33,7 @@ export const orderSchema: Yup.ObjectSchema<IOrderForm> = Yup.object({
     .matches(PHONE_NUMBER_REGEXP, INCORRECT_PHONE)
     .required(MANDATORY_FIELD),
   email: Yup.string().email(INCORRECT_EMAIL),
-  surname: Yup.string().min(2, MIN_LENGTH),
-  fatherName: Yup.string().min(2, MIN_LENGTH),
   postNumber: Yup.string().min(2, MIN_LENGTH),
-  postCode: Yup.string().min(2, MIN_LENGTH),
   orderNumber: Yup.string().required(MANDATORY_FIELD),
   status: Yup.string()
     .oneOf(['new', 'processing', 'delivery', 'done', 'canceled'])

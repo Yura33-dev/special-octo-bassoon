@@ -24,9 +24,6 @@ const orderSchema = new mongoose.Schema<IOrderApi>(
     orderNumber: { type: String, required: true },
     products: [{ type: productInOrder, required: true }],
     postNumber: { type: String, default: null },
-    postCode: { type: String, default: null },
-    surname: { type: String, default: null },
-    fatherName: { type: String, default: null },
     status: {
       type: String,
       enum: ['new', 'processing', 'delivery', 'done', 'canceled'],

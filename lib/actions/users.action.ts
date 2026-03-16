@@ -4,14 +4,13 @@ import ShortUniqueId from 'short-unique-id';
 
 import { redirect } from '@/i18n/routing';
 import {
+  EMAIL_REGEXP,
   INCORRECT_EMAIL,
-  INCORRECT_FATHERNAME,
   INCORRECT_NAME,
   INCORRECT_PHONE,
   INCORRECT_POST,
-  INCORRECT_SURNAME,
-  INCORRECT_ZIP,
   MANDATORY_FIELD,
+  PHONE_NUMBER_REGEXP,
 } from '@/lib/constants';
 import { Order } from '@/models';
 import { IOrderApi, IOrderData, IOrderState } from '@/types';
@@ -34,13 +33,10 @@ export async function submitOrder(
   const orderObject: Partial<IOrderApi> = {
     phone: parsedData.customerPhone,
     name: parsedData.customerName,
-    surname: parsedData.customerLastName || null,
-    fatherName: parsedData.customerFatherName || null,
     email: parsedData.customerEmail,
     deliveryTo: parsedData.city,
     deliveryBy: parsedData.delivery,
     postNumber: parsedData.postNumber || null,
-    postCode: parsedData.postCode || null,
     paymentType: parsedData.payment,
     totalPrice: parsedData.totalPrice,
     orderNumber: orderId,
@@ -74,14 +70,11 @@ function validateData(data: IOrderData) {
     }
   });
 
-  if (
-    data.customerEmail &&
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.customerEmail)
-  ) {
+  if (data.customerEmail && !EMAIL_REGEXP.test(data.customerEmail)) {
     errors.customerEmail = INCORRECT_EMAIL;
   }
 
-  if (data.customerPhone && !/^\d{10,}$/.test(data.customerPhone)) {
+  if (data.customerPhone && !PHONE_NUMBER_REGEXP.test(data.customerPhone)) {
     errors.customerPhone = INCORRECT_PHONE;
   }
 
@@ -89,21 +82,10 @@ function validateData(data: IOrderData) {
     errors.customerName = INCORRECT_NAME;
   }
 
-  if (data.delivery === 'np') {
-    if (!data.postNumber) {
-      errors.postNumber = INCORRECT_POST;
-    }
-  } else if (data.delivery === 'ukr') {
-    if (!data.customerLastName || data.customerLastName.length < 2) {
-      errors.customerLastName = INCORRECT_SURNAME;
-    }
-    if (!data.customerFatherName || data.customerFatherName.length < 2) {
-      errors.customerFatherName = INCORRECT_FATHERNAME;
-    }
-    if (!data.postCode || data.postCode.length < 2) {
-      errors.postCode = INCORRECT_ZIP;
-    }
+  if (!data.postNumber) {
+    errors.postNumber = INCORRECT_POST;
   }
+
   return errors;
 }
 

@@ -12,9 +12,6 @@ export interface IOrderApi extends Document {
   paymentType: string;
   deliveryTo: string;
   postNumber: string | null;
-  postCode: string | null;
-  surname: string | null;
-  fatherName: string | null;
   products: Array<IProductInOrderApi>;
   totalPrice: number;
   orderNumber: string;
@@ -40,9 +37,6 @@ export interface IOrderPopulated {
   paymentType: string;
   deliveryTo: string;
   postNumber: string | null;
-  postCode: string | null;
-  surname: string | null;
-  fatherName: string | null;
   products: Array<IProductInOrderPopulated>;
   totalPrice: number;
   orderNumber: string;
@@ -68,9 +62,6 @@ export interface IOrderMapped {
   paymentType: string;
   deliveryTo: string;
   postNumber: string | null;
-  postCode: string | null;
-  surname: string | null;
-  fatherName: string | null;
   products: Array<IProductInOrderMapped>;
   totalPrice: number;
   orderNumber: string;
@@ -116,10 +107,7 @@ export interface IOrderData {
   customerEmail: string;
   city: string;
   products: Array<IProductInOrderApi>;
-  customerLastName: string;
-  customerFatherName: string;
   postNumber: string;
-  postCode: string;
   totalPrice: number;
   orderId?: string;
   locale: string;
@@ -139,10 +127,7 @@ export interface IOrderForm {
   email?: string;
   deliveryTo: string;
   products?: Array<IProductInOrderMapped>;
-  surname?: string;
-  fatherName?: string;
   postNumber?: string;
-  postCode?: string;
   totalPrice?: number;
   orderNumber: string | null;
   status: OrderStatus;

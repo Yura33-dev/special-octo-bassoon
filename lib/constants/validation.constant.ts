@@ -4,9 +4,6 @@ export const INCORRECT_EMAIL = 'Будь ласка, вкажіть дійсну
 export const INCORRECT_PHONE = 'Будь ласка, вкажіть дійсний номер телефону';
 export const INCORRECT_NAME = 'Будь ласка, вкажіть коректне ім`я';
 export const INCORRECT_POST = 'Будь ласка, вкажіть номер поштового відділення';
-export const INCORRECT_SURNAME = 'Будь ласка, вкажіть прізвище';
-export const INCORRECT_FATHERNAME = 'Будь ласка, вкажіть по-батькові';
-export const INCORRECT_ZIP = 'Будь ласка, вкажіть дійсний поштовий індекс';
 
 //Dashboard
 export const INCORRECT_SLUG = 'Тільки латиниця, цифри та дефіс без пробілів';
