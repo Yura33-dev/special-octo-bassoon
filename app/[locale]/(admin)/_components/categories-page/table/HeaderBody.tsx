@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 
 import { Link } from '@/i18n/routing';
 import { patchCategoryById } from '@/lib/api';
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { ICategoryMapped, locale } from '@/types';
 
 import DropDownMenu from '../../shared/DropDownMenu';
@@ -54,7 +55,7 @@ export default function HeaderBody({ categories }: IHeaderBodyProps) {
               <div className='w-16 h-16'>
                 <Image
                   src={
-                    category.image === '' ? '/no-image.webp' : category.image
+                    category.image === '' ? DEFAULT_IMAGE_PATH : category.image
                   }
                   width={100}
                   height={100}

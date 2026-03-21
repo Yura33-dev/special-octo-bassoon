@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { addNestedCategory } from '@/lib/api';
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { ICategoryMapped, locale } from '@/types';
 
 interface ISubcategoriesListProps {
@@ -55,7 +56,7 @@ export default function SubcategoriesList({
           <div className='flex items-center gap-2'>
             <div className='w-16 h-16'>
               <Image
-                src={category.image || '/no-image.webp'}
+                src={category.image || DEFAULT_IMAGE_PATH}
                 width={100}
                 height={100}
                 alt={'Іконка підкатегорії'}

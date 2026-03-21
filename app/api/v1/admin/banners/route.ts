@@ -5,6 +5,7 @@ import sharp from 'sharp';
 import ShortUniqueId from 'short-unique-id';
 
 import { config } from '@/lib/config';
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 
 export async function POST(req: Request) {
   const formData = await req.formData();
@@ -71,7 +72,7 @@ export async function DELETE(req: Request) {
 
   const imagesToDelete: string[] = [bannerImageUa, bannerImageRu]
     .filter(Boolean)
-    .filter(image => image !== '/no-image.webp');
+    .filter(image => image !== DEFAULT_IMAGE_PATH);
 
   if (imagesToDelete.length === 0) {
     return NextResponse.json(
