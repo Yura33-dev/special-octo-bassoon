@@ -116,3 +116,8 @@ modal without losing the list view.
 | Error handling  | `console.error` + return `null`/`[]`; no throws in data-fetching layer |
 | Images          | Always converted to WebP via Sharp before S3 upload                    |
 | Pagination      | `calculatePaginationData` util in `lib/utils/`                         |
+
+#### Constant conventions
+
+All constants (string or number) should be stored in `lib/constants/` and then
+import/export they in `lib/constants/index.ts` file.
