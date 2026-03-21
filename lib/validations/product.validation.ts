@@ -12,6 +12,7 @@ import {
   LATIN_FILE_NAME,
   MANDATORY_FIELD,
   MAX_LENGTH_50,
+  MAX_OF_IMAGES,
   MIN_ARRAY_LENGTH_1,
   MIN_LENGTH,
   ONLY_NUMBERS,
@@ -87,27 +88,29 @@ export const validationProductSchema: Yup.ObjectSchema<IProductForm> =
 
     visible: Yup.boolean().default(true),
 
-    imgUrl: Yup.mixed<File>()
-      .test('fileType', ALLOW_IMAGE_EXT, value => {
-        if (!value || typeof value.name !== 'string') return true;
-        return ALLOW_IMAGE_EXT_ARRAY.includes(value.type);
-      })
-      .test('fileSize', LARGE_IMAGE_SIZE, value => {
-        if (!value || typeof value.name !== 'string') return true;
-        return value.size <= 5 * 1024 * 1024;
-      })
-      .test('fileName', LATIN_FILE_NAME, value => {
-        if (!value || typeof value.name !== 'string') return true;
-
-        const fileNameWithoutExtension = value.name
-          .split('.')
-          .slice(0, -1)
-          .join('.');
-
-        return FILE_NAME_REGEXP.test(fileNameWithoutExtension);
-      })
-      .nullable()
-      .default(null),
+    images: Yup.array()
+      .of(
+        Yup.mixed<File | string>()
+          .defined()
+          .test('fileType', ALLOW_IMAGE_EXT, value => {
+            if (!value || typeof value === 'string') return true;
+            return ALLOW_IMAGE_EXT_ARRAY.includes((value as File).type);
+          })
+          .test('fileSize', LARGE_IMAGE_SIZE, value => {
+            if (!value || typeof value === 'string') return true;
+            return (value as File).size <= 5 * 1024 * 1024;
+          })
+          .test('fileName', LATIN_FILE_NAME, value => {
+            if (!value || typeof value === 'string') return true;
+            const fileNameWithoutExtension = (value as File).name
+              .split('.')
+              .slice(0, -1)
+              .join('.');
+            return FILE_NAME_REGEXP.test(fileNameWithoutExtension);
+          })
+      )
+      .max(4, MAX_OF_IMAGES)
+      .default([]),
 
     filters: Yup.array()
       .of(

@@ -5,7 +5,9 @@ import { FormikErrors, FormikTouched } from 'formik';
 import { get } from 'lodash';
 import { CircleX } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 
 interface IFileUploaderProps<T> {
   name: string;
@@ -27,10 +29,12 @@ export default function FileUploader<T>({
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(imageUrl);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (!imageUrl) {
       setFile(null);
-      setPreview('/no-image.webp');
+      setPreview(DEFAULT_IMAGE_PATH);
     } else {
       setPreview(imageUrl);
     }
@@ -45,7 +49,7 @@ export default function FileUploader<T>({
         setPreview(URL.createObjectURL(selectedFile));
       } else {
         setFile(null);
-        setPreview('/no-image.webp');
+        setPreview(DEFAULT_IMAGE_PATH);
       }
       onChange(selectedFile);
     }
@@ -56,20 +60,22 @@ export default function FileUploader<T>({
     event.stopPropagation();
 
     setFile(null);
-    setPreview('/no-image.webp');
+    setPreview(DEFAULT_IMAGE_PATH);
     onChange(null);
+    if (inputRef.current) inputRef.current.value = '';
   };
 
   return (
     <label
       className={clsx(
-        'flex flex-col justify-start gap-2 rounded-md hover:cursor-pointer max-w-max',
+        'flex flex-col justify-start gap-2 rounded-md hover:cursor-pointer max-w-36',
         labelClassName && labelClassName
       )}
       htmlFor={String(name)}
     >
       <span className='text-sm font-semibold'>Зображення</span>
       <input
+        ref={inputRef}
         type='file'
         accept='image/*'
         name={String(name)}
@@ -83,7 +89,7 @@ export default function FileUploader<T>({
           src={
             typeof preview === 'string' && preview !== ''
               ? preview
-              : '/no-image.webp'
+              : DEFAULT_IMAGE_PATH
           }
           alt='Preview'
           className='w-full h-full object-cover rounded-md'
@@ -91,7 +97,7 @@ export default function FileUploader<T>({
           height={200}
           priority
         />
-        {preview !== '/no-image.webp' &&
+        {preview !== DEFAULT_IMAGE_PATH &&
           preview !== null &&
           preview !== undefined && (
             <button
@@ -103,7 +109,9 @@ export default function FileUploader<T>({
           )}
       </div>
 
-      {file && <p className='text-gray-700 text-sm'>{file.name}</p>}
+      {file && (
+        <p className='text-gray-700 text-sm truncate max-w-36'>{file.name}</p>
+      )}
 
       {get(touched, name) && get(errors, name) ? (
         <p className='text-xs pl-2 text-red-600'>{String(get(errors, name))}</p>

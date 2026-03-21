@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { UseDiscountLabels } from '@/lib/hooks';
 import { formattedPackValue, getProductLinks } from '@/lib/utils';
 import { IProductMapped, IProductPackItemMapped, locale } from '@/types';
@@ -46,7 +47,7 @@ export default function ProductCard({ product }: IProductCardProps) {
         productLink={productLink}
         productName={product.translatedData[locale].name}
         productLabels={appliedLabels}
-        productImage={product.imgUrl}
+        productImage={product.images[0] ?? DEFAULT_IMAGE_PATH}
       />
 
       <div className='flex flex-col p-4 relative flex-1'>

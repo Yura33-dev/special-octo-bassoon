@@ -4,6 +4,7 @@ import { CircleCheck, CircleX } from 'lucide-react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
 import { IProductMapped } from '@/types';
 
@@ -21,7 +22,7 @@ export default function ProductItem({ product }: IProductItemProps) {
     <li key={product.id} className='bg-white rounded-md'>
       <div className='h-40'>
         <Image
-          src={product.imgUrl}
+          src={product.images[0] ?? DEFAULT_IMAGE_PATH}
           width={500}
           height={250}
           alt={`Картина товару ${product.translatedData[locale].name}`}

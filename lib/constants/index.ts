@@ -41,6 +41,8 @@ import {
   PRODUCT_DISPLAY_LIMIT,
   DEFAULT_PAGE,
   ORDERS_DISPLAY_LIMIT,
+  DEFAULT_IMAGE_PATH,
+  MAX_IMAGES_FOR_PRODUCT,
 } from './other.constant';
 import { PRODUCT_LABELS } from './productsLabels.constant';
 import {
@@ -83,6 +85,7 @@ import {
   SORT_ORDER_GT_ZERO,
   DELIVERY_METHOD,
   PAYMENT_METHOD,
+  MAX_OF_IMAGES,
 } from './validation.constant';
 
 export {
@@ -162,4 +165,7 @@ export {
   PAYMENT_METHOD,
   PHONE_NUMBER_REGEXP,
   PRODUCT_LABELS,
+  DEFAULT_IMAGE_PATH,
+  MAX_OF_IMAGES,
+  MAX_IMAGES_FOR_PRODUCT,
 };

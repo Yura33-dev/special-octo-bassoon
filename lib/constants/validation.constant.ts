@@ -19,6 +19,7 @@ export const ALLOW_IMAGE_EXT_ARRAY = [
   'image/png',
   'image/webp',
 ];
+export const MAX_OF_IMAGES = 'Максимум 4 зображення';
 
 //Other
 export const MIN_LENGTH = 'Поле має містити від 2 символів';

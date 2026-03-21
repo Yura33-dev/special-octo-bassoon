@@ -86,7 +86,7 @@ const productSchema = new mongoose.Schema<IProductApi>(
     visible: { type: Boolean, required: false, default: true },
     producer: { type: mongoose.Schema.Types.ObjectId, ref: 'Producer' },
     labels: [{ type: String, enum: PRODUCT_LABELS, default: [] }],
-    imgUrl: { type: String, required: true },
+    images: { type: [String], default: [] },
     filters: [{ type: productFiltersSchema, default: [] }],
   },
   { timestamps: true, versionKey: false }
