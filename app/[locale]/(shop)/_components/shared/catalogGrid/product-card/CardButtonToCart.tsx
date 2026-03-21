@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { formattedPackValue } from '@/lib/utils';
 import { useCartStore } from '@/providers/cart.provider';
 import {
@@ -36,7 +37,7 @@ export default function CardButtonToCart({
     const productObject: IProductInCart = {
       id: product.id,
       producer: product.producer,
-      imgUrl: product.imgUrl,
+      imgUrl: product.images[0] ?? DEFAULT_IMAGE_PATH,
       translatedData: product.translatedData,
       categories: product.categories,
       packVariant: { ...packVariant[0], orderedQuantity: 1 },

@@ -4,7 +4,7 @@ import { Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 import Select from 'react-select';
 
-import { ADD_PRODUCTS_IN_ORDER } from '@/lib/constants';
+import { ADD_PRODUCTS_IN_ORDER, DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
 import { useAdminStore, useModalStore } from '@/providers';
 import {
@@ -244,7 +244,7 @@ function prepeareProductToOrder(
   return {
     productId: {
       id: product.id,
-      image: product.imgUrl,
+      image: product.images[0] ?? DEFAULT_IMAGE_PATH,
       producer: {
         name: product.producer.translatedData['uk'].title,
         exchangeRate: product.producer.exchangeRate ?? 0,

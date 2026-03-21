@@ -13,7 +13,7 @@ export function mapProduct(product: IProductPopulated): IProductMapped {
     categories: product.categories.map(category => mapCategory(category)),
     visible: product.visible,
     labels: product.labels,
-    imgUrl: product.imgUrl,
+    images: product.images ?? [],
     filters: product.filters.map(filter => mapFilterInProduct(filter)),
     producer: mapProducer(product.producer),
     updatedAt: product.updatedAt

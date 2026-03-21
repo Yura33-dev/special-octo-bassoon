@@ -16,6 +16,7 @@ import {
   getProductBySlug,
 } from '@/lib/api';
 import { config } from '@/lib/config';
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { locale } from '@/types';
 
 interface IProductPageProps {
@@ -61,7 +62,9 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: product.imgUrl ?? `${config.NEXT_PUBLIC_APP_URL}/no-image.webp`,
+          url:
+            product.images[0] ??
+            `${config.NEXT_PUBLIC_APP_URL}${DEFAULT_IMAGE_PATH}`,
           width: 1200,
           height: 630,
           alt: product.translatedData[params.locale].name,
@@ -73,7 +76,10 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: product.translatedData[params.locale].name,
       description: product.translatedData[params.locale].meta.description,
-      images: [product.imgUrl ?? `${config.NEXT_PUBLIC_APP_URL}/no-image.webp`],
+      images: [
+        product.images[0] ??
+          `${config.NEXT_PUBLIC_APP_URL}${DEFAULT_IMAGE_PATH}`,
+      ],
     },
   };
 }
@@ -118,7 +124,7 @@ export default async function ProductPage({ params }: IProductPageProps) {
         <Container>
           <div className='flex flex-col gap-5 sm:flex-row md:gap-10'>
             <ProductImage
-              src={product.imgUrl}
+              images={product.images}
               alt={product.translatedData[locale].name}
             />
 

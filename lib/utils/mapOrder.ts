@@ -1,5 +1,7 @@
 import { IOrderMapped, IOrderPopulated } from '@/types';
 
+import { DEFAULT_IMAGE_PATH } from '../constants';
+
 export function mapOrder(order: IOrderPopulated): IOrderMapped {
   return {
     id: order._id.toString(),
@@ -13,7 +15,7 @@ export function mapOrder(order: IOrderPopulated): IOrderMapped {
     products: order.products.map(product => ({
       productId: {
         id: product.productId?._id?.toString() ?? 'Видалений товар',
-        image: product.productId?.imgUrl ?? '/no-image.webp',
+        image: product.productId?.images?.[0] ?? DEFAULT_IMAGE_PATH,
         producer: {
           name:
             product.productId?.producer?.translatedData['uk']?.title ??

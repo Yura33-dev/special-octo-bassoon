@@ -24,7 +24,7 @@ export interface IProductApi extends Document {
   labels: Array<Labels> | [];
   visible: boolean;
   producer: ObjectId;
-  imgUrl: string;
+  images: string[];
   filters: Array<IFilterInProductApi>;
   updatedAt: Date;
   createdAt: Date;
@@ -39,7 +39,7 @@ export interface IProductPopulated {
   labels: Labels[];
   visible: boolean;
   producer: IProducerPopulated;
-  imgUrl: string;
+  images: string[];
   filters: IFilterInProductPopulated[];
   updatedAt: Date;
   createdAt: Date;
@@ -54,7 +54,7 @@ export interface IProductMapped {
   visible: boolean;
   producer: IProducerMapped;
   labels: Array<string>;
-  imgUrl: string;
+  images: string[];
   filters: Array<IFilterInProductMapped>;
   updatedAt: string;
   createdAt: string;
@@ -80,7 +80,7 @@ export interface IProductForm {
   translatedData: Record<string, ITranslatedData>;
   packaging: IPackaginInProduct;
   categories: Array<string>;
-  imgUrl: File | string | null;
+  images: (File | string)[];
   visible: boolean;
   filters: { id: string; filter: string; values: string[] }[];
   labels: Array<string>;

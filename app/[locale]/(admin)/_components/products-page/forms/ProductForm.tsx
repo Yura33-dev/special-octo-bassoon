@@ -112,7 +112,7 @@ export default function ProductForm({
       ],
     },
 
-    imgUrl: product?.imgUrl ?? null,
+    images: product?.images ?? [],
     visible: product?.visible ?? true,
 
     filters:
@@ -180,33 +180,33 @@ export default function ProductForm({
   ) => {
     setIsSubmitting(true);
 
-    if (values.imgUrl instanceof File) {
-      const formData = new FormData();
-      const width = 600;
+    const uploadedImages: string[] = [];
+    for (const image of values.images) {
+      if (image instanceof File) {
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('width', '600');
+        formData.append('imageTitle', values.translatedData['uk'].slug);
+        formData.append('folder', 'products');
 
-      formData.append('image', values.imgUrl);
-      formData.append('width', String(width));
-      formData.append('imageTitle', values.translatedData['uk'].slug);
-      formData.append('folder', 'products');
+        const response = await fetch('/api/v1/admin/products/image', {
+          method: 'POST',
+          body: formData,
+        });
+        const result = await response.json();
 
-      const response = await fetch('/api/v1/admin/products/image', {
-        method: 'POST',
-        body: formData,
-      });
-      const result = await response.json();
-
-      if (result.url) {
-        values.imgUrl = result.url;
-      } else {
-        values.imgUrl = '/no-image.webp';
-        console.error(
-          'Something went wrong while product image to S3 loading...'
-        );
+        if (result.url) {
+          uploadedImages.push(result.url);
+        } else {
+          console.error(
+            'Something went wrong while uploading product image to S3...'
+          );
+        }
+      } else if (typeof image === 'string') {
+        uploadedImages.push(image);
       }
     }
-
-    values.imgUrl =
-      typeof values.imgUrl === 'string' ? values.imgUrl : '/no-image.webp';
+    values.images = uploadedImages;
 
     values.translatedData['uk'].description = productDescriptionUk;
     values.translatedData['ru'].description = productDescriptionRu;
@@ -301,7 +301,7 @@ export default function ProductForm({
         <Visual
           title='Візуальні дані'
           formik={formik}
-          productImage={product?.imgUrl ?? null}
+          productImages={product?.images ?? []}
         />
 
         <Labels title='Лейбли' formik={formik} />

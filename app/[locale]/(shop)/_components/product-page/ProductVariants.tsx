@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { UsePackPrice } from '@/lib/hooks';
 import { formattedPackValue, formattedPrice } from '@/lib/utils';
 import { useCartStore } from '@/providers/cart.provider';
@@ -41,7 +42,7 @@ export default function ProductVariants({ product }: IPackagingProps) {
     const productObject: IProductInCart = {
       id: product.id,
       producer: product.producer,
-      imgUrl: product.imgUrl,
+      imgUrl: product.images[0] ?? DEFAULT_IMAGE_PATH,
       translatedData: product.translatedData,
       categories: product.categories,
       packVariant: { ...selectedPack, orderedQuantity: 1 },

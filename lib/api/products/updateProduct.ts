@@ -44,8 +44,9 @@ export async function updateProduct(
         filter: new mongoose.Types.ObjectId(filter.filter),
         values: filter.values || [],
       })),
-      imgUrl:
-        typeof product.imgUrl === 'string' ? product.imgUrl : '/no-image.webp',
+      images: Array.isArray(product.images)
+        ? product.images.filter((img): img is string => typeof img === 'string')
+        : [],
     };
 
     const updatedProduct: IProductApi | null = await Product.findOneAndUpdate(

@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 import sharp from 'sharp';
 import ShortUniqueId from 'short-unique-id';
 
-import { getProductById } from '@/lib/api';
 import { config } from '@/lib/config/';
 
 export async function POST(req: Request) {
@@ -77,23 +76,22 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const { productId } = await req.json();
+  const { imageUrl } = await req.json();
 
-  if (!productId) {
+  if (!imageUrl) {
     return NextResponse.json(
-      { error: 'No product ID provided' },
+      { error: 'No image URL provided' },
       { status: 400 }
     );
   }
 
-  const product = await getProductById(productId);
-
-  if (!product) {
-    return NextResponse.json({ error: 'No product found' }, { status: 200 });
+  let key: string;
+  try {
+    const url = new URL(imageUrl);
+    key = url.pathname.slice(1);
+  } catch {
+    return NextResponse.json({ error: 'Invalid image URL' }, { status: 400 });
   }
-
-  const url = new URL(product.imgUrl);
-  const key = url.pathname.slice(1);
 
   const s3 = new S3({
     region: config.s3_region,

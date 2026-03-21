@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import CircleLoader from '@/components/shared/loaders/CircleLoader';
 import { Link, routing } from '@/i18n/routing';
 import { getProductsByName } from '@/lib/api';
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
 import { formattedPrice } from '@/lib/utils';
 import { IProductMapped, locale } from '@/types';
 
@@ -133,7 +134,7 @@ export default function SearchBar() {
                   <div className='basis-3/4 flex items-center gap-4'>
                     <div className='hidden sm:block max-w-16 max-h-16 aspect-square'>
                       <Image
-                        src={product.imgUrl}
+                        src={product.images[0] ?? DEFAULT_IMAGE_PATH}
                         width={100}
                         height={100}
                         alt={product.translatedData[locale].name}
