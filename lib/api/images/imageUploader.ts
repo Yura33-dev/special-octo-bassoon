@@ -1,3 +1,5 @@
+import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
+
 interface IUploadImage {
   image: string | null | File;
   folder: 'banners' | 'products' | 'categories';
@@ -46,6 +48,6 @@ export async function imageUploader({
       return null;
     }
   } else {
-    return image === null || image === '' ? '/no-image.webp' : image;
+    return image === null || image === '' ? DEFAULT_IMAGE_PATH : image;
   }
 }

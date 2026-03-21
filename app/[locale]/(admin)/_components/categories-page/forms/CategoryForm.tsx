@@ -10,7 +10,11 @@ import { slugify } from 'transliteration';
 
 import { useRouter } from '@/i18n/routing';
 import { createCategory, patchCategoryById } from '@/lib/api';
-import { ADD_CATEGORY_ID, DELETE_CATEGORY_ID } from '@/lib/constants';
+import {
+  ADD_CATEGORY_ID,
+  DEFAULT_IMAGE_PATH,
+  DELETE_CATEGORY_ID,
+} from '@/lib/constants';
 import { categoryValidationSchema } from '@/lib/validations';
 import { useModalStore } from '@/providers';
 import { ICategoryForm, ICategoryMapped, locale } from '@/types';
@@ -91,13 +95,13 @@ export default function CategoryForm({
       if (result.url) {
         values.image = result.url;
       } else {
-        values.image = '/no-image.webp';
+        values.image = DEFAULT_IMAGE_PATH;
         console.error('Something went wrong while image to S3 loading...');
       }
     }
 
     values.image =
-      typeof values.image === 'string' ? values.image : '/no-image.webp';
+      typeof values.image === 'string' ? values.image : DEFAULT_IMAGE_PATH;
     values.meta['uk'].seoText = seoText?.uk ?? null;
     values.meta['ru'].seoText = seoText?.ru ?? null;
 

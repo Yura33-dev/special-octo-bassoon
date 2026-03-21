@@ -6,7 +6,11 @@ import { toast } from 'sonner';
 
 import { useRouter } from '@/i18n/routing';
 import { createSlide, imageUploader, patchSlideById } from '@/lib/api';
-import { ADD_BANNER_ID, DELETE_BANNER_ID } from '@/lib/constants';
+import {
+  ADD_BANNER_ID,
+  DEFAULT_IMAGE_PATH,
+  DELETE_BANNER_ID,
+} from '@/lib/constants';
 import { bannerValidationSchema } from '@/lib/validations';
 import { useModalStore } from '@/providers';
 import { ISlideForm, ISlideMapped } from '@/types';
@@ -66,8 +70,8 @@ export default function BannersForm({
       }),
     ]);
 
-    values.translatedData['uk'].image = urlUkBanner ?? '/no-image.webp';
-    values.translatedData['ru'].image = urlRuBanner ?? '/no-image.webp';
+    values.translatedData['uk'].image = urlUkBanner ?? DEFAULT_IMAGE_PATH;
+    values.translatedData['ru'].image = urlRuBanner ?? DEFAULT_IMAGE_PATH;
 
     try {
       if (isAddForm) {
