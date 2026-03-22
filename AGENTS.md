@@ -121,3 +121,12 @@ modal without losing the list view.
 
 All constants (string or number) should be stored in `lib/constants/` and then
 import/export they in `lib/constants/index.ts` file.
+
+#### Dynamic classes conventions
+
+Dynamic classes in components must be written with clsx-utillity.
+
+#### Links conventions
+
+All link elements (<a>) must be used through i18n-route special component
+<Link />.
