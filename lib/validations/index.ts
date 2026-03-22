@@ -5,6 +5,7 @@ import { orderSchema } from './order.validation';
 import { createPackSchema } from './packaging.validation';
 import { producerValidationSchema } from './producer.validation';
 import { validationProductSchema } from './product.validation';
+import { reviewValidationSchema } from './review.validation';
 
 export {
   categoryValidationSchema,
@@ -14,4 +15,5 @@ export {
   producerValidationSchema,
   bannerValidationSchema,
   orderSchema,
+  reviewValidationSchema,
 };
