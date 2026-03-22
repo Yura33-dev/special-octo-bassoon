@@ -28,6 +28,7 @@ export const MAX_LENGTH_15 = 'Поле може містити до 15 симв�
 export const MAX_LENGTH_24 = 'Поле може містити до 24 символів';
 export const MAX_LENGTH_30 = 'Поле може містити до 30 символів';
 export const MAX_LENGTH_50 = 'Поле може містити до 50 символів';
+export const MAX_LENGTH_100 = 'Поле може містити до 100 символів';
 //
 export const ONLY_NUMBERS = 'Поле може містити тільки числа';
 export const ONLY_LETTERS = 'Поле може містити тільки літери';
@@ -59,3 +60,10 @@ export const CURRENCY_EXCHANGE_MANDATORY =
 // Ordres
 export const DELIVERY_METHOD = 'Оберіть один із варіантів доставки';
 export const PAYMENT_METHOD = 'Оберіть один із варіантів доставки';
+
+// Reviews
+export const REVIEW_RATING_REQUIRED = 'Оберіть оцінку товару';
+export const REVIEW_COMMENT_MIN = 'Відгук має містити від 10 символів';
+export const REVIEW_COMMENT_MAX = 'Відгук може містити до 1000 символів';
+export const REVIEW_MANAGER_MAX =
+  'Відгук про менеджера може містити до 500 символів';

@@ -24,3 +24,5 @@ export const DELETE_ORDER_ID = 'delete_order_id';
 export const ARCHIVE_ORDER_ID = 'archive_order_id';
 export const ADD_PRODUCTS_IN_ORDER = 'add_products_in_order_id';
 export const DELETE_PRODUCTS_FROM_ORDER = 'delete_products_from_order_id';
+
+export const DELETE_REVIEW_ID = 'delete_review_id';
