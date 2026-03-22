@@ -14,6 +14,7 @@ import {
   getCategoryBySlug,
   getPageDataByName,
   getProductBySlug,
+  getReviewsByProductId,
 } from '@/lib/api';
 import { config } from '@/lib/config';
 import { DEFAULT_IMAGE_PATH } from '@/lib/constants';
@@ -96,6 +97,20 @@ export default async function ProductPage({ params }: IProductPageProps) {
       getTranslations('ProductPage'),
     ]);
 
+  const reviewsData = product
+    ? await getReviewsByProductId(product.id)
+    : {
+        reviews: [],
+        pagination: {
+          page: 1,
+          perPage: 20,
+          totalItems: 0,
+          totalPages: 0,
+          hasNextPage: false,
+          hasPrevPage: false,
+        },
+      };
+
   if (!catalogPageData || !category || !subcategory || !product) {
     notFound();
   }
@@ -146,7 +161,11 @@ export default async function ProductPage({ params }: IProductPageProps) {
           <ProductTabs
             tabs={{
               descriptionTab: product.translatedData[locale].description,
-              reviewsTab: [],
+              reviewsTab: {
+                reviews: reviewsData.reviews,
+                total: reviewsData.pagination.totalItems,
+                productId: product.id,
+              },
               buttons: ['Description', 'Reviews'],
             }}
           />
