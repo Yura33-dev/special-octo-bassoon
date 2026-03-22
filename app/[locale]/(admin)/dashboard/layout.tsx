@@ -6,6 +6,7 @@ import { getMessages } from 'next-intl/server';
 import { Toaster } from 'sonner';
 
 import { routing } from '@/i18n/routing';
+import { getPendingReviewsCount } from '@/lib/api';
 import { locale } from '@/types';
 import '@/app/globals.css';
 
@@ -33,7 +34,10 @@ export default async function DashboardLayout({
     notFound();
   }
 
-  const translations = await getMessages();
+  const [translations, pendingReviewsCount] = await Promise.all([
+    getMessages(),
+    getPendingReviewsCount(),
+  ]);
 
   return (
     <ClerkProvider>
@@ -42,7 +46,10 @@ export default async function DashboardLayout({
           <NextIntlClientProvider messages={translations}>
             <Header />
             <div className='flex min-h-screen'>
-              <SideBar className='bg-background flex-shrink-0 shadow-md h-screen sticky top-0 pt-20' />
+              <SideBar
+                className='bg-background flex-shrink-0 shadow-md h-screen sticky top-0 pt-20'
+                pendingReviewsCount={pendingReviewsCount}
+              />
               <main className='basis-full flex-grow mt-28 mb-24'>
                 {modal}
                 {children}

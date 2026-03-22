@@ -9,6 +9,7 @@ import {
   Blocks,
   Factory,
   LayoutDashboard,
+  MessageSquare,
   Package,
   ShoppingCart,
   SlidersHorizontal,
@@ -20,9 +21,13 @@ import { Link, usePathname } from '@/i18n/routing';
 
 interface ISideBarProps {
   className?: string;
+  pendingReviewsCount?: number;
 }
 
-export default function SideBar({ className }: ISideBarProps) {
+export default function SideBar({
+  className,
+  pendingReviewsCount = 0,
+}: ISideBarProps) {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(true);
@@ -189,6 +194,25 @@ export default function SideBar({ className }: ISideBarProps) {
           >
             <Wallet className='w-5 h-5' />
             <span>Замовлення</span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href={'/dashboard/reviews?status=pending'}
+            className={clsx(
+              'flex items-center justify-start gap-2 text-base transition-colors p-2 rounded-md hover:bg-primary-dark hover:text-white',
+              pathname.includes('reviews') && 'bg-primary-dark text-white'
+            )}
+          >
+            <MessageSquare className='w-5 h-5 flex-shrink-0' />
+            <span className='flex items-center gap-2'>
+              Відгуки
+              {pendingReviewsCount > 0 && (
+                <span className='bg-red-500 text-white text-xs font-medium rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0'>
+                  {pendingReviewsCount > 99 ? '99+' : pendingReviewsCount}
+                </span>
+              )}
+            </span>
           </Link>
         </li>
       </motion.ul>
