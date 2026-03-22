@@ -63,6 +63,15 @@ import {
   IProductForm,
 } from './interfaces/product.interfaces';
 import {
+  IReviewApi,
+  IReviewPopulated,
+  IReviewMapped,
+  IReviewAdminMapped,
+  IReviewForm,
+  IReviewsResult,
+  IReviewsByProduct,
+} from './interfaces/review.interfaces';
+import {
   ISettingsApi,
   ISettingsLeaned,
   ISettingsMapped,
@@ -137,5 +146,12 @@ export type {
   IProducerMapped,
   IProducerForm,
   IProductInCart,
+  IReviewApi,
+  IReviewPopulated,
+  IReviewMapped,
+  IReviewAdminMapped,
+  IReviewForm,
+  IReviewsResult,
+  IReviewsByProduct,
 };
 export type { locale, queryType };

@@ -19,7 +19,6 @@ export interface IProductApi extends Document {
   _id: ObjectId;
   translatedData: Record<string, ITranslatedData>;
   packaging: IProductPackVariantsApi;
-  //   reviews: Array<string>;
   categories: Array<ICategoryApi>;
   labels: Array<Labels> | [];
   visible: boolean;
@@ -34,7 +33,6 @@ export interface IProductPopulated {
   _id: ObjectId;
   translatedData: Record<string, ITranslatedData>;
   packaging: IProductPackVariantsPopulated;
-  //   reviews: Array<string>;
   categories: Array<ICategoryPopulated>;
   labels: Labels[];
   visible: boolean;
@@ -49,7 +47,6 @@ export interface IProductMapped {
   id: string;
   translatedData: Record<string, ITranslatedData>;
   packaging: IProductPackVariantsMapped;
-  //   reviews: Array<string>;
   categories: Array<ICategoryMapped>;
   visible: boolean;
   producer: IProducerMapped;
