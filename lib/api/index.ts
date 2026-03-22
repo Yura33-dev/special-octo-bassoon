@@ -44,6 +44,12 @@ import { getProductsByLabelsAndDiscounts } from './products/getProductsByLabelsA
 import { getProductsByName } from './products/getProductsByName';
 import { getProductsSiteMap } from './products/getProductsSiteMap';
 import { updateProduct } from './products/updateProduct';
+import { approveReviewById } from './reviews/approveReviewById';
+import { createReview } from './reviews/createReview';
+import { deleteReviewById } from './reviews/deleteReviewById';
+import { getAllReviews } from './reviews/getAllReviews';
+import { getPendingReviewsCount } from './reviews/getPendingReviewsCount';
+import { getReviewsByProductId } from './reviews/getReviewsByProductId';
 import { getAllSettings } from './settings/getAllSettings';
 import { createSlide } from './slides/createSlide';
 import { deleteSlideById } from './slides/deleteSlideById';
@@ -104,4 +110,10 @@ export {
   deleteOrderById,
   getProductsSiteMap,
   getProductsByLabelsAndDiscounts,
+  createReview,
+  getReviewsByProductId,
+  getAllReviews,
+  approveReviewById,
+  deleteReviewById,
+  getPendingReviewsCount,
 };
