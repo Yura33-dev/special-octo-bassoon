@@ -4,10 +4,18 @@ import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
+import { IReviewMapped } from '@/types';
+
+import ReviewsList from './reviews/ReviewsList';
+
 interface IInfoTabsProps {
   tabs: {
     descriptionTab: string | null | undefined;
-    reviewsTab: Array<object> | [];
+    reviewsTab: {
+      reviews: IReviewMapped[];
+      total: number;
+      productId: string;
+    };
     buttons: Array<string>;
   };
 }
@@ -58,14 +66,12 @@ export default function ProductTabs({ tabs }: IInfoTabsProps) {
           </div>
         )}
 
-        {activeTab === 'Reviews' && tabs.reviewsTab.length === 0 && (
-          <h4 className='bg-gray-200 p-5 text-lg rounded-b-md'>
-            {t('NoReviews')}
-          </h4>
-        )}
-
-        {activeTab === 'Reviews' && tabs.reviewsTab.length > 0 && (
-          <span className='bg-gray-200 p-5 rounded-b-md'>Reviews List</span> //TODO: reviews list
+        {activeTab === 'Reviews' && (
+          <ReviewsList
+            initialReviews={tabs.reviewsTab.reviews}
+            productId={tabs.reviewsTab.productId}
+            totalCount={tabs.reviewsTab.total}
+          />
         )}
       </div>
     </>
