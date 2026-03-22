@@ -5,6 +5,7 @@ import Packaging from './packaging.model';
 import Page from './pages.model';
 import Producer from './producer.model';
 import Product from './product.model';
+import Review from './review.model';
 import Setting from './settings.model';
 import Slide from './slide.model';
 
@@ -18,4 +19,5 @@ export {
   Filter,
   Order,
   Producer,
+  Review,
 };
