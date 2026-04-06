@@ -33,6 +33,7 @@ interface IMainCategoryPageProps {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: IMainCategoryPageProps): Promise<Metadata> {
   const category = await getCategoryBySlug(
     params.mainCategorySlug,
@@ -44,29 +45,34 @@ export async function generateMetadata({
       title: 'Купити насіння оптом та в роздріб з доставкою по всій Україні',
     };
 
-  const currentUrl = `${config.NEXT_PUBLIC_APP_URL}/${params.locale}/catalog/${category.slug[params.locale]}`;
+  const baseUrl = `${config.NEXT_PUBLIC_APP_URL}/${params.locale}/catalog/${category.slug[params.locale]}`;
+  const page = parseInt(searchParams.page || '1');
 
   return {
-    title: category.meta[params.locale].title,
+    title:
+      category.meta[params.locale].title ??
+      'Купити насіння оптом та в роздріб з доставкою по всій Україні',
+    description:
+      category.meta[params.locale].description ??
+      'Купити насіння з доставкою по Україні. Інтернет магазин продажу насіння.✔️Гарантія якості ✔️Вигідні ціни ✔️Швидка доставка',
+    keywords: category.meta[params.locale].keywords ?? '',
+
     metadataBase: new URL(config.NEXT_PUBLIC_APP_URL),
 
+    ...(page > 1 && {
+      robots: {
+        index: false,
+        follow: true,
+      },
+    }),
+
     alternates: {
-      canonical: currentUrl,
+      canonical: baseUrl,
       languages: {
         uk: `${config.NEXT_PUBLIC_APP_URL}/uk/catalog/${category.slug['uk']}`,
         ru: `${config.NEXT_PUBLIC_APP_URL}/ru/catalog/${category.slug['ru']}`,
         'x-default': `${config.NEXT_PUBLIC_APP_URL}/uk/catalog/${category.slug['uk']}`,
       },
-    },
-
-    other: {
-      title:
-        category.meta[params.locale].title ??
-        'Купити насіння оптом та в роздріб з доставкою по всій Україні',
-      description:
-        category.meta[params.locale].description ??
-        'Купити насіння з доставкою по Україні. Інтернет магазин продажу насіння.✔️Гарантія якості ✔️Вигідні ціни ✔️Швидка доставка',
-      keywords: category.meta[params.locale].keywords ?? '',
     },
 
     openGraph: {
@@ -77,7 +83,7 @@ export async function generateMetadata({
         category.meta[params.locale].description ??
         'Купити насіння з доставкою по Україні. Інтернет магазин продажу насіння.✔️Гарантія якості ✔️Вигідні ціни ✔️Швидка доставка',
       type: 'website',
-      url: currentUrl,
+      url: baseUrl,
       images: [
         {
           url: category.image ?? `${config.NEXT_PUBLIC_APP_URL}/no-image.webp`,
@@ -165,7 +171,7 @@ export default async function MainCategoryPage({
             <Filter filters={[producersFilterObject, ...filters]} />
             <div className='basis-full flex flex-col gap-4'>
               <h1 className='text-center text-xl md:text-2xl'>
-                {catalogPageData.translatedData[locale].h1}
+                {category.name[locale]}
               </h1>
 
               <ProductsListClient

@@ -39,6 +39,9 @@ export async function generateMetadata({
 
   return {
     title: product.translatedData[params.locale].meta.title,
+    description: product.translatedData[params.locale].meta.description,
+    keywords: product.translatedData[params.locale].meta.keywords ?? '',
+
     metadataBase: new URL(config.NEXT_PUBLIC_APP_URL),
 
     alternates: {
@@ -48,12 +51,6 @@ export async function generateMetadata({
         ru: `${config.NEXT_PUBLIC_APP_URL}/ru/catalog/${product.categories[0].slug['ru']}/${product.categories[1].slug['ru']}/${product.translatedData['ru'].slug}`,
         'x-default': `${config.NEXT_PUBLIC_APP_URL}/uk/catalog/${product.categories[0].slug['uk']}/${product.categories[1].slug['uk']}/${product.translatedData['uk'].slug}`,
       },
-    },
-
-    other: {
-      title: product.translatedData[params.locale].meta.title,
-      description: product.translatedData[params.locale].meta.description,
-      keywords: product.translatedData[params.locale].meta.keywords ?? '',
     },
 
     openGraph: {
@@ -115,6 +112,58 @@ export default async function ProductPage({ params }: IProductPageProps) {
     notFound();
   }
 
+  const defaultPackItem =
+    product.packaging.items.find(
+      item => item.packId.id === product.packaging.default.id
+    ) ?? product.packaging.items[0];
+
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.translatedData[locale].name,
+    image:
+      product.images.length > 0
+        ? product.images
+        : [`${config.NEXT_PUBLIC_APP_URL}${DEFAULT_IMAGE_PATH}`],
+    description: (
+      product.translatedData[locale].description ??
+      product.translatedData[locale].meta.description ??
+      ''
+    )
+      .replace(/<[^>]*>/g, '')
+      .trim(),
+    brand: {
+      '@type': 'Brand',
+      name: product.producer.translatedData[locale].title,
+    },
+    offers: defaultPackItem
+      ? {
+          '@type': 'Offer',
+          priceCurrency: 'UAH',
+          price:
+            (defaultPackItem.price / 100) *
+            (product.producer.exchangeRate ?? 1),
+          availability: defaultPackItem.inStock
+            ? 'https://schema.org/InStock'
+            : defaultPackItem.madeToOrder
+              ? 'https://schema.org/PreOrder'
+              : 'https://schema.org/OutOfStock',
+          url: `${config.NEXT_PUBLIC_APP_URL}/${locale}/catalog/${product.categories[0].slug[locale]}/${product.categories[1].slug[locale]}/${product.translatedData[locale].slug}`,
+        }
+      : undefined,
+    ...(reviewsData.pagination.totalItems > 0 && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue:
+          reviewsData.reviews.reduce((sum, r) => sum + r.rating, 0) /
+          reviewsData.reviews.length,
+        reviewCount: reviewsData.pagination.totalItems,
+        bestRating: 5,
+        worstRating: 1,
+      },
+    }),
+  };
+
   const generateBreadCrumbs = [
     '',
     `catalog`,
@@ -135,6 +184,10 @@ export default async function ProductPage({ params }: IProductPageProps) {
       breadcrumbLinks={generateBreadCrumbs}
       breadcrumbTitles={generateBreadTitles}
     >
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       <section>
         <Container>
           <div className='flex flex-col gap-5 sm:flex-row md:gap-10'>
