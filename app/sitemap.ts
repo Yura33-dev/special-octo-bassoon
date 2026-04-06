@@ -22,6 +22,7 @@ interface ISiteMap {
     languages: {
       uk: string;
       ru: string;
+      'x-default': string;
     };
   };
 }
@@ -44,6 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       languages: {
         uk: `${config.NEXT_PUBLIC_APP_URL}/uk`,
         ru: `${config.NEXT_PUBLIC_APP_URL}/ru`,
+        'x-default': `${config.NEXT_PUBLIC_APP_URL}/uk`,
       },
     },
   }));
@@ -58,6 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       languages: {
         uk: `${config.NEXT_PUBLIC_APP_URL}/uk/catalog`,
         ru: `${config.NEXT_PUBLIC_APP_URL}/ru/catalog`,
+        'x-default': `${config.NEXT_PUBLIC_APP_URL}/uk/catalog`,
       },
     },
   }));
@@ -82,6 +85,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           uk: linksData.uk,
           ru: linksData.ru,
+          'x-default': linksData.uk,
         },
       },
     }));
@@ -106,6 +110,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           uk: linksData.uk,
           ru: linksData.ru,
+          'x-default': linksData.uk,
         },
       },
     }));
